@@ -1,0 +1,15 @@
+packages:
+  - 'packages/*'
+
+catalog:
+  react: ^19.1.0
+  react-dom: ^19.1.0
+  '@types/react': ^19.1.7
+  '@types/react-dom': ^19.1.6
+
+catalogs: 
+  react18: 
+    react: ^18
+    react-dom: ^18
+    '@types/react': ^18
+    '@types/react-dom': ^18
