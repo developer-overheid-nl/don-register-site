@@ -21,7 +21,7 @@
     "@developer-overheid-nl/don-register-components": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "astro": "^5.9.2",
+    "astro": "^5.10.1",
     "react": "catalog:",
     "react-dom": "catalog:"
   }
