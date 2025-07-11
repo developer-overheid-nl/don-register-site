@@ -1,7 +1,7 @@
 {
-  "name": "@developer-overheid-nl/don-register-components",
+  "name": "@developer-overheid-nl/don-register-layouts",
   "author": "developer.overheid.nl",
-  "description": "The components for the API- and OSS registers",
+  "description": "The layouts for the API- and OSS registers",
   "license": "EUPL-1.2",
   "private": true,
   "type": "module",
@@ -18,12 +18,12 @@
       }
     }
   },
-  "exports": "./src/index.tsx",
-  "main": "./src/index.tsx",
+  "exports": "./src/index.ts",
+  "main": "./src/index.ts",
   "dependencies": {
-    "@rijkshuisstijl-community/components-css": "^1.2.0",
-    "@rijkshuisstijl-community/components-react": "^1.2.0",
-    "@rijkshuisstijl-community/design-tokens": "^2.0.0",
+    "@rijkshuisstijl-community/components-css": "catalog:",
+    "@rijkshuisstijl-community/components-react": "catalog:",
+    "@rijkshuisstijl-community/design-tokens": "catalog:",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {

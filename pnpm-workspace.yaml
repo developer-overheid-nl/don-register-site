@@ -1,11 +1,17 @@
 packages:
   - 'packages/*'
+  - 'apps/*'
 
 catalog:
+  astro: ^5.10.1
+  '@astrojs/react': ^4.3.0
   react: ^19.1.0
   react-dom: ^19.1.0
   '@types/react': ^19.1.8
   '@types/react-dom': ^19.1.6
+  '@rijkshuisstijl-community/components-css': ^1.2.0
+  '@rijkshuisstijl-community/components-react': ^1.2.0
+  '@rijkshuisstijl-community/design-tokens': ^2.0.0
 
 catalogs: 
   react18: 

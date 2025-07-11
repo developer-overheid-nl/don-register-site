@@ -1,0 +1,42 @@
+publiccodeYmlVersion: 0.4.0
+name: Websites for developer.overheid.nl API- and OSS registers
+applicationSuite: developer.overheid.nl API- and OSS registers
+url: https://github.com/developer-overheid-nl/don-register-site
+softwareVersion: 0.0.1-alpha.1
+platforms:
+  - web
+categories:
+  - data-collection
+  - data-visualization
+  - it-development
+  - project-management
+developmentStatus: development
+releaseDate: "1970-01-01"
+softwareType: standalone/web
+description:
+  nl:
+    localisedName: Websites voor developer.overheid.nl API- en OSS registers
+    shortDescription: Front-end van de websites voor developer.overheid.nl API- en OSS registers
+    longDescription: >-
+      Front-end van de websites voor developer.overheid.nl API- en OSS
+      registers. Deze registers worden ontsloten vanuit een REST API. 
+
+      Dit is de front-end code die de data op een gebruikersvriendelijke manier
+      beschikbaar maakt op https://apis.developer.overheid.nl/apis en
+      https://oss.developer.overheid.nl/repositories
+    features:
+      - informatie
+legal:
+  license: EUPL-1.2
+  mainCopyrightOwner: Stichting Geonovum
+  repoOwner: Stichting Geonovum
+maintenance:
+  type: internal
+  contacts:
+    - name: Jaap-Hein Wester
+      email: j.h.wester@geonovum.nl
+      affiliation: Geonovum
+localisation:
+  localisationReady: false
+  availableLanguages:
+    - nl

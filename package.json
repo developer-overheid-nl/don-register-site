@@ -17,11 +17,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/react": "4.3.0",
+    "@astrojs/react": "catalog:",
     "@developer-overheid-nl/don-register-components": "workspace:*",
+    "@developer-overheid-nl/don-register-layouts": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "astro": "^5.10.1",
+    "astro": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
   }
