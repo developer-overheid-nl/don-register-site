@@ -19,7 +19,7 @@ catalogs:
       specifier: ^2.0.0
       version: 2.0.0
     '@types/react':
-      specifier: ^19.1.8
+      specifier: ^19
       version: 19.1.8
     '@types/react-dom':
       specifier: ^19.1.6
