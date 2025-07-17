@@ -16,8 +16,8 @@ catalogs:
       specifier: ^1.2.0
       version: 1.2.0
     '@rijkshuisstijl-community/design-tokens':
-      specifier: ^2.0.0
-      version: 2.0.0
+      specifier: ^4.0.0
+      version: 4.0.0
     '@types/react':
       specifier: ^19.1.8
       version: 19.1.8
@@ -128,7 +128,7 @@ importers:
         version: 1.2.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
-        version: 2.0.0
+        version: 4.0.0
       '@types/react':
         specifier: catalog:react18
         version: 18.3.23
@@ -575,6 +575,9 @@ packages:
 
   '@rijkshuisstijl-community/design-tokens@2.0.0':
     resolution: {integrity: sha512-uH6/kXdCdA8FN+e3HqarlCYPi7snh/GeS9E88B87gGkZqxhHd4GVIdUcWtMX9KejZpcNr474XRoS72IP2brDUA==}
+
+  '@rijkshuisstijl-community/design-tokens@4.0.0':
+    resolution: {integrity: sha512-mmsOXd3yZB6dlQb4qyYwkdQYt56zghv0B6OvOodZy0Vocwgw2sr3C+/1eniZvMZqG0QEavLOjDleDtZT8fHvxQ==}
 
   '@rolldown/pluginutils@1.0.0-beta.19':
     resolution: {integrity: sha512-3FL3mnMbPu0muGOCaKAhhFEYmqv9eTfPSJRJmANrCwtgK8VuxpsZDGK+m0LYAGoyO8+0j5uRe4PeyPDK1yA/hA==}
@@ -2522,6 +2525,8 @@ snapshots:
       - '@babel/runtime'
 
   '@rijkshuisstijl-community/design-tokens@2.0.0': {}
+
+  '@rijkshuisstijl-community/design-tokens@4.0.0': {}
 
   '@rolldown/pluginutils@1.0.0-beta.19': {}
 
