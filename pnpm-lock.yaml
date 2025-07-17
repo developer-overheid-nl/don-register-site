@@ -10,8 +10,8 @@ catalogs:
       specifier: ^4.3.0
       version: 4.3.0
     '@rijkshuisstijl-community/components-css':
-      specifier: ^1.2.0
-      version: 1.2.0
+      specifier: ^3.0.0
+      version: 3.0.0
     '@rijkshuisstijl-community/components-react':
       specifier: ^1.2.0
       version: 1.2.0
@@ -122,7 +122,7 @@ importers:
     dependencies:
       '@rijkshuisstijl-community/components-css':
         specifier: 'catalog:'
-        version: 1.2.0
+        version: 3.0.0
       '@rijkshuisstijl-community/components-react':
         specifier: 'catalog:'
         version: 1.2.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -540,6 +540,9 @@ packages:
   '@nl-design-system-candidate/link-css@1.0.1':
     resolution: {integrity: sha512-faM8tcnkWw3DlvbyfurOFI90qNH2uMkph+h74aUW4KZwasaAwa4tSKUBCaNwFHFXYfw0zWQc3FS9Rj+0B1G9AA==}
 
+  '@nl-design-system-candidate/link-css@2.0.0':
+    resolution: {integrity: sha512-56dgQRXmo1z6Boen25vZ1eOhPRDV0GG+QCB4rH7WuALE3IcQuINYMx4+xJqQm8Fu5k/De9QBV0mE1uPs9bHy1w==}
+
   '@nl-design-system-candidate/link-react@1.1.1':
     resolution: {integrity: sha512-l0seBlSTN1XOSPdssQXBluYMAur6wp2ZjXu7Sa+KbN94y3vpvDzHjVUibRWBINUBSIOOcoGML0mvMq50G2afig==}
     peerDependencies:
@@ -566,6 +569,9 @@ packages:
 
   '@rijkshuisstijl-community/components-css@1.2.0':
     resolution: {integrity: sha512-v4u9JqHRHao7CG9XK2kT8OWf5exfkHQPCL/O4za9DQs9IIbI4IiLEeC/yW+YdzQvQf1tcPTsfYAsbR4zjeoMwA==}
+
+  '@rijkshuisstijl-community/components-css@3.0.0':
+    resolution: {integrity: sha512-qWdDMORuNNh2QOld3H1gL5xIZDzX48ZcJQc37nGhTvpxnZ6BbNjRRyi7t5z4KFZx1dVe/rCneS1LlCLUecp30A==}
 
   '@rijkshuisstijl-community/components-react@1.2.0':
     resolution: {integrity: sha512-4MSUP9a0tHWPhfoh+J/KMR179hEjyO/s9XQB2TQbey0s3onnWsuGVda0V5co1yipu3qEw74uXiDEl+zcWKak3A==}
@@ -2483,6 +2489,8 @@ snapshots:
 
   '@nl-design-system-candidate/link-css@1.0.1': {}
 
+  '@nl-design-system-candidate/link-css@2.0.0': {}
+
   '@nl-design-system-candidate/link-react@1.1.1(@babel/runtime@7.27.6)(react@19.1.0)':
     dependencies:
       '@babel/runtime': 7.27.6
@@ -2507,6 +2515,15 @@ snapshots:
     dependencies:
       '@nl-design-system-candidate/heading-css': 1.1.0
       '@nl-design-system-candidate/link-css': 1.0.1
+      '@nl-design-system-candidate/number-badge-css': 1.1.2
+      '@nl-design-system-candidate/paragraph-css': 2.1.0
+      '@nl-design-system-candidate/skip-link-css': 1.0.2
+      '@utrecht/component-library-css': 7.2.1
+
+  '@rijkshuisstijl-community/components-css@3.0.0':
+    dependencies:
+      '@nl-design-system-candidate/heading-css': 1.1.0
+      '@nl-design-system-candidate/link-css': 2.0.0
       '@nl-design-system-candidate/number-badge-css': 1.1.2
       '@nl-design-system-candidate/paragraph-css': 2.1.0
       '@nl-design-system-candidate/skip-link-css': 1.0.2

@@ -9,7 +9,7 @@ catalog:
   react-dom: ^19.1.0
   '@types/react': ^19.1.8
   '@types/react-dom': ^19.1.6
-  '@rijkshuisstijl-community/components-css': ^1.2.0
+  '@rijkshuisstijl-community/components-css': ^3.0.0
   '@rijkshuisstijl-community/components-react': ^1.2.0
   '@rijkshuisstijl-community/design-tokens': ^2.0.0
 
