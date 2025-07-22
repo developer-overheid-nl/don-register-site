@@ -1,52 +1,61 @@
 # syntax=docker/dockerfile:1
 
-# Stage 1: Base image with Node.js and pnpm support
+# ---- Base image with Node.js and pnpm ----
 FROM node:lts AS base
-
-# Set environment variables
 ENV FORCE_COLOR=0
 
-# Install latest corepack (which includes pnpm)
-RUN npm install -g corepack@latest
-RUN corepack enable
-RUN corepack prepare pnpm@latest --activate
-
-# Set working directory
-WORKDIR /opt/astro
-
-# Stage 2a: Development mode
-FROM base AS dev
+RUN npm install -g corepack@latest && \
+    corepack enable && \
+    corepack prepare pnpm@latest --activate
 
 WORKDIR /opt/astro
 
-# Expose default Astro dev port
-EXPOSE 4321
+# ---- Dependencies cache stage ----
+FROM base AS deps
 
-# Install dependencies and run the dev server
-CMD [ "sh", "-c", "pnpm install && pnpm dev --host" ]
+WORKDIR /opt/astro
 
-# Stage 2b: Production build
+COPY pnpm-workspace.yaml ./
+COPY pnpm-lock.yaml ./
+COPY package.json ./
+COPY apps/api-register/package.json ./apps/api-register/
+COPY packages/components/package.json ./packages/components/
+COPY packages/layouts/package.json ./packages/layouts/
+
+# Kopieer evt. meer subpackage package.json als je die hebt
+
+RUN pnpm install --frozen-lockfile
+
+# ---- Build app ----
+FROM base AS build
+
+WORKDIR /opt/astro
+
+COPY . .
+COPY --from=deps /opt/astro/node_modules ./node_modules
+COPY --from=deps /opt/astro/apps/api-register/node_modules ./apps/api-register/node_modules
+COPY --from=deps /opt/astro/packages/components/node_modules ./packages/components/node_modules
+COPY --from=deps /opt/astro/packages/layouts/node_modules ./packages/layouts/node_modules
+
+RUN pnpm --filter @developer-overheid-nl/api-register build
+
+# ---- Serve production build ----
 FROM base AS prod
 
 WORKDIR /opt/astro
 
-# Copy project files
-COPY . .
+ENV NODE_ENV=production
 
-# Install dependencies (locked)
-RUN pnpm install --frozen-lockfile
+COPY --from=build /opt/astro/apps/api-register/dist ./apps/api-register/dist
+COPY --from=build /opt/astro/node_modules ./node_modules
+COPY --from=build /opt/astro/apps/api-register/node_modules ./apps/api-register/node_modules
+COPY --from=build /opt/astro/packages/components/node_modules ./packages/components/node_modules
+COPY --from=build /opt/astro/packages/layouts/node_modules ./packages/layouts/node_modules
 
-# Build Astro site
-RUN pnpm build
+# Public folder als nodig voor preview-server (optioneel, afhankelijk van Astro-config)
+COPY --from=build /opt/astro /opt/astro
 
-# Stage 3: Serve using Astro's preview server
-FROM base AS preview
-
-WORKDIR /opt/astro
-
-# Copy built site and node_modules (for preview server)
-COPY --from=prod /opt/astro /opt/astro
 
 EXPOSE 4321
 
-CMD [ "pnpm", "preview", "--host" ]
+CMD ["pnpm", "--filter", "@developer-overheid-nl/api-register", "preview", "--host"]
