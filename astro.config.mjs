@@ -7,7 +7,8 @@ import react from '@astrojs/react';
 export default defineConfig({
   server: {
     allowedHosts: [
-      'api-register.don.apps.digilab.network'
+      'api-register.don.apps.digilab.network',
+      'localhost'
     ]
   },
   integrations: [react()],
