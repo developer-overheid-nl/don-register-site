@@ -1,7 +1,17 @@
 .logo {
-  float: inline-start;
+  display: grid;
+  width: max-content;
+  grid-template-areas: "vignet don"
+                       "payoff payoff";
+  grid-template-columns: 2rem auto;
+  column-gap: 0.25rem;
+  row-gap: 0.125rem;
+}
+
+.vignet {
+  grid-area: vignet;
   height: 1.5rem;
-  margin-inline-end: 0.5rem;
+  margin-block-end: 0.25rem;
 }
 
 .rsaquo {
@@ -12,12 +22,35 @@
   color: #8FCAE7;
 }
 
+.don {
+  grid-area: don;
+  align-self: end;
+  color: #000000;
+  height: 1.5rem;
+}
+
+.payoff {
+  grid-area: payoff;
+  color: #01689B;
+  height: 0.825rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .rsaquo { color: #66A4C3 }
+  .lowbar { color: #CCE7F4 }
+  .don { color: #FFFFFF }
+  .payoff { color: #CCE7F4 }
+}
+
 @media (forced-colors: active) {
   .rsaquo { color: #0F172A }
   .lowbar { color: #475569 }
+  .payoff { color: #0F172A }
 }
 
 @media (forced-colors: active) and (prefers-color-scheme: dark) {
   .rsaquo { color: #E2E8F0 }
   .lowbar { color: #F8FAFC }
+  .don { color: #FFFFFF }
+  .payoff { color: #E2E8F0 }
 }

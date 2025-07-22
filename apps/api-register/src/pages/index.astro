@@ -1,9 +1,10 @@
 ---
+import appConfig from "../../app.config";
 import { DonOverview } from "@developer-overheid-nl/don-register-layouts";
 import { Search } from "@developer-overheid-nl/don-register-components";
 ---
 
-<DonOverview title="API Register">
+<DonOverview titleSite={appConfig.title} titlePage="Overzicht">
     <Search />
     🙈🙉🙊
 </DonOverview>

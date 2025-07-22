@@ -2,11 +2,9 @@
 import '@rijkshuisstijl-community/design-tokens/dist/uitvoerend-groen/root.css';
 import '@rijkshuisstijl-community/components-css/dist/index.css';
 import '../styles/helpers.css';
-import { Heading } from '@rijkshuisstijl-community/components-react';
-import { SiteLogo } from '@developer-overheid-nl/don-register-components';
+import { Header } from '@developer-overheid-nl/don-register-components';
 
-const { title } = Astro.props;
-console.log(SiteLogo, title);
+const { titleSite, titlePage } = Astro.props;
 ---
 
 <html lang="nl">
@@ -15,11 +13,12 @@ console.log(SiteLogo, title);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>{titlePage} | {titleSite}</title>
   </head>
-  <body>
-    <SiteLogo />
-    <Heading level={1}>{title}</Heading>
-    <slot />
+  <body class="utrecht-document don-document">
+    <!-- <Document> -->
+      <Header titleSite={titleSite} titlePage={titlePage} />
+      <slot />
+    <!-- </Document> -->
   </body>
 </html>
