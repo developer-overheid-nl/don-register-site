@@ -3,19 +3,24 @@ packages:
   - 'apps/*'
 
 catalog:
-  astro: ^5.10.1
+  astro: ^5.12.1
   '@astrojs/react': ^4.3.0
   react: ^19.1.0
   react-dom: ^19.1.0
   '@types/react': ^19.1.8
   '@types/react-dom': ^19.1.6
-  '@rijkshuisstijl-community/components-css': ^1.2.0
-  '@rijkshuisstijl-community/components-react': ^1.2.0
-  '@rijkshuisstijl-community/design-tokens': ^2.0.0
+  '@rijkshuisstijl-community/components-css': ^3.0.0
+  '@rijkshuisstijl-community/components-react': ^2.0.0
+  '@rijkshuisstijl-community/design-tokens': ^4.0.0
 
 catalogs: 
   react18: 
-    react: ^18
-    react-dom: ^18
-    '@types/react': ^18
-    '@types/react-dom': ^18
+    react: '>=18.2.0'
+    react-dom: '>=18.2.0'
+    '@types/react': '>=18'
+    '@types/react-dom': '>=18'
+  react19: 
+    react: '>=19.1.0'
+    react-dom: '>=19.1.0'
+    '@types/react': '>=19'
+    '@types/react-dom': '>=19'
