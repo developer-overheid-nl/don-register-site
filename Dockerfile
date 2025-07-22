@@ -1,40 +1,43 @@
-# syntax=docker/dockerfile:1
+FROM node:lts AS base
+ENV FORCE_COLOR=0
 
-# ---- Build Astro static site ----
-FROM node:lts AS build
-
-WORKDIR /opt/astro
-
-# Install corepack and pnpm
 RUN npm install -g corepack@latest && \
     corepack enable && \
     corepack prepare pnpm@latest --activate
 
-# Copy monorepo files for proper workspace install
+WORKDIR /opt/astro
+
+# ---- Dependencies cache stage ----
+FROM base AS deps
+
+WORKDIR /opt/astro
+
 COPY pnpm-workspace.yaml ./
 COPY pnpm-lock.yaml ./
 COPY package.json ./
 COPY apps/api-register/package.json ./apps/api-register/
 COPY packages/components/package.json ./packages/components/
 COPY packages/layouts/package.json ./packages/layouts/
-# Voeg extra packages toe indien nodig
 
-# Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# Copy the rest of the project (for build)
-COPY . .
+# ---- Build app ----
+FROM base AS build
 
-# Build static output (alleen deze app)
+WORKDIR /opt/astro
+
+COPY . .
+COPY --from=deps /opt/astro/node_modules ./node_modules
+COPY --from=deps /opt/astro/apps/api-register/node_modules ./apps/api-register/node_modules
+COPY --from=deps /opt/astro/packages/components/node_modules ./packages/components/node_modules
+COPY --from=deps /opt/astro/packages/layouts/node_modules ./packages/layouts/node_modules
+
 RUN pnpm --filter @developer-overheid-nl/api-register build
 
-# ---- Serve with Caddy ----
+# ---- Serve production build ----
 FROM caddy:2.9.1-alpine AS caddy
 
-# Copy jouw Caddyfile (verwacht in project root!)
 COPY Caddyfile /etc/caddy/Caddyfile
-
-# Copy Astro static output naar /srv (let op: juiste dist map!)
 COPY --from=build /opt/astro/apps/api-register/dist /srv
 
 EXPOSE 4321
