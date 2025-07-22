@@ -10,8 +10,5 @@ export default defineConfig({
     ssr: {
       noExternal: ["@astrojs/react"],
     },
-    preview: {
-      allowedHosts: ["api-register.don.apps.digilab.network", "localhost"],
-    },
   },
 });
