@@ -58,4 +58,4 @@ COPY --from=build /opt/astro /opt/astro
 
 EXPOSE 4321
 
-CMD ["pnpm", "--filter", "@developer-overheid-nl/api-register", "preview", "--host"]
+CMD ["pnpm", "--filter", "@developer-overheid-nl/api-register", "preview", "--host", "0.0.0.0"]
