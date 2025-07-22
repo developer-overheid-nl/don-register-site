@@ -1,61 +1,42 @@
 # syntax=docker/dockerfile:1
 
-# ---- Base image with Node.js and pnpm ----
-FROM node:lts AS base
-ENV FORCE_COLOR=0
+# ---- Build Astro static site ----
+FROM node:lts AS build
 
+WORKDIR /opt/astro
+
+# Install corepack and pnpm
 RUN npm install -g corepack@latest && \
     corepack enable && \
     corepack prepare pnpm@latest --activate
 
-WORKDIR /opt/astro
-
-# ---- Dependencies cache stage ----
-FROM base AS deps
-
-WORKDIR /opt/astro
-
+# Copy monorepo files for proper workspace install
 COPY pnpm-workspace.yaml ./
 COPY pnpm-lock.yaml ./
 COPY package.json ./
 COPY apps/api-register/package.json ./apps/api-register/
 COPY packages/components/package.json ./packages/components/
 COPY packages/layouts/package.json ./packages/layouts/
+# Voeg extra packages toe indien nodig
 
-# Kopieer evt. meer subpackage package.json als je die hebt
-
+# Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# ---- Build app ----
-FROM base AS build
-
-WORKDIR /opt/astro
-
+# Copy the rest of the project (for build)
 COPY . .
-COPY --from=deps /opt/astro/node_modules ./node_modules
-COPY --from=deps /opt/astro/apps/api-register/node_modules ./apps/api-register/node_modules
-COPY --from=deps /opt/astro/packages/components/node_modules ./packages/components/node_modules
-COPY --from=deps /opt/astro/packages/layouts/node_modules ./packages/layouts/node_modules
 
+# Build static output (alleen deze app)
 RUN pnpm --filter @developer-overheid-nl/api-register build
 
-# ---- Serve production build ----
-FROM base AS prod
+# ---- Serve with Caddy ----
+FROM caddy:2.9.1-alpine AS caddy
 
-WORKDIR /opt/astro
+# Copy jouw Caddyfile (verwacht in project root!)
+COPY Caddyfile /etc/caddy/Caddyfile
 
-ENV NODE_ENV=production
-
-COPY --from=build /opt/astro/apps/api-register/dist ./apps/api-register/dist
-COPY --from=build /opt/astro/node_modules ./node_modules
-COPY --from=build /opt/astro/apps/api-register/node_modules ./apps/api-register/node_modules
-COPY --from=build /opt/astro/packages/components/node_modules ./packages/components/node_modules
-COPY --from=build /opt/astro/packages/layouts/node_modules ./packages/layouts/node_modules
-
-# Public folder als nodig voor preview-server (optioneel, afhankelijk van Astro-config)
-COPY --from=build /opt/astro /opt/astro
-
+# Copy Astro static output naar /srv (let op: juiste dist map!)
+COPY --from=build /opt/astro/apps/api-register/dist /srv
 
 EXPOSE 4321
 
-CMD ["pnpm", "--filter", "@developer-overheid-nl/api-register", "preview", "--host", "0.0.0.0"]
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
