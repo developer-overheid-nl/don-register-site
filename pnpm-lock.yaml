@@ -33,19 +33,6 @@ catalogs:
     react-dom:
       specifier: ^19.1.0
       version: 19.1.0
-  react18:
-    '@types/react':
-      specifier: '>=18'
-      version: 19.1.8
-    '@types/react-dom':
-      specifier: '>=18'
-      version: 19.1.6
-    react:
-      specifier: '>=18.2.0'
-      version: 19.1.0
-    react-dom:
-      specifier: '>=18.2.0'
-      version: 19.1.0
   react19:
     '@types/react':
       specifier: '>=19'
@@ -143,16 +130,16 @@ importers:
         specifier: 'catalog:'
         version: 4.0.0
       '@types/react':
-        specifier: catalog:react18
+        specifier: catalog:react19
         version: 19.1.8
       '@types/react-dom':
-        specifier: catalog:react18
+        specifier: catalog:react19
         version: 19.1.6(@types/react@19.1.8)
       react:
-        specifier: catalog:react18
+        specifier: catalog:react19
         version: 19.1.0
       react-dom:
-        specifier: catalog:react18
+        specifier: catalog:react19
         version: 19.1.0(react@19.1.0)
       typescript:
         specifier: ^5.8.3
