@@ -11,9 +11,9 @@
   "type": "module",
   "version": "0.0.1-alpha.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
+    "dev": "pnpm --filter @developer-overheid-nl/api-register dev",
+    "build": "pnpm --filter @developer-overheid-nl/api-register build",
+    "preview": "astro --filter @developer-overheid-nl/api-register preview",
     "astro": "astro"
   },
   "dependencies": {
