@@ -1,4 +1,5 @@
-import Logo from '../../../../proprietary/logos/don/react/Logo';
+import type { JSX } from 'react';
+import { Logo } from '../../../../proprietary';
 
 export default function SiteLogo({ urlHomepage = '/', urlCurrent }: { urlHomepage?: string, urlCurrent?: string }) {
   const isRoot = urlHomepage !== urlCurrent;
@@ -13,7 +14,6 @@ export default function SiteLogo({ urlHomepage = '/', urlCurrent }: { urlHomepag
   return (
     <Element {...props}>
       <Logo />
-      <span className="sr-only">Register DON</span>
     </Element>
   );
 }

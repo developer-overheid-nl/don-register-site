@@ -1,0 +1,12 @@
+.container {
+  border-block-end: 1px solid var(--rhc-nav-bar-border-color);
+}
+
+.navbar {
+  :global(.rhc-nav-bar__link) { 
+    align-items: center;
+    :global(.don-icon-externe-link-inline) {
+      order: 1;
+    }
+  }
+}

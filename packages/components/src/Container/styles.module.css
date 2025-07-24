@@ -1,0 +1,14 @@
+.container {
+  align-items: center;
+  /* background-color: var(--rhc-nav-bar-background-color); */
+  display: flex;
+  inline-size: var(--rhc-nav-bar-container-inline-size);
+  justify-content: center;
+
+  > * {
+    flex: 1;
+    max-inline-size: var(--rhc-nav-bar-max-inline-size);
+    padding-inline-end: var(--rhc-nav-bar-link-padding-inline-end);
+    padding-inline-start: var(--rhc-nav-bar-link-padding-inline-start);
+  }
+}

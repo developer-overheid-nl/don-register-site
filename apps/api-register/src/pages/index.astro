@@ -1,10 +1,37 @@
 ---
+import { API_ENDPOINT, API_X_API_KEY, API_VERSION } from "astro:env/server";
+
 import appConfig from "../../app.config";
 import { DonOverview } from "@developer-overheid-nl/don-register-layouts";
-import { Search } from "@developer-overheid-nl/don-register-components";
+// import { Search } from "@developer-overheid-nl/don-register-components";
+console.log('env', API_ENDPOINT, API_X_API_KEY, API_VERSION, import.meta.env.SSR, import.meta.env.MODE, import.meta.env.SITE);
+
+const data = await fetch(`${API_ENDPOINT}/${API_VERSION}/apis`, {
+    headers: {
+      'x-api-key': API_X_API_KEY,
+    },
+  })
+  .then((response) => {
+    if (!response.ok) {
+      // throw new Error(`HTTP error! Status: ${response.status} ${response.statusText}`);
+      return {
+        error: `HTTP error! Status: ${response.status} ${response.statusText}`,
+      };
+    }
+
+    return response.json();
+  })
+  //.then((response) => response.json());
+console.log('Fetched data:', data);
 ---
 
-<DonOverview titleSite={appConfig.title} titlePage="Overzicht">
-    <Search />
-    <>🙈🙉🙊</>
+<DonOverview appConfig={appConfig} titlePage="Overzicht">
+    <!-- <Search /> -->
+     <div>
+       {data.error ? (
+         <p>Error fetching data: {data.error}</p>
+       ) : (
+         <pre>{JSON.stringify(data, null, 2)}</pre>
+       )}
+     </div>
 </DonOverview>

@@ -1,10 +1,14 @@
 ---
+import '../styles/reset.css';
+import "../../../../proprietary/fonts/ro/index.css";
 import '@rijkshuisstijl-community/design-tokens/dist/uitvoerend-groen/root.css';
 import '@rijkshuisstijl-community/components-css/dist/index.css';
+import '../styles/override.css';
 import '../styles/helpers.css';
-import { Header } from '@developer-overheid-nl/don-register-components';
+import { Container, IconSprite, Header, TopNavigation } from '@developer-overheid-nl/don-register-components';
 
-const { titleSite, titlePage } = Astro.props;
+const { appConfig: {title: titleSite, topNavigation}, titlePage } = Astro.props;
+const { routePattern } = Astro;
 ---
 
 <html lang="nl">
@@ -16,9 +20,13 @@ const { titleSite, titlePage } = Astro.props;
     <title>{titlePage} | {titleSite}</title>
   </head>
   <body class="utrecht-document don-document">
-    <!-- <Document> -->
-      <Header titleSite={titleSite} titlePage={titlePage} />
+    <IconSprite />
+    <Container>
+      <Header titleSite={titleSite} titlePage={titlePage} urlCurrent={routePattern} />
+    </Container>
+    <TopNavigation items={topNavigation.items} endItems={topNavigation.endItems} />
+    <Container>
       <slot />
-    <!-- </Document> -->
+    </Container>
   </body>
 </html>

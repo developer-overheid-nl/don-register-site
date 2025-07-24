@@ -1,0 +1,25 @@
+:root {
+  --rhc-font-family-primary: 'RijksoverheidSansWeb', Arial, Verdana, sans-serif;
+  --rhc-font-size-xl-mobile: 2.5rem;
+  --rhc-font-size-xl-tablet: 2.5rem;
+  --rhc-font-size-xl-desktop: 2.5rem;
+  --rhc-font-size-lg-mobile: 2rem;
+  --rhc-font-size-lg-tablet: 2rem;
+  --rhc-font-size-lg-desktop: 2rem;
+  --rhc-font-size-md-mobile: 1.5rem;
+  --rhc-font-size-md-tablet: 1.5rem;
+  --rhc-font-size-md-desktop: 1.5rem;
+  --rhc-font-size-sm-mobile: 1rem;
+  --rhc-font-size-sm-tablet: 1.25rem;
+  --rhc-font-size-sm-desktop: 1.125rem;
+  --rhc-font-size-xs-mobile: 1rem;
+  --rhc-font-size-xs-tablet: 1rem;
+  --rhc-font-size-xs-desktop: 1rem;
+  --rhc-font-size-body-default: 1rem;
+  --rhc-font-size-body-intro: 1.25rem;
+  --rhc-font-size-heading-level-5: 1rem;
+  --rhc-font-size-heading-level-4: 1.25rem;
+  --rhc-font-size-heading-level-3: 1.5rem;
+  --rhc-font-size-heading-level-2: 1.75rem;
+  --rhc-font-size-heading-level-1: 2rem;
+}

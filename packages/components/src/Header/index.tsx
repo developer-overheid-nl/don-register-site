@@ -1,13 +1,24 @@
 import styles from "./styles.module.css";
 import SiteLogo from "../SiteLogo"
-import { Heading } from '@rijkshuisstijl-community/components-react';
+import { Heading, Link } from '@rijkshuisstijl-community/components-react';
+import { Lint } from "../../../../proprietary";
+import { IconDeltaNaarLinksInline } from "../../../../proprietary/icons";
 
-export default function Header({ titleSite, titlePage }: { titleSite: string, titlePage: string }) {
+interface HeaderProps {
+  titleSite: string;
+  titlePage: string;
+  urlCurrent?: string;
+}
+
+export default function Header({ titleSite, titlePage, urlCurrent }: HeaderProps) {
   return (
     <header className={styles.header}>
-      <SiteLogo />
-      <Heading level={1} appearance="h3">{titleSite}<span className="sr-only">: {titlePage}</span></Heading>
-      {/* Additional header content can go here */}
+      <nav aria-label="Naar dit domein"><SiteLogo urlCurrent={urlCurrent} /></nav>
+      <Lint className={styles.lint} />
+      <div className={styles.title}>
+        <Heading level={1} appearanceLevel={3} className={styles.heading}>{titleSite}<span className="sr-only">: {titlePage}</span></Heading>
+        <nav aria-label="Naar Hoofddomein"><Link href="#" className={styles.link}><IconDeltaNaarLinksInline className={styles.icon} /> Terug naar developer.overheid.nl</Link></nav>
+      </div>
     </header>
   );
 }
