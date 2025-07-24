@@ -14,18 +14,10 @@ env:
 
 jobs:
   build:
-    environment: production
     runs-on: ubuntu-latest
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
-      - name: Create .env file
-        env: 
-          API_X_API_KEY: ${{ secrets.API_X_API_KEY }}
-        run: |
-          touch apps/api-register/.env
-          echo "API_X_API_KEY=$API_X_API_KEY" >> apps/api-register/.env
 
       - name: Build image
         uses: docker/build-push-action@v6
