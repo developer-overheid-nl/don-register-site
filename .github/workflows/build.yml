@@ -25,7 +25,7 @@ jobs:
           API_X_API_KEY: ${{ secrets.API_X_API_KEY }}
         run: |
           touch .env
-          echo "API_X_API_KEY=$API_X_API_KEY" >> .env
+          echo "API_X_API_KEY=$API_X_API_KEY" >> apps/api-register/.env
 
       - name: Build image
         uses: docker/build-push-action@v6
