@@ -1,0 +1,24 @@
+---
+/* Note: This layout is used for Markdown pages */
+import type { MarkdownLayoutProps } from 'astro';
+import { Container } from '@developer-overheid-nl/don-register-components';
+import Base from './Base.astro';
+import appConfig from '../../../../apps/api-register/app.config'; // TODO: to get it in directly through props automatically
+
+type Props = MarkdownLayoutProps<{
+  title: string;
+}> & { appConfig: { title: string; topNavigation: { items: any[]; endItems: any[] } } }; // TODO: Define the props type
+
+
+const { frontmatter } = Astro.props;
+
+console.log('Markdown Layout Props:', frontmatter, appConfig);
+---
+
+<Base titlePage={frontmatter.title} appConfig={appConfig}>
+  <Container>
+    <div class="markdown-content">
+      <slot />
+    </div>
+  </Container>
+</Base>

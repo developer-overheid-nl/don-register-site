@@ -1,6 +1,6 @@
 export default {
   title: "API-register",
-  description: "Overzicht van API's",
+  // description: "Overzicht van API's",
   topNavigation: {
     items: [
       { id: 'home', label: "Overzicht", href: "/" },

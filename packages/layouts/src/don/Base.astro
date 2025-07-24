@@ -1,0 +1,30 @@
+---
+import '../styles/reset.css';
+import "../../../../proprietary/fonts/ro/index.css";
+import '@rijkshuisstijl-community/design-tokens/dist/uitvoerend-groen/root.css';
+import '@rijkshuisstijl-community/components-css/dist/index.css';
+import '../styles/override.css';
+import '../styles/helpers.css';
+import { Container, IconSprite, Header, TopNavigation } from '@developer-overheid-nl/don-register-components';
+
+const { appConfig: {title: titleSite, topNavigation}, titlePage } = Astro.props;
+const { routePattern } = Astro;
+---
+
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{titlePage} | {titleSite}</title>
+  </head>
+  <body class="utrecht-document don-document">
+    <IconSprite />
+    <Container>
+      <Header titleSite={titleSite} titlePage={titlePage} urlCurrent={routePattern} />
+    </Container>
+    <TopNavigation items={topNavigation.items} endItems={topNavigation.endItems} />
+    <slot />
+  </body>
+</html>
