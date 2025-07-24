@@ -21,6 +21,8 @@ jobs:
 
       - name: Build image
         uses: docker/build-push-action@v6
+        env: 
+          API_X_API_KEY: ${{ secrets.API_X_API_KEY }}
         with:
           target: caddy
           tags: |
