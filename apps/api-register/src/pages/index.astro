@@ -13,25 +13,30 @@ const data = await res.json();
 ---
 
 <DonOverview appConfig={appConfig} titlePage="Overzicht">
+  <script is:inline type="module" slot="head" define:vars={{ API_ENDPOINT, API_VERSION, API_X_API_KEY }}>
+    const data = await fetch(`${API_ENDPOINT}/${API_VERSION}/apis`, {
+      headers: {
+        'x-api-key': API_X_API_KEY,
+      },
+    })
+    .then((response) => {
+      if (!response.ok) {
+        return {
+          error: `HTTP error! Status: ${response.status} ${response.statusText}`,
+        };
+      }
+
+      return response.json();
+    }).catch((error) => {
+      return { error: error.message };
+    });
+    
+    localStorage.setItem('apiData', JSON.stringify(data));
+    localStorage.setItem('apiLastUpdated', new Date().toISOString());
+    console.log('Client side: Fetched data:', data);
+  </script>
   <div>
+    Server side (during build): Fetched data:
     <pre>{JSON.stringify(data, null, 2)}</pre>
   </div>
-
-  <script type="application/json" id="api-data-json">
-    {JSON.stringify(data)}
-  </script>
-  <script>
-
-    (() => {
-      const dataTag = document.getElementById('api-data-json');
-      if (dataTag) {
-        if (dataTag.textContent !== null) {
-          const data = JSON.parse(dataTag.textContent);
-          localStorage.setItem('apiData', JSON.stringify(data));
-          localStorage.setItem('apiLastUpdated', new Date().toISOString());
-          console.log('Fetched data:', data);
-        }
-      }
-    })();
-  </script>
 </DonOverview>
