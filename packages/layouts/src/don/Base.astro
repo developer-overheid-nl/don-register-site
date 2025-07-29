@@ -18,13 +18,16 @@ const { routePattern } = Astro;
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{titlePage} | {titleSite}</title>
+    <slot name="head" />
   </head>
   <body class="utrecht-document don-document">
+    <slot name="body-start" />
     <IconSprite />
     <Container>
       <Header titleSite={titleSite} titlePage={titlePage} urlCurrent={routePattern} />
     </Container>
     <TopNavigation items={topNavigation.items} endItems={topNavigation.endItems} />
     <slot />
+    <slot name="body-end" />
   </body>
 </html>

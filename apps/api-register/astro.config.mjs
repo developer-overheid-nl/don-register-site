@@ -14,10 +14,10 @@ export default defineConfig({
   },  
   env: {
     schema: {
-      API_ENDPOINT: envField.string({ context: 'server', access: 'public'}),
-      API_X_API_KEY: envField.string({ context: 'server', access: 'secret' }),
-      API_VERSION: envField.string({ context: 'server', access: 'public', default: 'v1' }),
+      API_ENDPOINT: envField.string({ context: 'client', access: 'public'}),
+      API_X_API_KEY: envField.string({ context: 'client', access: 'public' }),
+      API_VERSION: envField.string({ context: 'client', access: 'public', default: 'v1' }),
     },
-    validateSecrets: true
+    validateSecrets: false
   },
 });

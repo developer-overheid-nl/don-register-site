@@ -6,9 +6,12 @@ const { appConfig, titlePage } = Astro.props;
 ---
 
 <Base titlePage={titlePage} appConfig={appConfig}>
+  <slot name="head" slot="head" />
+  <slot name="body-start" slot="body-start" />
   <Container>
     <div class="overview-content">
       <slot />
     </div>
   </Container>
+  <slot name="body-end" slot="body-end" />
 </Base>
