@@ -6,6 +6,11 @@
   grid-template-columns: 2rem auto;
   column-gap: 0.25rem;
   row-gap: 0.125rem;
+
+  &.forced-dark {
+    background-color: #000000;
+    outline: 0.25rem solid #000000;
+  }
 }
 
 .vignet {
@@ -36,10 +41,12 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .rsaquo { color: #66A4C3 }
-  .lowbar { color: #CCE7F4 }
-  .don { color: #FFFFFF }
-  .payoff { color: #CCE7F4 }
+  .logo:not(.forced-light) {
+    .rsaquo { color: #66A4C3 }
+    .lowbar { color: #CCE7F4 }
+    .don { color: #FFFFFF }
+    .payoff { color: #CCE7F4 }
+  }
 }
 
 @media (forced-colors: active) {

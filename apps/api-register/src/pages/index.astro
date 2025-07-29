@@ -7,21 +7,34 @@ import { DonOverview } from "@developer-overheid-nl/don-register-layouts";
 
 console.log('env', API_ENDPOINT, API_X_API_KEY, API_VERSION, import.meta.env.SSR, import.meta.env.MODE, import.meta.env.SITE);
 ---
-<!--script>
-</script-->
 
 <DonOverview appConfig={appConfig} titlePage="Overzicht">
   <script type="module" slot="head" is:inline define:vars={{ API_ENDPOINT, API_X_API_KEY, API_VERSION }}>
-    // let db;
-    // const request = indexedDB.open("MyTestDatabase");
-    // request.onerror = (event) => {
-    //   console.error("Why didn't you allow my web app to use IndexedDB?!");
-    // };
-    // request.onsuccess = (event) => {
-    //   console.log("Database opened successfully");
-    //   db = event.target.result;
-    // console.log('IndexedDB opened:', db);
-    // };
+    self.addEventListener('fetch', async (event) => {
+      console.log('Fetch event for', event.request.url);
+      
+      event.respondWith(
+        caches.open('api-cache').then(async (cache) => {
+          const cachedResponse = await cache.match(event.request);
+          if (cachedResponse) {
+            console.log('Returning cached response for', event.request.url);
+            return cachedResponse;
+          }
+          
+          console.log('Fetching from network:', event.request.url);
+          const response = await fetch(event.request);
+          
+          if (response.ok) {
+            cache.put(event.request, response.clone());
+            console.log('Cached new response for', event.request.url);
+          } else {
+            console.error('Network request failed:', response.status, response.statusText);
+          }
+          
+          return response;
+        })
+      );
+    })
 
     console.log('props', API_X_API_KEY, API_ENDPOINT, API_VERSION);
     const data = await fetch(`${API_ENDPOINT}/${API_VERSION}/apis`, {
@@ -45,8 +58,6 @@ console.log('env', API_ENDPOINT, API_X_API_KEY, API_VERSION, import.meta.env.SSR
     localStorage.setItem('apiLastUpdated', new Date().toISOString());
     console.log('Fetched data:', data);
   </script>
-
-  <!-- <div slot="body-start" data-endpoint={API_ENDPOINT} data-api-key={API_X_API_KEY} data-version={API_VERSION} /> -->
     <!-- <Search /> -->
      <div>
       kijk in de console voor de data

@@ -23,3 +23,7 @@
   --rhc-font-size-heading-level-2: 1.75rem;
   --rhc-font-size-heading-level-1: 2rem;
 }
+
+.utrecht-document {
+  background-color: var(--utrecht-document-background-color, #ffffff);
+}

@@ -13,7 +13,7 @@ export default function SiteLogo({ urlHomepage = '/', urlCurrent }: { urlHomepag
 
   return (
     <Element {...props}>
-      <Logo />
+      <Logo forced='light' />
     </Element>
   );
 }
