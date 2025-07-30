@@ -23,9 +23,8 @@ jobs:
       - name: Build image
         uses: docker/build-push-action@v6
         with:
-          context: ./apps/api-register
-          build-args: |
-            API_X_API_KEY=${{ secrets.API_X_API_KEY }}
+          secrets: |
+            "api_x_api_key=${{ secrets.API_X_API_KEY }}"
           target: caddy
           tags: |
             ${{ env.IMAGE_NAME }}:latest
