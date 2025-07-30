@@ -32,7 +32,7 @@ COPY --from=deps /opt/astro/apps/api-register/node_modules ./apps/api-register/n
 COPY --from=deps /opt/astro/packages/components/node_modules ./packages/components/node_modules
 COPY --from=deps /opt/astro/packages/layouts/node_modules ./packages/layouts/node_modules
 
-RUN API_X_API_KEY=api_x_api_key pnpm --filter @developer-overheid-nl/api-register build
+RUN --mount=type=secret,id=api_x_api_key,env=API_X_API_KEY pnpm --filter @developer-overheid-nl/api-register build
 
 # ---- Serve production build ----
 FROM caddy:2.9.1-alpine AS caddy
