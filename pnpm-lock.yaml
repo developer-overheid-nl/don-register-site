@@ -13,8 +13,8 @@ catalogs:
       specifier: ^3.0.0
       version: 3.0.0
     '@rijkshuisstijl-community/components-react':
-      specifier: ^2.0.0
-      version: 2.0.0
+      specifier: ^2.1.0
+      version: 2.1.0
     '@rijkshuisstijl-community/design-tokens':
       specifier: ^4.0.0
       version: 4.0.0
@@ -110,7 +110,7 @@ importers:
         version: 3.0.0
       '@rijkshuisstijl-community/components-react':
         specifier: 'catalog:'
-        version: 2.0.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 2.1.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
         version: 4.0.0
@@ -146,7 +146,7 @@ importers:
         version: 3.0.0
       '@rijkshuisstijl-community/components-react':
         specifier: 'catalog:'
-        version: 2.0.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 2.1.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
         version: 4.0.0
@@ -597,8 +597,8 @@ packages:
   '@rijkshuisstijl-community/components-css@3.0.0':
     resolution: {integrity: sha512-qWdDMORuNNh2QOld3H1gL5xIZDzX48ZcJQc37nGhTvpxnZ6BbNjRRyi7t5z4KFZx1dVe/rCneS1LlCLUecp30A==}
 
-  '@rijkshuisstijl-community/components-react@2.0.0':
-    resolution: {integrity: sha512-NeeFS54mbZPEbaIn6tkTgUbwOPUw7WuaL7GKzDmRBfoz/ikRMcN2u24iHqAha4rGihCtrhxnNA9TzfbsXh99nQ==}
+  '@rijkshuisstijl-community/components-react@2.1.0':
+    resolution: {integrity: sha512-tosu2KmCsZRfKFJtJvPRzGws/K4+JMDXYjRJhUTDbpSc5aLmygQ4PwGBpYPgKrKCuYnEszp8STn/f8Mx3ArrZQ==}
     peerDependencies:
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
@@ -2562,7 +2562,7 @@ snapshots:
       '@nl-design-system-candidate/skip-link-css': 1.0.2
       '@utrecht/component-library-css': 7.2.1
 
-  '@rijkshuisstijl-community/components-react@2.0.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@rijkshuisstijl-community/components-react@2.1.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@nl-design-system-candidate/link-react': 1.1.1(@babel/runtime@7.27.6)(react@19.1.0)
       '@nl-design-system-candidate/skip-link-react': 1.1.1(@babel/runtime@7.27.6)(react@19.1.0)
