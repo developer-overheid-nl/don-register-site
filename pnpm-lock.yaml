@@ -27,6 +27,9 @@ catalogs:
     astro:
       specifier: ^5.12.1
       version: 5.12.1
+    i18next:
+      specifier: ^25.3.2
+      version: 25.3.2
     react:
       specifier: ^19.1.0
       version: 19.1.0
@@ -69,6 +72,9 @@ importers:
       astro:
         specifier: 'catalog:'
         version: 5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.8.3)
+      i18next:
+        specifier: 'catalog:'
+        version: 25.3.2(typescript@5.8.3)
       react:
         specifier: 'catalog:'
         version: 19.1.0
@@ -90,9 +96,15 @@ importers:
       astro:
         specifier: 'catalog:'
         version: 5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.8.3)
+      i18next:
+        specifier: 'catalog:'
+        version: 25.3.2(typescript@5.8.3)
 
   packages/components:
     dependencies:
+      '@developer-overheid-nl/don-register-locales':
+        specifier: workspace:*
+        version: link:../locales
       '@rijkshuisstijl-community/components-css':
         specifier: 'catalog:'
         version: 3.0.0
@@ -108,18 +120,27 @@ importers:
       '@types/react-dom':
         specifier: catalog:react19
         version: 19.1.6(@types/react@19.1.8)
+      i18next:
+        specifier: 'catalog:'
+        version: 25.3.2(typescript@5.8.3)
       react:
         specifier: catalog:react19
         version: 19.1.0
       react-dom:
         specifier: catalog:react19
         version: 19.1.0(react@19.1.0)
+      react-i18next:
+        specifier: ^15.6.1
+        version: 15.6.1(i18next@25.3.2(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
 
   packages/layouts:
     dependencies:
+      '@developer-overheid-nl/don-register-locales':
+        specifier: workspace:*
+        version: link:../locales
       '@rijkshuisstijl-community/components-css':
         specifier: 'catalog:'
         version: 3.0.0
@@ -135,6 +156,9 @@ importers:
       '@types/react-dom':
         specifier: catalog:react19
         version: 19.1.6(@types/react@19.1.8)
+      i18next:
+        specifier: 'catalog:'
+        version: 25.3.2(typescript@5.8.3)
       react:
         specifier: catalog:react19
         version: 19.1.0
@@ -144,6 +168,12 @@ importers:
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
+
+  packages/locales:
+    dependencies:
+      i18next:
+        specifier: 'catalog:'
+        version: 25.3.2(typescript@5.8.3)
 
 packages:
 
@@ -1385,11 +1415,22 @@ packages:
   html-escaper@3.0.3:
     resolution: {integrity: sha512-RuMffC89BOWQoY0WKGpIhn5gX3iI54O6nRA0yC124NYVtzjmFWBIiFd8M0x+ZdX0P9R4lADg1mgP8C7PxGOWuQ==}
 
+  html-parse-stringify@3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+
   html-void-elements@3.0.0:
     resolution: {integrity: sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg==}
 
   http-cache-semantics@4.2.0:
     resolution: {integrity: sha512-dTxcvPXqPvXBQpq5dUr6mEMJX4oIEFv6bwom3FDwKRDsuIjjJGANqhBuoAn9c1RQJIdAKav33ED65E2ys+87QQ==}
+
+  i18next@25.3.2:
+    resolution: {integrity: sha512-JSnbZDxRVbphc5jiptxr3o2zocy5dEqpVm9qCGdJwRNO+9saUJS0/u4LnM/13C23fUEWxAylPqKU/NpMV/IjqA==}
+    peerDependencies:
+      typescript: ^5
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   import-meta-resolve@4.1.0:
     resolution: {integrity: sha512-I6fiaX09Xivtk+THaMfAwnA3MVA5Big1WHF1Dfx9hFuvNIWpXnorlkzhcQf6ehrqQiiZECRt1poOAkPmer3ruw==}
@@ -1704,6 +1745,22 @@ packages:
     resolution: {integrity: sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==}
     peerDependencies:
       react: ^19.1.0
+
+  react-i18next@15.6.1:
+    resolution: {integrity: sha512-uGrzSsOUUe2sDBG/+FJq2J1MM+Y4368/QW8OLEKSFvnDflHBbZhSd1u3UkW0Z06rMhZmnB/AQrhCpYfE5/5XNg==}
+    peerDependencies:
+      i18next: '>= 23.2.3'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+      typescript: ^5
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+      typescript:
+        optional: true
 
   react-refresh@0.17.0:
     resolution: {integrity: sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==}
@@ -2042,6 +2099,10 @@ packages:
     peerDependenciesMeta:
       vite:
         optional: true
+
+  void-elements@3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
+    engines: {node: '>=0.10.0'}
 
   web-namespaces@2.0.1:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
@@ -3438,9 +3499,19 @@ snapshots:
 
   html-escaper@3.0.3: {}
 
+  html-parse-stringify@3.0.1:
+    dependencies:
+      void-elements: 3.1.0
+
   html-void-elements@3.0.0: {}
 
   http-cache-semantics@4.2.0: {}
+
+  i18next@25.3.2(typescript@5.8.3):
+    dependencies:
+      '@babel/runtime': 7.27.6
+    optionalDependencies:
+      typescript: 5.8.3
 
   import-meta-resolve@4.1.0: {}
 
@@ -3908,6 +3979,16 @@ snapshots:
       react: 19.1.0
       scheduler: 0.26.0
 
+  react-i18next@15.6.1(i18next@25.3.2(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3):
+    dependencies:
+      '@babel/runtime': 7.27.6
+      html-parse-stringify: 3.0.1
+      i18next: 25.3.2(typescript@5.8.3)
+      react: 19.1.0
+    optionalDependencies:
+      react-dom: 19.1.0(react@19.1.0)
+      typescript: 5.8.3
+
   react-refresh@0.17.0: {}
 
   react@19.1.0: {}
@@ -4273,6 +4354,8 @@ snapshots:
   vitefu@1.0.7(vite@6.3.5(@types/node@24.0.8)):
     optionalDependencies:
       vite: 6.3.5(@types/node@24.0.8)
+
+  void-elements@3.1.0: {}
 
   web-namespaces@2.0.1: {}
 

@@ -21,9 +21,12 @@
   "exports": "./src/index.tsx",
   "main": "./src/index.tsx",
   "dependencies": {
+    "@developer-overheid-nl/don-register-locales": "workspace:*",
     "@rijkshuisstijl-community/components-css": "catalog:",
     "@rijkshuisstijl-community/components-react": "catalog:",
     "@rijkshuisstijl-community/design-tokens": "catalog:",
+    "i18next": "catalog:",
+    "react-i18next": "^15.6.1",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {

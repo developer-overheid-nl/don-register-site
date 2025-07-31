@@ -22,8 +22,16 @@
   --rhc-font-size-heading-level-3: 1.5rem;
   --rhc-font-size-heading-level-2: 1.75rem;
   --rhc-font-size-heading-level-1: 2rem;
+  --utrecht-document-font-size: 1rem;
+  --nl-paragraph-font-size: 1rem;
+  --utrecht-alert-icon-inset-block-start: 0;
 }
 
 .utrecht-document {
   background-color: var(--utrecht-document-background-color, #ffffff);
+}
+
+.utrecht-icon {
+  /* removes extra space around the icon */
+  display: block;
 }

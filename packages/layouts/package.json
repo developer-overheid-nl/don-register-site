@@ -21,9 +21,11 @@
   "exports": "./src/index.ts",
   "main": "./src/index.ts",
   "dependencies": {
+    "@developer-overheid-nl/don-register-locales": "workspace:*",
     "@rijkshuisstijl-community/components-css": "catalog:",
     "@rijkshuisstijl-community/components-react": "catalog:",
     "@rijkshuisstijl-community/design-tokens": "catalog:",
+    "i18next": "catalog:",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {

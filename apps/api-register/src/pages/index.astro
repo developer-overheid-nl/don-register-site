@@ -1,28 +1,31 @@
 ---
-import { API_ENDPOINT, API_VERSION } from "astro:env/client";
+import { API_URL, API_ENDPOINT, API_VERSION } from "astro:env/client";
 import { API_X_API_KEY } from "astro:env/server";
 import appConfig from "../../app.config";
 import { DonOverview } from "@developer-overheid-nl/don-register-layouts";
+import { Alert, CardList } from "@developer-overheid-nl/don-register-components";
 
-const res = await fetch(`${API_ENDPOINT}/${API_VERSION}/apis`, {
+const res = await fetch(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`, {
   headers: {
     'x-api-key': API_X_API_KEY,
   },
 });
 const data = await res.json();
+const fetchedDate = new Date().toISOString();
 ---
 
 <DonOverview appConfig={appConfig} titlePage="Overzicht">
-  <script is:inline type="module" slot="head" define:vars={{ API_ENDPOINT, API_VERSION, API_X_API_KEY }}>
-    const data = await fetch(`${API_ENDPOINT}/${API_VERSION}/apis`, {
+  <script is:inline type="module" slot="head" define:vars={{ API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY }}>
+    const data = await fetch(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`, {
       headers: {
         'x-api-key': API_X_API_KEY,
       },
     })
     .then((response) => {
+      console.log(response, response.json());
       if (!response.ok) {
         return {
-          error: `HTTP error! Status: ${response.status} ${response.statusText}`,
+          message: `HTTP error! Status: ${response.status} ${response.statusText}`,
         };
       }
 
@@ -32,11 +35,18 @@ const data = await res.json();
     });
     
     localStorage.setItem('apiData', JSON.stringify(data));
-    localStorage.setItem('apiLastUpdated', new Date().toISOString());
+    localStorage.setItem('apiLastFetched', new Date().toISOString());
     console.log('Client side: Fetched data:', data);
   </script>
   <div>
-    Server side (during build): Fetched data:
-    <pre>{JSON.stringify(data, null, 2)}</pre>
+    <small>Server side (during build or SSR on {new Date(fetchedDate).toLocaleString('nl-NL')})<br />
+    Fetched data:
+    <pre>{JSON.stringify(data, null, 2)}</pre></small>
+
+    {data.message ?
+      <Alert type="error" textContent={data.message} />
+    : null }
+    <CardList items={data.items} />
+
   </div>
 </DonOverview>

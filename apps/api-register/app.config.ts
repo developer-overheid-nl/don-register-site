@@ -1,6 +1,9 @@
 export default {
   title: "API-register",
-  // description: "Overzicht van API's",
+  mainSite: {
+    name: "developer.overheid.nl",
+    url: "https://developer.overheid.nl",
+  },
   topNavigation: {
     items: [
       { id: 'home', label: "Overzicht", href: "/" },

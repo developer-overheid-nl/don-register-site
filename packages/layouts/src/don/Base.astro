@@ -6,9 +6,23 @@ import '@rijkshuisstijl-community/components-css/dist/index.css';
 import '../styles/override.css';
 import '../styles/helpers.css';
 import { Container, IconSprite, Header, TopNavigation } from '@developer-overheid-nl/don-register-components';
+import i18next from 'i18next';
+import resources from '@developer-overheid-nl/don-register-locales/nl' with { type: "json" };
 
-const { appConfig: {title: titleSite, topNavigation}, titlePage } = Astro.props;
+const { appConfig: {title: titleSite, mainSite, topNavigation}, titlePage } = Astro.props;
 const { routePattern } = Astro;
+
+i18next.init({
+  // Right now we are using the locales directly, but in the future we can use the i18next-fs-backend to load them from files
+  // We also have just one language. Refactor this when we have more languages.
+  lng: 'nl',
+  fallbackLng: 'nl',
+  resources: {
+    nl: {
+      translation: resources
+    }
+  },
+});
 ---
 
 <html lang="nl">
@@ -17,6 +31,7 @@ const { routePattern } = Astro;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={ i18next.t('layouts.meta-description') } />
     <title>{titlePage} | {titleSite}</title>
     <slot name="head" />
   </head>
@@ -24,7 +39,7 @@ const { routePattern } = Astro;
     <slot name="body-start" />
     <IconSprite />
     <Container>
-      <Header titleSite={titleSite} titlePage={titlePage} urlCurrent={routePattern} />
+      <Header titleSite={titleSite} titlePage={titlePage} mainSite={mainSite} urlCurrent={routePattern} />
     </Container>
     <TopNavigation items={topNavigation.items} endItems={topNavigation.endItems} />
     <slot />

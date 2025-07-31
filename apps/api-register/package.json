@@ -13,6 +13,7 @@
   "dependencies": {
     "@astrojs/react": "catalog:",
     "astro": "catalog:",
+    "i18next": "catalog:",
     "@developer-overheid-nl/don-register-components": "workspace:*",
     "@developer-overheid-nl/don-register-layouts": "workspace:*"
   },
