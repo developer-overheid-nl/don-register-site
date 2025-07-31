@@ -10,8 +10,8 @@ catalogs:
       specifier: ^4.3.0
       version: 4.3.0
     '@rijkshuisstijl-community/components-css':
-      specifier: ^3.0.0
-      version: 3.0.0
+      specifier: ^3.1.0
+      version: 3.1.0
     '@rijkshuisstijl-community/components-react':
       specifier: ^2.0.0
       version: 2.0.0
@@ -107,7 +107,7 @@ importers:
         version: link:../locales
       '@rijkshuisstijl-community/components-css':
         specifier: 'catalog:'
-        version: 3.0.0
+        version: 3.1.0
       '@rijkshuisstijl-community/components-react':
         specifier: 'catalog:'
         version: 2.0.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -143,7 +143,7 @@ importers:
         version: link:../locales
       '@rijkshuisstijl-community/components-css':
         specifier: 'catalog:'
-        version: 3.0.0
+        version: 3.1.0
       '@rijkshuisstijl-community/components-react':
         specifier: 'catalog:'
         version: 2.0.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -594,8 +594,8 @@ packages:
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
 
-  '@rijkshuisstijl-community/components-css@3.0.0':
-    resolution: {integrity: sha512-qWdDMORuNNh2QOld3H1gL5xIZDzX48ZcJQc37nGhTvpxnZ6BbNjRRyi7t5z4KFZx1dVe/rCneS1LlCLUecp30A==}
+  '@rijkshuisstijl-community/components-css@3.1.0':
+    resolution: {integrity: sha512-tmkIcax9/vUDzD3rO65uRGTmQrO360ncDsZQQt5C8UmlpzlNstTqOp+826kRJSakReT8spAJL5j9kjq5G/j/RA==}
 
   '@rijkshuisstijl-community/components-react@2.0.0':
     resolution: {integrity: sha512-NeeFS54mbZPEbaIn6tkTgUbwOPUw7WuaL7GKzDmRBfoz/ikRMcN2u24iHqAha4rGihCtrhxnNA9TzfbsXh99nQ==}
@@ -795,8 +795,8 @@ packages:
   '@utrecht/accordion-css@2.0.0':
     resolution: {integrity: sha512-U+NI6SXu5ULPjD+UDrdjh9f5AY+Hc3h5gIaqisDkogvmEDX7lkdOVxby0PrkBcVkEuiq9AIg9/RT0U3uFc7vwg==}
 
-  '@utrecht/alert-css@2.3.0':
-    resolution: {integrity: sha512-ATN820rMOASAJkkELuFqRW5hBO7WBxCd+yEFpIsLlm3ptTTnwOWl0MIBN3zNpgne3UM6U5R1YxSQwJ1FA0hEdA==}
+  '@utrecht/alert-css@2.4.0':
+    resolution: {integrity: sha512-2vrm2Y8yNIPu1VNmEGP7BJkxEFaSPobQ+hcPkQs2TJiPybzX+ut7ZCcm3KaxmE6LSVjIOLSbLXe2YW/fP2g/Rw==}
 
   '@utrecht/alert-dialog-css@1.4.2':
     resolution: {integrity: sha512-fnL692KHBh3POeyu9IxOjbZ/9Alb/ppjbt+uQ0ukyfhd8NUS9BYmwJTr9j5LUZdg9Kep/nHMbAN1zSptQ0DICQ==}
@@ -825,8 +825,8 @@ packages:
   '@utrecht/body-css@1.2.1':
     resolution: {integrity: sha512-YKB/y3Z+OjiDp39HTInrEme8ZOV+fffeHLybWTqCQjiP4JdPyiwUo82p7TYoyGe/isSGOSJQqVByhniadZI8mg==}
 
-  '@utrecht/breadcrumb-nav-css@1.4.1':
-    resolution: {integrity: sha512-YkBW5JIqvCm8aYwrw3EkaxBwjv3yEZRY5ms7CuZ3ul7RPpW5YhYRN4r5BUXxywnmRmHsoPvoS+0tdug8KS2GjA==}
+  '@utrecht/breadcrumb-nav-css@1.5.0':
+    resolution: {integrity: sha512-g1m//HVM4lKSAF83Y83jKbhb19QRK6ZHIYZ4gU3M9hkfLq51/JnM7TPPx3dB/PvSI3GrfXrnAh6SApcDUOvxUQ==}
 
   '@utrecht/button-css@2.3.1':
     resolution: {integrity: sha512-gjCVKTzsV/2TOTrYANHFP1f9RqXc/6lY+gC37q9KaEJZ55+37mVKeNubCO1ntFRJeGY+4oCT5ti2rtX4jqDjqg==}
@@ -858,8 +858,8 @@ packages:
   '@utrecht/combobox-css@1.4.1':
     resolution: {integrity: sha512-U3s8srLcTPjkn6pbzOudVsvUBwun4vLdhjQ2jyHGjsA/GDAU2Z2geGuLsYSFSJtsThMQ5QqfDtWj9tyYRKMByw==}
 
-  '@utrecht/component-library-css@7.2.1':
-    resolution: {integrity: sha512-HI4Xx7+5nkwr+KRquBkEoXYYXnQldnomlPemA+C936/nxeb3LJ635Txnsg5Crx104+bDohw1VlL0aewauDiyow==}
+  '@utrecht/component-library-css@7.4.0':
+    resolution: {integrity: sha512-rwjDHujybo2R8apoUpgVwBSrw0d26ZU4P6oephj+GCIqoehUlZglTBRR62NcvYfP2tVhPYznDkaVy23S4w8PFQ==}
 
   '@utrecht/currency-data-css@1.3.1':
     resolution: {integrity: sha512-QXXcRjRxnAab/jXqOWciokv0bCaVxxAOlF6hQC3OW76w4aaVVSXWRE3mBw+7g3AQ7nLGsfloTGwTshenF0g6+w==}
@@ -1067,6 +1067,9 @@ packages:
 
   '@utrecht/textbox-css@1.7.1':
     resolution: {integrity: sha512-MBM/NfMgdMSsaVJvE1Yk48Z0aAby2Bz4Vyt9CSFV38UZQU3C/kPwuQde3oJePCBnVJPx+K1YM8WhGcHF+c0Y4g==}
+
+  '@utrecht/tooltip-css@1.0.0':
+    resolution: {integrity: sha512-/VSySBP/JJroiQ/ncGDSHhE8S/DisW/nsq8f1KXkYj/Yx+xkpQP2wItHoEBsv51/+kkebOQ012wc/bXmBJqNcQ==}
 
   '@utrecht/top-task-link-css@1.4.1':
     resolution: {integrity: sha512-3vQT0x7Eqm9P790qnT7ukt1btMsG+mRZ6Hb+HCTAXXTdKBgeRUHdtkrBXZBF7C8gD7XgoSiotcYQzRLNKluJFA==}
@@ -2553,14 +2556,14 @@ snapshots:
 
   '@oslojs/encoding@1.1.0': {}
 
-  '@rijkshuisstijl-community/components-css@3.0.0':
+  '@rijkshuisstijl-community/components-css@3.1.0':
     dependencies:
       '@nl-design-system-candidate/heading-css': 1.1.0
       '@nl-design-system-candidate/link-css': 2.0.0
       '@nl-design-system-candidate/number-badge-css': 1.1.2
       '@nl-design-system-candidate/paragraph-css': 2.1.0
       '@nl-design-system-candidate/skip-link-css': 1.0.2
-      '@utrecht/component-library-css': 7.2.1
+      '@utrecht/component-library-css': 7.4.0
 
   '@rijkshuisstijl-community/components-react@2.0.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
@@ -2743,7 +2746,7 @@ snapshots:
 
   '@utrecht/accordion-css@2.0.0': {}
 
-  '@utrecht/alert-css@2.3.0': {}
+  '@utrecht/alert-css@2.4.0': {}
 
   '@utrecht/alert-dialog-css@1.4.2': {}
 
@@ -2763,7 +2766,7 @@ snapshots:
 
   '@utrecht/body-css@1.2.1': {}
 
-  '@utrecht/breadcrumb-nav-css@1.4.1': {}
+  '@utrecht/breadcrumb-nav-css@1.5.0': {}
 
   '@utrecht/button-css@2.3.1': {}
 
@@ -2785,10 +2788,10 @@ snapshots:
 
   '@utrecht/combobox-css@1.4.1': {}
 
-  '@utrecht/component-library-css@7.2.1':
+  '@utrecht/component-library-css@7.4.0':
     dependencies:
       '@utrecht/accordion-css': 2.0.0
-      '@utrecht/alert-css': 2.3.0
+      '@utrecht/alert-css': 2.4.0
       '@utrecht/alert-dialog-css': 1.4.2
       '@utrecht/alternate-lang-nav-css': 1.3.1
       '@utrecht/article-css': 1.5.1
@@ -2798,7 +2801,7 @@ snapshots:
       '@utrecht/badge-status-css': 1.4.1
       '@utrecht/blockquote-css': 1.6.1
       '@utrecht/body-css': 1.2.1
-      '@utrecht/breadcrumb-nav-css': 1.4.1
+      '@utrecht/breadcrumb-nav-css': 1.5.0
       '@utrecht/button-css': 2.3.1
       '@utrecht/button-group-css': 1.4.1
       '@utrecht/button-link-css': 1.3.1
@@ -2878,6 +2881,7 @@ snapshots:
       '@utrecht/table-of-contents-css': 0.3.1
       '@utrecht/textarea-css': 2.3.2
       '@utrecht/textbox-css': 1.7.1
+      '@utrecht/tooltip-css': 1.0.0
       '@utrecht/top-task-link-css': 1.4.1
       '@utrecht/top-task-nav-css': 1.3.1
       '@utrecht/unordered-list-css': 1.5.1
@@ -3021,6 +3025,8 @@ snapshots:
   '@utrecht/textarea-css@2.3.2': {}
 
   '@utrecht/textbox-css@1.7.1': {}
+
+  '@utrecht/tooltip-css@1.0.0': {}
 
   '@utrecht/top-task-link-css@1.4.1': {}
 
