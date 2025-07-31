@@ -25,8 +25,8 @@ catalogs:
       specifier: ^19.1.6
       version: 19.1.6
     astro:
-      specifier: ^5.12.1
-      version: 5.12.1
+      specifier: ^5.12.6
+      version: 5.12.6
     i18next:
       specifier: ^25.3.2
       version: 25.3.2
@@ -71,7 +71,7 @@ importers:
         version: 19.1.6(@types/react@19.1.8)
       astro:
         specifier: 'catalog:'
-        version: 5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.8.3)
+        version: 5.12.6(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.8.3)
       i18next:
         specifier: 'catalog:'
         version: 25.3.2(typescript@5.8.3)
@@ -95,7 +95,7 @@ importers:
         version: link:../../packages/layouts
       astro:
         specifier: 'catalog:'
-        version: 5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.8.3)
+        version: 5.12.6(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.8.3)
       i18next:
         specifier: 'catalog:'
         version: 25.3.2(typescript@5.8.3)
@@ -1123,8 +1123,8 @@ packages:
   array-iterate@2.0.1:
     resolution: {integrity: sha512-I1jXZMjAgCMmxT4qxXfPXa6SthSoE8h6gkSI9BGGNv8mP8G/v0blc+qFnZu6K42vTOiuME596QaLO0TP3Lk0xg==}
 
-  astro@5.12.1:
-    resolution: {integrity: sha512-/gH9cLIp6UNdbJO1FPBVN/Ea+1I9hJdQoLJKYUsXIRIfHcyF/3NCg0QVDJGw1oWkyQT6x6poQsnbgY9UXitjiw==}
+  astro@5.12.6:
+    resolution: {integrity: sha512-vDtuDYj/XlxyI2Ex63BM4/Awde8Pl3U3wS5I1NhogFIBPohBaJ1g9puu42XEm7GMZxRn9N3xFEpSP9uEO0W9/w==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -3067,7 +3067,7 @@ snapshots:
 
   array-iterate@2.0.1: {}
 
-  astro@5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.8.3):
+  astro@5.12.6(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.8.3):
     dependencies:
       '@astrojs/compiler': 2.12.2
       '@astrojs/internal-helpers': 0.6.1
