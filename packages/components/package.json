@@ -15,18 +15,28 @@
       ".": {
         "import": "./dist/index.js",
         "require": "./dist/index.js"
+      },
+      "./fetch": {
+        "import": "./dist/fetch.js",
+        "require": "./dist/fetch.js"
       }
     }
   },
-  "exports": "./src/index.tsx",
+  "exports": {
+    ".": "./src/index.tsx",
+    "./fetch": "./src/fetch.ts"
+  },
   "main": "./src/index.tsx",
   "dependencies": {
     "@developer-overheid-nl/don-register-locales": "workspace:*",
+    "@nanostores/react": "catalog:",
     "@rijkshuisstijl-community/components-css": "catalog:",
     "@rijkshuisstijl-community/components-react": "catalog:",
     "@rijkshuisstijl-community/design-tokens": "catalog:",
     "i18next": "catalog:",
+    "nanostores": "catalog:",
     "react-i18next": "^15.6.1",
+    "react-markdown": "catalog:",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {

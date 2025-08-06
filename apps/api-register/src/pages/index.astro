@@ -3,50 +3,44 @@ import { API_URL, API_ENDPOINT, API_VERSION } from "astro:env/client";
 import { API_X_API_KEY } from "astro:env/server";
 import appConfig from "../../app.config";
 import { DonOverview } from "@developer-overheid-nl/don-register-layouts";
-import { Alert, CardList } from "@developer-overheid-nl/don-register-components";
+import { Alert, Card, CardList } from "@developer-overheid-nl/don-register-components";
+import FetchContainer from "../../../../packages/components/src/FetchContainer";
+// import { fetchAPI } from "@developer-overheid-nl/don-register-components/fetch";
 
-const res = await fetch(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`, {
-  headers: {
-    'x-api-key': API_X_API_KEY,
-  },
-});
-const data = await res.json();
-const fetchedDate = new Date().toISOString();
+// const data = await fetchAPI(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`, API_X_API_KEY);
+// const fetchedDate = new Date().toISOString();
+console.log('Server side:', API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY);
 ---
 
 <DonOverview appConfig={appConfig} titlePage="Overzicht">
-  <script is:inline type="module" slot="head" define:vars={{ API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY }}>
-    const data = await fetch(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`, {
-      headers: {
-        'x-api-key': API_X_API_KEY,
-      },
-    })
-    .then((response) => {
-      console.log(response, response.json());
-      if (!response.ok) {
-        return {
-          message: `HTTP error! Status: ${response.status} ${response.statusText}`,
-        };
-      }
+  <script src="../scripts/storeconfig.js"></script>
+  <!-- <script src="../../../../packages/components/src/apiStore.ts"></script> -->
+  <!-- <script is:inline type="module" slot="head" define:vars={{ API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY }}>
+    // client side from @fs, see script above
+    import { fetchAPI } from "/@fs/C:/Projects/Geonovum/don-register-site/packages/components/src/fetch.ts";
 
-      return response.json();
-    }).catch((error) => {
-      return { error: error.message };
-    });
-    
-    localStorage.setItem('apiData', JSON.stringify(data));
-    localStorage.setItem('apiLastFetched', new Date().toISOString());
-    console.log('Client side: Fetched data:', data);
-  </script>
+    const dataClient = await fetchAPI(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`, API_X_API_KEY);
+    console.log('Client side: Fetched data:', dataClient);
+  </script> -->
+  <!-- <script is:inline type="module" slot="head" define:vars={{ API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY }}>
+    import { test } from "/@fs/C:/Projects/Geonovum/don-register-site/packages/components/src/apiStore.ts";
+
+    console.log(test.get());
+    test.set('Test from store (set by Astro)');
+    console.log(test.get());
+
+  </script> -->
   <div>
-    <small>Server side (during build or SSR on {new Date(fetchedDate).toLocaleString('nl-NL')})<br />
+    <!-- <small>Server side (during build or SSR on {new Date(fetchedDate).toLocaleString('nl-NL')})<br />
     Fetched data:
-    <pre>{JSON.stringify(data, null, 2)}</pre></small>
+    <pre>{JSON.stringify(data, null, 2)}</pre></small> -->
 
-    {data.message ?
+    <!-- {data.message ?
       <Alert type="error" textContent={data.message} />
-    : null }
-    <CardList items={data.items} />
+    : null } -->
 
+    <!-- <CardList  url={`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`} apiKey={API_X_API_KEY}><div slot="fallback">Loading</div></CardList> -->
+    <FetchContainer client:load url={`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`} apiKey={API_X_API_KEY} />
+    <Card client:load test="Test Title" />
   </div>
 </DonOverview>

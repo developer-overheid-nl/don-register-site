@@ -1,5 +1,8 @@
 ---
+import { API_ENDPOINT, API_X_API_KEY, API_VERSION } from "astro:env/server";
 import "../../proprietary/fonts/ro/index.css";
+
+console.log('env', API_ENDPOINT, API_X_API_KEY, API_VERSION, import.meta.env.SSR, import.meta.env.MODE, import.meta.env.SITE);
 ---
 
 <html lang="en">

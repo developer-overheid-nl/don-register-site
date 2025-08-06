@@ -9,16 +9,20 @@ export default defineConfig({
   integrations: [react()],
   vite: {
     ssr: {
-      noExternal: ['@astrojs/react']
-    }
-  },  
+      noExternal: ['@astrojs/react'],
+      // external: ['@developer-overheid-nl/don-register-components/fetch'],
+    },
+    optimizeDeps: {
+      include: ['@developer-overheid-nl/don-register-components/fetch'],
+    },
+  },
   env: {
     schema: {
       API_URL: envField.string({ context: 'client', access: 'public'}),
       API_ENDPOINT: envField.string({ context: 'client', access: 'public'}),
-      API_X_API_KEY: envField.string({ context: 'server', access: 'secret' }),
+      API_X_API_KEY: envField.string({ context: 'server', access: 'public' }),
       API_VERSION: envField.string({ context: 'client', access: 'public', default: 'v1' }),
     },
-    validateSecrets: false
+    validateSecrets: false,
   },
 });
