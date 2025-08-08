@@ -6,7 +6,7 @@ export default function FetchContainer({ data }: { data: any }) {
       {data ? (
         <>
           <pre hidden>{JSON.stringify(data, null, 2)}</pre>
-          {data.apis.map((item: any) => (
+          {data?.apis?.map((item: any) => (
             <div key={item.id} style={{ marginBlockEnd: '2rem' }}>
               <h3><a href={`https://redocly.github.io/redoc/?url=${item.oasUrl}`} target="_blank" rel="noopener">{item.title}</a></h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr 3fr)' }}>
