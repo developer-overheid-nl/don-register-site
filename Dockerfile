@@ -45,4 +45,4 @@ COPY --from=deps /opt/astro/apps/api-register/node_modules ./apps/api-register/n
 
 EXPOSE 4321
 
-CMD ["node", "./apps/api-register/dist/server/entry.mjs"]
+CMD ["node", "./apps/api-register/dist/server/entry.mjs", "--host", "0.0.0.0"]
