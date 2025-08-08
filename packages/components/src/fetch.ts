@@ -8,8 +8,9 @@ export async function fetchAPI(
     });
 
     if (!response.ok) {
+      console.log(`HTTP error! Status: ${response.status} ${response.statusText}`);
       return {
-        message: `HTTP error! Status: ${response.status} ${response.statusText}`,
+        apis: []
       };
     }
 
