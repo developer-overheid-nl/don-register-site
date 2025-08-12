@@ -2,7 +2,7 @@ import { type FragmentProps, type PropsWithChildren, use } from "react";
 import { fetchAPI } from "../fetch";
 // import { useStore } from '@nanostores/react';
 import { dataStore } from '../store';
-import CardsList from "../cardsListTEMP/CardsList";
+import CardsList from "../cardsList/CardsList";
 import styles from './styles.module.css';
 
 export interface OverviewContainerProps {
