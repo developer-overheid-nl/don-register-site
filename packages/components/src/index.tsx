@@ -1,5 +1,5 @@
 export { default as Card } from "./Card";
-export { default as CardList } from "./cardList/CardList";
+export { default as CardList } from "./cardsList/CardsList";
 export { default as Container } from "./container/Container";
 export { default as Search } from "./Search";
 export { default as SiteLogo } from "./siteLogo/SiteLogo";

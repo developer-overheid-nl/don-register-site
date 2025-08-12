@@ -61,7 +61,7 @@ export interface CardListProps {
   className?: string;
 }
 
-const CardList = (props: PropsWithChildren<CardListProps>) => {
+const CardsList = (props: PropsWithChildren<CardListProps>) => {
   const { items, className, ...restProps } = props;
 
   return (
@@ -117,7 +117,7 @@ const CardList = (props: PropsWithChildren<CardListProps>) => {
   )
 }
 
-export default CardList;
+export default CardsList;
 
 // export default function TranslatedCardList({ url, apiKey }: { url: string, apiKey: string }) {
 //   return (
