@@ -2,7 +2,7 @@ import { type FragmentProps, type PropsWithChildren, use } from "react";
 import { fetchAPI } from "../fetch";
 // import { useStore } from '@nanostores/react';
 import { dataStore } from '../store';
-import CardList from "../cardList/CardList";
+import CardsList from "../cardsListTEMP/CardsList";
 import styles from './styles.module.css';
 
 export interface OverviewContainerProps {
@@ -27,7 +27,7 @@ export default function OverviewContainer({apiItemsKey, children}: PropsWithChil
       <div className={styles.intro}>{`<!--extra content: -->`}{children}</div>
       <div className={styles.search}>{`<!--search-->`}</div>
       <div className={styles.filters}>{`<!--filters-->`}</div>
-      <CardList className={styles.list} items={items} />
+      <CardsList className={styles.list} items={items} />
       <div className={styles.pagination}>{`<!--pagination-->`}</div>
     </div>
   )
