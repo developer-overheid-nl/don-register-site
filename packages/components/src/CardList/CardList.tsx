@@ -93,12 +93,15 @@ const CardList = (props: PropsWithChildren<CardListProps>) => {
                     description={<div className={`utrecht-html ${styles.aboveLink}`}><Markdown>{item.description}</Markdown></div>}
                   >
                     <div className="utrecht-badge-list" role="list">
+                      {/* @ts-expect-error: RHC DataBadgeButton needs update with className prop  */}
                       <DataBadgeButton className={styles.aboveLink} role="listitem">
                         <a className={styles.badgeLink} href={`https://redocly.github.io/redoc/?url=${item.oasUrl}`} target="_blank" rel="noopener">ReDoc</a>
                       </DataBadgeButton>
+                      {/* @ts-expect-error: RHC DataBadgeButton needs update with className prop  */}
                       <DataBadgeButton className={styles.aboveLink} role="listitem">
                         <a className={styles.badgeLink} href={`https://editor.swagger.io/?url=${item.oasUrl}`} target="_blank" rel="noopener">Swagger</a>
                       </DataBadgeButton>
+                      {/* @ts-expect-error: RHC DataBadgeButton needs update with className prop  */}
                       <DataBadgeButton className={styles.aboveLink} role="listitem">
                         <a className={styles.badgeLink} href={`https://elements-demo.stoplight.io/?spec=${item.oasUrl}`} target="_blank" rel="noopener">Stoplight</a>
                       </DataBadgeButton>
