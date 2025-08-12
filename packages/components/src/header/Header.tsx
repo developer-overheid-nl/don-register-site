@@ -1,7 +1,7 @@
 import styles from "./styles.module.css";
 import { I18nextProvider, useTranslation } from 'react-i18next';
 import i18n from '../i18n'; 
-import SiteLogo from "../siteLogoTEMP/SiteLogo"
+import SiteLogo from "../siteLogo/SiteLogo"
 import { Heading, Link } from '@rijkshuisstijl-community/components-react';
 import { Lint } from "../../../../proprietary";
 import { IconDeltaNaarLinksInline } from "../../../../proprietary/icons";
