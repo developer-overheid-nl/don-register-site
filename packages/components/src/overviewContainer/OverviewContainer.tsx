@@ -2,7 +2,7 @@ import { type FragmentProps, type PropsWithChildren, use } from "react";
 import { fetchAPI } from "../fetch";
 // import { useStore } from '@nanostores/react';
 import { dataStore } from '../store';
-import CardList from "../CardList";
+import CardList from "../cardList/CardList";
 import styles from './styles.module.css';
 
 export interface OverviewContainerProps {
@@ -15,11 +15,11 @@ export default function OverviewContainer({apiItemsKey, children}: PropsWithChil
   let items;
 
   if (typeof data === "object" && data !== null && !("message" in data)) {
-    console.log(data[apiItemsKey]?.length, data.message);
+    // console.log(data[apiItemsKey]?.length, data.message);
     dataStore.set(data);
     items = data[apiItemsKey];
   } else {
-    console.log("Data is not a valid record:", data);
+    console.error("Data is not a valid record:", data);
   }
 
   return (

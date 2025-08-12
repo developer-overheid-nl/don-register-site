@@ -5,7 +5,7 @@ import '@rijkshuisstijl-community/design-tokens/dist/uitvoerend-groen/root.css';
 import '@rijkshuisstijl-community/components-css/dist/index.css';
 import '../styles/override.css';
 import '../styles/helpers.css';
-import { Container, IconSprite, Header, TopNavigation } from '@developer-overheid-nl/don-register-components';
+import { Container, IconsSprite, Header, TopNavigation } from '@developer-overheid-nl/don-register-components';
 import i18next from 'i18next';
 import resources from '@developer-overheid-nl/don-register-locales/nl' with { type: "json" };
 
@@ -37,7 +37,7 @@ i18next.init({
   </head>
   <body class="utrecht-document don-document">
     <slot name="body-start" />
-    <IconSprite />
+    <IconsSprite />
     <Container>
       <Header titleSite={titleSite} titlePage={titlePage} mainSite={mainSite} urlCurrent={routePattern} />
     </Container>
