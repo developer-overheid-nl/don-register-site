@@ -23,9 +23,7 @@ jobs:
       - name: Build image
         uses: docker/build-push-action@v6
         with:
-          secrets: |
-            "api_x_api_key=${{ secrets.API_X_API_KEY }}"
-          target: caddy
+          target: runtime
           tags: |
             ${{ env.IMAGE_NAME }}:latest
             ${{ env.IMAGE_NAME }}:${{ github.sha }}

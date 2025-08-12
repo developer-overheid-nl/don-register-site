@@ -32,14 +32,17 @@ COPY --from=deps /opt/astro/apps/api-register/node_modules ./apps/api-register/n
 COPY --from=deps /opt/astro/packages/components/node_modules ./packages/components/node_modules
 COPY --from=deps /opt/astro/packages/layouts/node_modules ./packages/layouts/node_modules
 
-RUN --mount=type=secret,id=api_x_api_key,env=API_X_API_KEY pnpm --filter @developer-overheid-nl/api-register build
+RUN pnpm --filter @developer-overheid-nl/api-register build
 
-# ---- Serve production build ----
-FROM caddy:2.9.1-alpine AS caddy
+# ---- Runtime container ----
+FROM node:lts-alpine AS runtime
 
-COPY Caddyfile /etc/caddy/Caddyfile
-COPY --from=build /opt/astro/apps/api-register/dist /srv
+WORKDIR /opt/astro
+
+COPY --from=deps /opt/astro/node_modules ./node_modules
+COPY --from=build /opt/astro/apps/api-register/dist ./apps/api-register/dist
+COPY --from=deps /opt/astro/apps/api-register/node_modules ./apps/api-register/node_modules
 
 EXPOSE 4321
 
-CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+CMD ["node", "./apps/api-register/dist/server/entry.mjs", "--host", "0.0.0.0", "--port", "4321"]
