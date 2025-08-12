@@ -4,6 +4,8 @@ title: Over deze site
 layout: "../../../../packages/layouts/src/don/Content.astro"
 ---
 
-## Wat is deze?
+## Over deze site
 
 🐵ℹ️
+
+<!-- dit is een Markdown-pagina -->

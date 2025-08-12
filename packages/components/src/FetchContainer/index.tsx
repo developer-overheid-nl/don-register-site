@@ -2,7 +2,7 @@ import { use } from "react";
 import { fetchAPI } from "../fetch";
 import Markdown from 'react-markdown'
 import { useStore } from '@nanostores/react';
-import { test } from '../apiStore';
+import { test, envStore, configStore } from '../store';
 
 //const data = await fetch(`https://api.don.apps.digilab.network/api-register/v1/apis`, {
 const data = await fetch(`https://gist.githubusercontent.com/dvh/ceba3e787ddb80e53c345afdb0c74b44/raw`, {
@@ -12,9 +12,9 @@ const data = await fetch(`https://gist.githubusercontent.com/dvh/ceba3e787ddb80e
 }).then((response) => response.json());
 
 //const $test = useStore(test);
-console.log('FetchContainer data:', data, 'from store:', test.get());
+console.log('FetchContainer data:', data, 'from store:', test.get(), envStore.get(), configStore.value);
 
-export default function FetchContainer({ url, apiKey }: { url: string, apiKey: string }) {
+export default function FetchContainer() {
   // const data = use(fetchAPI(url, apiKey));
 
   return (

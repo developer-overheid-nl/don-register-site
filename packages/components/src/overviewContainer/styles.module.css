@@ -1,0 +1,31 @@
+.layout {
+  display: grid;
+  grid-template-columns: 
+    [intro-start search-start filters-start]1fr[filters-end 
+    list-start pagination-start]3fr[intro-end search-end pagination-end list-end];
+  grid-template-rows: 
+    [intro-start]auto[intro-end 
+    search-start]auto[search-end 
+    filters-start list-start]auto[filters-end list-end 
+    pagination-start]auto[pagination-end];
+}
+
+.intro {
+  grid-area: intro;
+}
+
+.search {
+  grid-area: search;
+}
+
+.filters {
+  grid-area: filters;
+}
+
+.list {
+  grid-area: list;
+}
+
+.pagination {
+  grid-area: pagination;
+}

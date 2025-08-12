@@ -3,44 +3,19 @@ import { API_URL, API_ENDPOINT, API_VERSION } from "astro:env/client";
 import { API_X_API_KEY } from "astro:env/server";
 import appConfig from "../../app.config";
 import { DonOverview } from "@developer-overheid-nl/don-register-layouts";
-import { Alert, Card, CardList } from "@developer-overheid-nl/don-register-components";
-import FetchContainer from "../../../../packages/components/src/FetchContainer";
+import { Card, OverviewContainer } from "@developer-overheid-nl/don-register-components";
 // import { fetchAPI } from "@developer-overheid-nl/don-register-components/fetch";
 
 // const data = await fetchAPI(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`, API_X_API_KEY);
 // const fetchedDate = new Date().toISOString();
-console.log('Server side:', API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY);
 ---
 
 <DonOverview appConfig={appConfig} titlePage="Overzicht">
-  <script src="../scripts/storeconfig.js"></script>
-  <!-- <script src="../../../../packages/components/src/apiStore.ts"></script> -->
-  <!-- <script is:inline type="module" slot="head" define:vars={{ API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY }}>
-    // client side from @fs, see script above
-    import { fetchAPI } from "/@fs/C:/Projects/Geonovum/don-register-site/packages/components/src/fetch.ts";
+  <!-- <script src="../scripts/storeconfig.js"></script> -->
 
-    const dataClient = await fetchAPI(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`, API_X_API_KEY);
-    console.log('Client side: Fetched data:', dataClient);
-  </script> -->
-  <!-- <script is:inline type="module" slot="head" define:vars={{ API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY }}>
-    import { test } from "/@fs/C:/Projects/Geonovum/don-register-site/packages/components/src/apiStore.ts";
-
-    console.log(test.get());
-    test.set('Test from store (set by Astro)');
-    console.log(test.get());
-
-  </script> -->
+  <OverviewContainer apiItemsKey="apis">intro</OverviewContainer>
   <div>
-    <!-- <small>Server side (during build or SSR on {new Date(fetchedDate).toLocaleString('nl-NL')})<br />
-    Fetched data:
-    <pre>{JSON.stringify(data, null, 2)}</pre></small> -->
-
-    <!-- {data.message ?
-      <Alert type="error" textContent={data.message} />
-    : null } -->
-
-    <!-- <CardList  url={`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`} apiKey={API_X_API_KEY}><div slot="fallback">Loading</div></CardList> -->
-    <FetchContainer client:load url={`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`} apiKey={API_X_API_KEY} />
-    <Card client:load test="Test Title" />
+    i18Next test:
+    <Card client:load test="Test Title (todo: from i18next async?)" />
   </div>
 </DonOverview>

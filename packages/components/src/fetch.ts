@@ -1,11 +1,12 @@
 import { useMemo } from "react";
 
-export function fetchAPI(resource: string, key: string): Promise<Record<string, any> | { message: string }> {
-  return useMemo(() => fetch(`${resource}`, {
+export function fetchAPI(resource: string, key?: string): Promise<Record<string, any> | { message: string }> {
+  const options = key ? {
     headers: {
       'x-api-key': key,
     },
-  }).then(async (response) => {
+  } : undefined;
+  return useMemo(() => fetch(`${resource}`, options).then(async (response) => {
     if (!response.ok) {
       return {
         message: `HTTP error! Status: ${response.status} ${response.statusText}`,

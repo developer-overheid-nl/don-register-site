@@ -1,5 +1,6 @@
 :root {
   --rhc-font-family-primary: 'RijksoverheidSansWeb', Arial, Verdana, sans-serif;
+  --utrecht-paragraph-font-family: var(--rhc-font-family-primary);
   --rhc-font-size-xl-mobile: 2.5rem;
   --rhc-font-size-xl-tablet: 2.5rem;
   --rhc-font-size-xl-desktop: 2.5rem;
@@ -24,11 +25,17 @@
   --rhc-font-size-heading-level-1: 2rem;
   --utrecht-document-font-size: 1rem;
   --nl-paragraph-font-size: 1rem;
+  --utrecht-paragraph-font-size: var(--nl-paragraph-font-size);
   --utrecht-alert-icon-inset-block-start: 0;
 }
 
 .utrecht-document {
   background-color: var(--utrecht-document-background-color, #ffffff);
+}
+
+.utrecht-html p + p {
+  --utrecht-paragraph-margin-block-start: 0.5rem;
+  margin-block-start: calc(var(--utrecht-space-around, 0) * var(--utrecht-paragraph-margin-block-start, 0));
 }
 
 .utrecht-icon {

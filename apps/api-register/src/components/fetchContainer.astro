@@ -1,0 +1,39 @@
+---
+import { API_URL, API_ENDPOINT, API_VERSION } from "astro:env/client";
+import { API_X_API_KEY } from "astro:env/server";
+import appConfig from "../../app.config";
+
+const { resource } = Astro.props;
+---
+
+<fetch-container data-props={JSON.stringify({ API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY, resource })}>
+  <script>
+    class Fetchcontainer extends HTMLElement {
+      async connectedCallback() {
+        console.log(this.dataset.props)
+        const {API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY, resource} = JSON.parse(this.dataset.props);
+
+        const data = await fetch(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/${resource}`, {
+          headers: {
+            'x-api-key': API_X_API_KEY,
+          }
+        }).then((response) => response.text());
+
+        console.log(data);
+        this.dataset.data = data;
+      }
+    }
+
+    customElements.define('fetch-container', Fetchcontainer);
+  </script>
+<script>
+  // {API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY, resource} = this.dataset.props;
+  // const data = fetch(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/${resource}`, {
+  //   headers: {
+  //     'x-api-key': API_X_API_KEY,
+  //   }
+  // }).then((response) => response.json());
+
+  // console.log(data);
+</script>
+</fetch-container>
