@@ -2,10 +2,13 @@
 import appConfig from "../../app.config";
 import { DonOverview } from "@developer-overheid-nl/don-register-layouts";
 import { Card, OverviewContainer } from "@developer-overheid-nl/don-register-components";
+import { configStore } from "@developer-overheid-nl/don-register-components";
 // import { fetchAPI } from "@developer-overheid-nl/don-register-components/fetch";
 
 // const data = await fetchAPI(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`, API_X_API_KEY);
 // const fetchedDate = new Date().toISOString();
+configStore.set(appConfig);
+console.log(configStore);
 ---
 
 <DonOverview appConfig={appConfig} titlePage="Overzicht">

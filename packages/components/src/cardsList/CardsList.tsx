@@ -58,19 +58,25 @@ import { CardAsLink, DataBadgeButton, Heading, HeadingGroup, Link, Paragraph } f
 
 export interface CardListProps {
   items: Array<any>;
+  i18n?: Record<string, string | Record<string, string>>;
   className?: string;
 }
 
 const CardsList = (props: PropsWithChildren<CardListProps>) => {
-  const { items, className, ...restProps } = props;
+  const { t } = useTranslation();
+  const { items, i18n: i18nApp, className, ...restProps } = props;
+  const i18nContext = /* TODO: from props */ false ? 'filtered' : 'all';
+
+  // TODO: higher up in the layout / page or context-component
+  i18n.addResourceBundle(i18n.language, 'translation', i18nApp ? i18nApp[i18n.language] : {}, true, true)
 
   return (
     <div className={className} {...restProps}>
       <HeadingGroup className={styles.heading}>
         <Heading appearanceLevel={3} level={2}>
-          TODO:i18n Zoekresultaten
+          {t('components.search-results', {context: i18nContext})}
         </Heading>
-        <Paragraph role="status">{items.length} TODO:i18n items</Paragraph>
+        <Paragraph role="status">{t('components.search-results-amount', {context: i18nContext, amount: items.length})}</Paragraph>
       </HeadingGroup>
       {
         items && items.length > 0 && (
@@ -89,20 +95,20 @@ const CardsList = (props: PropsWithChildren<CardListProps>) => {
                       </HeadingGroup>
                     } 
                     href={`/details/${item.id}`}
-                    linkLabel={`Bekijk details`}
+                    linkLabel={t('components.view-details')}
                     description={<div className={`utrecht-html ${styles.aboveLink}`}><Markdown>{item.description}</Markdown></div>}
                   >
                     <div className="utrecht-badge-list" role="list">
                       {/* @ts-expect-error: RHC DataBadgeButton needs update with className prop  */}
-                      <DataBadgeButton className={styles.aboveLink} role="listitem">
+                      <DataBadgeButton className={styles.aboveLink} role="listitem" aria-pressed={null}>
                         <a className={styles.badgeLink} href={`https://redocly.github.io/redoc/?url=${item.oasUrl}`} target="_blank" rel="noopener">ReDoc</a>
                       </DataBadgeButton>
                       {/* @ts-expect-error: RHC DataBadgeButton needs update with className prop  */}
-                      <DataBadgeButton className={styles.aboveLink} role="listitem">
+                      <DataBadgeButton className={styles.aboveLink} role="listitem" aria-pressed={null}>
                         <a className={styles.badgeLink} href={`https://editor.swagger.io/?url=${item.oasUrl}`} target="_blank" rel="noopener">Swagger</a>
                       </DataBadgeButton>
                       {/* @ts-expect-error: RHC DataBadgeButton needs update with className prop  */}
-                      <DataBadgeButton className={styles.aboveLink} role="listitem">
+                      <DataBadgeButton className={styles.aboveLink} role="listitem" aria-pressed={null}>
                         <a className={styles.badgeLink} href={`https://elements-demo.stoplight.io/?spec=${item.oasUrl}`} target="_blank" rel="noopener">Stoplight</a>
                       </DataBadgeButton>
                     </div>
@@ -117,12 +123,12 @@ const CardsList = (props: PropsWithChildren<CardListProps>) => {
   )
 }
 
-export default CardsList;
+const TranslatedCardsList = (props: PropsWithChildren<CardListProps>) => {
+  return (
+    <I18nextProvider i18n={i18n}>
+      <CardsList {...props} />
+    </I18nextProvider>
+  );
+}
 
-// export default function TranslatedCardList({ url, apiKey }: { url: string, apiKey: string }) {
-//   return (
-//     <I18nextProvider i18n={i18n}>
-//       <CardList url={url} apiKey={apiKey} />
-//     </I18nextProvider>
-//   );
-// }
+export default TranslatedCardsList;

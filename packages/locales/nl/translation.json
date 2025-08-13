@@ -4,7 +4,14 @@
     "back-to-homepage-landmark": "Naar dit domein",
     "back-to-main-site": "Terug naar {{siteName}}",
     "back-to-main-site-landmark": "Naar hoofddomein",
-    "no-items-found": "Geen {{items}} gevonden."
+    "search-results_all": "Zoek $t(components.items, {\"count\": 99 })",
+    "search-results_filtered": "Zoekresultaten",
+    "search-results-amount_all": "{{amount}} $t(components.items, {\"count\": {{amount}} }) in onze database",
+    "search-results-amount_filtered": "{{amount}} $t(components.items, {\"count\": {{amount}} }) gevonden",
+    "view-details": "Bekijk details",
+    "items_one": "item",
+    "items_other": "items",
+    "no-items-found": "Geen $t(components.items, {\"count\": 99 }) gevonden."
   },
   "layouts": {
     "meta-description": "Welkom bij het API-Register. Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid."

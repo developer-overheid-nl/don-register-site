@@ -4,6 +4,17 @@ export default {
     name: "developer.overheid.nl",
     url: "https://developer.overheid.nl",
   },
+  items: {
+    type: 'apis',
+  },
+  i18n: {
+    nl: {
+      components: {
+        items_one: 'API',
+        items_other: 'API’s'
+      }
+    },
+  },
   topNavigation: {
     items: [
       { id: 'home', label: "Overzicht", href: "/" },
