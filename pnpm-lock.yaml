@@ -16,8 +16,8 @@ catalogs:
       specifier: ^3.0.0
       version: 3.0.0
     '@rijkshuisstijl-community/components-react':
-      specifier: ^2.0.0
-      version: 2.0.0
+      specifier: ^4.0.0
+      version: 4.0.0
     '@rijkshuisstijl-community/design-tokens':
       specifier: ^4.0.0
       version: 4.0.0
@@ -137,7 +137,7 @@ importers:
         version: 3.0.0
       '@rijkshuisstijl-community/components-react':
         specifier: 'catalog:'
-        version: 2.0.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 4.0.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
         version: 4.0.0
@@ -179,7 +179,7 @@ importers:
         version: 3.0.0
       '@rijkshuisstijl-community/components-react':
         specifier: 'catalog:'
-        version: 2.0.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 4.0.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
         version: 4.0.0
@@ -618,8 +618,8 @@ packages:
   '@nl-design-system-candidate/link-css@2.0.0':
     resolution: {integrity: sha512-56dgQRXmo1z6Boen25vZ1eOhPRDV0GG+QCB4rH7WuALE3IcQuINYMx4+xJqQm8Fu5k/De9QBV0mE1uPs9bHy1w==}
 
-  '@nl-design-system-candidate/link-react@1.1.1':
-    resolution: {integrity: sha512-l0seBlSTN1XOSPdssQXBluYMAur6wp2ZjXu7Sa+KbN94y3vpvDzHjVUibRWBINUBSIOOcoGML0mvMq50G2afig==}
+  '@nl-design-system-candidate/link-react@1.1.3':
+    resolution: {integrity: sha512-wp5mYcvrZjG64rZ6884Jdu2KHKEVB8VxTmw7Vy9gvyEt8lIE7MQ5Jnd17TM6YGc4ARd2guY6DSqXmuY3AMh9TA==}
     peerDependencies:
       '@babel/runtime': ^7
       react: ^18
@@ -633,8 +633,8 @@ packages:
   '@nl-design-system-candidate/skip-link-css@1.0.2':
     resolution: {integrity: sha512-+dWUOsnADH6dZSwffFAoKo5cjxvZT3vgIQcAqmtiU2cV1H+MAwGTK6nSocnSpO86tfwx1LVfU+63jhEzA674Kw==}
 
-  '@nl-design-system-candidate/skip-link-react@1.1.1':
-    resolution: {integrity: sha512-cDfqXIAWtLT5YHjk2mraiHYj+CpaooztqFwTYNzHef7lAo0TK31O9X4QWMkhcqeNrv0ICVIggFrCEXqa2StT2Q==}
+  '@nl-design-system-candidate/skip-link-react@1.1.3':
+    resolution: {integrity: sha512-PXBHYoCuw9x6HkgpIVjcE4axbeHiOR3W6chfxZ57yJQihPQJHlgee3oXXZH0UCB55L2Udyunf+Hzlv2rMKnn8Q==}
     peerDependencies:
       '@babel/runtime': ^7
       react: ^18
@@ -645,8 +645,8 @@ packages:
   '@rijkshuisstijl-community/components-css@3.0.0':
     resolution: {integrity: sha512-qWdDMORuNNh2QOld3H1gL5xIZDzX48ZcJQc37nGhTvpxnZ6BbNjRRyi7t5z4KFZx1dVe/rCneS1LlCLUecp30A==}
 
-  '@rijkshuisstijl-community/components-react@2.0.0':
-    resolution: {integrity: sha512-NeeFS54mbZPEbaIn6tkTgUbwOPUw7WuaL7GKzDmRBfoz/ikRMcN2u24iHqAha4rGihCtrhxnNA9TzfbsXh99nQ==}
+  '@rijkshuisstijl-community/components-react@4.0.0':
+    resolution: {integrity: sha512-Herxs+FT4uUDg5255xqZBR7fn4gkmR+T1jwfnMTZjTAwrQQ+AdWkG0XWUH4yxfT1gTuN+n6R1xukvR8Z3Ef4og==}
     peerDependencies:
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
@@ -2725,7 +2725,7 @@ snapshots:
 
   '@nl-design-system-candidate/link-css@2.0.0': {}
 
-  '@nl-design-system-candidate/link-react@1.1.1(@babel/runtime@7.27.6)(react@19.1.0)':
+  '@nl-design-system-candidate/link-react@1.1.3(@babel/runtime@7.27.6)(react@19.1.0)':
     dependencies:
       '@babel/runtime': 7.27.6
       clsx: 2.1.1
@@ -2737,7 +2737,7 @@ snapshots:
 
   '@nl-design-system-candidate/skip-link-css@1.0.2': {}
 
-  '@nl-design-system-candidate/skip-link-react@1.1.1(@babel/runtime@7.27.6)(react@19.1.0)':
+  '@nl-design-system-candidate/skip-link-react@1.1.3(@babel/runtime@7.27.6)(react@19.1.0)':
     dependencies:
       '@babel/runtime': 7.27.6
       clsx: 2.1.1
@@ -2754,10 +2754,10 @@ snapshots:
       '@nl-design-system-candidate/skip-link-css': 1.0.2
       '@utrecht/component-library-css': 7.2.1
 
-  '@rijkshuisstijl-community/components-react@2.0.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@rijkshuisstijl-community/components-react@4.0.0(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@nl-design-system-candidate/link-react': 1.1.1(@babel/runtime@7.27.6)(react@19.1.0)
-      '@nl-design-system-candidate/skip-link-react': 1.1.1(@babel/runtime@7.27.6)(react@19.1.0)
+      '@nl-design-system-candidate/link-react': 1.1.3(@babel/runtime@7.27.6)(react@19.1.0)
+      '@nl-design-system-candidate/skip-link-react': 1.1.3(@babel/runtime@7.27.6)(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
     transitivePeerDependencies:
