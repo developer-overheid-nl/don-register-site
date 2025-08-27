@@ -3,7 +3,7 @@ packages:
   - 'apps/*'
 
 catalog:
-  astro: ^5.12.1
+  astro: ^5.13.4
   '@astrojs/react': ^4.3.0
   i18next: ^25.3.2
   nanostores: ^1.0.1
