@@ -5,7 +5,7 @@ packages:
 catalog:
   astro: ^5.12.1
   '@astrojs/react': ^4.3.0
-  i18next: ^25.3.2
+  i18next: ^25.4.2
   nanostores: ^1.0.1
   '@nanostores/react': ^1.0.0
   react: ^19.1.0
