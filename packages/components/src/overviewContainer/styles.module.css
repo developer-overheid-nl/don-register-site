@@ -8,6 +8,7 @@
     search-start]auto[search-end 
     filters-start list-start]auto[filters-end list-end 
     pagination-start]auto[pagination-end];
+  gap: 1rem;
 }
 
 .intro {
@@ -24,8 +25,10 @@
 
 .list {
   grid-area: list;
+  --utrecht-space-around: 1;
 }
 
 .pagination {
   grid-area: pagination;
+  --utrecht-space-around: 1;
 }

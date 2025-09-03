@@ -1,0 +1,62 @@
+---
+import { Article,Container } from '@developer-overheid-nl/don-register-components';
+import Base from './Base.astro';
+// import styles from '../styles/detail.module.css';
+
+const { appConfig, titlePage } = Astro.props;
+---
+
+<Base titlePage={titlePage} appConfig={appConfig}>
+  <slot name="head" slot="head" />
+  <slot name="body-start" slot="body-start" />
+  <Container>
+    <div class="detail-content">
+      <div class="header">
+        <slot name="header" />
+      </div>
+      <Article className="description">
+        <slot name="description" />
+      </Article>
+      <aside class="aside">
+        <slot name="aside" />
+      </aside>
+      <aside class="meta">
+        <slot name="meta" />
+      </aside>
+      <slot />
+    </div>
+  </Container>
+  <slot name="body-end" slot="body-end" />
+</Base>
+
+<style>
+  .detail-content {
+    display: grid;
+    grid-template-columns: 
+      [header-start description-start meta-start]3fr[description-end meta-end
+      aside-start]1fr[header-end aside-start];
+    grid-template-rows: 
+      [header-start]auto[header-end 
+      description-start aside-start]auto[description-end aside-end
+      meta-start]auto[meta-end];
+    gap: 1rem;
+  }
+
+  .header {
+    grid-area: header;
+  }
+
+  .description {
+    grid-area: description;
+  }
+
+  .meta {
+    grid-area: meta;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .aside {
+    grid-area: aside;
+  }
+</style>

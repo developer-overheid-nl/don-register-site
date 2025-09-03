@@ -1,0 +1,30 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--rhc-space-200);
+}
+
+.active {
+  font-weight: bold;
+}
+
+.icon {
+  flex-shrink: 0;
+  transition: transform 0.2s ease-in-out;
+}
+
+:global(.utrecht-link-list__link:hover) .icon:not(.active) {
+  transform: translateX(0.125rem);
+}
+
+.icon.active {
+  transform: scale(1.5);
+}
+
+/* TODO: custom BadgeButton */
+.badgeLink {
+  color: inherit;
+  text-decoration: inherit;
+  display: inline-block;
+  padding-block: 0.25rem;
+}

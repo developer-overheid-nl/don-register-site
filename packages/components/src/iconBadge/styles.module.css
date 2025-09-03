@@ -1,0 +1,19 @@
+:global(.utrecht-data-badge--active) {
+  --utrecht-data-badge-background-color: var(--rhc-color-groen-100);
+  --utrecht-data-badge-color: var(--rhc-color-groen-500);
+}
+
+:global(.utrecht-data-badge--deprecated) {
+  --utrecht-data-badge-background-color: var(--rhc-color-donkergeel-100);
+  --utrecht-data-badge-color: var(--rhc-color-donkergeel-500);
+}
+
+:global(.utrecht-data-badge--sunset) {
+  --utrecht-data-badge-background-color: var(--rhc-color-oranje-100);
+  --utrecht-data-badge-color: var(--rhc-color-oranje-500);
+}
+
+:global(.utrecht-data-badge--retired) {
+  --utrecht-data-badge-background-color: var(--rhc-color-cool-grey-300);
+  --utrecht-data-badge-color: var(--rhc-color-cool-grey-900);
+}

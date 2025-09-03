@@ -33,8 +33,11 @@
     "@rijkshuisstijl-community/components-css": "catalog:",
     "@rijkshuisstijl-community/components-react": "catalog:",
     "@rijkshuisstijl-community/design-tokens": "catalog:",
+    "@types/parse-link-header": "^2.0.3",
+    "clsx": "catalog:",
     "i18next": "catalog:",
     "nanostores": "catalog:",
+    "parse-link-header": "^2.0.0",
     "react-i18next": "^15.6.1",
     "react-markdown": "catalog:",
     "typescript": "^5.8.3"

@@ -1,0 +1,26 @@
+.block {
+  padding: 1rem;
+  border-radius: var(--rhc-card-as-link-border-radius);
+
+  &.flex-row, &.flex-col {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &.flex-col {
+    flex-direction: column;
+  }
+
+  &.clear {
+    background-color: transparent;
+  }
+
+  &.filled {
+    background-color: var(--rhc-card-as-link-hover-background-color);
+  }
+
+  &.outlined {
+    border: 1px solid var(--rhc-card-as-link-border-color);
+  }
+}

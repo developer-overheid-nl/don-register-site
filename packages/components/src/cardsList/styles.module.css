@@ -1,7 +1,5 @@
 .cardsList {
   --rhc-card-as-link-inline-size: 100%;
-  --utrecht-badge-list-column-gap: 0.25rem;
-  --utrecht-badge-list-row-gap: 0.25rem;
   --rhc-card-as-link-active-text-decoration: none;
   list-style-type: none;
   padding-inline-start: 0;
@@ -20,12 +18,49 @@
   }
 }
 
+:global(.rhc-card-as-link__metadata) {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+/* :global(.nl-link.nl-link:any-link:hover) { */
+  /* --nl-link-hover-text-decoration-line: double; */
+  /* text-decoration-style: double; */
+  /* display: inline-block; */
+/* } */
+
 .aboveLink {
   position: relative;
   z-index: 1;
 }
 
+.orgLink:global(.nl-link:any-link) {
+  color: var(--nl-heading-level-4-color);
+  background-color: var(--rhc-color-cool-grey-200);
+  padding-block: 0.25rem;
+  padding-inline: 0.5rem;
+  border-radius: var(--utrecht-data-badge-border-radius, .5ch);
+  text-decoration: none;
+  text-decoration-line: none;
+
+  &:hover {
+    color: var(--rhc-color-cool-grey-50);
+    background-color: var(--rhc-color-cool-grey-600);
+  }
+}
+
 .badgeLink {
   color: inherit;
   text-decoration: inherit;
+  display: inline-block;
+  padding-block: 0.25rem;
+}
+
+.metadata {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
 }

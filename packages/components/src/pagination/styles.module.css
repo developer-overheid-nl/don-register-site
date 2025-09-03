@@ -1,0 +1,9 @@
+.pagination {
+  text-align: center;
+}
+
+:global(.utrecht-pagination__page-link.utrecht-pagination__page-link--current:hover) {
+  background-color: var(--utrecht-pagination-page-link-current-background-color);
+  border-color: var(--utrecht-pagination-page-link-current-border-color);
+  color: var(--utrecht-pagination-page-link-current-color);
+}

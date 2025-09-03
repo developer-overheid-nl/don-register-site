@@ -5,6 +5,7 @@ packages:
 catalog:
   astro: ^5.12.1
   '@astrojs/react': ^4.3.0
+  clsx: ^2.1.1
   i18next: ^25.3.2
   nanostores: ^1.0.1
   '@nanostores/react': ^1.0.0
@@ -12,7 +13,7 @@ catalog:
   react-dom: ^19.1.0
   react-markdown: ^10.1.0
   '@rijkshuisstijl-community/components-css': ^3.0.0
-  '@rijkshuisstijl-community/components-react': ^2.0.0
+  '@rijkshuisstijl-community/components-react': ^4.0.0
   '@rijkshuisstijl-community/design-tokens': ^4.0.0
   '@types/react': ^19.1.8
   '@types/react-dom': ^19.1.6

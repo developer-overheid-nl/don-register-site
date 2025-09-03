@@ -1,0 +1,50 @@
+---
+import appConfig from "../../../../app.config";
+import { DonOverview } from "@developer-overheid-nl/don-register-layouts";
+import { Card, OverviewContainer } from "@developer-overheid-nl/don-register-components";
+import { configStore } from "@developer-overheid-nl/don-register-components";
+// import { fetchAPI } from "@developer-overheid-nl/don-register-components/fetch";
+
+// const data = await fetchAPI(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`, API_X_API_KEY);
+// const fetchedDate = new Date().toISOString();
+configStore.set(appConfig);
+// console.log(configStore);
+
+const { page = 1 } = Astro.params;
+// let { pathname } = Astro.url;
+
+// const regex = /\/\d+$/g; // get pagenumber
+// pathname = pathname.replace(regex, '');
+
+const getRouting = (url: Astro['url'], originPathname: Astro['originPathname'], routePattern: Astro['routePattern'], params: Astro['params']) => {
+  const patternItems = routePattern.split('/');
+  const pathItems = url.pathname.split('/');
+
+  const parentPath = pathItems.filter(item => patternItems.includes(item)).join('/');
+
+  return {
+    url,
+    pattern: {
+      routePattern,
+      patternItems,
+      params,
+    },
+    path: {
+      pathname: url.pathname,
+      pathItems,
+      parentPath,
+      originPathname,
+      rewrite: originPathname.replace(/\/$/, '') !== url.pathname,
+    },
+    query: Object.fromEntries(url.searchParams),
+  };
+}
+
+const routingObj = getRouting(Astro.url, Astro.originPathname, Astro.routePattern, Astro.params);
+
+ console.log(routingObj);
+---
+
+<DonOverview appConfig={appConfig} titlePage="Overzicht">
+  <OverviewContainer apiItemsKey="apis" page={page} routing={routingObj}>Overzicht van open API's van Nederlandse overheidsorganisaties.</OverviewContainer>
+</DonOverview>
