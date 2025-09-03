@@ -186,6 +186,9 @@ importers:
 
   packages/layouts:
     dependencies:
+      '@developer-overheid-nl/don-register-components':
+        specifier: workspace:*
+        version: link:../components
       '@developer-overheid-nl/don-register-locales':
         specifier: workspace:*
         version: link:../locales
