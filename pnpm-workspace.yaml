@@ -6,7 +6,7 @@ catalog:
   astro: ^5.12.1
   '@astrojs/react': ^4.3.0
   clsx: ^2.1.1
-  i18next: ^25.3.2
+  i18next: ^25.5.0
   nanostores: ^1.0.1
   '@nanostores/react': ^1.0.0
   react: ^19.1.0
