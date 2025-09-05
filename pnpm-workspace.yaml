@@ -12,7 +12,7 @@ catalog:
   react: ^19.1.0
   react-dom: ^19.1.0
   react-markdown: ^10.1.0
-  '@rijkshuisstijl-community/components-css': ^3.0.0
+  '@rijkshuisstijl-community/components-css': ^6.0.0
   '@rijkshuisstijl-community/components-react': ^4.0.0
   '@rijkshuisstijl-community/design-tokens': ^4.0.0
   '@types/react': ^19.1.8
