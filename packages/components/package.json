@@ -41,7 +41,7 @@
     "i18next": "catalog:",
     "nanostores": "catalog:",
     "parse-link-header": "^2.0.0",
-    "react-i18next": "^15.6.1",
+    "react-i18next": "^15.7.3",
     "react-markdown": "catalog:",
     "typescript": "^5.8.3"
   },
