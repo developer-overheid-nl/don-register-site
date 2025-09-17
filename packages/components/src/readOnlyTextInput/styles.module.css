@@ -1,0 +1,5 @@
+.input {
+  --utrecht-textbox-max-inline-size: none;
+  --utrecht-pointer-target-min-size: 36px;
+  field-sizing: content;
+}

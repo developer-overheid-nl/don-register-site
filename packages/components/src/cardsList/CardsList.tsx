@@ -9,6 +9,7 @@ import { Alert, CardAsLink, DataBadgeButton, Heading, HeadingGroup as RHCHeading
 import IconBadge from "../iconBadge/IconBadge";
 import getAppearance, { getDate } from "../iconBadge/getAppearance";
 import HeadingGroup from "../headingGroup/HeadingGroup";
+import DataBadgeLink from "../dataBadgeLink/DataBadgeLink";
 //import { useFetch } from "../fetchHook";
 
 // interface CardListProps {
@@ -125,18 +126,15 @@ const CardsList = (props: PropsWithChildren<CardListProps>) => {
                     description={<div className={`utrecht-html ${styles.aboveLink}`}><Markdown>{item.description}</Markdown></div>}
                     metadata={<>
                       <div className="utrecht-badge-list" role="list">
-                        {/* @ts-expect-error: RHC DataBadgeButton needs update with className prop  */}
-                        <DataBadgeButton className={styles.aboveLink} role="listitem" aria-pressed={null}>
-                          <a className={styles.badgeLink} href={`https://redocly.github.io/redoc/?url=${item.oasUrl}`} target="_blank" rel="noopener">ReDoc</a>
-                        </DataBadgeButton>
-                        {/* @ts-expect-error: RHC DataBadgeButton needs update with className prop  */}
-                        <DataBadgeButton className={styles.aboveLink} role="listitem" aria-pressed={null}>
-                          <a className={styles.badgeLink} href={`https://editor.swagger.io/?url=${item.oasUrl}`} target="_blank" rel="noopener">Swagger</a>
-                        </DataBadgeButton>
-                        {/* @ts-expect-error: RHC DataBadgeButton needs update with className prop  */}
-                        <DataBadgeButton className={styles.aboveLink} role="listitem" aria-pressed={null}>
-                          <a className={styles.badgeLink} href={`https://elements-demo.stoplight.io/?spec=${item.oasUrl}`} target="_blank" rel="noopener">Stoplight</a>
-                        </DataBadgeButton>
+                        <DataBadgeLink className={styles.aboveLink} role="listitem" aria-pressed={null} href={`https://redocly.github.io/redoc/?url=${item.oasUrl}`} target="_blank" rel="noopener">
+                          ReDoc
+                        </DataBadgeLink>
+                        <DataBadgeLink className={styles.aboveLink} role="listitem" aria-pressed={null} href={`https://editor.swagger.io/?url=${item.oasUrl}`} target="_blank" rel="noopener">
+                          Swagger
+                        </DataBadgeLink>
+                        <DataBadgeLink className={styles.aboveLink} role="listitem" aria-pressed={null} href={`https://elements-demo.stoplight.io/?spec=${item.oasUrl}`} target="_blank" rel="noopener">
+                          Stoplight
+                        </DataBadgeLink>
                       </div>
                       <div className={styles.metadata}>
                         <IconBadge 

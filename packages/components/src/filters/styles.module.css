@@ -20,11 +20,3 @@
 .icon.active {
   transform: scale(1.5);
 }
-
-/* TODO: custom BadgeButton */
-.badgeLink {
-  color: inherit;
-  text-decoration: inherit;
-  display: inline-block;
-  padding-block: 0.25rem;
-}

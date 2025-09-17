@@ -1,0 +1,13 @@
+.button {
+  --utrecht-button-padding-block-end: 0.125rem;
+  --utrecht-button-padding-block-start: 0.125rem;
+  --utrecht-button-padding-inline-end: 0.125rem;
+  --utrecht-button-padding-inline-start: 0.125rem;
+  --utrecht-button-min-block-size: 36px;
+  --utrecht-button-min-inline-size: 36px;
+}
+
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}

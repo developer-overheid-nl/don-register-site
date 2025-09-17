@@ -14,7 +14,7 @@
     "start": "node apps/api-register/dist/server/entry.mjs --host 0.0.0.0 --port 4321",
     "dev": "pnpm --filter @developer-overheid-nl/api-register dev",
     "build": "pnpm --filter @developer-overheid-nl/api-register build",
-    "preview": "astro --filter @developer-overheid-nl/api-register preview",
+    "preview": "pnpm --filter @developer-overheid-nl/api-register preview",
     "astro": "astro"
   },
   "dependencies": {
@@ -32,5 +32,8 @@
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-markdown": "catalog:"
+  },
+  "devDependencies": {
+    "vite": "catalog:"
   }
 }

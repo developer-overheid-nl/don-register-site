@@ -1,12 +1,15 @@
 ---
 export const prerender = false; // Not needed in 'server' mode
-import { fetchAPI, getAppearance, getDate, HeadingGroup, IconBadge, Link, Article, Paragraph, DataSummary, DataSummaryItem, ScoreBadge, Block, Heading } from "@developer-overheid-nl/don-register-components";
+import { fetchAPI, getAppearance, getDate, HeadingGroup, IconBadge, Link, Markdown, Paragraph, DataSummary, DataSummaryItem, ScoreBadge, Block, Heading, CopyButton, DataBadgeLink, AlignBox, ReadOnlyTextInput } from "@developer-overheid-nl/don-register-components";
 import appConfig from "../../../app.config";
-import { DonDetail } from "@developer-overheid-nl/don-register-layouts";
+import { DonBasic, DonDetail } from "@developer-overheid-nl/don-register-layouts";
 import { t } from "i18next";
+import i18n from "@developer-overheid-nl/don-register-components/i18n";
+import { Toggletip } from "@rijkshuisstijl-community/components-react";
 
 const { id } = Astro.params;
 
+// TODO: interface from api-schema
 interface apiDetailResponse {
     id: string;
     title: string;
@@ -30,66 +33,106 @@ interface apiDetailResponse {
         retired?: string;
     };
     adrScore: number;
+    oasUrl: string;
     servers: {
-        [key: string]: {
-            url: string;
-            description: string;
-        };
-    };
+        url: string;
+        description: string;
+    }[];
 }
 
 const {data, headers} = await fetchAPI<apiDetailResponse>(`https://api.don.apps.digilab.network/api-register/v1/apis/${id}`, '153ede87-7c4c-4f22-99b2-d718423dd18d');
 console.log({data, headers});
 
-const details = data.hasOwnProperty('message') ? null : data as apiDetailResponse;
----
+const { i18n: i18nApp } = appConfig;
+i18n.addResourceBundle(i18n.language, 'translation', i18nApp ? i18nApp[i18n.language] : {}, true, true)
 
-<DonDetail appConfig={appConfig} titlePage={`Details van API: ${details?.title}`}>
-      <HeadingGroup 
+const details = data.hasOwnProperty('message') ? null : data as apiDetailResponse;
+console.log({details});
+
+---
+{details && (
+  <DonDetail appConfig={appConfig} titlePage={t(`pages.details-of-item`, {title: details?.title})}>
+      <HeadingGroup
         slot="header"
-        title={`Details van API: ${details?.title}`} 
+        title={t(`pages.details-of-item`, {title: details?.title})}
         level={2} 
         appearanceLevel={3} 
       >
-        <Paragraph itemScope={true} itemType="https://schema.org/Organization" itemID={details?.organisation.uri} className={`styles.aboveLink styles.publisher`}>
-            <span itemprop="name"><Link className={`styles.orgLink`} href={new URL(`./?organisation=${details?.organisation.uri}`, Astro.url).toString()}>
-                {details?.organisation.label}
+        <Paragraph itemScope={true} itemType="https://schema.org/Organization" itemID={details?.organisation?.uri} className={`styles.aboveLink styles.publisher`}>
+            <span itemprop="name"><Link className={`styles.orgLink`} href={new URL(`./?organisation=${details?.organisation?.uri}`, Astro.url).toString()}>
+                {details?.organisation?.label}
             </Link></span>
         </Paragraph>
       </HeadingGroup>
       <Fragment slot="description">
-        <Paragraph>
-          {details?.description}
-        </Paragraph>
+        <Markdown text={details?.description} />
       </Fragment>
       <Fragment slot="aside">
         <DataSummary appearance="row">
-          <DataSummaryItem itemKey="Organisatie" itemValue={details?.organisation.label || '-'} />
-          <DataSummaryItem itemKey="Contactpersoon" itemValue={details?.contact.name || '-'} />
-          <DataSummaryItem itemKey="Email" itemValue={details?.contact.email || '-'} />
+          <DataSummaryItem itemKey="Organisatie" itemValue={details?.organisation?.label || '-'} />
+          <DataSummaryItem itemKey="Contactpersoon" itemValue={details?.contact?.name || '-'} />
+          <DataSummaryItem itemKey="Email" itemValue={details?.contact?.email || '-'} />
         </DataSummary>
       </Fragment>
       <Fragment slot="meta">
         <Block layout="flex-row">
-          <div><span>Versie: </span>{details?.lifecycle.version || '-'}</div>
-          <div><span>ADR Score: </span><ScoreBadge name={`ADR`} score={details?.adrScore} max={7} /></div>
-          <div>
-            <IconBadge 
-              name={details?.lifecycle.status || 'unknown'} 
-              appearance={getAppearance(details?.lifecycle || {status: 'active'})} 
+          <div>{t(`components.version`, {version: details?.lifecycle?.version || '-'})}</div>
+          <AlignBox gap="small">
+            <span>{t(`components.adr-score`)}:</span>
+            <ScoreBadge name={`ADR`} score={details?.adrScore} max={100} inPercentage />
+            <Toggletip>Dit is de ADR score van de API</Toggletip>
+          </AlignBox>
+          <AlignBox gap="small">
+            <IconBadge
+              name={details?.lifecycle?.status || 'unknown'}
+              appearance={getAppearance(details?.lifecycle || {status: 'active'})}
             />
-            {t(`components.status-${details?.lifecycle.status}`, {context: getAppearance(details?.lifecycle), date: getDate(details?.lifecycle)})}
-          </div>
+            {t(`components.status-${details?.lifecycle?.status}`, {context: getAppearance(details?.lifecycle), date: getDate(details?.lifecycle)})}
+          </AlignBox>
         </Block>
-        <Heading level={3} appearanceLevel={4}>Servers</Heading>
+        <Heading level={3} appearanceLevel={4}>{t(`pages.servers`)}</Heading>
         <Block appearance="outlined">
-          <DataSummary appearance="row">
-            {details?.servers.map((server) => (
+          <DataSummary appearance="column" contained={true}>
+            {details?.servers?.map((server) => (
               <DataSummaryItem itemKey={server.description} itemValue={server.url} />
             ))}
           </DataSummary>
         </Block>
+        <Heading level={3} appearanceLevel={4}>{t(`pages.documentation`)}</Heading>
+        <Block appearance="outlined" layout="flex-col">
+          <AlignBox align="space-between" gap="small">
+            <label for="oasUrl" class="no-shrink">Open Api Specificatie</label>
+            <ReadOnlyTextInput
+              id="oasUrl"
+              type="url"
+              aria-label="Open Api Specificatie (OAS) URL"
+              defaultValue={details?.oasUrl}
+              name="oasUrl"
+            />
+            <CopyButton client:load text={details?.oasUrl} />
+          </AlignBox>
+          <div class="utrecht-badge-list" role="list">
+            <span>{t(`components.open-in`)}</span>
+            <DataBadgeLink className={`styles.aboveLink`} href={`https://redocly.github.io/redoc/?url=${details?.oasUrl}`} target="_blank" rel="noopener" role="listitem">
+              ReDoc
+            </DataBadgeLink>
+            <DataBadgeLink className={`styles.aboveLink`} href={`https://editor.swagger.io/?url=${details?.oasUrl}`} target="_blank" rel="noopener" role="listitem">
+              Swagger
+            </DataBadgeLink>
+            <DataBadgeLink className={`styles.aboveLink`} role="listitem" href={`https://elements-demo.stoplight.io/?spec=${details?.oasUrl}`} target="_blank" rel="noopener">
+              Stoplight
+            </DataBadgeLink>
+          </div>
+        </Block>
       </Fragment>
-    <!-- <>🐒 met ID: {id}</>
-    <pre style={{fontSize: 'x-small', whiteSpace: 'pre-wrap'}}>{JSON.stringify(data)}</pre> -->
-</DonDetail>
+    <!-- <pre style={{fontSize: 'x-small', whiteSpace: 'pre-wrap'}}>{JSON.stringify(data.lintResults)}</pre> -->
+</DonDetail>)
+}
+
+<!-- TODO: Add translation for API not found message -->
+{data.hasOwnProperty('message') && (
+  <DonBasic appConfig={appConfig} titlePage="API niet gevonden">
+    <Paragraph>De opgevraagde API met ID "{id}" is niet gevonden in de API-register.</Paragraph>
+    <Paragraph>Controleer of het ID correct is en probeer het opnieuw. Als het probleem zich blijft voordoen, neem dan contact op met de beheerder van het register.</Paragraph>
+  </DonBasic>
+)}

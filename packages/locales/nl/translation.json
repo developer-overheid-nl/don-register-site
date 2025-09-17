@@ -6,7 +6,7 @@
     "back-to-main-site-landmark": "Naar hoofddomein",
     "current-filter": "Huidige filter:",
     "remove-filter": " - Klik om filter te verwijderen",
-    "filter-by-organisation": "Filter op organisatie",
+    "filter-by": "Filter op {{type}}",
     "search-results_all": "Zoek $t(components.items, {\"count\": 99 })",
     "search-results_filtered": "Zoekresultaten",
     "search-results-amount_all": "{{amount}} $t(components.items, {\"count\": {{amount}} }) in onze database",
@@ -31,9 +31,17 @@
     "results-range_zero": "Geen resultaat",
     "results-range_one": "Resultaat {{range.0}}",
     "results-range_other": "Resultaten {{range.0}} tot en met {{range.1}}",
-    "page-and-results-range": "Pagina {{label}}: $t(components.results-range)"
+    "page-and-results-range": "Pagina {{label}}: $t(components.results-range)",
+    "adr-score": "ADR Score",
+    "open-in": "Open in",
+    "copy-to-clipboard": "Kopieer naar klembord"
   },
   "layouts": {
     "meta-description": "Welkom bij het API-Register. Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid."
+  },
+  "pages": {
+    "details-of-item": "Details van $t(components.items, {\"count\": 1 }): {{title}}",
+    "documentation": "Documentatie",
+    "servers": "Servers"
   }
 }

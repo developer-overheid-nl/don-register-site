@@ -1,5 +1,12 @@
 // @ts-check
 import { defineConfig, envField } from "astro/config";
+import { loadEnv } from "vite";
+
+// Settings for parse-link-header, see .env file
+const { 
+  PARSE_LINK_HEADER_MAXLEN, 
+  PARSE_LINK_HEADER_THROW_ON_MAXLEN_EXCEEDED 
+} = loadEnv(import.meta.env.MODE, process.cwd(), '');
 
 import react from "@astrojs/react";
 import node from "@astrojs/node";
@@ -17,12 +24,13 @@ export default defineConfig({
   },
   integrations: [react()],
   vite: {
+    // Settings for parse-link-header, see .env file
+    define: {
+      'process.env.PARSE_LINK_HEADER_MAXLEN': JSON.stringify(PARSE_LINK_HEADER_MAXLEN),
+      'process.env.PARSE_LINK_HEADER_THROW_ON_MAXLEN_EXCEEDED': JSON.stringify(PARSE_LINK_HEADER_THROW_ON_MAXLEN_EXCEEDED),
+    },
     ssr: {
       noExternal: ["@astrojs/react"],
-      // external: ['@developer-overheid-nl/don-register-components/fetch'],
-    },
-    optimizeDeps: {
-      include: ["@developer-overheid-nl/don-register-components/fetch"],
     },
   },
   env: {

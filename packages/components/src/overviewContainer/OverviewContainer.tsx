@@ -31,7 +31,7 @@ export interface OverviewContainerProps {
 //   return matches && {page: Number(matches[1]), perPage: Number(matches[2])};
 // }
 
-const getPagination = (pagination: paginationHeaders | null | undefined, path: string): PaginationProps => {
+const getPagination = (pagination: paginationHeaders | null | undefined, url: URL): PaginationProps => {
   // const {self, next, prev} = links;
 
   // const selfParts = getUrlParts(self.href);
@@ -52,15 +52,15 @@ const getPagination = (pagination: paginationHeaders | null | undefined, path: s
   // console.log(pagination)
 
   // TODO: make them self from links header
-  const prev = pagination.prev !== undefined && `${path}/${pagination.prev.page}`;
-  const next = pagination.next !== undefined && `${path}/${pagination.next.page}`;
+  const prev = pagination.prev !== undefined && new URL(`./${pagination.prev.page}${decodeURIComponent(url.search)}`, url).toString();
+  const next = pagination.next !== undefined && new URL(`./${pagination.next.page}${decodeURIComponent(url.search)}`, url).toString();
 
   const rangeBegin = (pagination.currentPage -1) * pagination.perPage + 1;
   const rangeEnd = pagination.currentPage * pagination.perPage;
 
   return {
     links: [{
-      href: `${path}/${pagination.currentPage}`, 
+      href: new URL(`./${pagination.currentPage}${decodeURIComponent(url.search)}`, url).toString(), 
       label: pagination.currentPage || 0, 
       range: [rangeBegin, rangeEnd > pagination.totalCount ? pagination.totalCount : rangeEnd],
     }], 
@@ -77,7 +77,7 @@ export default function OverviewContainer({apiItemsKey, page, routing, children}
   }
   //const data = use(fetchAPI(`https://gist.githubusercontent.com/dvh/ceba3e787ddb80e53c345afdb0c74b44/raw`));
   // const { data, headers } = use(fetchAPI(`http://localhost:1337/v1/apis?page=${page}`));
-  const { data, headers } = use(fetchHook(`https://api.don.apps.digilab.network/api-register/v1/apis?${new URLSearchParams(apiFilters).toString()}`, '153ede87-7c4c-4f22-99b2-d718423dd18d'));
+  const { data, headers } = use(fetchHook(`https://api.don.apps.digilab.network/api-register/v1/apis?${new URLSearchParams(apiFilters).toString()}&perPage=4`, '153ede87-7c4c-4f22-99b2-d718423dd18d'));
   // @ts-expect-error TODO: correct type, move to other place, see CardsList
   const { i18n } = useStore(configStore);
   let items: Array<any> = [], pagination = null;
@@ -93,7 +93,7 @@ export default function OverviewContainer({apiItemsKey, page, routing, children}
     console.error("Data is not a valid record:", data);
   }
 
-  const paginationProps = getPagination(pagination, routing.path.parentPath);
+  const paginationProps = getPagination(pagination, routing.url);
   // console.log({pagination, paginationProps})
 
   return (

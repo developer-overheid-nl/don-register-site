@@ -1,9 +1,10 @@
-'use client';
+// 'use client';
 
 import { useStore } from '@nanostores/react';
 import { fetchHook } from '../fetch';
 import { use, type HTMLProps, type PropsWithChildren } from 'react';
-import { DataBadgeButton, ExpandableCheckboxGroup, Heading, LinkList, LinkListCard, LinkListLink } from "@rijkshuisstijl-community/components-react";
+import { Heading, LinkList, LinkListLink } from "@rijkshuisstijl-community/components-react";
+import DataBadgeLink from '../dataBadgeLink/DataBadgeLink';
 import Icon from '../iconsSprite/Icon';
 import styles from './styles.module.css';
 import clsx from 'clsx';
@@ -19,15 +20,16 @@ const ListLinkIcon = ({ isActive }: { isActive: boolean }) => {
   return <Icon className={clsx([styles.icon, isActive && styles.active])} name={isActive ? "active" : "delta-naar-rechts-inline"} />;
 };
 
-// const filterOrg
+// TODO: make more generic for other filter types
 
 const Filters = (props: PropsWithChildren<FiltersProps>) => {
   const { t } = useTranslation();
   const { data, headers } = use(fetchHook(`https://api.don.apps.digilab.network/api-register/v1/organisations`, '153ede87-7c4c-4f22-99b2-d718423dd18d'));
   const { className, routing } = props;
   // const $data = useStore(dataStore);
-  const organisations = data;
-  const currentOrganisation = organisations.find(org => org.uri === routing?.query?.organisation);
+  const organisations = data && !data.message ? data : [];
+  console.log(organisations)
+  const currentOrganisation = organisations && organisations.find(org => org?.uri === routing?.query?.organisation);
 
   console.log(currentOrganisation,'routing:', routing);
 
@@ -38,19 +40,20 @@ const Filters = (props: PropsWithChildren<FiltersProps>) => {
         currentOrganisation && (<div className="utrecht-badge-list" role="list">
           <Heading level={2} appearanceLevel={3}>{t('components.current-filter')}</Heading>
           {/* @ts-expect-error: RHC DataBadgeButton needs update with role prop  */}
-          <DataBadgeButton role="listitem" 
+          <DataBadgeLink role="listitem" 
             aria-pressed={null} 
             helperText={t('components.remove-filter')}
-            icon={<Icon name="kruis-inline" />}
+            icon={<Icon name="kruis-inline" />} 
+            href={new URL(`../`, routing?.url).toString()}
           >
-            <a className={styles.badgeLink} href={new URL(`../`, routing?.url).toString()}>{currentOrganisation?.label}</a>
-          </DataBadgeButton>
+            {styles.badgeLink}{currentOrganisation?.label}
+          </DataBadgeLink>
         </div>)
       }
-      <Heading level={2} appearanceLevel={3}>{t('components.filter-by-organisation')}</Heading>
+      <Heading level={2} appearanceLevel={3}>{t('components.filter-by', { type: 'organisatie' })}</Heading>
       <LinkList>
         {
-          organisations.map((organisation) => (
+          organisations && organisations.map((organisation) => (
             <LinkListLink
               className={clsx([organisation.uri === routing?.query?.organisation && styles.active])}
               key={organisation.uri}

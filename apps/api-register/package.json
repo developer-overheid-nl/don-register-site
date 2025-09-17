@@ -10,16 +10,19 @@
     "preview": "astro preview",
     "astro": "astro"
   },
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "dependencies": {
     "@astrojs/react": "catalog:",
     "astro": "catalog:",
     "i18next": "catalog:",
     "nanostores": "catalog:",
+    "@rijkshuisstijl-community/components-react": "catalog:",
     "@developer-overheid-nl/don-register-components": "workspace:*",
     "@developer-overheid-nl/don-register-layouts": "workspace:*"
   },
-  "devDependencies": {},
-  "exports": {
-    ".": "./dist/index.js"
+  "devDependencies": {
+    "vite": "catalog:"
   }
 }

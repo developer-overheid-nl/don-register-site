@@ -1,9 +1,14 @@
 ---
+// import CopyButton from "../../../../packages/components/src/copyButton/CopyButton";
+
+import Block from "../../../../packages/components/src/block/Block";
 import appConfig from "../../app.config";
-import { DonOverview } from "@developer-overheid-nl/don-register-layouts"; // TODO: PageLayout
+import { DonBasic } from "@developer-overheid-nl/don-register-layouts"; // TODO: PageLayout
 ---
 
-<DonOverview appConfig={appConfig} titlePage="API toevoegen">
+<DonBasic appConfig={appConfig} titlePage="API toevoegen">
     <h2>API toevoegen</h2>
-    <>🧑‍💻ℹ️</>
-</DonOverview>
+    <Block>
+      🧑‍💻ℹ️
+    </Block>
+</DonBasic>

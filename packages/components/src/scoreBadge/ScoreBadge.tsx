@@ -6,6 +6,7 @@ interface ScoreBadgeProps {
   max?: number;
   showScore?: boolean;
   showMax?: boolean;
+  inPercentage?: boolean;
   colors?: {
     background: string;
     gradient: string[];
@@ -17,7 +18,7 @@ export default function ScoreBadge (props : ScoreBadgeProps) {
     background: '#CBD5E1',
     gradient: ['#E17000', '#FFB612', '#F9E11E', '#F9E11E', '#39870C']
   };
-  const { className, name, score, max = 10, showScore = true, showMax = false, colors = defaultcolors, ...restProps } = props;
+  const { className, name, score, max = 10, showScore = true, showMax = false, inPercentage = false, colors = defaultcolors, ...restProps } = props;
 
   return (
     <span className={`score-badge score-badge--${score} ${className}`} {...restProps} aria-label={`TODO: Score voor ${name}: ${score || 'onbekend'}`}>
@@ -46,10 +47,10 @@ export default function ScoreBadge (props : ScoreBadgeProps) {
         {showScore && (
           <text x="16" y="16" 
             textAnchor="middle" 
-            fontSize="0.5rem" 
+            fontSize="0.45rem" 
             textLength="0.75rem" 
             lengthAdjust="spacing"
-          >{typeof score === 'number' ? `${score}${showMax ? `/${max}` : ''}` : '–'}</text>
+          >{typeof score === 'number' ? `${score}${showMax ? `/${max}` : ''}${inPercentage ? '%' : ''}` : '–'}</text>
         )}
       </svg>
     </span>

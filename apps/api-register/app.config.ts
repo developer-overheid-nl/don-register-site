@@ -1,3 +1,5 @@
+type i18nTranslations = Record<string, string | Record<string, string>>;
+
 export default {
   title: "API-register",
   mainSite: {
@@ -14,7 +16,7 @@ export default {
         items_other: 'API’s'
       }
     },
-  },
+  } as Record<string, i18nTranslations>,
   topNavigation: {
     items: [
       { id: 'home', label: "Overzicht", href: "/" },

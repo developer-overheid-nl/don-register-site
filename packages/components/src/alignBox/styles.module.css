@@ -1,0 +1,98 @@
+.alignBox {
+  display: flex;
+  /*width: 100%;*/
+
+  :global(.no-shrink) {
+    flex-shrink: 0;
+  }
+}
+
+.row {
+  flex-direction: row;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.left {
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.center,
+.middle {
+  justify-content: center;
+  align-items: center;
+}
+
+.right {
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.top {
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.bottom {
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.topLeft {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.topRight {
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.bottomLeft {
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.bottomRight {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.stretch {
+  justify-content: stretch;
+  align-items: stretch;
+}
+
+.spaceBetween {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spaceAround {
+  justify-content: space-around;
+  align-items: center;
+}
+
+.spaceEvenly {
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.gapNone {
+  gap: 0;
+}
+
+.gapSmall {
+  gap: 0.5rem;
+}
+
+.gapMedium {
+  gap: 1rem;
+}
+
+.gapLarge {
+  gap: 2rem;
+}

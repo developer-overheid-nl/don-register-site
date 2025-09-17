@@ -34,7 +34,11 @@
   --utrecht-badge-list-row-gap: 0.25rem;
   --rhc-data-badge-button-column-gap: 0.25rem;
   --rhc-data-summary-font-family: var(--rhc-font-family-primary);
-  --rhc-data-summary-font-size: 0.875rem;
+  --rhc-data-summary-font-size: 1rem;
+  --utrecht-textbox-font-family: var(--rhc-font-family-primary);
+  --utrecht-textbox-font-size: 1rem;
+  --utrecht-textbox-line-height: 1;
+  --utrecht-textbox-focus-border-width: var(--utrecht-textbox-border-width, 1px);
 
   /* not available in RHC */
 

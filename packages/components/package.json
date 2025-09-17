@@ -24,7 +24,9 @@
   },
   "exports": {
     ".": "./src/index.tsx",
-    "./fetch": "./src/fetch.ts"
+    "./fetch": "./src/fetch.ts",
+    "./client": "./src/client.ts",
+    "./i18n": "./src/i18n.ts"
   },
   "main": "./src/index.tsx",
   "dependencies": {
@@ -34,6 +36,7 @@
     "@rijkshuisstijl-community/components-react": "catalog:",
     "@rijkshuisstijl-community/design-tokens": "catalog:",
     "@types/parse-link-header": "^2.0.3",
+    "@utrecht/button-react": "^2.0.7",
     "clsx": "catalog:",
     "i18next": "catalog:",
     "nanostores": "catalog:",

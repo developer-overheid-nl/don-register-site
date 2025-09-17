@@ -5,7 +5,7 @@ import '@rijkshuisstijl-community/design-tokens/dist/uitvoerend-groen/root.css';
 import '@rijkshuisstijl-community/components-css/dist/index.css';
 import '../styles/override.css';
 import '../styles/helpers.css';
-import { Container, IconsSprite, Header, TopNavigation } from '@developer-overheid-nl/don-register-components';
+import { Container, IconsSprite, Header, TopNavigation, Footer } from '@developer-overheid-nl/don-register-components';
 import i18next from 'i18next';
 import resources from '@developer-overheid-nl/don-register-locales/nl' with { type: "json" };
 
@@ -36,13 +36,58 @@ i18next.init({
     <slot name="head" />
   </head>
   <body class="utrecht-document don-document">
-    <slot name="body-start" />
-    <IconsSprite />
+    <div class="don-document-start">
+      <slot name="body-start" />
+      <IconsSprite />
+    </div>
+    <div class="don-document-header">
     <Container>
       <Header titleSite={titleSite} titlePage={titlePage} mainSite={mainSite} urlCurrent={routePattern} />
     </Container>
     <TopNavigation items={topNavigation.items} endItems={topNavigation.endItems} />
-    <slot />
-    <slot name="body-end" />
+    </div>
+    <div class="don-document-main">
+      <slot />
+    </div>
+    <div class="don-document-footer">
+      <Footer />
+    </div>
+    <div class="don-document-end">
+      <slot name="body-end" />
+    </div>
   </body>
 </html>
+
+<style>
+  .don-document {
+    height: 100dvh;
+    display: grid;
+    grid-template-rows: [start-start] 0 [start-end 
+                        header-start] auto [header-end 
+                        main-start] 1fr [main-end 
+                        footer-start] auto [footer-end 
+                        end-start] 0 [end-end];
+    grid-template-columns: [start-start header-start main-start footer-start end-start] auto [end-end footer-end main-end header-end start-end];
+    grid-auto-rows: 0;
+  }
+
+  .don-document-start {
+    grid-area: start;
+  }
+
+  .don-document-header {
+    grid-area: header;
+  }
+
+  .don-document-main {
+    grid-area: main;
+  }
+
+  .don-document-footer {
+    grid-area: footer;
+  }
+
+  .don-document-end {
+    grid-area: end;
+  }
+</style>
