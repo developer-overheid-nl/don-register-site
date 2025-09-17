@@ -48,6 +48,9 @@ catalogs:
     react-markdown:
       specifier: ^10.1.0
       version: 10.1.0
+    vite:
+      specifier: ^7.1.5
+      version: 7.1.5
   react19:
     '@types/react':
       specifier: '>=19'
@@ -110,7 +113,7 @@ importers:
         version: 10.1.0(@types/react@19.1.8)(react@19.1.0)
     devDependencies:
       vite:
-        specifier: ^7.1.5
+        specifier: 'catalog:'
         version: 7.1.5(@types/node@24.0.8)
 
   apps/api-register:
@@ -136,6 +139,10 @@ importers:
       nanostores:
         specifier: 'catalog:'
         version: 1.0.1
+    devDependencies:
+      vite:
+        specifier: 'catalog:'
+        version: 7.1.5(@types/node@24.0.8)
 
   packages/components:
     dependencies:
