@@ -40,7 +40,7 @@
     "meta-description": "Welkom bij het API-Register. Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid."
   },
   "pages": {
-    "details-of-item": "Details van $t(components.items, {\"count\": 1 }): {{title}}",
+    "details-of-item": "Details van $t(components.items, {\"count\": 1 })",
     "documentation": "Documentatie",
     "servers": "Servers"
   }

@@ -1,6 +1,8 @@
 ---
 import '../styles/reset.css';
 import "../../../../proprietary/fonts/ro/index.css";
+// import tokens from '@rijkshuisstijl-community/design-tokens/dist/uitvoerend-groen/root.css?url';
+// import css from '@rijkshuisstijl-community/components-css/dist/index.css?url';
 import '@rijkshuisstijl-community/design-tokens/dist/uitvoerend-groen/root.css';
 import '@rijkshuisstijl-community/components-css/dist/index.css';
 import '../styles/override.css';
@@ -32,6 +34,10 @@ i18next.init({
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={ i18next.t('layouts.meta-description') } />
+    <!-- <link href={tokens} rel="preload" as="style">
+    <link href={css} rel="preload" as="style">
+    <link rel="stylesheet" href={tokens}>
+    <link rel="stylesheet" href={css}> -->
     <title>{titlePage} | {titleSite}</title>
     <slot name="head" />
   </head>

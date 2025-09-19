@@ -1,0 +1,24 @@
+---
+import type { MarkdownLayoutProps } from 'astro';
+import { DonBasic } from '@developer-overheid-nl/don-register-layouts';
+import appConfig from "../../app.config";
+
+type Props = MarkdownLayoutProps<{
+  title: string;
+}>;
+
+const { frontmatter, headings } = Astro.props;
+
+/* Get the title, markdownlint will do some checkin', but TODO: check md files before commit */
+const titlePage = frontmatter.title 
+                || headings.filter(mdHeading => mdHeading.depth == 1).shift()?.text 
+                || frontmatter.url?.replace('/', ' ').trim();
+
+console.log(frontmatter, headings);
+--- 
+
+<DonBasic appConfig={appConfig} titlePage={titlePage}>
+  <div class="markdown-content">
+    <slot />
+  </div>
+</DonBasic>

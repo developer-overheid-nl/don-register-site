@@ -22,7 +22,7 @@ export default function ScoreBadge (props : ScoreBadgeProps) {
 
   return (
     <span className={`score-badge score-badge--${score} ${className}`} {...restProps} aria-label={`TODO: Score voor ${name}: ${score || 'onbekend'}`}>
-      <svg width="4rem" height="2rem" viewBox="0 0 32 16">
+      <svg width="5rem" height="2.5rem" viewBox="0 0 32 16">
         <defs>
           <linearGradient id="gradient">
             {colors.gradient && colors.gradient.map((color, index) => (

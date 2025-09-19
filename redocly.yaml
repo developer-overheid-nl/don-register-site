@@ -1,0 +1,12 @@
+# extends:
+#   - ./apps/api-register/redocly.yaml
+#  - .apps/oss-register/redocly.yaml
+apis:
+  api-register@v1:
+    root: https://api.don.apps.digilab.network/api-register/openapi.json
+    x-openapi-ts:
+      output: ./openapi/api-register.ts
+  test@v0:
+    root: https://gist.github.com/dvh/78822d11c4cebc68ecfd561efb6ee6ed/raw
+    x-openapi-ts:
+      output: ./openapi/test.ts

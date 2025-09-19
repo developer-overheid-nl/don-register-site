@@ -1,3 +1,12 @@
+.donDataBadge {
+  --_utrecht-data-badge-color: oklch(from var(--utrecht-data-badge-color) calc(l - 0.1) c h);
+  color: var(--_utrecht-data-badge-color);
+
+  &:hover {
+    color: var(--utrecht-data-badge-color);
+  }
+}
+
 .badgeLink {
   color: inherit;
   text-decoration: inherit;

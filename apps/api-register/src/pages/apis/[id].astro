@@ -5,9 +5,10 @@ import appConfig from "../../../app.config";
 import { DonBasic, DonDetail } from "@developer-overheid-nl/don-register-layouts";
 import { t } from "i18next";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
-import { Toggletip } from "@rijkshuisstijl-community/components-react";
 
 const { id } = Astro.params;
+import { API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY } from "astro:env/server";
+const API_RESOURCE = 'apis';
 
 // TODO: interface from api-schema
 interface apiDetailResponse {
@@ -40,21 +41,21 @@ interface apiDetailResponse {
     }[];
 }
 
-const {data, headers} = await fetchAPI<apiDetailResponse>(`https://api.don.apps.digilab.network/api-register/v1/apis/${id}`, '153ede87-7c4c-4f22-99b2-d718423dd18d');
+const {data, headers} = await fetchAPI<apiDetailResponse>(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/${API_RESOURCE}/${id}`, API_X_API_KEY);
 console.log({data, headers});
 
 const { i18n: i18nApp } = appConfig;
 i18n.addResourceBundle(i18n.language, 'translation', i18nApp ? i18nApp[i18n.language] : {}, true, true)
 
 const details = data.hasOwnProperty('message') ? null : data as apiDetailResponse;
-console.log({details});
+// console.log({details});
 
 ---
 {details && (
-  <DonDetail appConfig={appConfig} titlePage={t(`pages.details-of-item`, {title: details?.title})}>
+  <DonDetail appConfig={appConfig} titlePage={details?.title}>
       <HeadingGroup
         slot="header"
-        title={t(`pages.details-of-item`, {title: details?.title})}
+        title={`${t(`pages.details-of-item`)}: ${details?.title}`}
         level={2} 
         appearanceLevel={3} 
       >
@@ -80,7 +81,6 @@ console.log({details});
           <AlignBox gap="small">
             <span>{t(`components.adr-score`)}:</span>
             <ScoreBadge name={`ADR`} score={details?.adrScore} max={100} inPercentage />
-            <Toggletip>Dit is de ADR score van de API</Toggletip>
           </AlignBox>
           <AlignBox gap="small">
             <IconBadge

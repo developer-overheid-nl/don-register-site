@@ -99,3 +99,7 @@
   /* removes extra space around the icon */
   display: block;
 }
+
+html {
+  scrollbar-color: var(--rhc-color-cool-grey-400) var(--rhc-color-cool-grey-50);
+}

@@ -23,6 +23,7 @@
     "@developer-overheid-nl/don-register-layouts": "workspace:*"
   },
   "devDependencies": {
-    "vite": "catalog:"
+    "vite": "catalog:",
+    "vite-css-modules": "catalog:"
   }
 }

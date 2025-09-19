@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig, envField } from "astro/config";
 import { loadEnv } from "vite";
+// import { patchCssModules } from 'vite-css-modules';
 
 // Settings for parse-link-header, see .env file
 const { 
@@ -29,21 +30,27 @@ export default defineConfig({
       'process.env.PARSE_LINK_HEADER_MAXLEN': JSON.stringify(PARSE_LINK_HEADER_MAXLEN),
       'process.env.PARSE_LINK_HEADER_THROW_ON_MAXLEN_EXCEEDED': JSON.stringify(PARSE_LINK_HEADER_THROW_ON_MAXLEN_EXCEEDED),
     },
+    // plugins: [
+    //   // @ts-ignore
+    //   patchCssModules({
+    //     generateSourceTypes: true
+    //   })
+    // ],
     ssr: {
       noExternal: ["@astrojs/react"],
     },
   },
   env: {
     schema: {
-      API_URL: envField.string({ context: "client", access: "public" }),
-      API_ENDPOINT: envField.string({ context: "client", access: "public" }),
+      API_URL: envField.string({ context: "server", access: "public" }),
+      API_ENDPOINT: envField.string({ context: "server", access: "public" }),
       API_X_API_KEY: envField.string({ context: "server", access: "public", optional: true }),
       API_VERSION: envField.string({
-        context: "client",
+        context: "server",
         access: "public",
         default: "v1",
       }),
     },
-    validateSecrets: false,
+    // validateSecrets: false,
   },
 });

@@ -14,6 +14,6 @@
 }
 
 :global(.utrecht-data-badge--retired) {
-  --utrecht-data-badge-background-color: var(--rhc-color-cool-grey-300);
-  --utrecht-data-badge-color: var(--rhc-color-cool-grey-900);
+  --utrecht-data-badge-background-color: var(--rhc-color-rood-100);
+  --utrecht-data-badge-color: var(--rhc-color-rood-500);
 }
