@@ -16,7 +16,8 @@
     "build": "pnpm --filter @developer-overheid-nl/api-register build",
     "preview": "pnpm --filter @developer-overheid-nl/api-register preview",
     "astro": "astro",
-    "ts:oas": "pnpx openapi-typescript"
+    "ts:oas": "pnpx openapi-typescript",
+    "ts:test": "tsc --noEmit"
   },
   "dependencies": {
     "@astrojs/node": "^9.3.3",
@@ -30,13 +31,13 @@
     "clsx": "catalog:",
     "i18next": "catalog:",
     "nanostores": "catalog:",
+    "openapi-fetch": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-markdown": "catalog:"
   },
   "devDependencies": {
     "openapi-typescript": "catalog:",
-    "vite": "catalog:",
-    "vite-css-modules": "catalog:"
+    "vite": "catalog:"
   }
 }

@@ -18,12 +18,12 @@
     "astro": "catalog:",
     "i18next": "catalog:",
     "nanostores": "catalog:",
+    "openapi-fetch": "catalog:",
     "@rijkshuisstijl-community/components-react": "catalog:",
     "@developer-overheid-nl/don-register-components": "workspace:*",
     "@developer-overheid-nl/don-register-layouts": "workspace:*"
   },
   "devDependencies": {
-    "vite": "catalog:",
-    "vite-css-modules": "catalog:"
+    "vite": "catalog:"
   }
 }

@@ -1,10 +1,11 @@
 ---
 export const prerender = false; // Not needed in 'server' mode
-import { fetchAPI, getAppearance, getDate, HeadingGroup, IconBadge, Link, Markdown, Paragraph, DataSummary, DataSummaryItem, ScoreBadge, Block, Heading, CopyButton, DataBadgeLink, AlignBox, ReadOnlyTextInput } from "@developer-overheid-nl/don-register-components";
 import appConfig from "../../../app.config";
 import { DonBasic, DonDetail } from "@developer-overheid-nl/don-register-layouts";
+import { fetchAPI, getAppearance, getDate, HeadingGroup, IconBadge, Link, Markdown, Paragraph, DataSummary, DataSummaryItem, ScoreBadge, Block, Heading, CopyButton, DataBadgeLink, AlignBox, ReadOnlyTextInput } from "@developer-overheid-nl/don-register-components";
 import { t } from "i18next";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
+import { type paths } from "../../types/unknown-schema"; // TODO: replace with actual schema
 
 const { id } = Astro.params;
 import { API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY } from "astro:env/server";

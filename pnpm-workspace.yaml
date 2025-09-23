@@ -19,7 +19,7 @@ catalog:
   '@types/react-dom': 19.1.6
   vite: 7.1.5
   openapi-typescript: 7.9.1
-#  vite-css-modules: 1.10.0
+  openapi-fetch: 0.14.0
 
 catalogs: 
   react18: 
