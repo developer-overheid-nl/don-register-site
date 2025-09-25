@@ -1,7 +1,7 @@
 ---
 import appConfig from "../../../../app.config";
 import { DonOverview } from "@developer-overheid-nl/don-register-layouts";
-import { Card, OverviewContainer } from "@developer-overheid-nl/don-register-components";
+import { Card, Link, OverviewContainer } from "@developer-overheid-nl/don-register-components";
 import { configStore } from "@developer-overheid-nl/don-register-components";
 // import { fetchAPI } from "@developer-overheid-nl/don-register-components/fetch";
 
@@ -46,5 +46,6 @@ const routingObj = getRouting(Astro.url, Astro.originPathname, Astro.routePatter
 ---
 
 <DonOverview appConfig={appConfig} titlePage="Overzicht">
-  <OverviewContainer apiItemsKey="apis" page={page} routing={routingObj}>Overzicht van open API's van Nederlandse overheidsorganisaties.</OverviewContainer>
+  <OverviewContainer apiItemsKey="apis" page={page} routing={routingObj}>Dit is het vernieuwde API-register van de Nederlandse overheid (bèta): alle API’s op één plek. Wil je je eigen API’s registreren? <Link href="/apis/toevoegen">Lees hier hoe je API’s toevoegt en aansluit op het API-register</Link>.
+Omdat dit een bètaversie is, kan de werking of inhoud nog veranderen.</OverviewContainer>
 </DonOverview>
