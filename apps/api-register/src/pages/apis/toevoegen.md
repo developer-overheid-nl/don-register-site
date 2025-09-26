@@ -21,7 +21,7 @@ Stuur een mail naar [developer.overheid@geonovum.nl](mailto:developer.overheid@g
 
 - Het register werkt volledig *OpenAPI-first*.  
 - Alleen API’s met een **OpenAPI-specificatie** in JSON of YAML kunnen worden opgenomen.
-- Als de specificatie niet publiek toegankelijk is, kan de body meegestuurd worden in het `POST`-request voor het aanmaken vna de API.
+- Als de specificatie niet publiek toegankelijk is, kan de body meegestuurd worden in het `POST`-request voor het aanmaken van de API.
 
 ### Contactinformatie
 
