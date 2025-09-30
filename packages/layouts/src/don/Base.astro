@@ -11,7 +11,7 @@ import { Container, IconsSprite, Header, TopNavigation, Footer } from '@develope
 import i18next from 'i18next';
 import resources from '@developer-overheid-nl/don-register-locales/nl' with { type: "json" };
 
-const { appConfig: {title: titleSite, mainSite, topNavigation}, titlePage } = Astro.props;
+const { appConfig: {title: titleSite, mainSite, topNavigation, footer}, titlePage } = Astro.props;
 const { routePattern } = Astro;
 
 i18next.init({
@@ -56,7 +56,7 @@ i18next.init({
       <slot />
     </div>
     <div class="don-document-footer">
-      <Footer />
+      <Footer columns={footer.columns} />
     </div>
     <div class="don-document-end">
       <slot name="body-end" />

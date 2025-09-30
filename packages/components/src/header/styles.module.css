@@ -3,6 +3,10 @@
   align-items: center;
   justify-content: space-between;
   padding-block: 0 0.5rem;
+
+  > * {
+    flex-basis: 33.3333%;
+  }
 }
 
 .lint {
