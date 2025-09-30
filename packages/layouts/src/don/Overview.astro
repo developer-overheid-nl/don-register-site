@@ -10,8 +10,63 @@ const { appConfig, titlePage } = Astro.props;
   <slot name="body-start" slot="body-start" />
   <Container>
     <div class="overview-content">
-      <slot />
+      <div class="header"><slot name="header" /></div>
+      <div class="search"><slot name="search" /></div>
+      <div class="filters">
+        <slot name="filters" />
+      </div>
+      <div class="results">
+        <slot />
+      </div>
+      <div class="pagination">
+        <slot name="pagination" />
+      </div>
     </div>
   </Container>
   <slot name="body-end" slot="body-end" />
 </Base>
+
+<style>
+  .overview-content {
+    display: grid;
+    grid-template-columns: 
+      [header-start search-start filters-start]1fr[filters-end
+      results-start pagination-start]3fr[header-end search-end results-end pagination-end];
+    grid-template-rows: 
+      [header-start]auto[header-end 
+      search-start]0[search-end 
+      filters-start results-start]auto[results-end filters-end
+      pagination-start]auto[pagination-end];
+    gap: 1rem;
+  }
+
+  .header {
+    grid-area: header;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .search {
+    grid-area: search;
+
+    &:empty {
+      display: none;
+      margin-bottom: -1rem;
+    }
+  }
+
+  .filters {
+    grid-area: filters;
+  }
+
+  .results {
+    grid-area: results;
+  }
+
+  .pagination {
+    grid-area: pagination;
+  }
+
+</style>

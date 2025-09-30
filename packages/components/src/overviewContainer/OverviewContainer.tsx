@@ -82,8 +82,9 @@ export default function OverviewContainer({apiItemsKey, page, routing, children}
   const { i18n } = useStore(configStore);
   let items: Array<any> = [], pagination = null;
 
+  // TODO: remove fetch logic
   if (data && typeof data === 'object' && Array.isArray(data)) {
-    console.log(data.length, headers);
+    console.log({'data.length': data.length, headers});
     dataStore.set(data);
     items = data;
     pagination = headers.pagination;
@@ -100,7 +101,7 @@ export default function OverviewContainer({apiItemsKey, page, routing, children}
     <div className={styles.layout}>
       <div className={styles.intro}><Paragraph>{children}</Paragraph></div>
       {/* <div className={styles.search}>{`<!--search-->`}</div> */}
-      <Filters className={styles.filters} routing={routing} />
+      {/* <Filters className={styles.filters} routing={routing} /> */}
       <CardsList className={styles.list} items={items} total={pagination?.totalCount} routing={routing} i18n={i18n} />
       <div className={styles.pagination}>
         {pagination && pagination?.currentPage <= pagination?.totalPages ? (

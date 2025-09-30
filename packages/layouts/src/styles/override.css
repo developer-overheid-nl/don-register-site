@@ -28,6 +28,8 @@
   --nl-paragraph-font-family: var(--rhc-font-family-primary);
   --nl-paragraph-font-size: 1rem;
   --utrecht-paragraph-font-size: var(--nl-paragraph-font-size);
+  --utrecht-ordered-list-font-size: var(--nl-paragraph-font-size);
+  --utrecht-unordered-list-font-size: var(--nl-paragraph-font-size);
   --utrecht-alert-icon-inset-block-start: 0;
   --utrecht-link-hover-text-decoration-thickness: 1px;
   --utrecht-badge-list-column-gap: 0.25rem;

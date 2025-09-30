@@ -24,6 +24,7 @@ interface AlignBoxProps {
   align?: Align;
   gap?: Gap;
   direction? : 'row' | 'column';
+  display?: 'block' | 'inline';
   className?: string;
   children: ReactNode;
 }
@@ -82,6 +83,7 @@ const AlignBox: React.FC<AlignBoxProps> = ({
   align = 'center',
   gap = 'none',
   direction = 'row',
+  display = 'block',
   className,
   children,
 }) => {
@@ -89,7 +91,7 @@ const AlignBox: React.FC<AlignBoxProps> = ({
   const gapClass = getGapClass(gap);
 
   return (
-    <div className={clsx(styles.alignBox, styles[direction], alignmentClass, gapClass, className ?? '')}>
+    <div className={clsx(styles.alignBox, styles[direction], styles[display], alignmentClass, gapClass, className ?? '')}>
       {children}
     </div>
   );

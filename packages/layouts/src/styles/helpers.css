@@ -48,3 +48,10 @@
   height: auto;
   outline: 2px solid #005fcc;
 }
+
+/* Additional helper classes */
+
+.moveAbove {
+  position: relative;
+  z-index: 1;
+}

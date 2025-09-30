@@ -1,10 +1,18 @@
 .alignBox {
   display: flex;
-  /*width: 100%;*/
+  inline-size: 100%;
 
   :global(.no-shrink) {
     flex-shrink: 0;
   }
+}
+
+.inline {
+  inline-size: max-content;
+}
+
+.block {
+  inline-size: 100%;
 }
 
 .row {

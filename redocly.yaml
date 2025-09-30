@@ -1,5 +1,5 @@
 apis:
-  # api-register@v1:
-  #   root: https://api.don.apps.digilab.network/api-register/openapi.json
-  #   x-openapi-ts:
-  #     output: ./apps/api-register/src/types/api-schema.ts
+  api-register@v1:
+    root: https://api.don.apps.digilab.network/api-register/v1/openapi.json
+    x-openapi-ts:
+      output: ./apps/api-register/src/types/api-schema.ts

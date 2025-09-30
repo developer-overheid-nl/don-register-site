@@ -13,8 +13,6 @@ const { frontmatter, headings } = Astro.props;
 const titlePage = frontmatter.title 
                 || headings.filter(mdHeading => mdHeading.depth == 1).shift()?.text 
                 || frontmatter.url?.replace('/', ' ').trim();
-
-console.log(frontmatter, headings);
 --- 
 
 <DonBasic appConfig={appConfig} titlePage={titlePage}>
