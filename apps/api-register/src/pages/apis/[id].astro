@@ -79,7 +79,7 @@ const details = error ? null : data;
         <Heading level={3} appearanceLevel={4}>{t(`pages.tools`)}</Heading>
         <Block appearance="outlined" layout="flex-col">
           <AlignBox align="space-between" gap="small">
-            <label for="oasUrl" class="no-shrink">Open Api Specificatie</label>
+            <label for="oasUrl" class="no-shrink">OpenAPI Specificatie</label>
             <ReadOnlyTextInput
               id="oasUrl"
               type="url"
@@ -106,6 +106,7 @@ const details = error ? null : data;
             <span class="download-as-label">{t(`components.download-as`)}</span>
             <DataBadgeLink href={`download/${id}/bruno-collection.zip`}>Bruno Collection (.zip)</DataBadgeLink>
             <DataBadgeLink href={`download/${id}/postman.json`}>Postman Collection (.json)</DataBadgeLink>
+            <DataBadgeLink href={`download/${id}/oas.json`}>OAS 3.1 (.json)</DataBadgeLink>
           </div>
           {details.docsUrl ? (
             <AlignBox gap="small" display="inline">
