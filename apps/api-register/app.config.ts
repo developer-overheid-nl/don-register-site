@@ -23,7 +23,7 @@ export default {
     items: [
       { id: 'home', label: "Home", href: mainSiteUrl },
       { id: 'kennisbank', label: "Kennisbank", href: `${mainSiteUrl}/kennisbank` },
-      { id: 'apis', label: "API's", href: "/apis" },
+      { id: 'apis', label: "API's", href: "/apis", current: true },
       { id: 'communities', label: "Communities", href: `${mainSiteUrl}/communities` },
       { id: 'blog', label: "Blog", href: `${mainSiteUrl}/blog` },
     ],
@@ -37,13 +37,20 @@ export default {
   footer: {
     columns: [
       {
-        title: "Medemogelijk gemaakt door",
+        title: "Mede mogelijk gemaakt door",
         text: 
 `
 ![BZK](/sponsors/bzk.svg)  
 ![VNG](/sponsors/vng.svg)  
 ![FS](/sponsors/forumstandaardisatie.svg)  
 `,
+      },
+      {
+        title: "API-register",
+        items: [
+          { id: 'add', label: "API toevoegen", href: "/apis/toevoegen", icon: "_add" },
+          { id: 'statistics', label: "API-statistieken", href: "/api-statistieken" },
+        ],
       },
       {
         title: "Community",

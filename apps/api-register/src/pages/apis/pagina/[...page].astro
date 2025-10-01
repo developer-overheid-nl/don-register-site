@@ -42,6 +42,7 @@ i18n.addResourceBundle(i18n.language, 'translation', i18nApp ? i18nApp[i18n.lang
 const i18nContext = routingObj.query && Object.keys(routingObj.query).length > 0 ? 'filtered' : 'all';
 
 const items = error ? null : data;
+
 ---
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>

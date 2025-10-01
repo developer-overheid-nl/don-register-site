@@ -5,15 +5,60 @@
   --utrecht-page-footer-padding-inline-start: var(--rhc-nav-bar-link-padding-inline-start);
 }
 
-.footer :global(.utrecht-column-layout) {
-  display: flex;
-  inline-size: 100%;
-  justify-content: space-between;
+.footer {
+  :global(.utrecht-column-layout) {
+    display: flex;
+    inline-size: 100%;
+    justify-content: space-between;
 
-  > * {
-    flex-basis: 33.3333%;
+    > * {
+      flex-shrink: 0;
+      flex-grow: 0;
+    }
+  }
+
+  &.numColumns,
+  &.numColumns1 {
+    :global(.utrecht-column-layout) {
+      > * {
+        flex-basis: 100%;
+      }
+    }
+  }
+
+  &.numColumns2 {
+    :global(.utrecht-column-layout) {
+      > * {
+        flex-basis: calc(50% - var(--utrecht-column-layout-gap, 2em));
+      }
+    }
+  }
+
+  &.numColumns3 {
+    :global(.utrecht-column-layout) {
+      > * {
+        flex-basis: calc(33.333% - var(--utrecht-column-layout-gap, 2em));
+      }
+    }
+  }
+  &.numColumns4 {
+    :global(.utrecht-column-layout) {
+      flex-wrap: wrap;
+
+      > * {
+        flex-basis: calc(25% - var(--utrecht-column-layout-gap, 2em));
+      }
+    }
+  }
+
+  :global(.utrecht-link-list__link) { 
+    align-items: center;
+    :global(.don-icon-externe-link-inline) {
+      order: 1;
+    }
   }
 }
+
 
 :global(.rhc-page-prefooter) {
   margin-block-start: 2rem;

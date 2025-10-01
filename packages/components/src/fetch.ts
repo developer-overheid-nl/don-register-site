@@ -1,3 +1,5 @@
+/* DEPRECATED */
+
 import { useMemo } from "react";
 import parseLinkHeader from "parse-link-header";
 

@@ -11,3 +11,8 @@
     }
   }
 }
+
+/* modifier style wasn't implemented in RHC */
+:global(.rhc-nav-bar__link--bold) {
+  font-weight: bold;
+}

@@ -2,7 +2,7 @@
 export const prerender = false; // Not needed in 'server' mode
 import appConfig from "../../../app.config";
 import { DonBasic, DonDetail } from "@developer-overheid-nl/don-register-layouts";
-import { getAppearance, getDate, HeadingGroup, IconBadge, Link, Markdown, Paragraph, DataSummary, DataSummaryItem, ScoreBadge, Block, Heading, CopyButton, DataBadgeLink, AlignBox, ReadOnlyTextInput, Alert } from "@developer-overheid-nl/don-register-components";
+import { getAppearance, getDate, HeadingGroup, IconBadge, Link, Markdown, Paragraph, DataSummary, DataSummaryItem, ScoreBadge, Block, Heading, CopyButton, DataBadgeLink, AlignBox, ReadOnlyTextInput, Alert, Icon } from "@developer-overheid-nl/don-register-components";
 import { t } from "i18next";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import createClient from "openapi-fetch";
@@ -51,7 +51,7 @@ const details = error ? null : data;
         </Paragraph>
       </HeadingGroup>
       <Fragment slot="description">
-        <Markdown text={details?.description} />
+        <div class="utrecht-html"><Markdown text={details?.description} /></div>
       </Fragment>
       <Fragment slot="aside">
         <DataSummary appearance="row">
@@ -66,6 +66,7 @@ const details = error ? null : data;
           <AlignBox gap="small" display="inline">
             <span class="adr-score-label">{t(`components.adr-score`)}:</span>
             <ScoreBadge name={`ADR`} score={details.adrScore} max={100} inPercentage />
+            <span class="adr-score-info"><Link href={`https://developer-overheid-nl.github.io/oas-checker/?url=${details.oasUrl}`} target="_blank" rel="noopener noreferrer">Uitleg <Icon name="externe-link-inline" /></Link></span>
           </AlignBox>
           <AlignBox gap="small" display="inline">
             <IconBadge
@@ -122,7 +123,7 @@ const details = error ? null : data;
           </DataSummary>
           {details.auth ? (<>
             <Heading level={4} appearanceLevel={5}>{t(`pages.authentication`)}</Heading>
-            <!--TODO: Add authentication details here --><pre>{JSON.stringify(details.auth, null, 2)}</pre>
+            <!--TODO: Add authentication details here --><pre hidden>{JSON.stringify(details.auth, null, 2)}</pre>
           </>) : null}
         </Block>
       </Fragment>

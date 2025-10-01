@@ -3,10 +3,11 @@ import styles from "./styles.module.css";
 import { NavBar, type NavBarItemProps, type IconProps } from "@rijkshuisstijl-community/components-react";
 import Icon from "../iconsSprite/Icon";
 
-interface NavBarItem {
+export interface NavBarItem {
   id: string;
   label: string;
   href: string;
+  current?: boolean;
   icon?: string | ReactElement<IconProps>;
 }
 
@@ -28,9 +29,10 @@ const processIcon = (icon: NavBarItem["icon"]): ReactElement<IconProps> | undefi
   }
 } 
 
-const processNavBarItems = (items: Array<NavBarItem>): NavBarItemProps[] => {
+export const processNavBarItems = (items: Array<NavBarItem>): NavBarItemProps[] => {
   return items.map(item => ({
     ...item,
+    bold: item.current,
     icon: processIcon(item.icon),
   }));
 }
@@ -38,6 +40,8 @@ const processNavBarItems = (items: Array<NavBarItem>): NavBarItemProps[] => {
 export default function TopNavigation({ items, endItems }: TopNavigationProps) {
   const processedItems = processNavBarItems(items);
   const processedEndItems = endItems && processNavBarItems(endItems);
+
+  console.log(processedItems);
 
   return (
     <div className={styles.container}>
