@@ -46,4 +46,8 @@ export default defineConfig({
       }),
     },
   },
+  redirects: {
+    "contact": "https://developer.overheid.nl/contact/",
+    "privacy": "https://developer.overheid.nl/privacy/",
+  }
 });

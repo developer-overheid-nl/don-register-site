@@ -10,13 +10,6 @@ import createClient from "openapi-fetch";
 import { type paths } from "../../../types/api-schema"; 
 import { API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY } from "astro:env/server";
 
-// import { fetchAPI } from "@developer-overheid-nl/don-register-components/fetch";
-
-// const data = await fetchAPI(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`, API_X_API_KEY);
-// const fetchedDate = new Date().toISOString();
-// configStore.set(appConfig);
-// console.log(configStore);
-
 const { page = 1 } = Astro.params;
 
 const API_RESOURCE: keyof paths = `/${API_VERSION}/apis`;
@@ -60,11 +53,7 @@ const items = data;
   <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2} appearanceLevel={3}>
     <Paragraph role="status">{t('components.search-results-amount', {context: i18nContext, amount: paginationObj.totalCount})}</Paragraph>
   </HeadingGroup>
-  <!-- {
-    items && items.length == 0 && (
-      <Alert type="info">{t('components.search-results-amount-no-items', {context: i18nContext})}</Alert>
-    )
-  } -->
+
   { error && (
     <Alert type="error">{(error as unknown as any).message || t('components.fuzz-error')}</Alert>
   )}
