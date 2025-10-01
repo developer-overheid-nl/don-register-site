@@ -16,7 +16,14 @@ const titlePage = frontmatter.title
 --- 
 
 <DonBasic appConfig={appConfig} titlePage={titlePage}>
-  <div class="markdown-content">
+  <div class="markdown-content utrecht-html">
     <slot />
   </div>
 </DonBasic>
+
+<style>
+  .markdown-content {
+    --utrecht-article-max-inline-size: 100ch;
+    max-inline-size: var(--utrecht-article-max-inline-size);
+  }
+</style>

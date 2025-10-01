@@ -1,3 +1,13 @@
 ---
-return Astro.rewrite(new URL(`../apis/pagina/1?${Astro.url.searchParams.toString()}`, Astro.url));
+let searchParams = Astro.url.searchParams;
+const page = searchParams.get('pagina');
+searchParams.delete('pagina');
+
+// `/apis?pagina=n` (old site) will redirect to the new url stucture
+if (page) {
+  return Astro.redirect(new URL(`../apis/pagina/${page}?${searchParams.toString()}`, Astro.url))
+}
+
+// `/apis` will show page one of the overview, filtered views included
+return Astro.rewrite(new URL(`../apis/pagina/1?${searchParams.toString()}`, Astro.url));
 ---

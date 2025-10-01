@@ -92,6 +92,20 @@
   background-color: var(--utrecht-document-background-color, #ffffff);
 }
 
+.utrecht-html h1,
+.utrecht-html h2,
+.utrecht-html h3,
+.utrecht-html h4,
+.utrecht-html h5 {
+  --utrecht-paragraph-margin-block-start: 1.5rem;
+  margin-block-start: calc(var(--utrecht-space-around, 0) * var(--utrecht-paragraph-margin-block-start, 0));
+}
+
+.utrecht-html h1 + p,
+.utrecht-html h2 + p,
+.utrecht-html h3 + p,
+.utrecht-html h4 + p,
+.utrecht-html h5 + p,
 .utrecht-html p + p {
   --utrecht-paragraph-margin-block-start: 0.5rem;
   margin-block-start: calc(var(--utrecht-space-around, 0) * var(--utrecht-paragraph-margin-block-start, 0));

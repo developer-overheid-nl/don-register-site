@@ -10,6 +10,8 @@ import createClient from "openapi-fetch";
 import { type paths } from "../../../types/api-schema"; 
 import { API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY } from "astro:env/server";
 
+import {Content as Intro} from '../../../partials/intro.md';
+
 const { page = 1 } = Astro.params;
 
 const API_RESOURCE: keyof paths = `/${API_VERSION}/apis`;
@@ -39,14 +41,11 @@ i18n.addResourceBundle(i18n.language, 'translation', i18nApp ? i18nApp[i18n.lang
 
 const i18nContext = routingObj.query && Object.keys(routingObj.query).length > 0 ? 'filtered' : 'all';
 
-console.log({routingObj, paginationObj, pagination}, data);
-// console.log({data, error, headers});
-
-const items = data;
+const items = error ? null : data;
 ---
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
-  <Paragraph slot="header">{t('pages.intro')}</Paragraph>
+  <div class="markdown-content utrecht-html" slot="header"><Intro /></div>
   <!-- <div slot="search">TODO: Search form</div> -->
   <Filters slot="filters" routing={routingObj} />
 
@@ -102,9 +101,6 @@ const items = data;
     </CardsList>
   )}
   <Pagination slot="pagination" {...pagination} />
-  <!-- <CardsList items={data as any} routing={routingObj} /> -->
-  <!-- <CardsList className={styles.list} items={items} total={pagination?.totalCount} routing={routing} i18n={i18n} /> -->
-  <!-- <OverviewContainer slot="body-end" apiItemsKey="apis" page={page} routing={routingObj}></OverviewContainer> -->
 </DonOverview>
 
 <style>

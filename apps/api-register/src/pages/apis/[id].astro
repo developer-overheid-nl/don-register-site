@@ -2,13 +2,12 @@
 export const prerender = false; // Not needed in 'server' mode
 import appConfig from "../../../app.config";
 import { DonBasic, DonDetail } from "@developer-overheid-nl/don-register-layouts";
-import { getAppearance, getDate, HeadingGroup, IconBadge, Link, Markdown, Paragraph, DataSummary, DataSummaryItem, ScoreBadge, Block, Heading, CopyButton, DataBadgeLink, AlignBox, ReadOnlyTextInput } from "@developer-overheid-nl/don-register-components";
+import { getAppearance, getDate, HeadingGroup, IconBadge, Link, Markdown, Paragraph, DataSummary, DataSummaryItem, ScoreBadge, Block, Heading, CopyButton, DataBadgeLink, AlignBox, ReadOnlyTextInput, Alert } from "@developer-overheid-nl/don-register-components";
 import { t } from "i18next";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import createClient from "openapi-fetch";
 import { type paths } from "../../types/api-schema"; 
 import { API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY } from "astro:env/server";
-import { Icon, IconButton } from "@rijkshuisstijl-community/components-react";
 
 const { id = '' } = Astro.params;
 const API_RESOURCE: keyof paths = `/${API_VERSION}/apis/{id}`;
@@ -26,11 +25,17 @@ const { data, error, response: { headers } } = await client.GET(API_RESOURCE, {
 const { i18n: i18nApp } = appConfig;
 i18n.addResourceBundle(i18n.language, 'translation', i18nApp ? i18nApp[i18n.language] : {}, true, true)
 
-// console.log({data, error, headers});
-
 const details = error ? null : data;
 
 ---
+
+{ error && (
+  <DonBasic appConfig={appConfig} titlePage="API niet gevonden">
+    <Alert type="error">{(error as unknown as any).message || (error as unknown as any).detail || t('components.fuzz-error')}</Alert>
+    <Paragraph>{t('components.item-not-found-error')}</Paragraph>
+  </DonBasic>
+)}
+
 {details && (
   <DonDetail appConfig={appConfig} titlePage={details?.title}>
       <HeadingGroup
@@ -117,17 +122,9 @@ const details = error ? null : data;
           </DataSummary>
           {details.auth ? (<>
             <Heading level={4} appearanceLevel={5}>{t(`pages.authentication`)}</Heading>
-            TODO: Add authentication details here <pre>{JSON.stringify(details.auth, null, 2)}</pre>
+            <!--TODO: Add authentication details here --><pre>{JSON.stringify(details.auth, null, 2)}</pre>
           </>) : null}
         </Block>
       </Fragment>
 </DonDetail>)
 }
-
-<!-- TODO: Add translation for API not found message -->
-{error && (
-  <DonBasic appConfig={appConfig} titlePage="API niet gevonden">
-    <Paragraph>De opgevraagde API met ID "{id}" is niet gevonden in de API-register.</Paragraph>
-    <Paragraph>Controleer of het ID correct is en probeer het opnieuw. Als het probleem zich blijft voordoen, neem dan contact op met de beheerder van het register.</Paragraph>
-  </DonBasic>
-)}

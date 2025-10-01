@@ -17,9 +17,6 @@ export default {
         items_one: 'API',
         items_other: 'API’s'
       },
-      pages: {
-        intro: "Overzicht van open API's van Nederlandse overheidsorganisaties.",
-      }
     },
   } as Record<string, i18nTranslations>,
   topNavigation: {
