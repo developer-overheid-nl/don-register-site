@@ -1,51 +1,143 @@
 ---
 import appConfig from "../../../../app.config";
-import { DonOverview } from "@developer-overheid-nl/don-register-layouts";
-import { Card, Link, OverviewContainer } from "@developer-overheid-nl/don-register-components";
-import { configStore } from "@developer-overheid-nl/don-register-components";
-// import { fetchAPI } from "@developer-overheid-nl/don-register-components/fetch";
+import { DonOverview, getRouting, parseHeaders, getPagination } from "@developer-overheid-nl/don-register-layouts";
+import { Alert, CardAsLink, CardsList, CardsListItem, DataBadgeLink, Filters, getAppearance, getDate, Heading, HeadingGroup, IconBadge, Link, Markdown, Pagination, /*OverviewContainer,*/ Paragraph, ScoreBadge } from "@developer-overheid-nl/don-register-components";
+// import { configStore } from "@developer-overheid-nl/don-register-components";
 
-// const data = await fetchAPI(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis`, API_X_API_KEY);
-// const fetchedDate = new Date().toISOString();
-configStore.set(appConfig);
-// console.log(configStore);
+import { t } from "i18next";
+import i18n from "@developer-overheid-nl/don-register-components/i18n";
+import createClient from "openapi-fetch";
+import { type paths } from "../../../types/api-schema"; 
+import { API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY } from "astro:env/server";
 
 const { page = 1 } = Astro.params;
-// let { pathname } = Astro.url;
 
-// const regex = /\/\d+$/g; // get pagenumber
-// pathname = pathname.replace(regex, '');
-
-const getRouting = (url: Astro['url'], originPathname: Astro['originPathname'], routePattern: Astro['routePattern'], params: Astro['params']) => {
-  const patternItems = routePattern.split('/');
-  const pathItems = url.pathname.split('/');
-
-  const parentPath = pathItems.filter(item => patternItems.includes(item)).join('/');
-
-  return {
-    url,
-    pattern: {
-      routePattern,
-      patternItems,
-      params,
-    },
-    path: {
-      pathname: url.pathname,
-      pathItems,
-      parentPath,
-      originPathname,
-      rewrite: originPathname.replace(/\/$/, '') !== url.pathname,
-    },
-    query: Object.fromEntries(url.searchParams),
-  };
-}
+const API_RESOURCE: keyof paths = `/${API_VERSION}/apis`;
 
 const routingObj = getRouting(Astro.url, Astro.originPathname, Astro.routePattern, Astro.params);
 
- console.log(routingObj);
+const client = createClient<paths>({ baseUrl: `${API_URL}/${API_ENDPOINT}` });
+const { data, error, response: { headers } } = await client.GET(API_RESOURCE, {
+  params: {
+    query: { 
+      page: Number(page),
+      ...routingObj.query,
+    },
+  },
+  headers: {
+    'x-api-key': API_X_API_KEY,
+  },
+});
+
+const paginationObj = parseHeaders(headers);
+const pagination = getPagination(paginationObj, routingObj.url);
+
+const outOfBounds = paginationObj.totalPages && Number(page) > paginationObj.totalPages;
+
+const { i18n: i18nApp } = appConfig;
+i18n.addResourceBundle(i18n.language, 'translation', i18nApp ? i18nApp[i18n.language] : {}, true, true);
+
+const i18nContext = routingObj.query && Object.keys(routingObj.query).length > 0 ? 'filtered' : 'all';
+
+console.log({routingObj, paginationObj, pagination}, data);
+// console.log({data, error, headers});
+
+const items = data;
 ---
 
-<DonOverview appConfig={appConfig} titlePage="Overzicht">
-  <OverviewContainer apiItemsKey="apis" page={page} routing={routingObj}>Dit is het vernieuwde API-register van de Nederlandse overheid (bèta): alle API’s op één plek. Wil je je eigen API’s registreren? <Link href="/apis/toevoegen">Lees hier hoe je API’s toevoegt en aansluit op het API-register</Link>.
-Omdat dit een bètaversie is, kan de werking of inhoud nog veranderen.</OverviewContainer>
+<DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
+  <Paragraph slot="header">{t('pages.intro')}</Paragraph>
+  <!-- <div slot="search">TODO: Search form</div> -->
+  <Filters slot="filters" routing={routingObj} />
+
+  <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2} appearanceLevel={3}>
+    <Paragraph role="status">{t('components.search-results-amount', {context: i18nContext, amount: paginationObj.totalCount})}</Paragraph>
+  </HeadingGroup>
+
+  { error && (
+    <Alert type="error">{(error as unknown as any).message || t('components.fuzz-error')}</Alert>
+  )}
+
+  { outOfBounds && (
+    <Alert type="warning">
+      <Heading level={2} appearanceLevel={5}>{t('components.fuzz-error')}</Heading>
+      {t('components.pagination-out-of-bounds', {page: page, count: paginationObj.totalPages})}
+    </Alert>
+  )}
+
+  { items && items.length > 0 && (
+    <CardsList>
+      {
+        items.map((item, index, array) => (
+          <CardsListItem index={index} setsize={array.length}>
+            <CardAsLink
+              href={new URL(`../${item.id}`, routingObj?.url).toString()}
+              linkLabel={t('components.view-details')}
+            >
+              <HeadingGroup slot="heading" title={item.title || '🐒'} level={2} appearanceLevel={4}>
+                <div class="subtitle" slot="subTitle">
+                  <Paragraph slot="subTitle" itemScope={true} itemType="https://schema.org/Organization" itemID={item.organisation?.uri} className="moveAbove">
+                    <span itemprop="name"><DataBadgeLink appearance="subtle" className="orgLink" href={new URL(`../?organisation=${item.organisation?.uri}`, routingObj.url).toString()}>
+                      {item.organisation?.label}
+                    </DataBadgeLink></span>
+                  </Paragraph>
+                  <div class="header-meta">
+                    <IconBadge 
+                      className={`moveAbove`} 
+                      name={item.lifecycle?.status || 'unknown'} 
+                      appearance={getAppearance(item.lifecycle)} 
+                      title={t(`components.status-${item.lifecycle?.status}`, {context: getAppearance(item.lifecycle), date: getDate(item.lifecycle)})} 
+                      /> 
+                    <div class="version">{t('components.version', {version: item.lifecycle?.version})}</div>
+                  </div>
+              </div>
+              </HeadingGroup>
+              <div slot="description" class="description utrecht-html"><Markdown text={item.description} openLinksInNewTab /></div>
+              <span slot="metadata" class="adr-score-label">{t(`components.adr-score`)}:</span>
+              <ScoreBadge slot="metadata" className="meta" name={`ADR`} score={item.adrScore} max={100} inPercentage />
+            </CardAsLink>
+          </CardsListItem>
+        ))
+      }
+    </CardsList>
+  )}
+  <Pagination slot="pagination" {...pagination} />
+  <!-- <CardsList items={data as any} routing={routingObj} /> -->
+  <!-- <CardsList className={styles.list} items={items} total={pagination?.totalCount} routing={routing} i18n={i18n} /> -->
+  <!-- <OverviewContainer slot="body-end" apiItemsKey="apis" page={page} routing={routingObj}></OverviewContainer> -->
 </DonOverview>
+
+<style>
+  .heading-results {
+    padding-inline-start: calc(var(--rhc-card-as-link-border-width, 1px) + var(--rhc-card-as-link-padding-inline-start, 16px));
+  }
+  .subtitle {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .header-meta {
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+  }
+
+  .description {
+    a:hover {
+      text-decoration-line: none;
+    }
+  }
+
+  .meta {
+    place-content: center;
+  }
+
+  .version {
+    text-decoration: none;
+  }
+
+  .orgLink {
+    font-size: 0.875rem;
+  }
+</style>

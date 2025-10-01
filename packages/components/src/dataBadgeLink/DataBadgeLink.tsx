@@ -7,14 +7,16 @@ export interface DataBadgeLinkProps extends Omit<DataBadgeButtonProps, 'aria-pre
   children: React.ReactNode;
   target?: React.HTMLAttributeAnchorTarget;
   rel?: string;
-  className: string;
+  className?: string;
   role?: string;
+  appearance?: 'primary' | 'outlined' | 'subtle';
 }
 
 const DataBadgeLink = (props: DataBadgeLinkProps) => {
-  const { href, target, rel, children, className, role, ...restProps } = props;
+  const { href, target, rel, children, className, role, appearance = 'primary', ...restProps } = props;
   return (
-    <DataBadgeButton className={clsx(className, styles.donDataBadge)} aria-pressed={null} {...restProps}>
+    /* @ts-expect-error className is not exposed */
+    <DataBadgeButton className={clsx(className, styles.donDataBadge, styles[appearance])} aria-pressed={null} {...restProps}>
       <a className={clsx(styles.badgeLink)} href={href} target={target} rel={rel} role={role}>{children}</a>
     </DataBadgeButton>
   );

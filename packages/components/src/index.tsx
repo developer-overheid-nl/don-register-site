@@ -1,15 +1,18 @@
 // Barrel export for all components
 export { default as AlignBox } from "./alignBox/AlignBox";
 export { default as Article } from "./article/Article";
+export { default as Alert, type AlertProps } from "./alert/Alert";
 export { default as Block } from "./block/Block";
 export { default as Card } from "./Card"; // remove
-export { default as CardList } from "./cardsList/CardsList";
+export { default as CardAsLink } from "./cardAsLink/CardAsLink";
+export { default as CardsList, CardsListItem } from "./cardsList/CardsList"; // refactor
 export { default as Container } from "./container/Container";
 export { default as CopyButton } from "./copyButton/CopyButton"; // use client
 export { default as Footer } from "./footer/Footer";
 // export { default as Search } from "./Search"; // remove
 export { default as SiteLogo } from "./siteLogo/SiteLogo";
 export { default as Paragraph } from "./paragraph/Paragraph";
+export { default as Pagination, type PaginationProps } from "./pagination/Pagination";
 export { default as Link } from "./link/Link";
 export { default as Heading } from "./heading/Heading";
 export { default as HeadingGroup } from "./headingGroup/HeadingGroup";

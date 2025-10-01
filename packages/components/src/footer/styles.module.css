@@ -1,5 +1,18 @@
 .footer {
-  
+  --utrecht-page-footer-padding-block-end: 2rem;
+  --utrecht-page-footer-padding-block-start: 1rem;
+  --utrecht-page-footer-padding-inline-end: var(--rhc-nav-bar-link-padding-inline-end);
+  --utrecht-page-footer-padding-inline-start: var(--rhc-nav-bar-link-padding-inline-start);
+}
+
+.footer :global(.utrecht-column-layout) {
+  display: flex;
+  inline-size: 100%;
+  justify-content: space-between;
+
+  > * {
+    flex-basis: 33.3333%;
+  }
 }
 
 :global(.rhc-page-prefooter) {

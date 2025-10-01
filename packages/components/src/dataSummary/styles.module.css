@@ -3,7 +3,7 @@
   flex-direction: column;
   row-gap: 0.75rem;
   margin-block-start: 0;
-  margin-block-end: 0;
+  margin-block-end: 1rem;
   --rhc-data-summary-item-key-padding-inline-start: 0;
   --rhc-data-summary-item-key-padding-inline-end: 0;
   --rhc-data-summary-item-key-padding-block-start: 0;
@@ -51,7 +51,17 @@
   }
 }
 
+:global(.rhc-data-summary__item-key):empty {
+  display: none;
+}
+
+:global(.rhc-data-summary__item-value) {
+  word-break: break-word;
+  hyphens: auto;
+}
+
 .isContained {
+  margin-block-end: 0;
   :global(.rhc-data-summary__item:last-child) {
     --rhc-data-summary-item-border-block-end-style: none;
     --rhc-data-summary-item-key-row-padding-block-end: 0;

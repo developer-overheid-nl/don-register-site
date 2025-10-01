@@ -1,5 +1,7 @@
 import type { HTMLProps, PropsWithChildren, ReactNode } from "react";
 import { HeadingGroup as RHCHeadingGroup, Heading, type HeadingProps, Paragraph } from "@rijkshuisstijl-community/components-react";
+import clsx from "clsx";
+import styles from "./styles.module.css";
 
 export interface HeadingGroupProps extends HTMLProps<RHCHeadingGroup> {
   title: string;
@@ -12,7 +14,7 @@ export interface HeadingGroupProps extends HTMLProps<RHCHeadingGroup> {
 const HeadingGroup = (props: PropsWithChildren<HeadingGroupProps>) => {
   const { title, subTitle, level, appearanceLevel, className, subTitleProps, children, ...restProps } = props;
   return (
-    <RHCHeadingGroup className={className} {...restProps}>
+    <RHCHeadingGroup className={clsx(className, styles.headingGroup)} {...restProps}>
       <Heading appearanceLevel={appearanceLevel} level={level}>
         {title}
       </Heading>

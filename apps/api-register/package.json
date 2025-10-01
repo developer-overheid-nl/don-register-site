@@ -15,13 +15,13 @@
   },
   "dependencies": {
     "@astrojs/react": "catalog:",
+    "@developer-overheid-nl/don-register-components": "workspace:*",
+    "@developer-overheid-nl/don-register-layouts": "workspace:*",
+    "@rijkshuisstijl-community/components-react": "catalog:",
     "astro": "catalog:",
     "i18next": "catalog:",
     "nanostores": "catalog:",
-    "openapi-fetch": "catalog:",
-    "@rijkshuisstijl-community/components-react": "catalog:",
-    "@developer-overheid-nl/don-register-components": "workspace:*",
-    "@developer-overheid-nl/don-register-layouts": "workspace:*"
+    "openapi-fetch": "catalog:"
   },
   "devDependencies": {
     "vite": "catalog:"

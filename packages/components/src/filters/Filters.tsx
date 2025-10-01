@@ -26,20 +26,14 @@ const Filters = (props: PropsWithChildren<FiltersProps>) => {
   const { t } = useTranslation();
   const { data, headers } = use(fetchHook(`https://api.don.apps.digilab.network/api-register/v1/organisations`, '153ede87-7c4c-4f22-99b2-d718423dd18d'));
   const { className, routing } = props;
-  // const $data = useStore(dataStore);
   const organisations = data && !data.message ? data : [];
-  console.log(organisations)
   const currentOrganisation = organisations && organisations.find(org => org?.uri === routing?.query?.organisation);
-
-  console.log(currentOrganisation,'routing:', routing);
 
   return (
     <div className={clsx([styles.filters, className])}>
-      {/* <pre style={{fontSize: 'x-small', whiteSpace: 'pre-wrap'}}>{JSON.stringify(organisations)}</pre> */}
       {
-        currentOrganisation && (<div className="utrecht-badge-list" role="list">
+        currentOrganisation && (<div className={clsx("utrecht-badge-list", styles.currentFilter)} role="list">
           <Heading level={2} appearanceLevel={3}>{t('components.current-filter')}</Heading>
-          {/* @ts-expect-error: RHC DataBadgeButton needs update with role prop  */}
           <DataBadgeLink role="listitem" 
             aria-pressed={null} 
             helperText={t('components.remove-filter')}

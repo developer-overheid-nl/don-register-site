@@ -2,54 +2,33 @@
 export const prerender = false; // Not needed in 'server' mode
 import appConfig from "../../../app.config";
 import { DonBasic, DonDetail } from "@developer-overheid-nl/don-register-layouts";
-import { fetchAPI, getAppearance, getDate, HeadingGroup, IconBadge, Link, Markdown, Paragraph, DataSummary, DataSummaryItem, ScoreBadge, Block, Heading, CopyButton, DataBadgeLink, AlignBox, ReadOnlyTextInput } from "@developer-overheid-nl/don-register-components";
+import { getAppearance, getDate, HeadingGroup, IconBadge, Link, Markdown, Paragraph, DataSummary, DataSummaryItem, ScoreBadge, Block, Heading, CopyButton, DataBadgeLink, AlignBox, ReadOnlyTextInput } from "@developer-overheid-nl/don-register-components";
 import { t } from "i18next";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
-import { type paths } from "../../types/unknown-schema"; // TODO: replace with actual schema
-
-const { id } = Astro.params;
+import createClient from "openapi-fetch";
+import { type paths } from "../../types/api-schema"; 
 import { API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY } from "astro:env/server";
-const API_RESOURCE = 'apis';
+import { Icon, IconButton } from "@rijkshuisstijl-community/components-react";
 
-// TODO: interface from api-schema
-interface apiDetailResponse {
-    id: string;
-    title: string;
-    description: string;
-    contact: {
-        name: string;
-        url: string;
-        email:  string;
-    };
-    organisation: {
-        id: string;
-        label: string;
-        uri: string;
-    };
-    version: string;
-    lifecycle: {
-        status: 'active' | 'deprecated' | 'sunset' | 'retired';
-        version: string;
-        deprecated?: string;
-        sunset?: string;
-        retired?: string;
-    };
-    adrScore: number;
-    oasUrl: string;
-    servers: {
-        url: string;
-        description: string;
-    }[];
-}
+const { id = '' } = Astro.params;
+const API_RESOURCE: keyof paths = `/${API_VERSION}/apis/{id}`;
 
-const {data, headers} = await fetchAPI<apiDetailResponse>(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/${API_RESOURCE}/${id}`, API_X_API_KEY);
-console.log({data, headers});
+const client = createClient<paths>({ baseUrl: `${API_URL}/${API_ENDPOINT}` });
+const { data, error, response: { headers } } = await client.GET(API_RESOURCE, {
+  params: {
+    path: { id },
+  },
+  headers: {
+    'x-api-key': API_X_API_KEY,
+  },
+});
 
 const { i18n: i18nApp } = appConfig;
 i18n.addResourceBundle(i18n.language, 'translation', i18nApp ? i18nApp[i18n.language] : {}, true, true)
 
-const details = data.hasOwnProperty('message') ? null : data as apiDetailResponse;
-// console.log({details});
+// console.log({data, error, headers});
+
+const details = error ? null : data;
 
 ---
 {details && (
@@ -78,28 +57,20 @@ const details = data.hasOwnProperty('message') ? null : data as apiDetailRespons
       </Fragment>
       <Fragment slot="meta">
         <Block layout="flex-row">
-          <div>{t(`components.version`, {version: details?.lifecycle?.version || '-'})}</div>
-          <AlignBox gap="small">
-            <span>{t(`components.adr-score`)}:</span>
-            <ScoreBadge name={`ADR`} score={details?.adrScore} max={100} inPercentage />
+          <div>{t(`components.version`, {version: details.lifecycle?.version || '-'})}</div>
+          <AlignBox gap="small" display="inline">
+            <span class="adr-score-label">{t(`components.adr-score`)}:</span>
+            <ScoreBadge name={`ADR`} score={details.adrScore} max={100} inPercentage />
           </AlignBox>
-          <AlignBox gap="small">
+          <AlignBox gap="small" display="inline">
             <IconBadge
-              name={details?.lifecycle?.status || 'unknown'}
+              name={details.lifecycle?.status || 'unknown'}
               appearance={getAppearance(details?.lifecycle || {status: 'active'})}
             />
             {t(`components.status-${details?.lifecycle?.status}`, {context: getAppearance(details?.lifecycle), date: getDate(details?.lifecycle)})}
           </AlignBox>
         </Block>
-        <Heading level={3} appearanceLevel={4}>{t(`pages.servers`)}</Heading>
-        <Block appearance="outlined">
-          <DataSummary appearance="column" contained={true}>
-            {details?.servers?.map((server) => (
-              <DataSummaryItem itemKey={server.description} itemValue={server.url} />
-            ))}
-          </DataSummary>
-        </Block>
-        <Heading level={3} appearanceLevel={4}>{t(`pages.documentation`)}</Heading>
+        <Heading level={3} appearanceLevel={4}>{t(`pages.tools`)}</Heading>
         <Block appearance="outlined" layout="flex-col">
           <AlignBox align="space-between" gap="small">
             <label for="oasUrl" class="no-shrink">Open Api Specificatie</label>
@@ -111,27 +82,50 @@ const details = data.hasOwnProperty('message') ? null : data as apiDetailRespons
               name="oasUrl"
             />
             <CopyButton client:load text={details?.oasUrl} />
+            <Link href={`https://fetch.usebruno.com?url=${details?.oasUrl}&type=openapi`} target="_blank" rel="noopener noreferrer"><img src="https://fetch.usebruno.com/button.svg" alt="Fetch in Bruno" width="130" height="30" /></Link>
           </AlignBox>
           <div class="utrecht-badge-list" role="list">
-            <span>{t(`components.open-in`)}</span>
-            <DataBadgeLink className={`styles.aboveLink`} href={`https://redocly.github.io/redoc/?url=${details?.oasUrl}`} target="_blank" rel="noopener" role="listitem">
+            <span class="open-in-label">{t(`components.open-in`)}</span>
+            <DataBadgeLink href={`https://redocly.github.io/redoc/?url=${details?.oasUrl}`} target="_blank" rel="noopener" role="listitem">
               ReDoc
             </DataBadgeLink>
-            <DataBadgeLink className={`styles.aboveLink`} href={`https://editor.swagger.io/?url=${details?.oasUrl}`} target="_blank" rel="noopener" role="listitem">
+            <DataBadgeLink href={`https://editor.swagger.io/?url=${details?.oasUrl}`} target="_blank" rel="noopener" role="listitem">
               Swagger
             </DataBadgeLink>
-            <DataBadgeLink className={`styles.aboveLink`} role="listitem" href={`https://elements-demo.stoplight.io/?spec=${details?.oasUrl}`} target="_blank" rel="noopener">
+            <DataBadgeLink role="listitem" href={`https://elements-demo.stoplight.io/?spec=${details?.oasUrl}`} target="_blank" rel="noopener">
               Stoplight
             </DataBadgeLink>
           </div>
+          <div class="utrecht-badge-list" role="list">
+            <span class="download-as-label">{t(`components.download-as`)}</span>
+            <DataBadgeLink href={`download/${id}/bruno-collection.zip`}>Bruno Collection (.zip)</DataBadgeLink>
+            <DataBadgeLink href={`download/${id}/postman.json`}>Postman Collection (.json)</DataBadgeLink>
+          </div>
+          {details.docsUrl ? (
+            <AlignBox gap="small" display="inline">
+              <span class="read-docs-label">{t(`components.read-documentation-at`)} </span>
+              <Link href={details.docsUrl}>{details.docsUrl}</Link>
+            </AlignBox>) : null}
+        </Block>
+        <Heading level={3} appearanceLevel={4}>{t(`pages.servers-and-auth`)}</Heading>
+        <Block appearance="outlined">
+          <Heading level={4} appearanceLevel={5}>{t(`pages.servers`)}</Heading>
+          <DataSummary appearance="column" contained={details.auth ? false : true}>
+            {details.servers ? details.servers?.map((server) => (
+              <DataSummaryItem itemKey={server.description} itemValue={server.url} />
+            )) : <DataSummaryItem itemValue={t('components.no-items-present', { items: 'servers'})} />}
+          </DataSummary>
+          {details.auth ? (<>
+            <Heading level={4} appearanceLevel={5}>{t(`pages.authentication`)}</Heading>
+            TODO: Add authentication details here <pre>{JSON.stringify(details.auth, null, 2)}</pre>
+          </>) : null}
         </Block>
       </Fragment>
-    <!-- <pre style={{fontSize: 'x-small', whiteSpace: 'pre-wrap'}}>{JSON.stringify(data.lintResults)}</pre> -->
 </DonDetail>)
 }
 
 <!-- TODO: Add translation for API not found message -->
-{data.hasOwnProperty('message') && (
+{error && (
   <DonBasic appConfig={appConfig} titlePage="API niet gevonden">
     <Paragraph>De opgevraagde API met ID "{id}" is niet gevonden in de API-register.</Paragraph>
     <Paragraph>Controleer of het ID correct is en probeer het opnieuw. Als het probleem zich blijft voordoen, neem dan contact op met de beheerder van het register.</Paragraph>

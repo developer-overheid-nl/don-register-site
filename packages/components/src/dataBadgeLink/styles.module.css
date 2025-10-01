@@ -1,9 +1,35 @@
-.donDataBadge {
-  --_utrecht-data-badge-color: oklch(from var(--utrecht-data-badge-color) calc(l - 0.1) c h);
-  color: var(--_utrecht-data-badge-color);
+.donDataBadge.donDataBadge {
+  &.primary {
+    --_utrecht-data-badge-color: oklch(from var(--utrecht-data-badge-color) calc(l - 0.1) c h);
+    color: var(--_utrecht-data-badge-color);    
 
-  &:hover {
-    color: var(--utrecht-data-badge-color);
+    &:hover {
+      color: var(--utrecht-data-badge-color);
+    }
+  }
+
+  &.outlined {
+    --_utrecht-data-badge-background-color: var(--rhc-color-canvas);
+    background-color: var(--_utrecht-data-badge-background-color);
+    border: 2px solid var(--utrecht-data-badge-color);
+
+    &:hover {
+      background-color: var(--utrecht-data-badge-background-color);
+      border-color: var(--utrecht-data-badge-background-color);
+    }
+  }
+
+  &.subtle {
+    --_utrecht-data-badge-color: var(--nl-link-color);
+    --_utrecht-data-badge-background-color: var(--rhc-color-cool-grey-200);
+    --utrecht-data-badge-font-weight: normal;
+    background-color: var(--_utrecht-data-badge-background-color);
+    color: var(--_utrecht-data-badge-color);
+
+    &:hover {
+      color: var(--rhc-color-cool-grey-50);
+      background-color: var(--rhc-color-cool-grey-500);
+    }
   }
 }
 

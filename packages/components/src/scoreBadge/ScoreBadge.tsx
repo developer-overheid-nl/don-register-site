@@ -2,7 +2,7 @@
 interface ScoreBadgeProps {
   className?: string;
   name: string;
-  score?: number;
+  score?: number | null;
   max?: number;
   showScore?: boolean;
   showMax?: boolean;
@@ -16,7 +16,7 @@ interface ScoreBadgeProps {
 export default function ScoreBadge (props : ScoreBadgeProps) {
   const defaultcolors: ScoreBadgeProps['colors'] = {
     background: '#CBD5E1',
-    gradient: ['#E17000', '#FFB612', '#F9E11E', '#F9E11E', '#39870C']
+    gradient: ['#FEE9B7', '#FDDE94', '#A5C991', '#6AA549', '#39870C']
   };
   const { className, name, score, max = 10, showScore = true, showMax = false, inPercentage = false, colors = defaultcolors, ...restProps } = props;
 
@@ -47,8 +47,7 @@ export default function ScoreBadge (props : ScoreBadgeProps) {
         {showScore && (
           <text x="16" y="16" 
             textAnchor="middle" 
-            fontSize="0.45rem" 
-            textLength="0.75rem" 
+            fontSize="0.4rem" 
             lengthAdjust="spacing"
           >{typeof score === 'number' ? `${score}${showMax ? `/${max}` : ''}${inPercentage ? '%' : ''}` : '–'}</text>
         )}

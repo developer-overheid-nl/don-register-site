@@ -1,0 +1,20 @@
+.cardAsLink.cardAsLink {
+  &:hover {
+    :global(.rhc-card-as-link__heading) {
+      text-decoration: none;
+    }
+    :global(.nl-heading) {
+      text-decoration: var(--rhc-card-as-link-active-text-decoration, underline);
+    }
+  }
+}
+
+:global(.rhc-card-as-link__metadata) {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+}
+
+:global(.rhc-card-as-link__footer) {
+  --rhc-card-as-link-padding-block-start: 0;
+}

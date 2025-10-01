@@ -27,7 +27,8 @@
     "@rijkshuisstijl-community/components-react": "catalog:",
     "@rijkshuisstijl-community/design-tokens": "catalog:",
     "i18next": "catalog:",
-    "typescript": "^5.8.3"
+    "parse-link-header": "2.0.0",
+    "typescript": "5.8.3"
   },
   "peerDependencies": {
     "@types/react": "catalog:react19",

@@ -4,6 +4,10 @@
   row-gap: var(--rhc-space-200);
 }
 
+.currentFilter {
+  flex-direction: column;
+}
+
 .active {
   font-weight: bold;
 }
