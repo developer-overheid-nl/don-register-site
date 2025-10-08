@@ -16,8 +16,8 @@ const DataBadgeLink = (props: DataBadgeLinkProps) => {
   const { href, target, rel, children, className, role, appearance = 'primary', ...restProps } = props;
   return (
     /* @ts-expect-error className is not exposed */
-    <DataBadgeButton className={clsx(className, styles.donDataBadge, styles[appearance])} aria-pressed={null} {...restProps}>
-      <a className={clsx(styles.badgeLink)} href={href} target={target} rel={rel} role={role}>{children}</a>
+    <DataBadgeButton className={clsx(className, styles.donDataBadge, styles[appearance])} aria-pressed={null} role={role} {...restProps}>
+      <a className={clsx(styles.badgeLink)} href={href} target={target} rel={rel}>{children}</a>
     </DataBadgeButton>
   );
 }

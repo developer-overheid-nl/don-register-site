@@ -1,7 +1,7 @@
 import { LinkList, LinkListLink, Footer as RHCFooter, type HeadingLevel} from "@rijkshuisstijl-community/components-react";
 import clsx from "clsx";
 import styles from "./styles.module.css";
-import type { PropsWithChildren, ReactNode } from "react";
+import { useId, type PropsWithChildren, type ReactNode } from "react";
 import Markdown from "../markdown/Markdown";
 import Icon from "../iconsSprite/Icon";
 import Heading from "../heading/Heading";
@@ -26,12 +26,13 @@ export interface FooterProps extends React.HTMLAttributes<HTMLElement> {
 
 // TODO: refactor icons together with TopNavigation
 const FooterColumns = (props: ColumnProps) => {
+  const id = useId();
   const { title, items, text } = props;
   const processedItems = items &&  processNavBarItems(items);
 
   return (
-    <div className={styles.column}>
-      <Heading level={2} appearanceLevel={5}>{title}</Heading>
+    <nav className={styles.column} aria-describedby={id}>
+      <Heading level={2} appearanceLevel={5} id={id}>{title}</Heading>
       {text && <Markdown>{text}</Markdown>}
       {processedItems && (
         <LinkList>
@@ -44,7 +45,7 @@ const FooterColumns = (props: ColumnProps) => {
           ))}
         </LinkList>
       )}
-    </div>
+    </nav>
   )
 }
 

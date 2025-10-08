@@ -3,6 +3,8 @@ import type { MarkdownLayoutProps } from 'astro';
 import { DonBasic } from '@developer-overheid-nl/don-register-layouts';
 import appConfig from "../../app.config";
 
+export const prerender = true;
+
 type Props = MarkdownLayoutProps<{
   title: string;
 }>;

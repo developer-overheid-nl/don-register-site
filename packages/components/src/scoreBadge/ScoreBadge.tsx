@@ -1,7 +1,9 @@
+import clsx from "clsx";
 
 interface ScoreBadgeProps {
   className?: string;
   name: string;
+  ariaLabelPrefix?: string;
   score?: number | null;
   max?: number;
   showScore?: boolean;
@@ -18,11 +20,11 @@ export default function ScoreBadge (props : ScoreBadgeProps) {
     background: '#CBD5E1',
     gradient: ['#FEE9B7', '#FDDE94', '#A5C991', '#6AA549', '#39870C']
   };
-  const { className, name, score, max = 10, showScore = true, showMax = false, inPercentage = false, colors = defaultcolors, ...restProps } = props;
+  const { className, name, ariaLabelPrefix, score, max = 10, showScore = true, showMax = false, inPercentage = false, colors = defaultcolors, ...restProps } = props;
 
   return (
-    <span className={`score-badge score-badge--${score} ${className}`} {...restProps} aria-label={`TODO: Score voor ${name}: ${score || 'onbekend'}`}>
-      <svg width="5rem" height="2.5rem" viewBox="0 0 32 16">
+    <span className={clsx(['score-badge', `score-badge--${score}`, className])} {...restProps}>
+      <svg width="5rem" height="2.5rem" viewBox="0 0 32 16" name={name} aria-label={`${ariaLabelPrefix || ''}${score + (inPercentage ? '%' : '') || 'onbekend'}`}>
         <defs>
           <linearGradient id="gradient">
             {colors.gradient && colors.gradient.map((color, index) => (

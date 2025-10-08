@@ -1,7 +1,10 @@
 ---
 import { Article, Container } from '@developer-overheid-nl/don-register-components';
 import Base from './Base.astro';
+import i18n from "@developer-overheid-nl/don-register-components/i18n";
 // import styles from '../styles/detail.module.css';
+
+const { t } = i18n;
 
 const { appConfig, titlePage } = Astro.props;
 ---
@@ -17,10 +20,10 @@ const { appConfig, titlePage } = Astro.props;
       <Article className="description">
         <slot name="description" />
       </Article>
-      <aside class="aside">
+      <aside class="aside" aria-label={t('pages.aside-landmark')}>
         <slot name="aside" />
       </aside>
-      <aside class="meta">
+      <aside class="meta" aria-label={t('pages.meta-landmark')}>
         <slot name="meta" />
       </aside>
       <slot />

@@ -1,40 +1,107 @@
-De website(s) van het OSS- en API-register van developer.overheid.nl
+# developer.overheid.nl Register Site(s)
 
-> WORK IN PROGRESS
-> TODO: create proper README
+> De website(s) van het OSS- en API-register van developer.overheid.nl.
+
+Deze monorepo bevat de *nieuwe* websites van het [API-register](https://apis.developer.overheid.nl) en binnenkort ook het [OSS-register](https://oss.developer.overheid.nl).
+De codebase bestaat uit een aantal packages die de gezamelijke codebase (components, layouts, etc) vormen en een `apps`-package waarin de verschillende websites staan.
+
+## Packages
+
+### Components
+
+De package `components` bevat de generieke React componenten voor de sites. Deze zijn gebaseerd op de [Rijkshuisstijl Community Componenten](https://github.com/nl-design-system/rijkshuisstijl-community).  
+Deze package zal gepubliceerd worden op [NPM](https://www.npmjs.com/)
+
+### Layouts
+
+De package `layouts` bevat de (generieke) Astro layouts voor de sites. Op dit moment zitten ze in de map `don` zodat er evt andere organisaties bij kunnen komen. Dit kan veranderen.  
+Deze package bevat ook een aantal helper-scripts.  
+Deze package zal gepubliceerd worden op [NPM](https://www.npmjs.com/)
+
+### Locales
+
+De packages `locales` bevat het localization-bestand voor de (kleine) teksten op de site. Dit is op basis van [i18next](https://www.i18next.com/).  
+Op dit moment is er maar 1 locale beschikbaar, namelijk Nederlands (`nl/translation.json`), mogelijk dat er in de toekomst meer talen beschikbaar komen. De `apps` en andere packages kunnen dan aangepast worden met taaldetectielogica.  
+Deze package zal gepubliceerd worden op [NPM](https://www.npmjs.com/)
+
+## Apps
+
+### API-register
+
+> Dit is het API-register van de Nederlandse overheid (bèta): alle API’s op één plek.  
+> [apis.developer.overheid.nl](https://apis.developer.overheid.nl)
+
+De [Astro] site van het API-register.
+
+Zie ook de [README](/apps/api-register/README.md) van deze package.
+
+### TBD: OSS-register
+
+TODO: De [Astro] site van het OSS-register.
+
+### TBD: Demo
+
+TODO: een template site die gekloond kan worden door andere organisaties, waarin uitgelegd kan worden hoe de opzet veranderd kan worden etc.
+
+## Overige mappen en bestanden
+
+### Proprietary
+
+De map `proprietary` bevat bestanden die niet zomaar gebruikt mogen worden, zoals logo's, fonts en iconen.  
+Deze "package" zal ook niet gepubliceerd worden op NPM.  
+TODO: Een generieke optie aanbieden...  
+TODO: fix linking naar packages
+
+### Types
+
+Typescript declarations.
+
+### redocly.yaml
+
+Het bestand `redocly.yaml` bevat de OpenApiSpecification-configuratie van de API's van de apps. Als er een nieuwe app wordt toegevoegd kan hier de OAS toegevoegd worden. Met `pnpm ts:oas` wordt een typescript declaration aangemaakt op basis van de OAS.  
+Hiervoor wordt [OpenAPI TypeScript](https://openapi-ts.dev/) gebruikt en de apps maken gebruik van [openapi-fetch](https://openapi-ts.dev/openapi-fetch/) waardoor de inhoud van de API direct de correcte types heeft.
+
+## Structuur
+
+```mermaid
+graph LR
+    subgraph don-register-site
+        C[Components] ==> L[Layouts] & A[Apps]
+        L ==> A
+        I(Locales) -.-> C & L & A
+    end
+    subgraph rijkshuisstijl-community
+        Rcomp[RHC components] ---> C 
+        Rcss[RHC css] ----> L 
+        Rtokens[RHC tokens] ----> L
+    end
+    Astro ----> A & L
+    React ---> C & A
+    i18n(i18next) -.-> I
+    oasts(openapi-ts) -..-> don-register-site
+    oasfetch(openapi-fetch) -....-> A
+```
+
+## (Dev)Dependencies
+
+- Astro: Site build, routing, SSR / SSG
+- React: Components
+- i18Next: Localisation
+- Typescript
+- Vite
+- OpenAPI TypeScript: Type declarations & fetch
+- RijkshuisstijlCommunity: React Components
+
+## Contact
+
+[💬 Slack](https://codefornl.slack.com/archives/CFV4B3XE2)  •&nbsp;
+[🐘 Mastodon](https://social.overheid.nl/@developer)  •&nbsp;
+[👔 LinkedIn](https://www.linkedin.com/company/92926607)  •&nbsp;
+[📨 Schiet een issue in](https://github.com/developer-overheid-nl/don-register-site/issues) •&nbsp;
+[🔀 Github Discussions](https://github.com/orgs/developer-overheid-nl/discussions)  •&nbsp;
+[📜 Bijdragen](https://developer.overheid.nl/contributing)
 
 ---
-
-# Astro Starter Kit: Minimal
-
-```sh
-pnpm create astro@latest -- --template minimal
-```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
 
 ## 🧞 Commands
 
@@ -48,7 +115,3 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm preview`         | Preview your build locally, before deploying     |
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

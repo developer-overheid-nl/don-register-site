@@ -12,6 +12,7 @@ import { API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY } from "astro:env/ser
 
 import {Content as Intro} from '../../../partials/intro.md';
 
+Astro.response.headers.set('Cache-Control', 'public, max-age=7200');
 const { page = 1 } = Astro.params;
 
 const API_RESOURCE: keyof paths = `/${API_VERSION}/apis`;
@@ -34,7 +35,7 @@ const { data, error, response: { headers } } = await client.GET(API_RESOURCE, {
 const paginationObj = parseHeaders(headers);
 const pagination = getPagination(paginationObj, routingObj.url);
 
-const outOfBounds = paginationObj.totalPages && Number(page) > paginationObj.totalPages;
+const outOfBounds = Boolean(paginationObj.totalPages && Number(page) > paginationObj.totalPages);
 
 const { i18n: i18nApp } = appConfig;
 i18n.addResourceBundle(i18n.language, 'translation', i18nApp ? i18nApp[i18n.language] : {}, true, true);
@@ -65,7 +66,7 @@ const items = error ? null : data;
     </Alert>
   )}
 
-  { items && items.length > 0 && (
+  { items && items.length > 0 ? (
     <CardsList>
       {
         items.map((item, index, array) => (
@@ -100,6 +101,9 @@ const items = error ? null : data;
         ))
       }
     </CardsList>
+  ) : 
+  ( 
+    <Alert type="warning">{t('components.no-items-found')}</Alert> 
   )}
   <Pagination slot="pagination" {...pagination} />
 </DonOverview>

@@ -4,7 +4,7 @@ import resources from '@developer-overheid-nl/don-register-locales/nl' with { ty
 const i18nInstance: i18n = createInstance({
   lng: 'nl',
   fallbackLng: 'nl',
-  debug: true,
+  // debug: true,
 
   interpolation: {
     escapeValue: false, // not needed for react as it escapes by default

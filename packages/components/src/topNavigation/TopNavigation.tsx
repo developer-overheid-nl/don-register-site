@@ -41,8 +41,6 @@ export default function TopNavigation({ items, endItems }: TopNavigationProps) {
   const processedItems = processNavBarItems(items);
   const processedEndItems = endItems && processNavBarItems(endItems);
 
-  console.log(processedItems);
-
   return (
     <div className={styles.container}>
       <NavBar items={processedItems} endItems={processedEndItems} className={styles.navbar} />

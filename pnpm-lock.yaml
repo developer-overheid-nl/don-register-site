@@ -233,6 +233,9 @@ importers:
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
         version: 7.0.0
+      '@types/parse-link-header':
+        specifier: ^2.0.3
+        version: 2.0.3
       '@types/react':
         specifier: catalog:react19
         version: 19.1.8

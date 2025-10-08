@@ -7,8 +7,10 @@ export interface paginationHeaders {
   totalCount: number;
   totalPages: number;
   self: parseLinkHeader.Link;
+  first?: parseLinkHeader.Link;
   prev?: parseLinkHeader.Link;
   next?: parseLinkHeader.Link;
+  last?: parseLinkHeader.Link;
 }
 
 export const parseHeaders = (headers: Headers) => {
@@ -26,27 +28,13 @@ export const parseHeaders = (headers: Headers) => {
 }
 
 export const getPagination = (pagination: paginationHeaders | null | undefined, url: URL): PaginationProps => {
-  // const {self, next, prev} = links;
-
-  // const selfParts = getUrlParts(self.href);
-  // const nextParts = getUrlParts(next?.href);
-  // const prevParts = getUrlParts(prev?.href);
-
-  // const resultsBegin = selfParts && selfParts?.page - 1 * selfParts?.perPage;
-  // const resultsEnd = selfParts && selfParts?.page * selfParts?.perPage;
-  // const range = 
-  // console.log({self, next, prev}, {selfParts, nextParts, prevParts}, {resultsBegin, resultsEnd});
-
   if (!pagination) {
     return {
       links: []
     }
   }
 
-  // console.log(pagination)
-
-  // TODO: make them self from links header
-  const prev = pagination.prev !== undefined && new URL(`./${pagination.prev.page}${decodeURIComponent(url.search)}`, url).toString();
+  const prev = pagination.prev !== undefined && new URL(`./${(pagination.prev.page) < pagination.totalPages ? pagination.prev.page : pagination.last.page}${decodeURIComponent(url.search)}`, url).toString();
   const next = pagination.next !== undefined && new URL(`./${pagination.next.page}${decodeURIComponent(url.search)}`, url).toString();
 
   const rangeBegin = (pagination.currentPage -1) * pagination.perPage + 1;

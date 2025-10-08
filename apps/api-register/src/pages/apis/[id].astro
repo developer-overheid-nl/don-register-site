@@ -9,6 +9,7 @@ import createClient from "openapi-fetch";
 import { type paths } from "../../types/api-schema"; 
 import { API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY } from "astro:env/server";
 
+Astro.response.headers.set('Cache-Control', 'public, max-age=7200');
 const { id = '' } = Astro.params;
 const API_RESOURCE: keyof paths = `/${API_VERSION}/apis/{id}`;
 
@@ -22,11 +23,17 @@ const { data, error, response: { headers } } = await client.GET(API_RESOURCE, {
   },
 });
 
+// Localization
 const { i18n: i18nApp } = appConfig;
-i18n.addResourceBundle(i18n.language, 'translation', i18nApp ? i18nApp[i18n.language] : {}, true, true)
+const i18nPage = {
+  'pages.aside-landmark': 'Contactinformatie',
+}
+i18n.addResourceBundle(i18n.language, 'translation', i18nApp ? i18nApp[i18n.language] : {}, true, true);
+i18n.addResources(i18n.language, 'translation', i18nPage);
 
 const details = error ? null : data;
 
+// console.log(headers)
 ---
 
 { error && (
@@ -38,95 +45,106 @@ const details = error ? null : data;
 
 {details && (
   <DonDetail appConfig={appConfig} titlePage={details?.title}>
-      <HeadingGroup
-        slot="header"
-        title={`${t(`pages.details-of-item`)}: ${details?.title}`}
-        level={2} 
-        appearanceLevel={3} 
-      >
-        <Paragraph itemScope={true} itemType="https://schema.org/Organization" itemID={details?.organisation?.uri} className={`styles.aboveLink styles.publisher`}>
-            <span itemprop="name"><Link className={`styles.orgLink`} href={new URL(`./?organisation=${details?.organisation?.uri}`, Astro.url).toString()}>
-                {details?.organisation?.label}
-            </Link></span>
-        </Paragraph>
-      </HeadingGroup>
-      <Fragment slot="description">
-        <div class="utrecht-html"><Markdown text={details?.description} /></div>
-      </Fragment>
-      <Fragment slot="aside">
-        <DataSummary appearance="row">
-          <DataSummaryItem itemKey="Organisatie" itemValue={details?.organisation?.label || '-'} />
-          <DataSummaryItem itemKey="Contactpersoon" itemValue={details?.contact?.name || '-'} />
-          <DataSummaryItem itemKey="Email" itemValue={details?.contact?.email || '-'} />
-        </DataSummary>
-      </Fragment>
-      <Fragment slot="meta">
-        <Block layout="flex-row">
-          <div>{t(`components.version`, {version: details.lifecycle?.version || '-'})}</div>
-          <AlignBox gap="small" display="inline">
-            <span class="adr-score-label">{t(`components.adr-score`)}:</span>
+    <HeadingGroup
+      slot="header"
+      title={`${t(`pages.details-of-item`)}: ${details?.title}`}
+      level={2} 
+      appearanceLevel={3} 
+    >
+      <Paragraph itemScope={true} itemType="https://schema.org/Organization" itemID={details?.organisation?.uri} className={`styles.aboveLink styles.publisher`}>
+          <span itemprop="name"><Link className={`styles.orgLink`} href={new URL(`./?organisation=${details?.organisation?.uri}`, Astro.url).toString()}>
+              {details?.organisation?.label}
+          </Link></span>
+      </Paragraph>
+    </HeadingGroup>
+    <Fragment slot="description">
+      <div class="utrecht-html"><Markdown text={details?.description} /></div>
+    </Fragment>
+    <Fragment slot="aside">
+      <DataSummary appearance="row">
+        <DataSummaryItem itemKey="Organisatie" itemValue={details?.organisation?.label || '-'} />
+        <DataSummaryItem itemKey="Contactpersoon" itemValue={details?.contact?.name || '-'} />
+        <DataSummaryItem itemKey="Email" itemValue={details?.contact?.email || '-'} />
+      </DataSummary>
+    </Fragment>
+    <Fragment slot="meta">
+      <Block layout="flex-row">
+        <div>{t(`components.version`, {version: details.lifecycle?.version || '-'})}</div>
+        <AlignBox gap="small" display="inline">
+          <figure class="adr-score-figure">
+            <figcaption class="adr-score-label">{t(`components.adr-score`)}:</figcaption>
             <ScoreBadge name={`ADR`} score={details.adrScore} max={100} inPercentage />
             <span class="adr-score-info"><Link href={`https://developer-overheid-nl.github.io/oas-checker/?url=${details.oasUrl}`} target="_blank" rel="noopener noreferrer">Uitleg <Icon name="externe-link-inline" /></Link></span>
-          </AlignBox>
+          </figure>
+        </AlignBox>
+        <AlignBox gap="small" display="inline">
+          <IconBadge
+            name={details.lifecycle?.status || 'unknown'}
+            appearance={getAppearance(details?.lifecycle || {status: 'active'})}
+          />
+          {t(`components.status-${details?.lifecycle?.status}`, {context: getAppearance(details?.lifecycle), date: getDate(details?.lifecycle)})}
+        </AlignBox>
+      </Block>
+      <Heading level={3} appearanceLevel={4}>{t(`pages.tools`)}</Heading>
+      <Block appearance="outlined" layout="flex-col">
+        <AlignBox align="space-between" gap="small">
+          <label for="oasUrl" class="no-shrink">OpenAPI Specificatie</label>
+          <ReadOnlyTextInput
+            id="oasUrl"
+            type="url"
+            aria-label="Open Api Specificatie (OAS) URL"
+            defaultValue={details?.oasUrl}
+            name="oasUrl"
+          />
+          <CopyButton client:load text={details?.oasUrl} />
+          <Link href={`https://fetch.usebruno.com?url=${details?.oasUrl}&type=openapi`} target="_blank" rel="noopener noreferrer"><img src="https://fetch.usebruno.com/button.svg" alt="Fetch in Bruno" width="130" height="30" /></Link>
+        </AlignBox>
+        <div class="utrecht-badge-list" role="list">
+          <span class="open-in-label">{t(`components.open-in`)}</span>
+          <DataBadgeLink href={`https://redocly.github.io/redoc/?url=${details?.oasUrl}`} target="_blank" rel="noopener" role="listitem">
+            ReDoc
+          </DataBadgeLink>
+          <DataBadgeLink href={`https://editor.swagger.io/?url=${details?.oasUrl}`} target="_blank" rel="noopener" role="listitem">
+            Swagger
+          </DataBadgeLink>
+          <DataBadgeLink role="listitem" href={`https://elements-demo.stoplight.io/?spec=${details?.oasUrl}`} target="_blank" rel="noopener">
+            Stoplight
+          </DataBadgeLink>
+        </div>
+        <div class="utrecht-badge-list" role="list">
+          <span class="download-as-label">{t(`components.download-as`)}</span>
+          <DataBadgeLink href={`download/${id}/bruno-collection.zip`} role="listitem">Bruno Collection (.zip)</DataBadgeLink>
+          <DataBadgeLink href={`download/${id}/postman.json`} role="listitem">Postman Collection (.json)</DataBadgeLink>
+          <DataBadgeLink href={`download/${id}/oas.json`} role="listitem">OAS 3.1 (.json)</DataBadgeLink>
+        </div>
+        {details.docsUrl ? (
           <AlignBox gap="small" display="inline">
-            <IconBadge
-              name={details.lifecycle?.status || 'unknown'}
-              appearance={getAppearance(details?.lifecycle || {status: 'active'})}
-            />
-            {t(`components.status-${details?.lifecycle?.status}`, {context: getAppearance(details?.lifecycle), date: getDate(details?.lifecycle)})}
-          </AlignBox>
-        </Block>
-        <Heading level={3} appearanceLevel={4}>{t(`pages.tools`)}</Heading>
-        <Block appearance="outlined" layout="flex-col">
-          <AlignBox align="space-between" gap="small">
-            <label for="oasUrl" class="no-shrink">OpenAPI Specificatie</label>
-            <ReadOnlyTextInput
-              id="oasUrl"
-              type="url"
-              aria-label="Open Api Specificatie (OAS) URL"
-              defaultValue={details?.oasUrl}
-              name="oasUrl"
-            />
-            <CopyButton client:load text={details?.oasUrl} />
-            <Link href={`https://fetch.usebruno.com?url=${details?.oasUrl}&type=openapi`} target="_blank" rel="noopener noreferrer"><img src="https://fetch.usebruno.com/button.svg" alt="Fetch in Bruno" width="130" height="30" /></Link>
-          </AlignBox>
-          <div class="utrecht-badge-list" role="list">
-            <span class="open-in-label">{t(`components.open-in`)}</span>
-            <DataBadgeLink href={`https://redocly.github.io/redoc/?url=${details?.oasUrl}`} target="_blank" rel="noopener" role="listitem">
-              ReDoc
-            </DataBadgeLink>
-            <DataBadgeLink href={`https://editor.swagger.io/?url=${details?.oasUrl}`} target="_blank" rel="noopener" role="listitem">
-              Swagger
-            </DataBadgeLink>
-            <DataBadgeLink role="listitem" href={`https://elements-demo.stoplight.io/?spec=${details?.oasUrl}`} target="_blank" rel="noopener">
-              Stoplight
-            </DataBadgeLink>
-          </div>
-          <div class="utrecht-badge-list" role="list">
-            <span class="download-as-label">{t(`components.download-as`)}</span>
-            <DataBadgeLink href={`download/${id}/bruno-collection.zip`}>Bruno Collection (.zip)</DataBadgeLink>
-            <DataBadgeLink href={`download/${id}/postman.json`}>Postman Collection (.json)</DataBadgeLink>
-            <DataBadgeLink href={`download/${id}/oas.json`}>OAS 3.1 (.json)</DataBadgeLink>
-          </div>
-          {details.docsUrl ? (
-            <AlignBox gap="small" display="inline">
-              <span class="read-docs-label">{t(`components.read-documentation-at`)} </span>
-              <Link href={details.docsUrl}>{details.docsUrl}</Link>
-            </AlignBox>) : null}
-        </Block>
-        <Heading level={3} appearanceLevel={4}>{t(`pages.servers-and-auth`)}</Heading>
-        <Block appearance="outlined">
-          <Heading level={4} appearanceLevel={5}>{t(`pages.servers`)}</Heading>
-          <DataSummary appearance="column" contained={details.auth ? false : true}>
-            {details.servers ? details.servers?.map((server) => (
-              <DataSummaryItem itemKey={server.description} itemValue={server.url} />
-            )) : <DataSummaryItem itemValue={t('components.no-items-present', { items: 'servers'})} />}
-          </DataSummary>
-          {details.auth ? (<>
-            <Heading level={4} appearanceLevel={5}>{t(`pages.authentication`)}</Heading>
-            <!--TODO: Add authentication details here --><pre hidden>{JSON.stringify(details.auth, null, 2)}</pre>
-          </>) : null}
-        </Block>
-      </Fragment>
+            <span class="read-docs-label">{t(`components.read-documentation-at`)} </span>
+            <Link href={details.docsUrl}>{details.docsUrl}</Link>
+          </AlignBox>) : null}
+      </Block>
+      <Heading level={3} appearanceLevel={4}>{t(`pages.servers-and-auth`)}</Heading>
+      <Block appearance="outlined">
+        <Heading level={4} appearanceLevel={5}>{t(`pages.servers`)}</Heading>
+        <DataSummary appearance="column" contained={details.auth ? false : true}>
+          {details.servers ? details.servers?.map((server) => (
+            <DataSummaryItem itemKey={server.description} itemValue={server.url} />
+          )) : <DataSummaryItem itemValue={t('components.no-items-present', { items: 'servers'})} />}
+        </DataSummary>
+        {details.auth ? (<>
+          <Heading level={4} appearanceLevel={5}>{t(`pages.authentication`)}</Heading>
+          <!--TODO: Add authentication details here --><pre hidden>{JSON.stringify(details.auth, null, 2)}</pre>
+        </>) : null}
+      </Block>
+    </Fragment>
 </DonDetail>)
 }
+
+<style>
+  .adr-score-figure {
+    display: contents;
+  }
+  .adr-score-label {
+    display: inline-block;
+  }
+</style>

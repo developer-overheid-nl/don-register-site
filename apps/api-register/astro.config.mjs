@@ -23,6 +23,9 @@ export default defineConfig({
     port: 4321,
   },
   integrations: [react()],
+  build: {
+    inlineStylesheets: 'never'
+  },
   vite: {
     // Settings for parse-link-header, see .env file
     define: {

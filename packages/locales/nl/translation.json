@@ -47,6 +47,8 @@
     "meta-description": "Welkom bij het API-Register. Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid."
   },
   "pages": {
+    "aside-landmark": "Zijbalk",
+    "meta-landmark": "Metaformatie",
     "details-of-item": "Details van $t(components.items, {\"count\": 1 })",
     "overview": "Overzicht",
     "tools": "Aan de slag",
