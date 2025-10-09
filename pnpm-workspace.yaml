@@ -3,7 +3,7 @@ packages:
   - 'apps/*'
 
 catalog:
-  astro: 5.12.1
+  astro: 5.14.3
   '@astrojs/react': 4.3.0
   clsx: 2.1.1
   i18next: 25.3.2
