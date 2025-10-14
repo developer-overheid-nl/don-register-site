@@ -56,8 +56,8 @@ export default function ScoreBadge (props : ScoreBadgeProps) {
               dx="0.25"
               dy="0.25"
               stdDeviation="0.5"
-              flood-color="#fff"
-              flood-opacity="1" />
+              floodColor="#fff"
+              floodOpacity="1" />
           </filter>
         </defs>
         <circle cx="16" cy="13" r="10" fill="none" 
