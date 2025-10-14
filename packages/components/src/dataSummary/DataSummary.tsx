@@ -2,7 +2,7 @@ import { DataSummary as RHCDataSummary, type DataSummaryProps as RHCDataSummaryP
 import styles from "./styles.module.css";
 import clsx from "clsx";
 
-interface DataSummaryProps extends RHCDataSummaryProps {
+export interface DataSummaryProps extends RHCDataSummaryProps {
   contained?: boolean;
 }
 

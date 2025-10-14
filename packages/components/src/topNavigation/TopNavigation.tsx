@@ -11,7 +11,7 @@ export interface NavBarItem {
   icon?: string | ReactElement<IconProps>;
 }
 
-interface TopNavigationProps {
+export interface TopNavigationProps {
   items: Array<NavBarItem>;
   endItems?: Array<NavBarItem>;
 }

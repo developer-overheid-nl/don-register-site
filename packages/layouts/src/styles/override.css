@@ -20,7 +20,7 @@
   --rhc-font-size-body-intro: 1.25rem;
   --rhc-font-size-heading-level-5: 1.25rem;
   --rhc-font-size-heading-level-4: 1.5rem;
-  --rhc-font-size-heading-level-3: 1.875rem;
+  --rhc-font-size-heading-level-3: 1.75rem;
   --rhc-font-size-heading-level-2: 2rem;
   --rhc-font-size-heading-level-1: 2.25rem;
   --nl-heading-level-1-font-size: var(--rhc-font-size-heading-level-1);
@@ -121,6 +121,11 @@
   /* --utrecht-pagination-relative-link-hover-color: <color>; */
   /* --utrecht-pagination-relative-link-disabled-background-color: <color>; */
   /* --utrecht-pagination-relative-link-disabled-color: <color>; */
+  --utrecht-code-background-color: var(--rhc-color-cool-grey-50);
+  --utrecht-code-color: var(--rhc-color-cool-grey-800);
+  /* --utrecht-code-font-family: *; */
+  /* --utrecht-code-font-size: <length>; */
+  /* --utrecht-code-line-height: <number>; */
 }
 
 .utrecht-document {
@@ -130,14 +135,15 @@
 .utrecht-html h1,
 .utrecht-html h2,
 .utrecht-html h3 {
-  --utrecht-paragraph-margin-block-start: 2rem;
-  margin-block-start: calc(var(--utrecht-space-around, 0) * var(--utrecht-paragraph-margin-block-start, 0));
+  --utrecht-heading-1-margin-block-start: 2rem;
+  --utrecht-heading-2-margin-block-start: 2rem;
+  --utrecht-heading-3-margin-block-start: 2rem;
 }
 
 .utrecht-html h4,
 .utrecht-html h5 {
-  --utrecht-paragraph-margin-block-start: 1.5rem;
-  margin-block-start: calc(var(--utrecht-space-around, 0) * var(--utrecht-paragraph-margin-block-start, 0));
+  --utrecht-heading-4-margin-block-start: 1.5rem;
+  --utrecht-heading-5-margin-block-start: 1.5rem;
 }
 
 .utrecht-html h1 + p,

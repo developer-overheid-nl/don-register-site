@@ -7,12 +7,6 @@ import Icon from "../iconsSprite/Icon";
 import Heading from "../heading/Heading";
 import { processNavBarItems, type NavBarItem } from "../topNavigation/TopNavigation";
 
-// interface LinkItem {
-//   id: string;
-//   label: string;
-//   href: string;
-//   icon: string | ReactNode;
-// }
 export interface ColumnProps {
   title: string;
   items?: NavBarItem[];

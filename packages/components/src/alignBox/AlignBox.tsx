@@ -20,7 +20,7 @@ type Align =
 
 type Gap = 'none' | 'small' | 'medium' | 'large';
 
-interface AlignBoxProps {
+export interface AlignBoxProps {
   align?: Align;
   gap?: Gap;
   direction? : 'row' | 'column';

@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import styles from './styles.module.css'
 import { type HTMLAttributes, type ReactNode } from 'react';
 
-interface BlockProps extends HTMLAttributes<HTMLDivElement> {
+export interface BlockProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   children?: ReactNode;
   appearance?: 'clear' | 'outlined' | 'filled';

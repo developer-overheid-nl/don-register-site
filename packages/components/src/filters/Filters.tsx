@@ -1,7 +1,5 @@
 // 'use client';
 
-import { useStore } from '@nanostores/react';
-import { fetchHook } from '../fetch';
 import { use, type HTMLProps, type PropsWithChildren } from 'react';
 import { Heading, LinkList, LinkListLink } from "@rijkshuisstijl-community/components-react";
 import DataBadgeLink from '../dataBadgeLink/DataBadgeLink';
@@ -10,10 +8,11 @@ import styles from './styles.module.css';
 import clsx from 'clsx';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 import i18n from '../i18n';
-// import { dataStore } from '../store';
 
 export interface FiltersProps extends HTMLProps<HTMLDivElement> {
   routing?: Record<string, any>;
+  data: any;
+  headers: any;
 }
 
 const ListLinkIcon = ({ isActive }: { isActive: boolean }) => {
@@ -24,8 +23,7 @@ const ListLinkIcon = ({ isActive }: { isActive: boolean }) => {
 
 const Filters = (props: PropsWithChildren<FiltersProps>) => {
   const { t } = useTranslation();
-  const { data, headers } = use(fetchHook(`https://api.don.apps.digilab.network/api-register/v1/organisations`, '153ede87-7c4c-4f22-99b2-d718423dd18d'));
-  const { className, routing } = props;
+  const { data, headers, className, routing } = props;
   const organisations = data && !data.message ? data : [];
   const currentOrganisation = organisations && organisations.find(org => org?.uri === routing?.query?.organisation);
 

@@ -6,7 +6,7 @@ import { Heading, Link } from '@rijkshuisstijl-community/components-react';
 import { Lint } from "../../../../proprietary";
 import { IconDeltaNaarLinksInline } from "../../../../proprietary/icons";
 
-interface HeaderProps {
+export interface HeaderProps {
   titleSite: string;
   titlePage: string;
   mainSite: { name: string; url: string };

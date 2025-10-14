@@ -49,7 +49,6 @@ const details = error ? null : data;
       slot="header"
       title={`${t(`pages.details-of-item`)}: ${details?.title}`}
       level={2} 
-      appearanceLevel={3} 
     >
       <Paragraph itemScope={true} itemType="https://schema.org/Organization" itemID={details?.organisation?.uri} className={`styles.aboveLink styles.publisher`}>
           <span itemprop="name"><Link className={`styles.orgLink`} href={new URL(`./?organisation=${details?.organisation?.uri}`, Astro.url).toString()}>
@@ -58,7 +57,8 @@ const details = error ? null : data;
       </Paragraph>
     </HeadingGroup>
     <Fragment slot="description">
-      <div class="utrecht-html"><Markdown text={details?.description} /></div>
+      <Heading level={3} className="sr-only">{t(`pages.description`)}</Heading>
+      <div class="utrecht-html"><Markdown text={details?.description} minHeadingDepth={4} /></div>
     </Fragment>
     <Fragment slot="aside">
       <DataSummary appearance="row">
@@ -85,7 +85,7 @@ const details = error ? null : data;
           {t(`components.status-${details?.lifecycle?.status}`, {context: getAppearance(details?.lifecycle), date: getDate(details?.lifecycle)})}
         </AlignBox>
       </Block>
-      <Heading level={3} appearanceLevel={4}>{t(`pages.tools`)}</Heading>
+      <Heading level={3}>{t(`pages.tools`)}</Heading>
       <Block appearance="outlined" layout="flex-col">
         <AlignBox align="space-between" gap="small">
           <label for="oasUrl" class="no-shrink">OpenAPI Specificatie</label>
@@ -123,16 +123,16 @@ const details = error ? null : data;
             <Link href={details.docsUrl}>{details.docsUrl}</Link>
           </AlignBox>) : null}
       </Block>
-      <Heading level={3} appearanceLevel={4}>{t(`pages.servers-and-auth`)}</Heading>
+      <Heading level={4}>{t(`pages.servers-and-auth`)}</Heading>
       <Block appearance="outlined">
-        <Heading level={4} appearanceLevel={5}>{t(`pages.servers`)}</Heading>
+        <Heading level={5}>{t(`pages.servers`)}</Heading>
         <DataSummary appearance="column" contained={details.auth ? false : true}>
           {details.servers ? details.servers?.map((server) => (
             <DataSummaryItem itemKey={server.description} itemValue={server.url} />
           )) : <DataSummaryItem itemValue={t('components.no-items-present', { items: 'servers'})} />}
         </DataSummary>
         {details.auth ? (<>
-          <Heading level={4} appearanceLevel={5}>{t(`pages.authentication`)}</Heading>
+          <Heading level={5}>{t(`pages.authentication`)}</Heading>
           <!--TODO: Add authentication details here --><pre hidden>{JSON.stringify(details.auth, null, 2)}</pre>
         </>) : null}
       </Block>

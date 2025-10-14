@@ -20,7 +20,6 @@
     "@rijkshuisstijl-community/components-react": "catalog:",
     "astro": "catalog:",
     "i18next": "catalog:",
-    "nanostores": "catalog:",
     "openapi-fetch": "catalog:"
   },
   "devDependencies": {

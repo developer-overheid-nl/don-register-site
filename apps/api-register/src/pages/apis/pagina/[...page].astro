@@ -15,18 +15,25 @@ import {Content as Intro} from '../../../partials/intro.md';
 Astro.response.headers.set('Cache-Control', 'public, max-age=7200');
 const { page = 1 } = Astro.params;
 
-const API_RESOURCE: keyof paths = `/${API_VERSION}/apis`;
+const APIS_RESOURCE: keyof paths = `/${API_VERSION}/apis`;
+const ORGS_RESOURCE: keyof paths = `/${API_VERSION}/organisations`;
 
 const routingObj = getRouting(Astro.url, Astro.originPathname, Astro.routePattern, Astro.params);
 
 const client = createClient<paths>({ baseUrl: `${API_URL}/${API_ENDPOINT}` });
-const { data, error, response: { headers } } = await client.GET(API_RESOURCE, {
+const { data, error, response: { headers } } = await client.GET(APIS_RESOURCE, {
   params: {
     query: { 
       page: Number(page),
       ...routingObj.query,
     },
   },
+  headers: {
+    'x-api-key': API_X_API_KEY,
+  },
+});
+
+const { data: filters, error: filtersError, response: { headers: filtersHeaders } } = await client.GET(ORGS_RESOURCE, {
   headers: {
     'x-api-key': API_X_API_KEY,
   },
@@ -49,9 +56,9 @@ const items = error ? null : data;
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
   <div class="markdown-content utrecht-html" slot="header"><Intro /></div>
   <!-- <div slot="search">TODO: Search form</div> -->
-  <Filters slot="filters" routing={routingObj} />
+  <Filters slot="filters" routing={routingObj} data={filters} headers={filtersHeaders} />
 
-  <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2} appearanceLevel={3}>
+  <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2}>
     <Paragraph role="status">{t('components.search-results-amount', {context: i18nContext, amount: paginationObj.totalCount})}</Paragraph>
   </HeadingGroup>
 
@@ -93,7 +100,7 @@ const items = error ? null : data;
                   </div>
               </div>
               </HeadingGroup>
-              <div slot="description" class="description utrecht-html"><Markdown text={item.description} openLinksInNewTab /></div>
+              <div slot="description" class="description utrecht-html"><Markdown text={item.description} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
               <span slot="metadata" class="adr-score-label">{t(`components.adr-score`)}:</span>
               <ScoreBadge slot="metadata" className="meta" name={`ADR`} score={item.adrScore} max={100} inPercentage />
             </CardAsLink>

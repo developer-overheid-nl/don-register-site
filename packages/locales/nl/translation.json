@@ -51,6 +51,7 @@
     "meta-landmark": "Metaformatie",
     "details-of-item": "Details van $t(components.items, {\"count\": 1 })",
     "overview": "Overzicht",
+    "description": "Beschrijving",
     "tools": "Aan de slag",
     "documentation": "Documentatie",
     "servers-and-auth": "Servers en authenticatie",
