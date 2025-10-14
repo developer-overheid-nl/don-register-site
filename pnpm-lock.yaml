@@ -71,7 +71,7 @@ importers:
     dependencies:
       '@astrojs/node':
         specifier: ^9.3.3
-        version: 9.3.3(astro@5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.8.3))
+        version: 9.3.3(astro@5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.9.3))
       '@astrojs/react':
         specifier: 'catalog:'
         version: 4.3.0(@types/node@24.0.8)(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -89,13 +89,13 @@ importers:
         version: 19.1.6(@types/react@19.1.8)
       astro:
         specifier: 'catalog:'
-        version: 5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.8.3)
+        version: 5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.9.3)
       clsx:
         specifier: 'catalog:'
         version: 2.1.1
       i18next:
         specifier: 'catalog:'
-        version: 25.3.2(typescript@5.8.3)
+        version: 25.3.2(typescript@5.9.3)
       openapi-fetch:
         specifier: 'catalog:'
         version: 0.14.0
@@ -111,7 +111,7 @@ importers:
     devDependencies:
       openapi-typescript:
         specifier: 'catalog:'
-        version: 7.9.1(typescript@5.8.3)
+        version: 7.9.1(typescript@5.9.3)
       vite:
         specifier: 'catalog:'
         version: 7.1.5(@types/node@24.0.8)
@@ -132,10 +132,10 @@ importers:
         version: 6.0.1(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       astro:
         specifier: 'catalog:'
-        version: 5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.8.3)
+        version: 5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.9.3)
       i18next:
         specifier: 'catalog:'
-        version: 25.3.2(typescript@5.8.3)
+        version: 25.3.2(typescript@5.9.3)
       openapi-fetch:
         specifier: 'catalog:'
         version: 0.14.0
@@ -175,7 +175,7 @@ importers:
         version: 2.1.1
       i18next:
         specifier: 'catalog:'
-        version: 25.3.2(typescript@5.8.3)
+        version: 25.3.2(typescript@5.9.3)
       parse-link-header:
         specifier: ^2.0.0
         version: 2.0.0
@@ -187,7 +187,7 @@ importers:
         version: 19.1.0(react@19.1.0)
       react-i18next:
         specifier: ^15.6.1
-        version: 15.6.1(i18next@25.3.2(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)
+        version: 15.6.1(i18next@25.3.2(typescript@5.9.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.9.3)
       react-markdown:
         specifier: 'catalog:'
         version: 10.1.0(@types/react@19.1.8)(react@19.1.0)
@@ -195,8 +195,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
+        specifier: ^5.9.3
+        version: 5.9.3
 
   packages/layouts:
     dependencies:
@@ -226,7 +226,7 @@ importers:
         version: 19.1.6(@types/react@19.1.8)
       i18next:
         specifier: 'catalog:'
-        version: 25.3.2(typescript@5.8.3)
+        version: 25.3.2(typescript@5.9.3)
       parse-link-header:
         specifier: 2.0.0
         version: 2.0.0
@@ -237,14 +237,14 @@ importers:
         specifier: catalog:react19
         version: 19.1.0(react@19.1.0)
       typescript:
-        specifier: 5.8.3
-        version: 5.8.3
+        specifier: 5.9.3
+        version: 5.9.3
 
   packages/locales:
     dependencies:
       i18next:
         specifier: 'catalog:'
-        version: 25.3.2(typescript@5.8.3)
+        version: 25.3.2(typescript@5.9.3)
 
 packages:
 
@@ -2259,8 +2259,8 @@ packages:
     resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
     engines: {node: '>=16'}
 
-  typescript@5.8.3:
-    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -2644,10 +2644,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/node@9.3.3(astro@5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.8.3))':
+  '@astrojs/node@9.3.3(astro@5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.9.3))':
     dependencies:
       '@astrojs/internal-helpers': 0.7.1
-      astro: 5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.8.3)
+      astro: 5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.9.3)
       send: 1.2.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -3576,7 +3576,7 @@ snapshots:
 
   array-iterate@2.0.1: {}
 
-  astro@5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.8.3):
+  astro@5.12.1(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.9.3):
     dependencies:
       '@astrojs/compiler': 2.12.2
       '@astrojs/internal-helpers': 0.6.1
@@ -3626,7 +3626,7 @@ snapshots:
       smol-toml: 1.4.1
       tinyexec: 0.3.2
       tinyglobby: 0.2.15
-      tsconfck: 3.1.6(typescript@5.8.3)
+      tsconfck: 3.1.6(typescript@5.9.3)
       ultrahtml: 1.6.0
       unifont: 0.5.2
       unist-util-visit: 5.0.0
@@ -3639,7 +3639,7 @@ snapshots:
       yocto-spinner: 0.2.3
       zod: 3.25.67
       zod-to-json-schema: 3.24.6(zod@3.25.67)
-      zod-to-ts: 1.2.0(typescript@5.8.3)(zod@3.25.67)
+      zod-to-ts: 1.2.0(typescript@5.9.3)(zod@3.25.67)
     optionalDependencies:
       sharp: 0.33.5
     transitivePeerDependencies:
@@ -4081,11 +4081,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  i18next@25.3.2(typescript@5.8.3):
+  i18next@25.3.2(typescript@5.9.3):
     dependencies:
       '@babel/runtime': 7.27.6
     optionalDependencies:
-      typescript: 5.8.3
+      typescript: 5.9.3
 
   import-meta-resolve@4.1.0: {}
 
@@ -4577,14 +4577,14 @@ snapshots:
 
   openapi-typescript-helpers@0.0.15: {}
 
-  openapi-typescript@7.9.1(typescript@5.8.3):
+  openapi-typescript@7.9.1(typescript@5.9.3):
     dependencies:
       '@redocly/openapi-core': 1.34.5(supports-color@10.2.2)
       ansi-colors: 4.1.3
       change-case: 5.4.4
       parse-json: 8.3.0
       supports-color: 10.2.2
-      typescript: 5.8.3
+      typescript: 5.9.3
       yargs-parser: 21.1.1
 
   p-limit@6.2.0:
@@ -4669,15 +4669,15 @@ snapshots:
       react: 19.1.0
       scheduler: 0.26.0
 
-  react-i18next@15.6.1(i18next@25.3.2(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3):
+  react-i18next@15.6.1(i18next@25.3.2(typescript@5.9.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.9.3):
     dependencies:
       '@babel/runtime': 7.27.6
       html-parse-stringify: 3.0.1
-      i18next: 25.3.2(typescript@5.8.3)
+      i18next: 25.3.2(typescript@5.9.3)
       react: 19.1.0
     optionalDependencies:
       react-dom: 19.1.0(react@19.1.0)
-      typescript: 5.8.3
+      typescript: 5.9.3
 
   react-markdown@10.1.0(@types/react@19.1.8)(react@19.1.0):
     dependencies:
@@ -4975,15 +4975,15 @@ snapshots:
 
   trough@2.2.0: {}
 
-  tsconfck@3.1.6(typescript@5.8.3):
+  tsconfck@3.1.6(typescript@5.9.3):
     optionalDependencies:
-      typescript: 5.8.3
+      typescript: 5.9.3
 
   tslib@2.8.1: {}
 
   type-fest@4.41.0: {}
 
-  typescript@5.8.3: {}
+  typescript@5.9.3: {}
 
   ufo@1.6.1: {}
 
@@ -5216,9 +5216,9 @@ snapshots:
     dependencies:
       zod: 3.25.67
 
-  zod-to-ts@1.2.0(typescript@5.8.3)(zod@3.25.67):
+  zod-to-ts@1.2.0(typescript@5.9.3)(zod@3.25.67):
     dependencies:
-      typescript: 5.8.3
+      typescript: 5.9.3
       zod: 3.25.67
 
   zod@3.25.67: {}

@@ -28,7 +28,7 @@
     "@rijkshuisstijl-community/design-tokens": "catalog:",
     "i18next": "catalog:",
     "parse-link-header": "2.0.0",
-    "typescript": "5.8.3"
+    "typescript": "5.9.3"
   },
   "peerDependencies": {
     "@types/parse-link-header": "^2.0.3",
