@@ -20,7 +20,7 @@
     "ts:test": "tsc --noEmit"
   },
   "dependencies": {
-    "@astrojs/node": "^9.3.3",
+    "@astrojs/node": "catalog:",
     "@astrojs/react": "catalog:",
     "@developer-overheid-nl/don-register-components": "workspace:*",
     "@developer-overheid-nl/don-register-layouts": "workspace:*",
