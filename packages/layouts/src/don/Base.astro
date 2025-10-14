@@ -9,7 +9,7 @@ import { Container, IconsSprite, Header, TopNavigation, Footer } from '@develope
 import i18next from 'i18next';
 import resources from '@developer-overheid-nl/don-register-locales/nl' with { type: "json" };
 
-const { appConfig: {title: titleSite, mainSite, topNavigation, footer}, titlePage } = Astro.props;
+const { appConfig: {title: titleSite, mainSite, urlHomepage, topNavigation, footer}, titlePage } = Astro.props;
 const { routePattern } = Astro;
 
 i18next.init({
@@ -42,7 +42,7 @@ i18next.init({
     </div>
     <div class="don-document-header">
     <Container>
-      <Header titleSite={titleSite} titlePage={titlePage} mainSite={mainSite} urlCurrent={routePattern} />
+      <Header titleSite={titleSite} titlePage={titlePage} mainSite={mainSite} urlCurrent={routePattern} urlHomepage={urlHomepage} logoLinkBehaviour='main-site-on-home' />
     </Container>
     <TopNavigation items={topNavigation.items} endItems={topNavigation.endItems} />
     </div>

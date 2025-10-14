@@ -1,12 +1,11 @@
 import type { JSX } from 'react';
 import { Logo } from '../../../../proprietary';
 
-export default function SiteLogo({ urlHomepage = '/', urlCurrent }: { urlHomepage?: string, urlCurrent?: string }) {
-  const isRoot = urlHomepage !== urlCurrent;
-  const element = isRoot ? 'a' : 'div';
+export default function SiteLogo({ isRoot, href }: { isRoot: boolean, href: string }) {
+  const element = !isRoot ? 'a' : 'div';
   const props = {
     className: 'site-logo',
-    ...(isRoot ? { href: urlHomepage, rel: 'home' } : {}),
+    ...(!isRoot ? { href } : {}),
   };
 
   const Element = element as keyof JSX.IntrinsicElements;

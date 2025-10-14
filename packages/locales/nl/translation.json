@@ -1,9 +1,9 @@
 {
   "components": {
     "back-to-homepage": "Terug naar de homepage",
-    "back-to-homepage-landmark": "Naar dit domein",
+    "back-to-homepage-landmark": "$t(components.back-to-homepage)",
     "back-to-main-site": "Terug naar {{siteName}}",
-    "back-to-main-site-landmark": "Naar hoofddomein",
+    "back-to-main-site-landmark": "$t(components.back-to-main-site)",
     "current-filter": "Huidige filter:",
     "remove-filter": " - Klik om filter te verwijderen",
     "filter-by": "Filter op {{type}}",

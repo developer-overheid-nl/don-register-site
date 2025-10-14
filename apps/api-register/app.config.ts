@@ -8,6 +8,7 @@ export default {
     name: "developer.overheid.nl",
     url: mainSiteUrl,
   },
+  urlHomepage: ['/', '/apis/pagina/[...page]'],
   items: {
     type: 'apis',
   },
@@ -15,7 +16,8 @@ export default {
     nl: {
       components: {
         items_one: 'API',
-        items_other: 'API’s'
+        items_other: 'API’s',
+        'back-to-homepage': 'Terug naar het API-registeroverzicht',
       },
     },
   } as Record<string, i18nTranslations>,
