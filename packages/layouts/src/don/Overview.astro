@@ -30,13 +30,13 @@ const { appConfig, titlePage } = Astro.props;
   .overview-content {
     display: grid;
     grid-template-columns: 
-      [header-start search-start filters-start]1fr[filters-end
-      results-start pagination-start]3fr[header-end search-end results-end pagination-end];
+      [search-start filters-start] 1fr [filters-end search-end
+      header-start results-start pagination-start] 3fr [header-end results-end pagination-end];
     grid-template-rows: 
-      [header-start]auto[header-end 
-      search-start]0[search-end 
-      filters-start results-start]auto[results-end filters-end
-      pagination-start]auto[pagination-end];
+      [header-start] auto [header-end 
+      search-start results-start] minmax(0, auto) [search-end 
+      filters-start] auto [filters-end results-end
+      pagination-start] auto [pagination-end];
     gap: 1rem;
   }
 
@@ -53,7 +53,7 @@ const { appConfig, titlePage } = Astro.props;
 
     &:empty {
       display: none;
-      margin-bottom: -1rem;
+      /* margin-bottom: -1rem; */
     }
   }
 

@@ -1,7 +1,7 @@
 ---
 import appConfig from "../../../../app.config";
 import { DonOverview, getRouting, parseHeaders, getPagination } from "@developer-overheid-nl/don-register-layouts";
-import { Alert, CardAsLink, CardsList, CardsListItem, DataBadgeLink, Filters, getAppearance, getDate, Heading, HeadingGroup, IconBadge, Link, Markdown, Pagination, /*OverviewContainer,*/ Paragraph, ScoreBadge } from "@developer-overheid-nl/don-register-components";
+import { Alert, Article, CardAsLink, CardsList, CardsListItem, DataBadgeLink, Filters, getAppearance, getDate, Heading, HeadingGroup, IconBadge, Link, Markdown, Pagination, /*OverviewContainer,*/ Paragraph, ScoreBadge, Search } from "@developer-overheid-nl/don-register-components";
 // import { configStore } from "@developer-overheid-nl/don-register-components";
 
 import { t } from "i18next";
@@ -17,11 +17,13 @@ const { page = 1 } = Astro.params;
 
 const APIS_RESOURCE: keyof paths = `/${API_VERSION}/apis`;
 const ORGS_RESOURCE: keyof paths = `/${API_VERSION}/organisations`;
+const SEARCH_RESOURCE: keyof paths = `/${API_VERSION}/apis/_search`;
 
 const routingObj = getRouting(Astro.url, Astro.originPathname, Astro.routePattern, Astro.params);
 
 const client = createClient<paths>({ baseUrl: `${API_URL}/${API_ENDPOINT}` });
-const { data, error, response: { headers } } = await client.GET(APIS_RESOURCE, {
+
+const { data, error, response: { url, headers } } = await client.GET(routingObj.query?.q ? SEARCH_RESOURCE : APIS_RESOURCE, {
   params: {
     query: { 
       page: Number(page),
@@ -31,12 +33,18 @@ const { data, error, response: { headers } } = await client.GET(APIS_RESOURCE, {
   headers: {
     'x-api-key': API_X_API_KEY,
   },
+}).catch(error => {
+  console.error(error);
+  return {data: null, error, response: new Response()}
 });
 
 const { data: filters, error: filtersError, response: { headers: filtersHeaders } } = await client.GET(ORGS_RESOURCE, {
   headers: {
     'x-api-key': API_X_API_KEY,
   },
+}).catch(error => {
+  console.error(error);
+  return {data: null, error, response: new Response()}
 });
 
 const paginationObj = parseHeaders(headers);
@@ -54,16 +62,16 @@ const items = error ? null : data;
 ---
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
-  <div class="markdown-content utrecht-html" slot="header"><Intro /></div>
-  <!-- <div slot="search">TODO: Search form</div> -->
-  <Filters slot="filters" routing={routingObj} data={filters} headers={filtersHeaders} />
+  <Article className="markdown-content utrecht-html" slot="header"><Intro /></Article>
+  <Search slot="search"></Search>
+  <Filters slot="filters" routing={routingObj} data={filters} headers={filtersHeaders} error={filtersError} />
 
   <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2}>
     <Paragraph role="status">{t('components.search-results-amount', {context: i18nContext, amount: paginationObj.totalCount})}</Paragraph>
   </HeadingGroup>
 
   { error && (
-    <Alert type="error">{(error as unknown as any).message || t('components.fuzz-error')}</Alert>
+    <Alert type="error">{(error as unknown as any).message || (error as unknown as any).error_msg || t('components.fuzz-error')}</Alert>
   )}
 
   { outOfBounds && (

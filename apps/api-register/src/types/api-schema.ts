@@ -28,6 +28,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/apis/_search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Zoek API's
+         * @description Zoekt geregistreerde API's op basis van titel.
+         */
+        get: operations["searchApis"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/apis/{id}": {
         parameters: {
             query?: never;
@@ -64,6 +84,26 @@ export interface paths {
          * @description Geeft de gegenereerde Bruno ZIP terug.
          */
         get: operations["getBruno"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/apis/{id}/oas31": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Download OAS 3.1 documentatie
+         * @description Geeft de gegenereerde OAS 3.1 JSON terug.
+         */
+        get: operations["getOas31"];
         put?: never;
         post?: never;
         delete?: never;
@@ -319,6 +359,31 @@ export interface operations {
             };
         };
     };
+    searchApis: {
+        parameters: {
+            query?: {
+                limit?: number;
+                q?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description De API-versie van de response */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModelsApiSummary"][];
+                };
+            };
+        };
+    };
     retrieveApi: {
         parameters: {
             query?: never;
@@ -386,6 +451,35 @@ export interface operations {
         };
     };
     getBruno: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description De API-versie van de response */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getOas31: {
         parameters: {
             query?: never;
             header?: never;

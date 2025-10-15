@@ -1,6 +1,6 @@
 // 'use client';
 
-import { use, type HTMLProps, type PropsWithChildren } from 'react';
+import { type HTMLProps, type PropsWithChildren } from 'react';
 import { Heading, LinkList, LinkListLink } from "@rijkshuisstijl-community/components-react";
 import DataBadgeLink from '../dataBadgeLink/DataBadgeLink';
 import Icon from '../iconsSprite/Icon';
@@ -8,11 +8,13 @@ import styles from './styles.module.css';
 import clsx from 'clsx';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 import i18n from '../i18n';
+import Alert from '../alert/Alert';
 
 export interface FiltersProps extends HTMLProps<HTMLDivElement> {
   routing?: Record<string, any>;
   data: any;
   headers: any;
+  error: any;
 }
 
 const ListLinkIcon = ({ isActive }: { isActive: boolean }) => {
@@ -23,12 +25,16 @@ const ListLinkIcon = ({ isActive }: { isActive: boolean }) => {
 
 const Filters = (props: PropsWithChildren<FiltersProps>) => {
   const { t } = useTranslation();
-  const { data, headers, className, routing } = props;
+  const { data, headers, error, className, routing } = props;
   const organisations = data && !data.message ? data : [];
   const currentOrganisation = organisations && organisations.find(org => org?.uri === routing?.query?.organisation);
 
   return (
     <div className={clsx([styles.filters, className])}>
+      { error && (
+        <Alert type="error">{(error as unknown as any).message || (error as unknown as any).error_msg || t('components.fuzz-error')}</Alert>
+      )}
+
       {
         currentOrganisation && (<div className={clsx("utrecht-badge-list", styles.currentFilter)} role="list">
           <Heading level={2} appearanceLevel={3}>{t('components.current-filter')}</Heading>
