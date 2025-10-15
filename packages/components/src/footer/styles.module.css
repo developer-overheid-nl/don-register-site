@@ -3,6 +3,9 @@
   --utrecht-page-footer-padding-block-start: 1rem;
   --utrecht-page-footer-padding-inline-end: var(--rhc-nav-bar-link-padding-inline-end);
   --utrecht-page-footer-padding-inline-start: var(--rhc-nav-bar-link-padding-inline-start);
+  --rhc-page-footer-outlined-color: #154273;
+  --rhc-page-footer-outlined-border-color: var(--rhc-nav-bar-border-color);
+  --rhc-page-footer-border-block-start-width: var(--rhc-nav-bar-border-block-end-width);
 }
 
 .footer {
@@ -60,6 +63,10 @@
 }
 
 
-:global(.rhc-page-prefooter) {
+:global(.rhc-page-prefooter.rhc-page-prefooter) {
   margin-block-start: 2rem;
+
+  &:before {
+    background-color: var(--rhc-nav-bar-border-color);
+  }
 }

@@ -77,6 +77,9 @@
   --utrecht-blockquote-margin-block-end: 0.5rem;
   --utrecht-blockquote-margin-block-start: 1rem;
 
+  --rhc-nav-bar-color: #0f172a;
+  --rhc-nav-bar-border-color: #01689b;
+
   /* not available in RHC */
 
   /* Uncomment each custom property you need */
