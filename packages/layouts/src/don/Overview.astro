@@ -27,12 +27,35 @@ const { appConfig, titlePage } = Astro.props;
 </Base>
 
 <style>
-  /* @import url(../styles/breakpoints.css); */
   @media (--lg-and-above-viewport) {
     /* 12 columns */
     .overview-content {
       --first-column: 3fr;
       --second-column: 9fr;
+    }
+  }
+
+  @media (--md-viewport) {
+    /* 9 columns */
+    .overview-content {
+      --first-column: 3fr;
+      --second-column: 6fr;
+    }
+  }
+
+  @media (--sm-viewport) {
+    /* 9 columns */
+    .overview-content {
+      --first-column: 4fr;
+      --second-column: 5fr;
+    }
+  }
+
+  @media (--xs-viewport) {
+    /* 6 columns */
+    .overview-content {
+      --first-column: 2fr;
+      --second-column: 4fr;
     }
   }
 
@@ -49,19 +72,25 @@ const { appConfig, titlePage } = Astro.props;
     gap: 1rem;
   }
 
-  @media (--md-viewport) {
+  @media (--sm-and-below-viewport) {
     .overview-content {
       grid-template-columns: 
-        [search-start filters-start] 3fr [filters-end search-end
-        header-start results-start pagination-start] 6fr [header-end results-end pagination-end];
+        [search-start filters-start header-start] var(--first-column, 3fr) [filters-end search-end
+        results-start pagination-start] var(--second-column, 9fr) [header-end results-end pagination-end];
     }
   }
 
-  @media (--sm-viewport) {
+  @media (--xxs-and-below-viewport) {
+    /* 1 column */
     .overview-content {
-      grid-template-columns: 
-        [search-start filters-start] 4fr [filters-end search-end
-        header-start results-start pagination-start] 5fr [header-end results-end pagination-end];
+    grid-template-columns: 
+      [search-start filters-start header-start results-start pagination-start] 1fr [filters-end search-end header-end results-end pagination-end];
+    grid-template-rows: 
+      [header-start] auto [header-end 
+      search-start] auto [search-end 
+      results-start] minmax(0, auto) [results-end 
+      filters-start] auto [filters-end 
+      pagination-start] auto [pagination-end];
     }
   }
 

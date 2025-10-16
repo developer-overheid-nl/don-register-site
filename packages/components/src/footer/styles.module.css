@@ -23,6 +23,8 @@
   &.numColumns,
   &.numColumns1 {
     :global(.utrecht-column-layout) {
+      row-gap: 0.5rem;
+
       > * {
         flex-basis: 100%;
       }
@@ -61,6 +63,31 @@
     }
   }
 }
+
+@media (--xs-and-below-viewport) {
+  .footer.footer {
+    :global(.utrecht-column-layout) {
+      row-gap: 0.5rem;
+
+      > * {
+        flex-basis: calc(50% - var(--utrecht-column-layout-gap, 2em));
+      }
+    }
+  }
+}
+
+@media (--xxs-and-below-viewport) {
+  .footer.footer {
+    :global(.utrecht-column-layout) {
+      row-gap: 0.5rem;
+
+      > * {
+        flex-basis: 100%;
+      }
+    }
+  }
+}
+
 
 
 :global(.rhc-page-prefooter.rhc-page-prefooter) {

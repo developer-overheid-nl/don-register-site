@@ -2,7 +2,6 @@
 import Base from './Base.astro';
 import { Article, Container } from '@developer-overheid-nl/don-register-components';
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
-// import styles from '../styles/detail.module.css';
 
 const { t } = i18n;
 
@@ -33,17 +32,55 @@ const { appConfig, titlePage } = Astro.props;
 </Base>
 
 <style>
+    @media (--lg-and-above-viewport) {
+    /* 12 columns */
+    .detail-content {
+      --first-column: 8fr;
+      --second-column: 4fr;
+    }
+  }
+
+  @media (--md-viewport) {
+    /* 9 columns */
+    .detail-content {
+      --first-column: 6fr;
+      --second-column: 3fr;
+    }
+  }
+
+  @media (--sm-viewport) {
+    /* 9 columns */
+    .detail-content {
+      --first-column: 5fr;
+      --second-column: 4fr;
+    }
+  }
+
   .detail-content {
     display: grid;
     grid-template-columns: 
-      [header-start description-start meta-start]3fr[description-end meta-end
-      aside-start]1fr[header-end aside-end];
+      [header-start description-start meta-start] var(--first-column, 9fr) [description-end meta-end
+      aside-start] var(--second-column, 3fr) [header-end aside-end];
     grid-template-rows: 
       [header-start]auto[header-end 
       description-start aside-start]auto[description-end
       meta-start]auto[aside-end meta-end];
     gap: 1rem;
   }
+
+  @media (--sm-and-below-viewport) {
+    /* 1 column */
+    .detail-content {
+      grid-template-columns: 
+        [header-start description-start meta-start aside-start] 1fr [description-end meta-end header-end aside-end];
+    grid-template-rows: 
+      [header-start] auto [header-end 
+      description-start] auto [description-end 
+      meta-start] auto [meta-end
+      aside-start] auto [aside-end];
+    }
+  }
+
 
   .header {
     grid-area: header;

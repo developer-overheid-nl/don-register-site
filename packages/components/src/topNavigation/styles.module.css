@@ -38,6 +38,12 @@
 
 @media (--xxs-and-below-viewport) {
   .navbar {
+    font-size: 0.875rem;
+  }
+}
+
+@media (--xxxs-viewport) {
+  .navbar {
     font-size: 0.75rem;
   }
 }

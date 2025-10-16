@@ -2,7 +2,6 @@
 import appConfig from "../../../../app.config";
 import { DonOverview, getRouting, parseHeaders, getPagination } from "@developer-overheid-nl/don-register-layouts";
 import { Alert, Article, CardAsLink, CardsList, CardsListItem, DataBadgeLink, Filters, getAppearance, getDate, Heading, HeadingGroup, IconBadge, Link, Markdown, Pagination, /*OverviewContainer,*/ Paragraph, ScoreBadge, Search } from "@developer-overheid-nl/don-register-components";
-// import { configStore } from "@developer-overheid-nl/don-register-components";
 
 import { t } from "i18next";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
@@ -18,12 +17,13 @@ const { page = 1 } = Astro.params;
 const APIS_RESOURCE: keyof paths = `/${API_VERSION}/apis`;
 const ORGS_RESOURCE: keyof paths = `/${API_VERSION}/organisations`;
 const SEARCH_RESOURCE: keyof paths = `/${API_VERSION}/apis/_search`;
+const SEARCH_QUERY_KEY = 'q';
 
 const routingObj = getRouting(Astro.url, Astro.originPathname, Astro.routePattern, Astro.params);
 
 const client = createClient<paths>({ baseUrl: `${API_URL}/${API_ENDPOINT}` });
 
-const { data, error, response: { url, headers } } = await client.GET(routingObj.query?.q ? SEARCH_RESOURCE : APIS_RESOURCE, {
+const { data, error, response: { headers } } = await client.GET(routingObj.query[SEARCH_QUERY_KEY] ? SEARCH_RESOURCE : APIS_RESOURCE, {
   params: {
     query: { 
       page: Number(page),
@@ -63,7 +63,7 @@ const items = error ? null : data;
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
   <Article className="markdown-content utrecht-html" slot="header"><Intro /></Article>
-  <Search slot="search" searchUrl={new URL(`/apis/zoeken`, routingObj?.url).toString()}></Search>
+  <Search slot="search" searchUrl={new URL(`/apis/zoeken`, routingObj?.url).toString()} searchKey={SEARCH_QUERY_KEY} searchTerm={routingObj.query[SEARCH_QUERY_KEY]}></Search>
   <Filters slot="filters" routing={routingObj} data={filters} headers={filtersHeaders} error={filtersError} />
 
   <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2}>
@@ -141,6 +141,8 @@ const items = error ? null : data;
   }
 
   .description {
+    word-break: break-word;
+    
     a:hover {
       text-decoration-line: none;
     }

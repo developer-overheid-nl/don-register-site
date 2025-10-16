@@ -12,6 +12,12 @@
   gap: 0;
 }
 
+@media (--xxs-and-below-viewport) {
+  .form {
+    justify-content: center;
+  }
+}
+
 .input {
   grid-area: input;
 
