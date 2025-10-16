@@ -16,8 +16,8 @@ catalogs:
       specifier: 3.1.0
       version: 3.1.0
     '@rijkshuisstijl-community/components-css':
-      specifier: 7.0.0
-      version: 7.0.0
+      specifier: 8.0.0
+      version: 8.0.0
     '@rijkshuisstijl-community/components-react':
       specifier: 7.0.0
       version: 7.0.0
@@ -169,7 +169,7 @@ importers:
         version: link:../locales
       '@rijkshuisstijl-community/components-css':
         specifier: 'catalog:'
-        version: 7.0.0(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1)
+        version: 8.0.0(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1)
       '@rijkshuisstijl-community/components-react':
         specifier: 'catalog:'
         version: 7.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -226,7 +226,7 @@ importers:
         version: link:../locales
       '@rijkshuisstijl-community/components-css':
         specifier: 'catalog:'
-        version: 7.0.0(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1)
+        version: 8.0.0(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1)
       '@rijkshuisstijl-community/components-react':
         specifier: 'catalog:'
         version: 7.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -779,8 +779,8 @@ packages:
     resolution: {integrity: sha512-0EbE8LRbkogtcCXU7liAyC00n9uNG9hJ+eMyHFdUsy9lB/WGqnEBgwjA9q2cyzAVcdTkQqTBBU1XePNnN3OijA==}
     engines: {node: '>=18.17.0', npm: '>=9.5.0'}
 
-  '@rijkshuisstijl-community/components-css@7.0.0':
-    resolution: {integrity: sha512-4WZ03BSBfokfn+w1rcGahsNMGGEyOU0iNuL3vZPkHpyf1kkFYVhaElTxks8BPZc4KwtgjsXB0Drgp4VBTTZhyw==}
+  '@rijkshuisstijl-community/components-css@8.0.0':
+    resolution: {integrity: sha512-mH/4H896wuxe0odNEbsF6DKT6WMtD7se2utwq5gNu0WIOoIatarH+00M8JZk94ttwnIp6zMq9oJJXk/gXeb/vQ==}
 
   '@rijkshuisstijl-community/components-react@7.0.0':
     resolution: {integrity: sha512-xiBn7W/A87jt85/Xhqb6BY7DVAe0bHSJ4VMnVnZ5PWrtQLmEskJ0HbH52asy4NUxO0J0Dz6mpq/IgVYxKvewbA==}
@@ -3130,7 +3130,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rijkshuisstijl-community/components-css@7.0.0(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1)':
+  '@rijkshuisstijl-community/components-css@8.0.0(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1)':
     dependencies:
       '@amsterdam/design-system-css': 1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1)
       '@nl-design-system-candidate/heading-css': 1.1.0

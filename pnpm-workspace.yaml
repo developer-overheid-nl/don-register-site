@@ -6,7 +6,7 @@ catalog:
   '@astrojs/node': 9.4.6
   '@astrojs/react': 4.3.0
   '@csstools/postcss-global-data': 3.1.0
-  '@rijkshuisstijl-community/components-css': 7.0.0
+  '@rijkshuisstijl-community/components-css': 8.0.0
   '@rijkshuisstijl-community/components-react': 7.0.0
   '@rijkshuisstijl-community/design-tokens': 7.0.0
   '@types/react-dom': 19.1.6
