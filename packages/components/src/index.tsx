@@ -24,7 +24,7 @@ export { default as Markdown, type MarkdownProps, type HeadingLevels } from './m
 export { default as Pagination, type PaginationProps } from "./pagination/Pagination";
 export { default as Paragraph } from "./paragraph/Paragraph";
 export { default as ReadOnlyTextInput } from "./readOnlyTextInput/ReadOnlyTextInput";
-export { default as Search, type SearchProps } from "./searchX/Search";
+export { default as Search, type SearchProps } from "./search/Search";
 export { default as ScoreBadge, type ScoreBadgeProps } from "./scoreBadge/ScoreBadge";
 export { default as SiteLogo } from "./siteLogo/SiteLogo";
 export { default as TopNavigation, processNavBarItems, type TopNavigationProps, type NavBarItem } from "./topNavigation/TopNavigation";
