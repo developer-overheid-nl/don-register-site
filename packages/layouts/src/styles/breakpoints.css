@@ -1,0 +1,31 @@
+/*
+'xxs': 390px,
+'xs': 540px,
+'sm': 720px,
+'md': 960px,
+'lg': 1280px,
+'xl': 1920px,
+'xxl': 2560px,
+*/
+@custom-media --xxxs-viewport (max-width: 389.9px);
+@custom-media --xxs-viewport (min-width: 390px) and (max-width: 539.9px);
+@custom-media --xs-viewport (min-width: 540px) and (max-width: 719.9px);
+@custom-media --sm-viewport (min-width: 720px) and (max-width: 959.9px);
+@custom-media --md-viewport (min-width: 960px) and (max-width: 1279.9px);
+@custom-media --lg-viewport (min-width: 1280px) and (max-width: 1919.9px);
+@custom-media --xl-viewport (min-width: 1920x) and (max-width: 2559.9px);
+@custom-media --xxl-viewport (min-width: 2560px);
+
+@custom-media --xxs-and-below-viewport (max-width: 539.9px);
+@custom-media --xs-and-below-viewport (max-width: 719.9px);
+@custom-media --sm-and-below-viewport (max-width: 959.9px);
+@custom-media --md-and-below-viewport (max-width: 1279.9px);
+@custom-media --lg-and-below-viewport (max-width: 1919.9px);
+@custom-media --xl-and-below-viewport (max-width: 2559.9px);
+
+@custom-media --xxs-and-above-viewport (min-width: 390px);
+@custom-media --xs-and-above-viewport (min-width: 540px);
+@custom-media --sm-and-above-viewport (min-width: 720px);
+@custom-media --md-and-above-viewport (min-width: 960px);
+@custom-media --lg-and-above-viewport (min-width: 1280px);
+@custom-media --xl-and-above-viewport (min-width: 1920x);

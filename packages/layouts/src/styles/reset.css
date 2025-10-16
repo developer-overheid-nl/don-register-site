@@ -1,7 +1,13 @@
 html {
   box-sizing: border-box;
-  scrollbar-gutter: stable both-edges;
+  scrollbar-gutter: auto;
   scroll-behavior: smooth;
+}
+
+@media (--lg-and-above-viewport) {
+  html {
+    scrollbar-gutter: stable both-edges;
+  }
 }
 
 html:lang(nl) {

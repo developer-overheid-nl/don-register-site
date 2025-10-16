@@ -23,6 +23,8 @@
     "openapi-fetch": "catalog:"
   },
   "devDependencies": {
+    "@csstools/postcss-global-data": "catalog:",
+    "postcss-custom-media": "catalog:",
     "vite": "catalog:"
   }
 }

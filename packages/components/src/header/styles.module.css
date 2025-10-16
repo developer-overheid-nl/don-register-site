@@ -9,8 +9,31 @@
   }
 }
 
-.lint {
-  align-self: flex-start;
+@media (--xxs-and-below-viewport) {
+  .header {
+    flex-direction: column;
+
+    > * {
+      flex-basis: auto;
+    }
+  }
+}
+
+@media (--xs-and-below-viewport) {
+  .header {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+
+    > * {
+      flex-basis: auto;
+      order: 2;
+    }
+  }
+
+  .lint {
+    flex-basis: 100%;
+    order: 1;
+  }
 }
 
 .title {

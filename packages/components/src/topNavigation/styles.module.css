@@ -12,6 +12,36 @@
   }
 }
 
+@media (--md-and-below-viewport) {
+  .navbar {
+    flex-wrap: wrap;
+  }
+}
+
+/* TODO: hamburger menu ? */
+@media (--xs-and-below-viewport) {
+  .navbar.navbar {
+    flex-direction: column;
+    align-items: stretch;
+
+    :global(.rhc-nav-bar__list) {
+      border-block-end: 1px solid var(--rhc-nav-bar-border-color);
+      justify-content: center;
+    }
+
+    :global(.rhc-nav-bar__list--end) {
+      margin-inline-start: revert;
+      border-block-end: revert;
+    }
+  }
+}
+
+@media (--xxs-and-below-viewport) {
+  .navbar {
+    font-size: 0.75rem;
+  }
+}
+
 /* modifier style wasn't implemented in RHC */
 :global(.rhc-nav-bar__link--bold) {
   font-weight: bold;
