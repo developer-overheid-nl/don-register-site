@@ -50,8 +50,9 @@ export default {
       {
         title: "API-register",
         items: [
-          { id: 'add', label: "API toevoegen", href: "/apis/toevoegen", icon: "_add" },
-          { id: 'statistics', label: "API-statistieken", href: "/api-statistieken" },
+          { id: 'add', label: "API toevoegen", href: "/apis/toevoegen" },
+          { id: 'statistics', label: "Statistieken", href: "/statistieken" },
+          { id: 'api-archive', label: "Sitearchief", href: "https://minbzk.sitearchief.nl/?subsite=devoverheidapis", icon: "_external", target: "_blank" },
         ],
       },
       {
@@ -72,7 +73,7 @@ export default {
           { id: 'team', label: "Het team", href: "https://developer.overheid.nl/team" },
           { id: 'privacy', label: "Privacyverklaring", href: "https://developer.overheid.nl/privacy" },
           { id: 'toegankelijkheid', label: "Toegankelijkheid", href: "https://developer.overheid.nl/toegankelijkheid" },
-          { id: 'archive', label: "Sitearchief", href: "https://minbzk.sitearchief.nl/?subsite=devoverheidapis#archive", icon: "_external", target: "_blank" },
+          { id: 'archive', label: "Sitearchief", href: "https://minbzk.sitearchief.nl/?subsite=developeroverheid", icon: "_external", target: "_blank" },
         ]
       }
     ]
