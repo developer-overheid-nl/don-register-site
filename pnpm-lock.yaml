@@ -34,8 +34,8 @@ catalogs:
       specifier: 2.1.1
       version: 2.1.1
     i18next:
-      specifier: 25.3.2
-      version: 25.3.2
+      specifier: 25.6.0
+      version: 25.6.0
     openapi-fetch:
       specifier: 0.14.0
       version: 0.14.0
@@ -101,7 +101,7 @@ importers:
         version: 2.1.1
       i18next:
         specifier: 'catalog:'
-        version: 25.3.2(typescript@5.9.3)
+        version: 25.6.0(typescript@5.9.3)
       openapi-fetch:
         specifier: 'catalog:'
         version: 0.14.0
@@ -141,7 +141,7 @@ importers:
         version: 5.14.5(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.9.3)
       i18next:
         specifier: 'catalog:'
-        version: 25.3.2(typescript@5.9.3)
+        version: 25.6.0(typescript@5.9.3)
       openapi-fetch:
         specifier: 'catalog:'
         version: 0.14.0
@@ -181,7 +181,7 @@ importers:
         version: 2.1.1
       i18next:
         specifier: 'catalog:'
-        version: 25.3.2(typescript@5.9.3)
+        version: 25.6.0(typescript@5.9.3)
       parse-link-header:
         specifier: ^2.0.0
         version: 2.0.0
@@ -193,7 +193,7 @@ importers:
         version: 19.1.0(react@19.1.0)
       react-i18next:
         specifier: ^15.6.1
-        version: 15.6.1(i18next@25.3.2(typescript@5.9.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.9.3)
+        version: 15.6.1(i18next@25.6.0(typescript@5.9.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.9.3)
       react-markdown:
         specifier: 'catalog:'
         version: 10.1.0(@types/react@19.1.8)(react@19.1.0)
@@ -232,7 +232,7 @@ importers:
         version: 19.1.6(@types/react@19.1.8)
       i18next:
         specifier: 'catalog:'
-        version: 25.3.2(typescript@5.9.3)
+        version: 25.6.0(typescript@5.9.3)
       parse-link-header:
         specifier: 2.0.0
         version: 2.0.0
@@ -250,7 +250,7 @@ importers:
     dependencies:
       i18next:
         specifier: 'catalog:'
-        version: 25.3.2(typescript@5.9.3)
+        version: 25.6.0(typescript@5.9.3)
 
 packages:
 
@@ -1633,8 +1633,8 @@ packages:
     resolution: {integrity: sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw==}
     engines: {node: '>= 14'}
 
-  i18next@25.3.2:
-    resolution: {integrity: sha512-JSnbZDxRVbphc5jiptxr3o2zocy5dEqpVm9qCGdJwRNO+9saUJS0/u4LnM/13C23fUEWxAylPqKU/NpMV/IjqA==}
+  i18next@25.6.0:
+    resolution: {integrity: sha512-tTn8fLrwBYtnclpL5aPXK/tAYBLWVvoHM1zdfXoRNLcI+RvtMsoZRV98ePlaW3khHYKuNh/Q65W/+NVFUeIwVw==}
     peerDependencies:
       typescript: ^5
     peerDependenciesMeta:
@@ -4085,7 +4085,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  i18next@25.3.2(typescript@5.9.3):
+  i18next@25.6.0(typescript@5.9.3):
     dependencies:
       '@babel/runtime': 7.27.6
     optionalDependencies:
@@ -4666,11 +4666,11 @@ snapshots:
       react: 19.1.0
       scheduler: 0.26.0
 
-  react-i18next@15.6.1(i18next@25.3.2(typescript@5.9.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.9.3):
+  react-i18next@15.6.1(i18next@25.6.0(typescript@5.9.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.9.3):
     dependencies:
       '@babel/runtime': 7.27.6
       html-parse-stringify: 3.0.1
-      i18next: 25.3.2(typescript@5.9.3)
+      i18next: 25.6.0(typescript@5.9.3)
       react: 19.1.0
     optionalDependencies:
       react-dom: 19.1.0(react@19.1.0)
