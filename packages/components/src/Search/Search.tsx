@@ -8,23 +8,25 @@ import i18n from "../i18n";
 import type { PropsWithChildren } from "react";
 
 export interface SearchProps {
+  searchUrl: string;
+  searchKey?: string;
   searchTerm?: string;
   className?: string;
 }
 
 const Search = (props: SearchProps) => {
   const { t } = useTranslation();
-  const { searchTerm, className } = props;
+  const { searchUrl, searchKey = 'q', searchTerm, className } = props;
 
   return (
     <search aria-labelledby="search-heading" role="search" className={clsx(styles.search, className)}>
       <Heading id="search-heading" level={2} appearanceLevel={3}>{t('components.search')}</Heading>
-      <form action={`zoeken`} method="GET" className={styles.form}>
+      <form action={searchUrl} method="GET" className={styles.form}>
         {/* @ts-expect-error className not exposed */}
         <FormFieldTextInput className={styles.input}
           aria-describedby="search-help"
           label={t('components.search-label')}
-          name="q"
+          name={searchKey}
           type="text"
           value={searchTerm}
         ><div className="sr-only" id="search-help">
