@@ -40,8 +40,8 @@ catalogs:
       specifier: 25.6.0
       version: 25.6.0
     openapi-fetch:
-      specifier: 0.14.0
-      version: 0.14.0
+      specifier: 0.15.0
+      version: 0.15.0
     openapi-typescript:
       specifier: 7.9.1
       version: 7.9.1
@@ -110,7 +110,7 @@ importers:
         version: 25.6.0(typescript@5.9.3)
       openapi-fetch:
         specifier: 'catalog:'
-        version: 0.14.0
+        version: 0.15.0
       react:
         specifier: 'catalog:'
         version: 19.1.0
@@ -150,7 +150,7 @@ importers:
         version: 25.6.0(typescript@5.9.3)
       openapi-fetch:
         specifier: 'catalog:'
-        version: 0.14.0
+        version: 0.15.0
     devDependencies:
       '@csstools/postcss-global-data':
         specifier: 'catalog:'
@@ -1981,8 +1981,8 @@ packages:
   oniguruma-to-es@4.3.3:
     resolution: {integrity: sha512-rPiZhzC3wXwE59YQMRDodUwwT9FZ9nNBwQQfsd1wfdtlKEyCdRV0avrTcSZ5xlIvGRVPd/cx6ZN45ECmS39xvg==}
 
-  openapi-fetch@0.14.0:
-    resolution: {integrity: sha512-PshIdm1NgdLvb05zp8LqRQMNSKzIlPkyMxYFxwyHR+UlKD4t2nUjkDhNxeRbhRSEd3x5EUNh2w5sJYwkhOH4fg==}
+  openapi-fetch@0.15.0:
+    resolution: {integrity: sha512-OjQUdi61WO4HYhr9+byCPMj0+bgste/LtSBEcV6FzDdONTs7x0fWn8/ndoYwzqCsKWIxEZwo4FN/TG1c1rI8IQ==}
 
   openapi-typescript-helpers@0.0.15:
     resolution: {integrity: sha512-opyTPaunsklCBpTK8JGef6mfPhLSnyy5a0IN9vKtx3+4aExf+KxEqYwIy3hqkedXIB97u357uLMJsOnm3GVjsw==}
@@ -4636,7 +4636,7 @@ snapshots:
       regex: 6.0.1
       regex-recursion: 6.0.2
 
-  openapi-fetch@0.14.0:
+  openapi-fetch@0.15.0:
     dependencies:
       openapi-typescript-helpers: 0.0.15
 

@@ -14,7 +14,7 @@ catalog:
   astro: 5.14.5
   clsx: 2.1.1
   i18next: 25.6.0
-  openapi-fetch: 0.14.0
+  openapi-fetch: 0.15.0
   openapi-typescript: 7.9.1
   postcss-custom-media: 11.0.6
   react-dom: 19.1.0
