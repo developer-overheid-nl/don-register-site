@@ -51,7 +51,7 @@ export default {
         title: "API-register",
         items: [
           { id: 'add', label: "API toevoegen", href: "/apis/toevoegen" },
-          { id: 'statistics', label: "Statistieken", href: "/statistieken" },
+          { id: 'statistics', label: "Statistieken", href: "/api-statistieken" },
           { id: 'api-archive', label: "Sitearchief", href: "https://minbzk.sitearchief.nl/?subsite=devoverheidapis", icon: "_external", target: "_blank" },
         ],
       },
