@@ -38,8 +38,8 @@ export default defineConfig({
   },
   env: {
     schema: {
-      API_URL: envField.string({ context: "server", access: "public" }),
-      API_ENDPOINT: envField.string({ context: "server", access: "public" }),
+      API_URL: envField.string({ context: "server", access: "secret" }),
+      API_ENDPOINT: envField.string({ context: "server", access: "secret" }),
       API_X_API_KEY: envField.string({ context: "server", access: "secret", optional: true }),
       API_VERSION: envField.enum({
         values: ["v1"],
