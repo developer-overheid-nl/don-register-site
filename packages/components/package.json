@@ -35,7 +35,7 @@
     "@rijkshuisstijl-community/components-react": "catalog:",
     "@rijkshuisstijl-community/design-tokens": "catalog:",
     "@types/parse-link-header": "^2.0.3",
-    "@utrecht/button-react": "^2.0.7",
+    "@utrecht/button-react": "^2.0.8",
     "clsx": "catalog:",
     "i18next": "catalog:",
     "parse-link-header": "^2.0.0",

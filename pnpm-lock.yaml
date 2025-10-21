@@ -186,8 +186,8 @@ importers:
         specifier: catalog:react19
         version: 19.1.6(@types/react@19.1.8)
       '@utrecht/button-react':
-        specifier: ^2.0.7
-        version: 2.0.7(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: ^2.0.8
+        version: 2.0.8(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       clsx:
         specifier: 'catalog:'
         version: 2.1.1
@@ -1028,6 +1028,9 @@ packages:
   '@utrecht/button-css@2.3.1':
     resolution: {integrity: sha512-gjCVKTzsV/2TOTrYANHFP1f9RqXc/6lY+gC37q9KaEJZ55+37mVKeNubCO1ntFRJeGY+4oCT5ti2rtX4jqDjqg==}
 
+  '@utrecht/button-css@3.0.0':
+    resolution: {integrity: sha512-iwKhmYE/AVKdxTyeQefiP3Wlpkeg/K+PaOXlG2D9tMh6pp+ndz+0yr65T9jSGVZeU/wjoafu9tGAXoe959ql5w==}
+
   '@utrecht/button-group-css@1.5.0':
     resolution: {integrity: sha512-8HGQ+CPDoxFM7n+ArsCixFEpw0Uykf4YxLc18L3tE5yw2+pBdrLVieh+wBghg2QtfsQJs5tpLZbw76wyaVENmg==}
     deprecated: Deprecated. Replaced by @utrecht/action-group-css.
@@ -1035,8 +1038,8 @@ packages:
   '@utrecht/button-link-css@1.3.1':
     resolution: {integrity: sha512-jatHsTpTO25Jy3BWPNlcgiyZ9S0nRdu9CGz7E+qucgcmzAI99BN+vDGzrhRj+HS/UcgTP3TgTggjzcBx8q+Q2A==}
 
-  '@utrecht/button-react@2.0.7':
-    resolution: {integrity: sha512-mJ6rO4+86FitY3y5XO/ov+1YQkruIQYWuEVNgO+EShG70vm8pT8cuU7ReauKJq0JUgxKeaNYWdyBWha9Sz64/Q==}
+  '@utrecht/button-react@2.0.8':
+    resolution: {integrity: sha512-tFNbq6W/HJ1BmHQaCJcmiol9iehHKDtBBj8Lh+yXjlNMt5ovpfltcUd0Qc74lsD7lbjFomWHulmQg25RqBGfAg==}
     peerDependencies:
       '@babel/runtime': '*'
       react: '18'
@@ -3320,14 +3323,16 @@ snapshots:
 
   '@utrecht/button-css@2.3.1': {}
 
+  '@utrecht/button-css@3.0.0': {}
+
   '@utrecht/button-group-css@1.5.0': {}
 
   '@utrecht/button-link-css@1.3.1': {}
 
-  '@utrecht/button-react@2.0.7(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@utrecht/button-react@2.0.8(@babel/runtime@7.27.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@babel/runtime': 7.27.6
-      '@utrecht/button-css': 2.3.1
+      '@utrecht/button-css': 3.0.0
       clsx: 2.1.1
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
