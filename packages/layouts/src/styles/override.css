@@ -66,6 +66,7 @@
   --utrecht-textbox-font-size: 1rem;
   --utrecht-textbox-line-height: 1;
   --utrecht-textbox-focus-border-width: var(--utrecht-textbox-border-width, 1px);
+  --utrecht-blockquote-content-font-size: 1.125rem;
   --utrecht-blockquote-border-width: 1px;
   --utrecht-blockquote-border-radius: 5px;
   --utrecht-blockquote-border-inline-start-width: 6px;
@@ -79,6 +80,7 @@
 
   --rhc-nav-bar-color: #0f172a;
   --rhc-nav-bar-border-color: #01689b;
+  --rhc-nav-bar-link-font-size: var(--utrecht-document-font-size, inherit);
 
   /* not available in RHC */
 
