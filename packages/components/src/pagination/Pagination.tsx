@@ -2,7 +2,6 @@ import clsx from "clsx";
 import type {
   ElementType,
   HTMLAttributes,
-  JSX,
   PropsWithChildren,
 } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
@@ -92,7 +91,7 @@ export interface PaginationProps extends HTMLAttributes<HTMLElement> {
 const PageLink = (props: PageLinkProps) => {
   const { t } = useTranslation();
   const { href, label, range, index, current, ...restProps } = props;
-  const isCurrent = index == current;
+  const isCurrent = index === current;
   const element = !isCurrent ? "a" : "span";
   const hrefAttr = !isCurrent && { href };
   const count =
@@ -159,11 +158,13 @@ const Pagination = (props: PropsWithChildren<PaginationProps>) => {
           <RelativeLink href={String(prev)} position="prev" />
         </span>
       )}
+      {/* biome-ignore-start lint/a11y/useSemanticElements: taken from NLDS example */}
       <span
         role="group"
         aria-label={t("components.pages")}
         className="utrecht-pagination__pages"
       >
+      {/* biome-ignore-end lint/a11y/useSemanticElements: taken from NLDS example */}
         {links &&
           links.length > 0 &&
           links.map(({ href, label, range }, index) => (
@@ -173,7 +174,7 @@ const Pagination = (props: PropsWithChildren<PaginationProps>) => {
               range={range}
               index={index}
               current={current}
-              key={index}
+              key={label}
             />
           ))}
       </span>

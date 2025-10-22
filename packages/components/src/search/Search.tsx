@@ -24,15 +24,14 @@ const Search = (props: SearchProps) => {
   return (
     <search
       aria-labelledby="search-heading"
-      role="search"
       className={clsx(styles.search, className)}
     >
       <Heading id="search-heading" level={2} appearanceLevel={3}>
         {t("components.search")}
       </Heading>
       <form action={searchUrl} method="GET" className={styles.form}>
-        {/* @ts-expect-error className not exposed */}
         <FormFieldTextInput
+          /* @ts-expect-error className not exposed */
           className={styles.input}
           aria-describedby="search-help"
           label={t("components.search-label")}

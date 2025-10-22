@@ -7,6 +7,8 @@ export default function Icon(props: React.HTMLProps<SVGSVGElement>) {
       width="1rem"
       height="1rem"
       className={`${iconClassName}`}
+      role={props.role || "img"}
+      aria-label={props["aria-label"]}
       {...restProps}
     >
       <use href={`#icon-${name}`} />

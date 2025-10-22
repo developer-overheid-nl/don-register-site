@@ -47,24 +47,23 @@ export default function ScoreBadge(props: ScoreBadgeProps) {
         height="2.5rem"
         viewBox="0 0 32 16"
         name={name}
+        role="img"
         aria-label={`${ariaLabelPrefix || ""}${score + (inPercentage ? "%" : "") || "onbekend"}`}
       >
         <defs>
           <linearGradient id="gradient">
-            {colors.gradient &&
-              colors.gradient.map((color, index) => (
+            {colors.gradient?.map((color, index) => (
                 <stop
-                  key={`grd-${index}`}
+                  key={`grd-${color}`}
                   offset={`${(index * 100) / (colors.gradient.length - 1)}%`}
                   style={{ stopColor: color, stopOpacity: 1 }}
                 />
               ))}
           </linearGradient>
           <linearGradient id="arrow" gradientTransform="rotate(90)">
-            {colors.arrow &&
-              colors.arrow.map((color, index) => (
+            {colors.arrow?.map((color, index) => (
                 <stop
-                  key={`arr-${index}`}
+                  key={`arr-${color}`}
                   offset={index}
                   style={{ stopColor: color }}
                 />

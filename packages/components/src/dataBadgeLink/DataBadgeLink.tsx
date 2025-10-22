@@ -28,9 +28,10 @@ const DataBadgeLink = (props: DataBadgeLinkProps) => {
     ...restProps
   } = props;
   return (
-    /* @ts-expect-error className is not exposed */
     <DataBadgeButton
+      /* @ts-expect-error className is not exposed */
       className={clsx(className, styles.donDataBadge, styles[appearance])}
+      /* biome-ignore lint/a11y/useValidAriaValues: {null} is needed to remove it */
       aria-pressed={null}
       role={role}
       {...restProps}

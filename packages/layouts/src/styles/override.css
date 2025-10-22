@@ -1,6 +1,5 @@
 :root {
   --rhc-font-family-primary: 'RijksoverheidSansWeb', Arial, Verdana, sans-serif;
-  --utrecht-paragraph-font-family: var(--rhc-font-family-primary);
   --rhc-font-size-xl-mobile: 2.5rem;
   --rhc-font-size-xl-tablet: 2.5rem;
   --rhc-font-size-xl-desktop: 2.5rem;

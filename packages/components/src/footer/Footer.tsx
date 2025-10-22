@@ -2,13 +2,11 @@ import {
   LinkList,
   LinkListLink,
   Footer as RHCFooter,
-  type HeadingLevel,
 } from "@rijkshuisstijl-community/components-react";
 import clsx from "clsx";
 import styles from "./styles.module.css";
-import { useId, type PropsWithChildren, type ReactNode } from "react";
+import { useId, type PropsWithChildren } from "react";
 import Markdown from "../markdown/Markdown";
-import Icon from "../iconsSprite/Icon";
 import Heading from "../heading/Heading";
 import {
   processNavBarItems,
@@ -56,7 +54,7 @@ const FooterColumns = (props: ColumnProps) => {
 };
 
 const Footer = (props: PropsWithChildren<FooterProps>) => {
-  const { className, columns, children, ...restProps } = props;
+  const { className, columns, ...restProps } = props;
   const columnsClass = `numColumns${Math.min(Number(columns?.length), 4)}`;
 
   return (

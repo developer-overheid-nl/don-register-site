@@ -20,13 +20,13 @@ export interface CardsListProps extends HTMLAttributes<HTMLOListElement> {
   className?: string;
 }
 
-export interface CardListPropsOLD {
-  items: Array<any>;
-  total?: number;
-  routing?: Record<string, any>;
-  i18n?: Record<string, string | Record<string, string>>;
-  className?: string;
-}
+// export interface CardListPropsOLD {
+//   items: Array<any>;
+//   total?: number;
+//   routing?: Record<string, any>;
+//   i18n?: Record<string, string | Record<string, string>>;
+//   className?: string;
+// }
 
 const CardsList = (props: PropsWithChildren<CardsListProps>) => {
   const { id, items, className, children } = props;

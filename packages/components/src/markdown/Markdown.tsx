@@ -1,8 +1,6 @@
-import React, { type JSX } from "react";
 import ReactMarkdown, {
   type Options,
   type Components,
-  type ExtraProps,
 } from "react-markdown";
 import remarkBehead from "remark-behead";
 
@@ -35,10 +33,11 @@ export default function Markdown(options: MarkdownProps) {
 
   return (
     <ReactMarkdown
+      /* biome-ignore lint/correctness/noChildrenProp: TODO: make sure other way is works */
       children={mdText}
       components={components}
       skipHtml={true}
-      unwrapDisallowed={true} /*allowedElements={['p', 'ul', 'ol', 'li']}*/
+      unwrapDisallowed={true} 
       remarkPlugins={[[remarkBehead, { minDepth: minHeadingDepth }]]}
       {...restOptions}
     />

@@ -14,7 +14,7 @@ const { frontmatter, headings } = Astro.props;
 /* Get the title, markdownlint will do some checkin', but TODO: check md files before commit */
 const titlePage =
   frontmatter.title ||
-  headings.filter((mdHeading) => mdHeading.depth == 1).shift()?.text ||
+  headings.filter((mdHeading) => mdHeading.depth === 1).shift()?.text ||
   frontmatter.url?.replace("/", " ").trim();
 --- 
 

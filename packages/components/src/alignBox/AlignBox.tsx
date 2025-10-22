@@ -1,4 +1,5 @@
-import React, { type ReactNode, type CSSProperties } from "react";
+import type React from "react";
+import type { ReactNode } from "react";
 import styles from "./styles.module.css";
 import clsx from "clsx";
 
