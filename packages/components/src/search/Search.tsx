@@ -1,6 +1,9 @@
 import { I18nextProvider, useTranslation } from "react-i18next";
 import Heading from "../heading/Heading";
-import { FormFieldTextInput, PrimaryActionButton } from "@rijkshuisstijl-community/components-react";
+import {
+  FormFieldTextInput,
+  PrimaryActionButton,
+} from "@rijkshuisstijl-community/components-react";
 import clsx from "clsx";
 import styles from "./styles.module.css";
 import Icon from "../iconsSprite/Icon";
@@ -16,30 +19,43 @@ export interface SearchProps {
 
 const Search = (props: SearchProps) => {
   const { t } = useTranslation();
-  const { searchUrl, searchKey = 'q', searchTerm, className } = props;
+  const { searchUrl, searchKey = "q", searchTerm, className } = props;
 
   return (
-    <search aria-labelledby="search-heading" role="search" className={clsx(styles.search, className)}>
-      <Heading id="search-heading" level={2} appearanceLevel={3}>{t('components.search')}</Heading>
+    <search
+      aria-labelledby="search-heading"
+      role="search"
+      className={clsx(styles.search, className)}
+    >
+      <Heading id="search-heading" level={2} appearanceLevel={3}>
+        {t("components.search")}
+      </Heading>
       <form action={searchUrl} method="GET" className={styles.form}>
         {/* @ts-expect-error className not exposed */}
-        <FormFieldTextInput className={styles.input}
+        <FormFieldTextInput
+          className={styles.input}
           aria-describedby="search-help"
-          label={t('components.search-label')}
+          label={t("components.search-label")}
           name={searchKey}
           type="text"
           value={searchTerm}
-        ><div className="sr-only" id="search-help">
-          {t('components.search-help')}
-        </div></FormFieldTextInput>
-        
-        <PrimaryActionButton aria-label={t('components.search-button')} className={styles.button} type="submit">
+        >
+          <div className="sr-only" id="search-help">
+            {t("components.search-help")}
+          </div>
+        </FormFieldTextInput>
+
+        <PrimaryActionButton
+          aria-label={t("components.search-button")}
+          className={styles.button}
+          type="submit"
+        >
           <Icon name="zoek-inline" width="1.5rem" height="1.5rem" />
         </PrimaryActionButton>
       </form>
     </search>
-  )
-}
+  );
+};
 
 const TranslatedSearch = (props: PropsWithChildren<SearchProps>) => {
   return (
@@ -47,7 +63,6 @@ const TranslatedSearch = (props: PropsWithChildren<SearchProps>) => {
       <Search {...props} />
     </I18nextProvider>
   );
-}
-
+};
 
 export default TranslatedSearch;

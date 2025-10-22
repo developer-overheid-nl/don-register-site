@@ -1,63 +1,63 @@
-import React, { type ReactNode, type CSSProperties } from 'react';
-import styles from './styles.module.css';
-import clsx from 'clsx';
+import React, { type ReactNode, type CSSProperties } from "react";
+import styles from "./styles.module.css";
+import clsx from "clsx";
 
 type Align =
-  | 'left'
-  | 'center'
-  | 'right'
-  | 'top'
-  | 'bottom'
-  | 'middle'
-  | 'top-left'
-  | 'top-right'
-  | 'bottom-left'
-  | 'bottom-right'
-  | 'stretch'
-  | 'space-between'
-  | 'space-around'
-  | 'space-evenly';
+  | "left"
+  | "center"
+  | "right"
+  | "top"
+  | "bottom"
+  | "middle"
+  | "top-left"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-right"
+  | "stretch"
+  | "space-between"
+  | "space-around"
+  | "space-evenly";
 
-type Gap = 'none' | 'small' | 'medium' | 'large';
+type Gap = "none" | "small" | "medium" | "large";
 
 export interface AlignBoxProps {
   align?: Align;
   gap?: Gap;
-  direction? : 'row' | 'column';
-  display?: 'block' | 'inline';
+  direction?: "row" | "column";
+  display?: "block" | "inline";
   className?: string;
   children: ReactNode;
 }
 
 const getAlignmentClass = (align: Align): string => {
   switch (align) {
-    case 'left':
+    case "left":
       return styles.left;
-    case 'center':
+    case "center":
       return styles.center;
-    case 'right':
+    case "right":
       return styles.right;
-    case 'top':
+    case "top":
       return styles.top;
-    case 'bottom':
+    case "bottom":
       return styles.bottom;
-    case 'middle':
+    case "middle":
       return styles.middle;
-    case 'top-left':
+    case "top-left":
       return styles.topLeft;
-    case 'top-right':
+    case "top-right":
       return styles.topRight;
-    case 'bottom-left':
+    case "bottom-left":
       return styles.bottomLeft;
-    case 'bottom-right':
+    case "bottom-right":
       return styles.bottomRight;
-    case 'stretch':
+    case "stretch":
       return styles.stretch;
-    case 'space-between':
+    case "space-between":
       return styles.spaceBetween;
-    case 'space-around':
+    case "space-around":
       return styles.spaceAround;
-    case 'space-evenly':
+    case "space-evenly":
       return styles.spaceEvenly;
     default:
       return styles.center;
@@ -66,13 +66,13 @@ const getAlignmentClass = (align: Align): string => {
 
 const getGapClass = (gap: Gap): string => {
   switch (gap) {
-    case 'none':
+    case "none":
       return styles.gapNone;
-    case 'small':
+    case "small":
       return styles.gapSmall;
-    case 'medium':
+    case "medium":
       return styles.gapMedium;
-    case 'large':
+    case "large":
       return styles.gapLarge;
     default:
       return styles.gapMedium;
@@ -80,10 +80,10 @@ const getGapClass = (gap: Gap): string => {
 };
 
 const AlignBox: React.FC<AlignBoxProps> = ({
-  align = 'center',
-  gap = 'none',
-  direction = 'row',
-  display = 'block',
+  align = "center",
+  gap = "none",
+  direction = "row",
+  display = "block",
   className,
   children,
 }) => {
@@ -91,7 +91,16 @@ const AlignBox: React.FC<AlignBoxProps> = ({
   const gapClass = getGapClass(gap);
 
   return (
-    <div className={clsx(styles.alignBox, styles[direction], styles[display], alignmentClass, gapClass, className ?? '')}>
+    <div
+      className={clsx(
+        styles.alignBox,
+        styles[direction],
+        styles[display],
+        alignmentClass,
+        gapClass,
+        className ?? "",
+      )}
+    >
       {children}
     </div>
   );

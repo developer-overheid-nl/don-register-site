@@ -41,7 +41,7 @@
   }
 }
 
-:global(.rhc-data-summary--row ) {
+:global(.rhc-data-summary--row) {
   :global(.rhc-data-summary__item) {
     justify-content: space-between;
   }

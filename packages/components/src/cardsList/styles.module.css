@@ -8,7 +8,11 @@
   row-gap: var(--rhc-space-200);
 }
 
-:global(.rhc-card-as-link:hover .rhc-card-as-link__heading.rhc-card-as-link__heading){ /* TODO: specifity */
+:global(
+    .rhc-card-as-link:hover
+    .rhc-card-as-link__heading.rhc-card-as-link__heading
+  ) {
+  /* TODO: specifity */
   :global(.nl-heading) {
     text-decoration: underline;
   }

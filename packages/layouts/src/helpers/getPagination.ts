@@ -14,40 +14,61 @@ export interface paginationHeaders {
 }
 
 export const parseHeaders = (headers: Headers) => {
-  const links = parseLinkHeader(headers.get('link'));
+  const links = parseLinkHeader(headers.get("link"));
 
   const pagination = <paginationHeaders>{
-    currentPage: Number(headers.get('x-current-page')),
-    perPage: Number(headers.get('x-per-page')),
-    totalCount: Number(headers.get('x-total-count')),
-    totalPages: Number(headers.get('x-total-pages')),
+    currentPage: Number(headers.get("x-current-page")),
+    perPage: Number(headers.get("x-per-page")),
+    totalCount: Number(headers.get("x-total-count")),
+    totalPages: Number(headers.get("x-total-pages")),
     ...links,
-  }
+  };
 
   return pagination;
-}
+};
 
-export const getPagination = (pagination: paginationHeaders | null | undefined, url: URL): PaginationProps => {
+export const getPagination = (
+  pagination: paginationHeaders | null | undefined,
+  url: URL,
+): PaginationProps => {
   if (!pagination) {
     return {
-      links: []
-    }
+      links: [],
+    };
   }
 
-  const prev = pagination.prev !== undefined && new URL(`./${(pagination.prev.page) < pagination.totalPages ? pagination.prev.page : pagination.last.page}${decodeURIComponent(url.search)}`, url).toString();
-  const next = pagination.next !== undefined && new URL(`./${pagination.next.page}${decodeURIComponent(url.search)}`, url).toString();
+  const prev =
+    pagination.prev !== undefined &&
+    new URL(
+      `./${(pagination.prev.page) < pagination.totalPages ? pagination.prev.page : pagination.last.page}${decodeURIComponent(url.search)}`,
+      url,
+    ).toString();
+  const next =
+    pagination.next !== undefined &&
+    new URL(
+      `./${pagination.next.page}${decodeURIComponent(url.search)}`,
+      url,
+    ).toString();
 
-  const rangeBegin = (pagination.currentPage -1) * pagination.perPage + 1;
+  const rangeBegin = (pagination.currentPage - 1) * pagination.perPage + 1;
   const rangeEnd = pagination.currentPage * pagination.perPage;
 
   return {
-    links: [{
-      href: new URL(`./${pagination.currentPage}${decodeURIComponent(url.search)}`, url).toString(), 
-      label: pagination.currentPage || 0, 
-      range: [rangeBegin, rangeEnd > pagination.totalCount ? pagination.totalCount : rangeEnd],
-    }], 
-    current: 0, 
-    prev, 
-    next
-  }
-}
+    links: [
+      {
+        href: new URL(
+          `./${pagination.currentPage}${decodeURIComponent(url.search)}`,
+          url,
+        ).toString(),
+        label: pagination.currentPage || 0,
+        range: [
+          rangeBegin,
+          rangeEnd > pagination.totalCount ? pagination.totalCount : rangeEnd,
+        ],
+      },
+    ],
+    current: 0,
+    prev,
+    next,
+  };
+};

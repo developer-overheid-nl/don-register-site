@@ -1,26 +1,37 @@
 ---
-import '../styles/reset.css';
+import "../styles/reset.css";
 import "../../../../proprietary/fonts/ro/index.css";
-import '@rijkshuisstijl-community/design-tokens/dist/uitvoerend-groen/root.css';
-import '@rijkshuisstijl-community/components-css/dist/index.css';
-import '../styles/override.css';
-import '../styles/helpers.css';
-import { Container, IconsSprite, Header, TopNavigation, Footer } from '@developer-overheid-nl/don-register-components';
-import i18next from 'i18next';
-import resources from '@developer-overheid-nl/don-register-locales/nl' with { type: "json" };
+import "@rijkshuisstijl-community/design-tokens/dist/uitvoerend-groen/root.css";
+import "@rijkshuisstijl-community/components-css/dist/index.css";
+import "../styles/override.css";
+import "../styles/helpers.css";
+import {
+  Container,
+  IconsSprite,
+  Header,
+  TopNavigation,
+  Footer,
+} from "@developer-overheid-nl/don-register-components";
+import i18next from "i18next";
+import resources from "@developer-overheid-nl/don-register-locales/nl" with {
+  type: "json",
+};
 
-const { appConfig: {title: titleSite, mainSite, urlHomepage, topNavigation, footer}, titlePage } = Astro.props;
+const {
+  appConfig: { title: titleSite, mainSite, urlHomepage, topNavigation, footer },
+  titlePage,
+} = Astro.props;
 const { routePattern } = Astro;
 
 i18next.init({
   // Right now we are using the locales directly, but in the future we can use the i18next-fs-backend to load them from files
   // We also have just one language. Refactor this when we have more languages.
-  lng: 'nl',
-  fallbackLng: 'nl',
+  lng: "nl",
+  fallbackLng: "nl",
   resources: {
     nl: {
-      translation: resources
-    }
+      translation: resources,
+    },
   },
 });
 ---

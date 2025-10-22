@@ -1,4 +1,8 @@
-import { type HTMLAttributes, type PropsWithChildren, type ReactNode } from "react";
+import {
+  type HTMLAttributes,
+  type PropsWithChildren,
+  type ReactNode,
+} from "react";
 import { CardAsLink } from "@rijkshuisstijl-community/components-react";
 import clsx from "clsx";
 import styles from "./styles.module.css";
@@ -29,24 +33,34 @@ const CardsList = (props: PropsWithChildren<CardsListProps>) => {
 
   return (
     <ol className={clsx(styles.cardsList, className)} id={id}>
-      {
-        items && items.length > 0 ? items.map((item, index, array) => (
-          <CardsListItem key={`${id || 'don-cards'}_${index}`} index={index} setsize={array.length}>
-            {item as unknown as ReactNode}
-          </CardsListItem>
-        )) : children
-      }
+      {items && items.length > 0
+        ? items.map((item, index, array) => (
+            <CardsListItem
+              key={`${id || "don-cards"}_${index}`}
+              index={index}
+              setsize={array.length}
+            >
+              {item as unknown as ReactNode}
+            </CardsListItem>
+          ))
+        : children}
     </ol>
   );
-}
+};
 
 export interface CardsListItemProps {
   index: number;
   setsize: number;
 }
 
-export const CardsListItem = ({ index, setsize, children }: PropsWithChildren<CardsListItemProps>) => (
-  <li aria-posinset={index + 1} aria-setsize={setsize}>{children}</li>
-)
+export const CardsListItem = ({
+  index,
+  setsize,
+  children,
+}: PropsWithChildren<CardsListItemProps>) => (
+  <li aria-posinset={index + 1} aria-setsize={setsize}>
+    {children}
+  </li>
+);
 
 export default CardsList;

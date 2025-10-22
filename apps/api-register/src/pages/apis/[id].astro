@@ -1,35 +1,72 @@
 ---
 export const prerender = false; // Not needed in 'server' mode
 import appConfig from "../../../app.config";
-import { DonBasic, DonDetail } from "@developer-overheid-nl/don-register-layouts";
-import { getAppearance, getDate, HeadingGroup, IconBadge, Link, Markdown, Paragraph, DataSummary, DataSummaryItem, ScoreBadge, Block, Heading, CopyButton, DataBadgeLink, AlignBox, ReadOnlyTextInput, Alert, Icon } from "@developer-overheid-nl/don-register-components";
+import {
+  DonBasic,
+  DonDetail,
+} from "@developer-overheid-nl/don-register-layouts";
+import {
+  getAppearance,
+  getDate,
+  HeadingGroup,
+  IconBadge,
+  Link,
+  Markdown,
+  Paragraph,
+  DataSummary,
+  DataSummaryItem,
+  ScoreBadge,
+  Block,
+  Heading,
+  CopyButton,
+  DataBadgeLink,
+  AlignBox,
+  ReadOnlyTextInput,
+  Alert,
+  Icon,
+} from "@developer-overheid-nl/don-register-components";
 import { t } from "i18next";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import createClient from "openapi-fetch";
-import { type paths } from "../../types/api-schema"; 
-import { API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY } from "astro:env/server";
+import { type paths } from "../../types/api-schema";
+import {
+  API_URL,
+  API_ENDPOINT,
+  API_VERSION,
+  API_X_API_KEY,
+} from "astro:env/server";
 
-Astro.response.headers.set('Cache-Control', 'public, max-age=7200');
-const { id = '' } = Astro.params;
+Astro.response.headers.set("Cache-Control", "public, max-age=7200");
+const { id = "" } = Astro.params;
 const API_RESOURCE: keyof paths = `/${API_VERSION}/apis/{id}`;
 
 const client = createClient<paths>({ baseUrl: `${API_URL}/${API_ENDPOINT}` });
-const { data, error, response: { headers } } = await client.GET(API_RESOURCE, {
+const {
+  data,
+  error,
+  response: { headers },
+} = await client.GET(API_RESOURCE, {
   params: {
     path: { id },
   },
   headers: {
-    'x-api-key': API_X_API_KEY,
+    "x-api-key": API_X_API_KEY,
   },
 });
 
 // Localization
 const { i18n: i18nApp } = appConfig;
 const i18nPage = {
-  'pages.aside-landmark': 'Contactinformatie',
-}
-i18n.addResourceBundle(i18n.language, 'translation', i18nApp ? i18nApp[i18n.language] : {}, true, true);
-i18n.addResources(i18n.language, 'translation', i18nPage);
+  "pages.aside-landmark": "Contactinformatie",
+};
+i18n.addResourceBundle(
+  i18n.language,
+  "translation",
+  i18nApp ? i18nApp[i18n.language] : {},
+  true,
+  true,
+);
+i18n.addResources(i18n.language, "translation", i18nPage);
 
 const details = error ? null : data;
 

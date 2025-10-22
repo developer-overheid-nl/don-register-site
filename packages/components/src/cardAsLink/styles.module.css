@@ -4,7 +4,10 @@
       text-decoration: none;
     }
     :global(.nl-heading) {
-      text-decoration: var(--rhc-card-as-link-active-text-decoration, underline);
+      text-decoration: var(
+        --rhc-card-as-link-active-text-decoration,
+        underline
+      );
     }
   }
 }

@@ -4,9 +4,9 @@
   --utrecht-textbox-border-color: var(--rhc-color-cool-grey-900);
 }
 
-.form  {
+.form {
   display: grid;
-  grid-template-areas: "input button";
+  grid-template-areas: 'input button';
   grid-template-columns: auto min-content;
   align-items: end;
   gap: 0;

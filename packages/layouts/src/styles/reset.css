@@ -19,7 +19,9 @@ html:lang(nl) {
   hyphenate-limit-lines: 2;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 

@@ -4,7 +4,7 @@
 }
 
 .navbar {
-  :global(.rhc-nav-bar__link) { 
+  :global(.rhc-nav-bar__link) {
     align-items: center;
     :global(.don-icon-externe-link-inline) {
       order: 1;

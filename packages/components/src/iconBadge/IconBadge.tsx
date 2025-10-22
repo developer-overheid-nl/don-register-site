@@ -8,13 +8,25 @@ export interface IconBadgeProps extends HTMLProps<HTMLSpanElement> {
   appearance?: string;
 }
 
-export default function IconBadge (props : IconBadgeProps) {
+export default function IconBadge(props: IconBadgeProps) {
   const { className, name, appearance, ...restProps } = props;
-  const iconClassName = `don-icon don-icon-${name} ${className || ''}`.trim();
-  
+  const iconClassName = `don-icon don-icon-${name} ${className || ""}`.trim();
+
   return (
-    <span className={clsx('utrecht-data-badge', `utrecht-data-badge--${appearance || name}`, styles)} {...restProps}>
-      <Icon width="1.5rem" height="1.5rem" className={`${iconClassName}`} name={name} />
+    <span
+      className={clsx(
+        "utrecht-data-badge",
+        `utrecht-data-badge--${appearance || name}`,
+        styles,
+      )}
+      {...restProps}
+    >
+      <Icon
+        width="1.5rem"
+        height="1.5rem"
+        className={`${iconClassName}`}
+        name={name}
+      />
     </span>
   );
 }

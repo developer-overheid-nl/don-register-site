@@ -1,10 +1,16 @@
-import type { JSX } from 'react';
-import { Logo } from '../../../../proprietary';
+import type { JSX } from "react";
+import { Logo } from "../../../../proprietary";
 
-export default function SiteLogo({ isRoot, href }: { isRoot: boolean, href: string }) {
-  const element = !isRoot ? 'a' : 'div';
+export default function SiteLogo({
+  isRoot,
+  href,
+}: {
+  isRoot: boolean;
+  href: string;
+}) {
+  const element = !isRoot ? "a" : "div";
   const props = {
-    className: 'site-logo',
+    className: "site-logo",
     ...(!isRoot ? { href } : {}),
   };
 
@@ -12,7 +18,7 @@ export default function SiteLogo({ isRoot, href }: { isRoot: boolean, href: stri
 
   return (
     <Element {...props}>
-      <Logo forced='light' />
+      <Logo forced="light" />
     </Element>
   );
 }
