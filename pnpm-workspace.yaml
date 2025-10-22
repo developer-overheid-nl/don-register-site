@@ -3,7 +3,7 @@ packages:
   - 'apps/*'
 
 catalog:
-  '@astrojs/node': 9.4.6
+  '@astrojs/node': 9.5.0
   '@astrojs/react': 4.3.0
   '@csstools/postcss-global-data': 3.1.0
   '@rijkshuisstijl-community/components-css': 8.0.0
