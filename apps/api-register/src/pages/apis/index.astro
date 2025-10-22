@@ -1,5 +1,5 @@
 ---
-let searchParams = Astro.url.searchParams;
+const searchParams = Astro.url.searchParams;
 const page = searchParams.get("pagina");
 searchParams.delete("pagina");
 

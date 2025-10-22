@@ -1,6 +1,6 @@
 // 'use client';
 
-import { type HTMLProps, type PropsWithChildren } from "react";
+import type { HTMLProps, PropsWithChildren } from "react";
 import {
   Heading,
   LinkList,

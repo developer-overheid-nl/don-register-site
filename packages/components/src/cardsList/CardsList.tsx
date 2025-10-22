@@ -1,9 +1,9 @@
-import {
-  type HTMLAttributes,
-  type PropsWithChildren,
-  type ReactNode,
+import type {
+  HTMLAttributes,
+  PropsWithChildren,
+  ReactNode,
 } from "react";
-import { CardAsLink } from "@rijkshuisstijl-community/components-react";
+import type { CardAsLink } from "@rijkshuisstijl-community/components-react";
 import clsx from "clsx";
 import styles from "./styles.module.css";
 
