@@ -1,9 +1,11 @@
-import styles from "./styles.module.css";
+import {
+  Heading /*, Link */,
+} from "@rijkshuisstijl-community/components-react";
 import { I18nextProvider, useTranslation } from "react-i18next";
+import { Lint } from "../../../../proprietary";
 import i18n from "../i18n";
 import SiteLogo from "../siteLogo/SiteLogo";
-import { Heading /*, Link */ } from "@rijkshuisstijl-community/components-react";
-import { Lint } from "../../../../proprietary";
+import styles from "./styles.module.css";
 // import { IconDeltaNaarLinksInline } from "../../../../proprietary/icons";
 
 export interface HeaderProps extends LogoNavProps {

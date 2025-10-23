@@ -4,14 +4,14 @@ import {
   Footer as RHCFooter,
 } from "@rijkshuisstijl-community/components-react";
 import clsx from "clsx";
-import styles from "./styles.module.css";
-import { useId, type PropsWithChildren } from "react";
-import Markdown from "../markdown/Markdown";
+import { type PropsWithChildren, useId } from "react";
 import Heading from "../heading/Heading";
+import Markdown from "../markdown/Markdown";
 import {
-  processNavBarItems,
   type NavBarItem,
+  processNavBarItems,
 } from "../topNavigation/TopNavigation";
+import styles from "./styles.module.css";
 
 export interface ColumnProps {
   title: string;

@@ -1,18 +1,19 @@
 // 'use client';
 /* biome-ignore-all lint: TODO: filters needs a refactor anyway */
-import type { HTMLProps, PropsWithChildren } from "react";
+
 import {
   Heading,
   LinkList,
   LinkListLink,
 } from "@rijkshuisstijl-community/components-react";
+import clsx from "clsx";
+import type { HTMLProps, PropsWithChildren } from "react";
+import { I18nextProvider, useTranslation } from "react-i18next";
+import Alert from "../alert/Alert";
 import DataBadgeLink from "../dataBadgeLink/DataBadgeLink";
+import i18n from "../i18n";
 import Icon from "../iconsSprite/Icon";
 import styles from "./styles.module.css";
-import clsx from "clsx";
-import { I18nextProvider, useTranslation } from "react-i18next";
-import i18n from "../i18n";
-import Alert from "../alert/Alert";
 
 export interface FiltersProps extends HTMLProps<HTMLDivElement> {
   routing?: Record<string, any>;

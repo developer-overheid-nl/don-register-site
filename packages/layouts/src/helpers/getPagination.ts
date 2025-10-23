@@ -1,5 +1,5 @@
-import parseLinkHeader from "parse-link-header";
 import type { PaginationProps } from "@developer-overheid-nl/don-register-components";
+import parseLinkHeader from "parse-link-header";
 
 export interface paginationHeaders {
   currentPage: number;

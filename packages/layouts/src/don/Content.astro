@@ -1,11 +1,11 @@
 ---
-/* biome-ignore-all lint: see net line... */
+/* biome-ignore-all lint: see next line... */
 /* OBSOLETE ? */
 /* Note: This layout is used for Markdown pages */
-import type { MarkdownLayoutProps } from "astro";
 import { Container } from "@developer-overheid-nl/don-register-components";
-import Base from "./Base.astro";
+import type { MarkdownLayoutProps } from "astro";
 import appConfig from "../../../../apps/api-register/app.config"; // TODO: to get it in directly through props automatically
+import Base from "./Base.astro";
 
 type Props = MarkdownLayoutProps<{
   title: string;

@@ -2,8 +2,8 @@ import {
   DataBadgeButton,
   type DataBadgeButtonProps,
 } from "@rijkshuisstijl-community/components-react";
-import styles from "./styles.module.css";
 import clsx from "clsx";
+import styles from "./styles.module.css";
 
 export interface DataBadgeLinkProps
   extends Omit<DataBadgeButtonProps, "aria-pressed" | "pressed"> {

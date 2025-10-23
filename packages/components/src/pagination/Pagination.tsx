@@ -1,13 +1,9 @@
 import clsx from "clsx";
-import type {
-  ElementType,
-  HTMLAttributes,
-  PropsWithChildren,
-} from "react";
+import type { ElementType, HTMLAttributes, PropsWithChildren } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
+import i18n from "../i18n";
 // import parseLinkHeader from "parse-link-header";
 import styles from "./styles.module.css";
-import i18n from "../i18n";
 
 interface PageLinkProps
   extends Omit<
@@ -164,7 +160,7 @@ const Pagination = (props: PropsWithChildren<PaginationProps>) => {
         aria-label={t("components.pages")}
         className="utrecht-pagination__pages"
       >
-      {/* biome-ignore-end lint/a11y/useSemanticElements: taken from NLDS example */}
+        {/* biome-ignore-end lint/a11y/useSemanticElements: taken from NLDS example */}
         {links &&
           links.length > 0 &&
           links.map(({ href, label, range }, index) => (

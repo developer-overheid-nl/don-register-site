@@ -1,7 +1,7 @@
+import clsx from "clsx";
 import type React from "react";
 import type { ReactNode } from "react";
 import styles from "./styles.module.css";
-import clsx from "clsx";
 
 type Align =
   | "left"

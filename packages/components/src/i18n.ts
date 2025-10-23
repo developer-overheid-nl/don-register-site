@@ -1,7 +1,7 @@
-import { createInstance, type i18n } from "i18next";
 import resources from "@developer-overheid-nl/don-register-locales/nl" with {
   type: "json",
 };
+import { createInstance, type i18n } from "i18next";
 
 const i18nInstance: i18n = createInstance({
   lng: "nl",

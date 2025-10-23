@@ -1,2 +1,2 @@
-export * from "./getRouting";
 export * from "./getPagination";
+export * from "./getRouting";

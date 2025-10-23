@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import styles from "./styles.module.css";
 import type { HTMLAttributes, ReactNode } from "react";
+import styles from "./styles.module.css";
 
 export interface BlockProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;

@@ -2,8 +2,8 @@ import {
   DataSummary as RHCDataSummary,
   type DataSummaryProps as RHCDataSummaryProps,
 } from "@rijkshuisstijl-community/components-react";
-import styles from "./styles.module.css";
 import clsx from "clsx";
+import styles from "./styles.module.css";
 
 export interface DataSummaryProps extends RHCDataSummaryProps {
   contained?: boolean;

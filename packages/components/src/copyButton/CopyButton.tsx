@@ -1,9 +1,9 @@
 "use client";
 
 import { SecondaryActionButton } from "@rijkshuisstijl-community/components-react";
+import clsx from "clsx";
 import Icon from "../iconsSprite/Icon";
 import styles from "./styles.module.css";
-import clsx from "clsx";
 
 const CopyButton = ({
   text,

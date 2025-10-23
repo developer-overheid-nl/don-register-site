@@ -1,6 +1,6 @@
 import {
-  Link as RHCLink,
   type LinkProps,
+  Link as RHCLink,
 } from "@rijkshuisstijl-community/components-react";
 
 const Link = (props: LinkProps) => {

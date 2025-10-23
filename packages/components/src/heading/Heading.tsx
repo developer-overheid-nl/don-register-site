@@ -1,6 +1,6 @@
 import {
-  Heading as RHCHeading,
   type HeadingProps,
+  Heading as RHCHeading,
 } from "@rijkshuisstijl-community/components-react";
 
 const Heading = (props: HeadingProps) => {

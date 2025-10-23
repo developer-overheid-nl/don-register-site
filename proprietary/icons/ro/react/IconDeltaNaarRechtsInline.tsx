@@ -1,4 +1,5 @@
 import type { SVGProps } from "react";
+
 /**
  * Rijkshuisstijl icoon
  *

@@ -1,10 +1,10 @@
-import type { APIRoute } from "astro";
 import {
-  API_URL,
   API_ENDPOINT,
+  API_URL,
   API_VERSION,
   API_X_API_KEY,
 } from "astro:env/server";
+import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async ({ params }) => {
   const { id } = params;

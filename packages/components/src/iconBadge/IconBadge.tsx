@@ -1,6 +1,6 @@
+import clsx from "clsx";
 import type { HTMLProps } from "react";
 import Icon from "../iconsSprite/Icon";
-import clsx from "clsx";
 import styles from "./styles.module.css";
 
 export interface IconBadgeProps extends HTMLProps<HTMLSpanElement> {

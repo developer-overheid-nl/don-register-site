@@ -53,21 +53,21 @@ export default function ScoreBadge(props: ScoreBadgeProps) {
         <defs>
           <linearGradient id="gradient">
             {colors.gradient?.map((color, index) => (
-                <stop
-                  key={`grd-${color}`}
-                  offset={`${(index * 100) / (colors.gradient.length - 1)}%`}
-                  style={{ stopColor: color, stopOpacity: 1 }}
-                />
-              ))}
+              <stop
+                key={`grd-${color}`}
+                offset={`${(index * 100) / (colors.gradient.length - 1)}%`}
+                style={{ stopColor: color, stopOpacity: 1 }}
+              />
+            ))}
           </linearGradient>
           <linearGradient id="arrow" gradientTransform="rotate(90)">
             {colors.arrow?.map((color, index) => (
-                <stop
-                  key={`arr-${color}`}
-                  offset={index}
-                  style={{ stopColor: color }}
-                />
-              ))}
+              <stop
+                key={`arr-${color}`}
+                offset={index}
+                style={{ stopColor: color }}
+              />
+            ))}
           </linearGradient>
           <filter id="glow">
             <feDropShadow

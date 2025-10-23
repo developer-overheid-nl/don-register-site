@@ -1,6 +1,6 @@
 import {
-  Article as RHCArticle,
   type ArticleProps,
+  Article as RHCArticle,
 } from "@rijkshuisstijl-community/components-react";
 
 const Article = (props: ArticleProps) => {

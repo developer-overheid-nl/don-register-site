@@ -1,10 +1,6 @@
-import type {
-  HTMLAttributes,
-  PropsWithChildren,
-  ReactNode,
-} from "react";
 import type { CardAsLink } from "@rijkshuisstijl-community/components-react";
 import clsx from "clsx";
+import type { HTMLAttributes, PropsWithChildren, ReactNode } from "react";
 import styles from "./styles.module.css";
 
 export interface CardsListProps extends HTMLAttributes<HTMLOListElement> {

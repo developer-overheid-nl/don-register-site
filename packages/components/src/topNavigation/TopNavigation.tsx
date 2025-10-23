@@ -1,11 +1,11 @@
-import type { ReactElement } from "react";
-import styles from "./styles.module.css";
 import {
+  type IconProps,
   NavBar,
   type NavBarItemProps,
-  type IconProps,
 } from "@rijkshuisstijl-community/components-react";
+import type { ReactElement } from "react";
 import Icon from "../iconsSprite/Icon";
+import styles from "./styles.module.css";
 
 export interface NavBarItem {
   id: string;

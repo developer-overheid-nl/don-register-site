@@ -1,14 +1,14 @@
-import { I18nextProvider, useTranslation } from "react-i18next";
-import Heading from "../heading/Heading";
 import {
   FormFieldTextInput,
   PrimaryActionButton,
 } from "@rijkshuisstijl-community/components-react";
 import clsx from "clsx";
-import styles from "./styles.module.css";
-import Icon from "../iconsSprite/Icon";
-import i18n from "../i18n";
 import type { PropsWithChildren } from "react";
+import { I18nextProvider, useTranslation } from "react-i18next";
+import Heading from "../heading/Heading";
+import i18n from "../i18n";
+import Icon from "../iconsSprite/Icon";
+import styles from "./styles.module.css";
 
 export interface SearchProps {
   searchUrl: string;

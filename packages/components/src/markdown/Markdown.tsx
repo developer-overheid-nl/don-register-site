@@ -1,7 +1,4 @@
-import ReactMarkdown, {
-  type Options,
-  type Components,
-} from "react-markdown";
+import ReactMarkdown, { type Components, type Options } from "react-markdown";
 import remarkBehead from "remark-behead";
 
 export type HeadingLevels = 0 | 1 | 2 | 3 | 4 | 5;
@@ -37,7 +34,7 @@ export default function Markdown(options: MarkdownProps) {
       children={mdText}
       components={components}
       skipHtml={true}
-      unwrapDisallowed={true} 
+      unwrapDisallowed={true}
       remarkPlugins={[[remarkBehead, { minDepth: minHeadingDepth }]]}
       {...restOptions}
     />
