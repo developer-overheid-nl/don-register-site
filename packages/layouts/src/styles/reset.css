@@ -19,13 +19,15 @@ html:lang(nl) {
   hyphenate-limit-lines: 2;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
 body {
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
 svg {

@@ -1,15 +1,13 @@
 // @ts-check
+
+import node from "@astrojs/node";
+import react from "@astrojs/react";
 import { defineConfig, envField } from "astro/config";
 import { loadEnv } from "vite";
 
 // Settings for parse-link-header, see .env file
-const { 
-  PARSE_LINK_HEADER_MAXLEN, 
-  PARSE_LINK_HEADER_THROW_ON_MAXLEN_EXCEEDED 
-} = loadEnv(import.meta.env.MODE, process.cwd(), '');
-
-import react from "@astrojs/react";
-import node from "@astrojs/node";
+const { PARSE_LINK_HEADER_MAXLEN, PARSE_LINK_HEADER_THROW_ON_MAXLEN_EXCEEDED } =
+  loadEnv(import.meta.env.MODE, process.cwd(), "");
 
 // https://astro.build/config
 export default defineConfig({
@@ -19,30 +17,50 @@ export default defineConfig({
     mode: "standalone",
   }),
   server: {
-    host: '0.0.0.0',
+    host: "0.0.0.0",
     port: 4321,
   },
-  integrations: [react()],
+  integrations: [
+    react(),
+  ],
   build: {
-    inlineStylesheets: 'never'
+    inlineStylesheets: "never",
   },
   vite: {
     // Settings for parse-link-header, see .env file
     define: {
-      'process.env.PARSE_LINK_HEADER_MAXLEN': JSON.stringify(PARSE_LINK_HEADER_MAXLEN),
-      'process.env.PARSE_LINK_HEADER_THROW_ON_MAXLEN_EXCEEDED': JSON.stringify(PARSE_LINK_HEADER_THROW_ON_MAXLEN_EXCEEDED),
+      "process.env.PARSE_LINK_HEADER_MAXLEN": JSON.stringify(
+        PARSE_LINK_HEADER_MAXLEN,
+      ),
+      "process.env.PARSE_LINK_HEADER_THROW_ON_MAXLEN_EXCEEDED": JSON.stringify(
+        PARSE_LINK_HEADER_THROW_ON_MAXLEN_EXCEEDED,
+      ),
     },
     ssr: {
-      noExternal: ["@astrojs/react"],
+      noExternal: [
+        "@astrojs/react",
+      ],
     },
   },
   env: {
     schema: {
-      API_URL: envField.string({ context: "server", access: "secret" }),
-      API_ENDPOINT: envField.string({ context: "server", access: "secret" }),
-      API_X_API_KEY: envField.string({ context: "server", access: "secret", optional: true }),
+      API_URL: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+      API_ENDPOINT: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+      API_X_API_KEY: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
+      }),
       API_VERSION: envField.enum({
-        values: ["v1"],
+        values: [
+          "v1",
+        ],
         context: "server",
         access: "public",
         default: "v1",
@@ -52,5 +70,5 @@ export default defineConfig({
   redirects: {
     "contact": "https://developer.overheid.nl/contact/",
     "privacy": "https://developer.overheid.nl/privacy/",
-  }
+  },
 });

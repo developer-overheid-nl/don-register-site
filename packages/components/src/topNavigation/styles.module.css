@@ -4,7 +4,7 @@
 }
 
 .navbar {
-  :global(.rhc-nav-bar__link) { 
+  :global(.rhc-nav-bar__link) {
     align-items: center;
     :global(.don-icon-externe-link-inline) {
       order: 1;
@@ -25,8 +25,8 @@
     align-items: stretch;
 
     :global(.rhc-nav-bar__list) {
-      border-block-end: 1px solid var(--rhc-nav-bar-border-color);
       justify-content: center;
+      border-block-end: 1px solid var(--rhc-nav-bar-border-color);
     }
 
     :global(.rhc-nav-bar__list--end) {

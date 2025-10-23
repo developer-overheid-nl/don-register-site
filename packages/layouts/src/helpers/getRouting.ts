@@ -1,10 +1,17 @@
-import type { APIContext } from 'astro';
+import type { APIContext } from "astro";
 
-export const getRouting = (url: APIContext['url'], originPathname: APIContext['originPathname'], routePattern: APIContext['routePattern'], params: APIContext['params']) => {
-  const patternItems = routePattern.split('/');
-  const pathItems = url.pathname.split('/');
+export const getRouting = (
+  url: APIContext["url"],
+  originPathname: APIContext["originPathname"],
+  routePattern: APIContext["routePattern"],
+  params: APIContext["params"],
+) => {
+  const patternItems = routePattern.split("/");
+  const pathItems = url.pathname.split("/");
 
-  const parentPath = pathItems.filter(item => patternItems.includes(item)).join('/');
+  const parentPath = pathItems
+    .filter((item) => patternItems.includes(item))
+    .join("/");
 
   return {
     url,
@@ -18,8 +25,8 @@ export const getRouting = (url: APIContext['url'], originPathname: APIContext['o
       pathItems,
       parentPath,
       originPathname,
-      rewrite: originPathname.replace(/\/$/, '') !== url.pathname,
+      rewrite: originPathname.replace(/\/$/, "") !== url.pathname,
     },
     query: Object.fromEntries(url.searchParams),
   };
-}
+};

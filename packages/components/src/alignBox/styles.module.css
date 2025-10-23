@@ -24,69 +24,69 @@
 }
 
 .left {
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
 }
 
 .center,
 .middle {
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .right {
-  justify-content: flex-end;
   align-items: center;
+  justify-content: flex-end;
 }
 
 .top {
-  justify-content: center;
   align-items: flex-start;
+  justify-content: center;
 }
 
 .bottom {
-  justify-content: center;
   align-items: flex-end;
+  justify-content: center;
 }
 
 .topLeft {
-  justify-content: flex-start;
   align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .topRight {
-  justify-content: flex-end;
   align-items: flex-start;
+  justify-content: flex-end;
 }
 
 .bottomLeft {
-  justify-content: flex-start;
   align-items: flex-end;
+  justify-content: flex-start;
 }
 
 .bottomRight {
-  justify-content: flex-end;
   align-items: flex-end;
+  justify-content: flex-end;
 }
 
 .stretch {
-  justify-content: stretch;
   align-items: stretch;
+  justify-content: stretch;
 }
 
 .spaceBetween {
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .spaceAround {
-  justify-content: space-around;
   align-items: center;
+  justify-content: space-around;
 }
 
 .spaceEvenly {
-  justify-content: space-evenly;
   align-items: center;
+  justify-content: space-evenly;
 }
 
 .gapNone {

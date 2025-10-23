@@ -1,15 +1,16 @@
 .logo {
   display: grid;
-  width: max-content;
-  grid-template-areas: "vignet don"
-                       "payoff payoff";
+  grid-template-areas:
+    'vignet don'
+    'payoff payoff';
   grid-template-columns: 2rem auto;
-  column-gap: 0.25rem;
   row-gap: 0.125rem;
+  column-gap: 0.25rem;
+  width: max-content;
 
   &.forced-dark {
-    background-color: #000000;
     outline: 0.25rem solid #000000;
+    background-color: #000000;
   }
 }
 
@@ -20,44 +21,66 @@
 }
 
 .rsaquo {
-  color: #01689B;
+  color: #01689b;
 }
 
 .lowbar {
-  color: #8FCAE7;
+  color: #8fcae7;
 }
 
 .don {
   grid-area: don;
   align-self: end;
-  color: #000000;
   height: 1.5rem;
+  color: #000000;
 }
 
 .payoff {
   grid-area: payoff;
-  color: #01689B;
   height: 0.825rem;
+  color: #01689b;
 }
 
 @media (prefers-color-scheme: dark) {
   .logo:not(.forced-light) {
-    .rsaquo { color: #66A4C3 }
-    .lowbar { color: #CCE7F4 }
-    .don { color: #FFFFFF }
-    .payoff { color: #CCE7F4 }
+    .rsaquo {
+      color: #66a4c3;
+    }
+    .lowbar {
+      color: #cce7f4;
+    }
+    .don {
+      color: #ffffff;
+    }
+    .payoff {
+      color: #cce7f4;
+    }
   }
 }
 
 @media (forced-colors: active) {
-  .rsaquo { color: #0F172A }
-  .lowbar { color: #475569 }
-  .payoff { color: #0F172A }
+  .rsaquo {
+    color: #0f172a;
+  }
+  .lowbar {
+    color: #475569;
+  }
+  .payoff {
+    color: #0f172a;
+  }
 }
 
 @media (forced-colors: active) and (prefers-color-scheme: dark) {
-  .rsaquo { color: #E2E8F0 }
-  .lowbar { color: #F8FAFC }
-  .don { color: #FFFFFF }
-  .payoff { color: #E2E8F0 }
+  .rsaquo {
+    color: #e2e8f0;
+  }
+  .lowbar {
+    color: #f8fafc;
+  }
+  .don {
+    color: #ffffff;
+  }
+  .payoff {
+    color: #e2e8f0;
+  }
 }

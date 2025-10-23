@@ -1,9 +1,11 @@
-import styles from "./styles.module.css";
-import { I18nextProvider, useTranslation } from 'react-i18next';
-import i18n from '../i18n'; 
-import SiteLogo from "../siteLogo/SiteLogo"
-import { Heading, Link } from '@rijkshuisstijl-community/components-react';
+import {
+  Heading /*, Link */,
+} from "@rijkshuisstijl-community/components-react";
+import { I18nextProvider, useTranslation } from "react-i18next";
 import { Lint } from "../../../../proprietary";
+import i18n from "../i18n";
+import SiteLogo from "../siteLogo/SiteLogo";
+import styles from "./styles.module.css";
 // import { IconDeltaNaarLinksInline } from "../../../../proprietary/icons";
 
 export interface HeaderProps extends LogoNavProps {
@@ -30,56 +32,90 @@ interface LogoNavProps {
    *
    * Note: translation keys: `components.back-to-homepage-landmark`, ...
    */
-  logoLinkBehaviour?: 'no-link' | 'site-home' | 'main-site' | 'main-site-on-home';
+  logoLinkBehaviour?:
+    | "no-link"
+    | "site-home"
+    | "main-site"
+    | "main-site-on-home";
 }
 
 function LogoNav(props: LogoNavProps) {
   const { t } = useTranslation();
-  const { mainSite, urlCurrent = '/', urlHomepage = ['/'], logoLinkBehaviour } = props;
+  const {
+    mainSite,
+    urlCurrent = "/",
+    urlHomepage = ["/"],
+    logoLinkBehaviour,
+  } = props;
   let isRoot: boolean = urlHomepage.includes(urlCurrent);
-  let href: string = '/';
+  let href: string = "/";
   let landmark: string | undefined;
   let title: string | undefined;
 
   switch (logoLinkBehaviour) {
-    case 'no-link':
+    case "no-link":
       isRoot = true;
       break;
-    case 'main-site':
+    case "main-site":
       isRoot = false;
       href = mainSite.url;
-      landmark = t('components.back-to-main-site-landmark', { siteName: mainSite.name });
+      landmark = t("components.back-to-main-site-landmark", {
+        siteName: mainSite.name,
+      });
       break;
-    case 'main-site-on-home':
-      href = isRoot ? mainSite.url : urlHomepage[0] || '/';
-      landmark = isRoot ? t('components.back-to-main-site-landmark', { siteName: mainSite.name }) : t('components.back-to-homepage-landmark');
-      title = isRoot ? t('components.back-to-main-site', { siteName: mainSite.name }) : t('components.back-to-homepage');
+    case "main-site-on-home":
+      href = isRoot ? mainSite.url : urlHomepage[0] || "/";
+      landmark = isRoot
+        ? t("components.back-to-main-site-landmark", {
+            siteName: mainSite.name,
+          })
+        : t("components.back-to-homepage-landmark");
+      title = isRoot
+        ? t("components.back-to-main-site", { siteName: mainSite.name })
+        : t("components.back-to-homepage");
       isRoot = false;
       break;
     default:
-      href = urlHomepage[0] || '/';
-      landmark = isRoot ? undefined : t('components.back-to-homepage-landmark');
+      href = urlHomepage[0] || "/";
+      landmark = isRoot ? undefined : t("components.back-to-homepage-landmark");
       break;
   }
 
-  return (
-    landmark ? (
-      <nav aria-label={landmark} title={title}><SiteLogo isRoot={isRoot} href={href} /></nav>
-    ) : (
-      <div className="nav"><SiteLogo isRoot={isRoot} href={href} /></div>
-    )
+  return landmark ? (
+    <nav aria-label={landmark} title={title}>
+      <SiteLogo isRoot={isRoot} href={href} />
+    </nav>
+  ) : (
+    <div className="nav">
+      <SiteLogo isRoot={isRoot} href={href} />
+    </div>
   );
 }
 
-function Header({ titleSite, titlePage, mainSite, urlCurrent, urlHomepage, logoLinkBehaviour }: HeaderProps) {
+function Header({
+  titleSite,
+  titlePage,
+  mainSite,
+  urlCurrent,
+  urlHomepage,
+  logoLinkBehaviour,
+}: HeaderProps) {
   // const { t } = useTranslation();
 
   return (
     <header className={styles.header}>
-      <LogoNav mainSite={mainSite} urlCurrent={urlCurrent} urlHomepage={urlHomepage} logoLinkBehaviour={logoLinkBehaviour} />
+      <LogoNav
+        mainSite={mainSite}
+        urlCurrent={urlCurrent}
+        urlHomepage={urlHomepage}
+        logoLinkBehaviour={logoLinkBehaviour}
+      />
       <Lint className={styles.lint} />
       <div className={styles.title}>
-        <Heading level={1} appearanceLevel={3} className={styles.heading}>{titleSite}<span className="sr-only">: {titlePage}</span></Heading>
+        <Heading level={1} appearanceLevel={3} className={styles.heading}>
+          {titleSite}
+          <span className="sr-only">: {titlePage}</span>
+        </Heading>
         {/* TODO: uncomment and update component if backlink here is still needed... */}
         {/* <nav aria-label={t('components.back-to-main-site-landmark')}>
           <Link href={mainSite.url} className={styles.link}>
