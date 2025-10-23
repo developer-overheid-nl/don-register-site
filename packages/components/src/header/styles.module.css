@@ -47,15 +47,15 @@
 }
 
 .icon {
-  fill: currentColor;
-  block-size: 0.875rem;
   inline-size: 0.875rem;
+  block-size: 0.875rem;
+  fill: currentColor;
   transition: all 0.25s ease-in-out;
 }
 
 .link.link:any-link {
-  text-decoration-line: none;
   align-items: center;
+  text-decoration-line: none;
   transition: all 0.25s ease-in-out;
 }
 

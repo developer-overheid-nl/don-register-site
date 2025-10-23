@@ -14,8 +14,8 @@
 
 :global(.rhc-card-as-link__metadata) {
   display: flex;
-  justify-content: flex-end;
   align-items: baseline;
+  justify-content: flex-end;
 }
 
 :global(.rhc-card-as-link__footer) {

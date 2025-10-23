@@ -25,8 +25,8 @@
     --_utrecht-data-badge-color: var(--nl-link-color);
     --_utrecht-data-badge-background-color: var(--rhc-color-cool-grey-200);
     --utrecht-data-badge-font-weight: normal;
-    background-color: var(--_utrecht-data-badge-background-color);
     color: var(--_utrecht-data-badge-color);
+    background-color: var(--_utrecht-data-badge-background-color);
 
     &:hover {
       color: var(--rhc-color-cool-grey-50);
@@ -36,8 +36,8 @@
 }
 
 .badgeLink {
-  color: inherit;
-  text-decoration: inherit;
   display: inline-block;
   padding-block: 0.25rem;
+  color: inherit;
+  text-decoration: inherit;
 }

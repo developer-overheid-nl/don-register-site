@@ -17,12 +17,12 @@
 .footer {
   :global(.utrecht-column-layout) {
     display: flex;
-    inline-size: 100%;
     justify-content: space-between;
+    inline-size: 100%;
 
     > * {
-      flex-shrink: 0;
       flex-grow: 0;
+      flex-shrink: 0;
     }
   }
 

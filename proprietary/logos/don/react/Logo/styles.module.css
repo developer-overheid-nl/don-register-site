@@ -1,16 +1,16 @@
 .logo {
   display: grid;
-  width: max-content;
   grid-template-areas:
     'vignet don'
     'payoff payoff';
   grid-template-columns: 2rem auto;
-  column-gap: 0.25rem;
   row-gap: 0.125rem;
+  column-gap: 0.25rem;
+  width: max-content;
 
   &.forced-dark {
-    background-color: #000000;
     outline: 0.25rem solid #000000;
+    background-color: #000000;
   }
 }
 
@@ -31,14 +31,14 @@
 .don {
   grid-area: don;
   align-self: end;
-  color: #000000;
   height: 1.5rem;
+  color: #000000;
 }
 
 .payoff {
   grid-area: payoff;
-  color: #01689b;
   height: 0.825rem;
+  color: #01689b;
 }
 
 @media (prefers-color-scheme: dark) {

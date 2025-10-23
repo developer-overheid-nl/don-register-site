@@ -1,11 +1,11 @@
 .cardsList {
   --rhc-card-as-link-inline-size: 100%;
   --rhc-card-as-link-active-text-decoration: none;
-  list-style-type: none;
-  padding-inline-start: 0;
   display: flex;
   flex-direction: column;
   row-gap: var(--rhc-space-200);
+  padding-inline-start: 0;
+  list-style-type: none;
 }
 
 :global(
