@@ -12,8 +12,10 @@ export default function Logo({
     >
       <svg
         height={`1.5rem`}
+        id="don-logo-vignet"
         className={styles.vignet}
-        role="presentation"
+        role="graphics-object img"
+        aria-label="Logo"
         viewBox="0 0 92 75"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -35,6 +37,7 @@ export default function Logo({
         height={`1.5rem`}
         id="don-logo-name"
         className={styles.don}
+        role="graphics-object"
         aria-label="developer.overheid.nl"
         viewBox="0 0 332 33"
         fill="none"
@@ -50,6 +53,7 @@ export default function Logo({
         height={`0.825rem`}
         id="don-logo-payoff"
         className={styles.payoff}
+        role="graphics-object"
         aria-label="Ontwikkelaarsportaal van de Nederlandse overheid"
         viewBox="0 0 416 18"
         fill="none"

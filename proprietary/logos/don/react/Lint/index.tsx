@@ -7,6 +7,8 @@ export default function Lint({ className = "" }: { className?: string }) {
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      role="img"
+      aria-label="Logo van de Rijksoverheid"
     >
       <rect
         id="ro-lint"

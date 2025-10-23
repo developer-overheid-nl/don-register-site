@@ -11,9 +11,7 @@
       "**",
       "!**/package.json",
       "!**/tsconfig.*",
-      "!**/postcss.config.*",
       "!**/.astro",
-      "!**/astro.config.*",
       "!**/dist",
       "!**/.vscode"
     ]
@@ -69,6 +67,15 @@
             "noUnusedVariables": "off",
             "noUnusedImports": "off"
           }
+        }
+      }
+    },
+    {
+      "includes": ["**/*config*"],
+      "javascript": {
+        "formatter": {
+          "quoteProperties": "preserve",
+          "expand": "always"
         }
       }
     }

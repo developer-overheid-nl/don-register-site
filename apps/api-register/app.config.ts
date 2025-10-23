@@ -8,7 +8,10 @@ export default {
     name: "developer.overheid.nl",
     url: mainSiteUrl,
   },
-  urlHomepage: ["/", "/apis/pagina/[...page]"],
+  urlHomepage: [
+    "/",
+    "/apis/pagina/[...page]",
+  ],
   items: {
     type: "apis",
   },
@@ -23,19 +26,32 @@ export default {
   } as Record<string, i18nTranslations>,
   topNavigation: {
     items: [
-      { id: "home", label: "Home", href: mainSiteUrl },
+      {
+        id: "home",
+        label: "Home",
+        href: mainSiteUrl,
+      },
       {
         id: "kennisbank",
         label: "Kennisbank",
         href: `${mainSiteUrl}/kennisbank`,
       },
-      { id: "apis", label: "API's", href: "/apis", current: true },
+      {
+        id: "apis",
+        label: "API's",
+        href: "/apis",
+        current: true,
+      },
       {
         id: "communities",
         label: "Communities",
         href: `${mainSiteUrl}/communities`,
       },
-      { id: "blog", label: "Blog", href: `${mainSiteUrl}/blog` },
+      {
+        id: "blog",
+        label: "Blog",
+        href: `${mainSiteUrl}/blog`,
+      },
     ],
     endItems: [
       {
@@ -81,7 +97,11 @@ export default {
       {
         title: "API-register",
         items: [
-          { id: "add", label: "API toevoegen", href: "/apis/toevoegen" },
+          {
+            id: "add",
+            label: "API toevoegen",
+            href: "/apis/toevoegen",
+          },
           {
             id: "statistics",
             label: "Statistieken",

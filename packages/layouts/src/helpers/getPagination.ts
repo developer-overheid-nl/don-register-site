@@ -38,11 +38,16 @@ export const getPagination = (
   }
 
   const prev =
-    pagination.prev !== undefined &&
-    new URL(
-      `./${(pagination.prev.page) < pagination.totalPages ? pagination.prev.page : pagination.last.page}${decodeURIComponent(url.search)}`,
-      url,
-    ).toString();
+    pagination.prev !== undefined && pagination.last !== undefined
+      ? new URL(
+          `./${
+            Number(pagination.prev.page) < pagination.totalPages
+              ? pagination.prev.page
+              : pagination.last.page
+          }${decodeURIComponent(url.search)}`,
+          url,
+        ).toString()
+      : undefined;
   const next =
     pagination.next !== undefined &&
     new URL(
