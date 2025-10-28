@@ -80,7 +80,7 @@ const Filters = (props: PropsWithChildren<FiltersProps>) => {
             <LinkListLink
               className={clsx([
                 organisation.uri === routing?.query?.organisation &&
-                  styles.active,
+                styles.active,
               ])}
               key={organisation.uri}
               href={new URL(
@@ -97,7 +97,6 @@ const Filters = (props: PropsWithChildren<FiltersProps>) => {
             </LinkListLink>
           ))}
       </LinkList>
-      {/* <ExpandableCheckboxGroup legend="ORGS" options={organisations} selectedOptions={[]} onOptionChange={(option) => {console.log('Option changed', option)}} /> */}
     </div>
   );
 };

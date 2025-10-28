@@ -2,7 +2,6 @@ import clsx from "clsx";
 import type { ElementType, HTMLAttributes, PropsWithChildren } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "../i18n";
-// import parseLinkHeader from "parse-link-header";
 import styles from "./styles.module.css";
 
 interface PageLinkProps
@@ -34,55 +33,6 @@ export interface PaginationProps extends HTMLAttributes<HTMLElement> {
   next?: string | false;
   className?: string;
 }
-
-// export interface paginationHeaders {
-//   currentPage: number;
-//   perPage: number;
-//   totalCount: number;
-//   totalPages: number;
-//   self: parseLinkHeader.Link;
-//   prev?: parseLinkHeader.Link;
-//   next?: parseLinkHeader.Link;
-// }
-
-// const getPagination = (pagination: paginationHeaders | null | undefined, url: URL): PaginationProps => {
-//   // const {self, next, prev} = links;
-
-//   // const selfParts = getUrlParts(self.href);
-//   // const nextParts = getUrlParts(next?.href);
-//   // const prevParts = getUrlParts(prev?.href);
-
-//   // const resultsBegin = selfParts && selfParts?.page - 1 * selfParts?.perPage;
-//   // const resultsEnd = selfParts && selfParts?.page * selfParts?.perPage;
-//   // const range =
-//   // console.log({self, next, prev}, {selfParts, nextParts, prevParts}, {resultsBegin, resultsEnd});
-
-//   if (!pagination) {
-//     return {
-//       links: []
-//     }
-//   }
-
-//   // console.log(pagination)
-
-//   // TODO: make them self from links header
-//   const prev = pagination.prev !== undefined && new URL(`./${pagination.prev.page}${decodeURIComponent(url.search)}`, url).toString();
-//   const next = pagination.next !== undefined && new URL(`./${pagination.next.page}${decodeURIComponent(url.search)}`, url).toString();
-
-//   const rangeBegin = (pagination.currentPage -1) * pagination.perPage + 1;
-//   const rangeEnd = pagination.currentPage * pagination.perPage;
-
-//   return {
-//     links: [{
-//       href: new URL(`./${pagination.currentPage}${decodeURIComponent(url.search)}`, url).toString(),
-//       label: pagination.currentPage || 0,
-//       range: [rangeBegin, rangeEnd > pagination.totalCount ? pagination.totalCount : rangeEnd],
-//     }],
-//     current: 0,
-//     prev,
-//     next
-//   }
-// }
 
 const PageLink = (props: PageLinkProps) => {
   const { t } = useTranslation();
