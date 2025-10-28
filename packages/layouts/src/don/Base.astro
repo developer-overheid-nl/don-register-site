@@ -58,21 +58,22 @@ i18next.init({
     <slot name="head" />
     {shouldRenderMatomo && (
       <>
-        <!-- Matomo -->
-        <script is:inline>
+        <script
+          is:inline
+          define:vars={{ matomoUrl, matomoSiteId, matomoScriptUrl }}
+        >
           var _paq = window._paq = window._paq || [];
           /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
           _paq.push(["trackPageView"]);
           _paq.push(["enableLinkTracking"]);
-          (function() {
-            var u = {JSON.stringify(matomoUrl)};
+          (function(){
+            var u = matomoUrl;
             _paq.push(["setTrackerUrl", u + "matomo.php"]);
-            _paq.push(["setSiteId", {JSON.stringify(matomoSiteId)}]);
+            _paq.push(["setSiteId", matomoSiteId]);
             var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0];
-            g.async = true; g.src = {JSON.stringify(matomoScriptUrl)}; s.parentNode.insertBefore(g, s);
-          }})();
+            g.async = true; g.src = matomoScriptUrl; s.parentNode.insertBefore(g, s);
+          })();
         </script>
-        <!-- End Matomo Code -->
       </>
     )}
   </head>
