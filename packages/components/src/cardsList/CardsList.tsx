@@ -23,14 +23,14 @@ const CardsList = (props: PropsWithChildren<CardsListProps>) => {
     <ol className={clsx(styles.cardsList, className)} id={id}>
       {items && items.length > 0
         ? items.map((item, index, array) => (
-          <CardsListItem
-            key={`${id || "don-cards"}_${index}`}
-            index={index}
-            setsize={array.length}
-          >
-            {item as unknown as ReactNode}
-          </CardsListItem>
-        ))
+            <CardsListItem
+              key={`${id || "don-cards"}_${index}`}
+              index={index}
+              setsize={array.length}
+            >
+              {item as unknown as ReactNode}
+            </CardsListItem>
+          ))
         : children}
     </ol>
   );

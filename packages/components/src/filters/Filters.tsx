@@ -80,7 +80,7 @@ const Filters = (props: PropsWithChildren<FiltersProps>) => {
             <LinkListLink
               className={clsx([
                 organisation.uri === routing?.query?.organisation &&
-                styles.active,
+                  styles.active,
               ])}
               key={organisation.uri}
               href={new URL(
