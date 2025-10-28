@@ -1,3 +1,4 @@
+/* biome-ignore-all lint/complexity/noImportantStyles: for thes usecases `!important`s are allowed */
 /* Accessibility Helper Classes */
 /* ...by Copilot */
 
@@ -9,9 +10,9 @@
   padding: 0 !important;
   margin: -1px !important;
   overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
   white-space: nowrap !important;
   border: 0 !important;
+  clip: rect(0, 0, 0, 0) !important;
 }
 
 /* Make an element focusable only for keyboard users */
@@ -29,21 +30,21 @@
 /* Skip to content link styling */
 .skip-link {
   position: absolute;
-  left: -999px;
   top: auto;
+  left: -999px;
+  z-index: 100;
   width: 1px;
   height: 1px;
-  overflow: hidden;
-  z-index: 100;
-  background: #fff;
-  color: #005fcc;
   padding: 8px 16px;
-  border-radius: 4px;
+  overflow: hidden;
+  color: #005fcc;
   text-decoration: none;
+  background: #fff;
+  border-radius: 4px;
 }
 .skip-link:focus {
-  left: 8px;
   top: 8px;
+  left: 8px;
   width: auto;
   height: auto;
   outline: 2px solid #005fcc;

@@ -1,7 +1,10 @@
-import { Paragraph as RHCParagraph, type ParagraphProps } from "@rijkshuisstijl-community/components-react";
+import {
+  type ParagraphProps,
+  Paragraph as RHCParagraph,
+} from "@rijkshuisstijl-community/components-react";
 
 const Paragraph = (props: ParagraphProps) => {
   return <RHCParagraph {...props} />;
-}
+};
 
 export default Paragraph;

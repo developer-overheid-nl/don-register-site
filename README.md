@@ -2,6 +2,8 @@
 
 > De website(s) van het OSS- en API-register van developer.overheid.nl.
 
+[![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
+
 Deze monorepo bevat de *nieuwe* websites van het [API-register](https://apis.developer.overheid.nl) en binnenkort ook het [OSS-register](https://oss.developer.overheid.nl).
 De codebase bestaat uit een aantal packages die de gezamelijke codebase (components, layouts, etc) vormen en een `apps`-package waarin de verschillende websites staan.
 
@@ -91,6 +93,13 @@ graph LR
 - Vite
 - OpenAPI TypeScript: Type declarations & fetch
 - RijkshuisstijlCommunity: React Components
+- Biome: formatting, linting and assist
+
+## Formatting and Linting
+
+Deze repository maakt gebruik van [Biome][biome] voor formatting en linting. Download de VSCode extensie: [![Install Biome in VS Code](https://img.shields.io/badge/Install%20Biome-in%20VS%20Code-007ACC?style=flat&logo=biome)](vscode:extension/biomejs.biome)  
+Als code styleguide kijken we naar de default settings en de [Google Style Guides](https://google.github.io/styleguide/) voor inspiratie.
+Voor Astro-bestanden zijn een aantal features uitgezet om false positives te voorkomen.
 
 ## Contact
 
@@ -115,3 +124,5 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm preview`         | Preview your build locally, before deploying     |
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help` | Get help using the Astro CLI                     |
+
+[biome]: https://biomejs.dev/

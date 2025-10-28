@@ -1,64 +1,117 @@
 ---
-import appConfig from "../../../../app.config";
-import { DonOverview, getRouting, parseHeaders, getPagination } from "@developer-overheid-nl/don-register-layouts";
-import { Alert, Article, CardAsLink, CardsList, CardsListItem, DataBadgeLink, Filters, getAppearance, getDate, Heading, HeadingGroup, IconBadge, Link, Markdown, Pagination, /*OverviewContainer,*/ Paragraph, ScoreBadge, Search } from "@developer-overheid-nl/don-register-components";
-
-import { t } from "i18next";
+import {
+  API_ENDPOINT,
+  API_URL,
+  API_VERSION,
+  API_X_API_KEY,
+} from "astro:env/server";
+import {
+  Alert,
+  Article,
+  CardAsLink,
+  CardsList,
+  CardsListItem,
+  DataBadgeLink,
+  Filters,
+  getAppearance,
+  getDate,
+  Heading,
+  HeadingGroup,
+  IconBadge,
+  Markdown,
+  Pagination,
+  Paragraph,
+  ScoreBadge,
+  Search,
+} from "@developer-overheid-nl/don-register-components";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
+import {
+  DonOverview,
+  getPagination,
+  getRouting,
+  parseHeaders,
+} from "@developer-overheid-nl/don-register-layouts";
+import { t } from "i18next";
 import createClient from "openapi-fetch";
-import { type paths } from "../../../types/api-schema"; 
-import { API_URL, API_ENDPOINT, API_VERSION, API_X_API_KEY } from "astro:env/server";
+import appConfig from "../../../../app.config";
+import { Content as Intro } from "../../../partials/intro.md";
+import type { paths } from "../../../types/api-schema";
 
-import {Content as Intro} from '../../../partials/intro.md';
-
-Astro.response.headers.set('Cache-Control', 'public, max-age=7200');
+Astro.response.headers.set("Cache-Control", "public, max-age=7200");
 const { page = 1 } = Astro.params;
 
 const APIS_RESOURCE: keyof paths = `/${API_VERSION}/apis`;
 const ORGS_RESOURCE: keyof paths = `/${API_VERSION}/organisations`;
 const SEARCH_RESOURCE: keyof paths = `/${API_VERSION}/apis/_search`;
-const SEARCH_QUERY_KEY = 'q';
+const SEARCH_QUERY_KEY = "q";
 
-const routingObj = getRouting(Astro.url, Astro.originPathname, Astro.routePattern, Astro.params);
+const routingObj = getRouting(
+  Astro.url,
+  Astro.originPathname,
+  Astro.routePattern,
+  Astro.params,
+);
 
 const client = createClient<paths>({ baseUrl: `${API_URL}/${API_ENDPOINT}` });
 
-const { data, error, response: { headers } } = await client.GET(routingObj.query[SEARCH_QUERY_KEY] ? SEARCH_RESOURCE : APIS_RESOURCE, {
-  params: {
-    query: { 
-      page: Number(page),
-      ...routingObj.query,
+const {
+  data,
+  error,
+  response: { headers },
+} = await client
+  .GET(routingObj.query[SEARCH_QUERY_KEY] ? SEARCH_RESOURCE : APIS_RESOURCE, {
+    params: {
+      query: {
+        page: Number(page),
+        ...routingObj.query,
+      },
     },
-  },
-  headers: {
-    'x-api-key': API_X_API_KEY,
-  },
-}).catch(error => {
-  console.error(error);
-  return {data: null, error, response: new Response()}
-});
+    headers: {
+      "x-api-key": API_X_API_KEY,
+    },
+  })
+  .catch((error) => {
+    console.error(error);
+    return { data: null, error, response: new Response() };
+  });
 
-const { data: filters, error: filtersError, response: { headers: filtersHeaders } } = await client.GET(ORGS_RESOURCE, {
-  headers: {
-    'x-api-key': API_X_API_KEY,
-  },
-}).catch(error => {
-  console.error(error);
-  return {data: null, error, response: new Response()}
-});
+const {
+  data: filters,
+  error: filtersError,
+  response: { headers: filtersHeaders },
+} = await client
+  .GET(ORGS_RESOURCE, {
+    headers: {
+      "x-api-key": API_X_API_KEY,
+    },
+  })
+  .catch((error) => {
+    console.error(error);
+    return { data: null, error, response: new Response() };
+  });
 
 const paginationObj = parseHeaders(headers);
 const pagination = getPagination(paginationObj, routingObj.url);
 
-const outOfBounds = Boolean(paginationObj.totalPages && Number(page) > paginationObj.totalPages);
+const outOfBounds = Boolean(
+  paginationObj.totalPages && Number(page) > paginationObj.totalPages,
+);
 
 const { i18n: i18nApp } = appConfig;
-i18n.addResourceBundle(i18n.language, 'translation', i18nApp ? i18nApp[i18n.language] : {}, true, true);
+i18n.addResourceBundle(
+  i18n.language,
+  "translation",
+  i18nApp ? i18nApp[i18n.language] : {},
+  true,
+  true,
+);
 
-const i18nContext = routingObj.query && Object.keys(routingObj.query).length > 0 ? 'filtered' : 'all';
+const i18nContext =
+  routingObj.query && Object.keys(routingObj.query).length > 0
+    ? "filtered"
+    : "all";
 
 const items = error ? null : data;
-
 ---
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>

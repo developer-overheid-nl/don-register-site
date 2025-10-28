@@ -1,6 +1,6 @@
-import { type HTMLAttributes, type PropsWithChildren, type ReactNode } from "react";
-import { CardAsLink } from "@rijkshuisstijl-community/components-react";
+import type { CardAsLink } from "@rijkshuisstijl-community/components-react";
 import clsx from "clsx";
+import type { HTMLAttributes, PropsWithChildren, ReactNode } from "react";
 import styles from "./styles.module.css";
 
 export interface CardsListProps extends HTMLAttributes<HTMLOListElement> {
@@ -16,37 +16,39 @@ export interface CardsListProps extends HTMLAttributes<HTMLOListElement> {
   className?: string;
 }
 
-export interface CardListPropsOLD {
-  items: Array<any>;
-  total?: number;
-  routing?: Record<string, any>;
-  i18n?: Record<string, string | Record<string, string>>;
-  className?: string;
-}
-
 const CardsList = (props: PropsWithChildren<CardsListProps>) => {
   const { id, items, className, children } = props;
 
   return (
     <ol className={clsx(styles.cardsList, className)} id={id}>
-      {
-        items && items.length > 0 ? items.map((item, index, array) => (
-          <CardsListItem key={`${id || 'don-cards'}_${index}`} index={index} setsize={array.length}>
-            {item as unknown as ReactNode}
-          </CardsListItem>
-        )) : children
-      }
+      {items && items.length > 0
+        ? items.map((item, index, array) => (
+            <CardsListItem
+              key={`${id || "don-cards"}_${index}`}
+              index={index}
+              setsize={array.length}
+            >
+              {item as unknown as ReactNode}
+            </CardsListItem>
+          ))
+        : children}
     </ol>
   );
-}
+};
 
 export interface CardsListItemProps {
   index: number;
   setsize: number;
 }
 
-export const CardsListItem = ({ index, setsize, children }: PropsWithChildren<CardsListItemProps>) => (
-  <li aria-posinset={index + 1} aria-setsize={setsize}>{children}</li>
-)
+export const CardsListItem = ({
+  index,
+  setsize,
+  children,
+}: PropsWithChildren<CardsListItemProps>) => (
+  <li aria-posinset={index + 1} aria-setsize={setsize}>
+    {children}
+  </li>
+);
 
 export default CardsList;

@@ -1,22 +1,28 @@
 .footer {
   --utrecht-page-footer-padding-block-end: 2rem;
   --utrecht-page-footer-padding-block-start: 1rem;
-  --utrecht-page-footer-padding-inline-end: var(--rhc-nav-bar-link-padding-inline-end);
-  --utrecht-page-footer-padding-inline-start: var(--rhc-nav-bar-link-padding-inline-start);
+  --utrecht-page-footer-padding-inline-end: var(
+    --rhc-nav-bar-link-padding-inline-end
+  );
+  --utrecht-page-footer-padding-inline-start: var(
+    --rhc-nav-bar-link-padding-inline-start
+  );
   --rhc-page-footer-outlined-color: #154273;
   --rhc-page-footer-outlined-border-color: var(--rhc-nav-bar-border-color);
-  --rhc-page-footer-border-block-start-width: var(--rhc-nav-bar-border-block-end-width);
+  --rhc-page-footer-border-block-start-width: var(
+    --rhc-nav-bar-border-block-end-width
+  );
 }
 
 .footer {
   :global(.utrecht-column-layout) {
     display: flex;
-    inline-size: 100%;
     justify-content: space-between;
+    inline-size: 100%;
 
     > * {
-      flex-shrink: 0;
       flex-grow: 0;
+      flex-shrink: 0;
     }
   }
 
@@ -56,7 +62,7 @@
     }
   }
 
-  :global(.utrecht-link-list__link) { 
+  :global(.utrecht-link-list__link) {
     align-items: center;
     :global(.don-icon-externe-link-inline) {
       order: 1;
@@ -87,8 +93,6 @@
     }
   }
 }
-
-
 
 :global(.rhc-page-prefooter.rhc-page-prefooter) {
   margin-block-start: 2rem;

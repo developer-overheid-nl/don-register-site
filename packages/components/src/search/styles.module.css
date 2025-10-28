@@ -4,12 +4,12 @@
   --utrecht-textbox-border-color: var(--rhc-color-cool-grey-900);
 }
 
-.form  {
+.form {
   display: grid;
-  grid-template-areas: "input button";
+  grid-template-areas: 'input button';
   grid-template-columns: auto min-content;
-  align-items: end;
   gap: 0;
+  align-items: end;
 }
 
 @media (--xxs-and-below-viewport) {
@@ -22,8 +22,8 @@
   grid-area: input;
 
   :global(.utrecht-textbox) {
-    border-bottom-right-radius: 0;
     border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   :global(.utrecht-textbox--html-input:focus-visible) {
@@ -34,6 +34,6 @@
 
 .button:global(.utrecht-button) {
   grid-area: button;
-  border-bottom-left-radius: 0;
   border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }

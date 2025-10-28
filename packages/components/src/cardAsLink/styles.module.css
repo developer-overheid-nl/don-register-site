@@ -4,15 +4,18 @@
       text-decoration: none;
     }
     :global(.nl-heading) {
-      text-decoration: var(--rhc-card-as-link-active-text-decoration, underline);
+      text-decoration: var(
+        --rhc-card-as-link-active-text-decoration,
+        underline
+      );
     }
   }
 }
 
 :global(.rhc-card-as-link__metadata) {
   display: flex;
-  justify-content: flex-end;
   align-items: baseline;
+  justify-content: flex-end;
 }
 
 :global(.rhc-card-as-link__footer) {
