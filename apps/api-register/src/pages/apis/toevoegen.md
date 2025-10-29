@@ -47,7 +47,6 @@ Indien de OpenAPI-specificatie publiek beschikbaar is, zullen wij dagelijks chec
 
 1. Vraag schrijfrechten aan via [developer.overheid@geonovum.nl](mailto:developer.overheid@geonovum.nl).  
 2. Ontvang je credentials.  
-3. Raadpleeg de [API-specificatie](#TODO:add-url) voor alle velden en endpoints.  
-4. Doe een `POST` naar de API van het register om jouw API toe te voegen.
+3. Doe een `POST` naar de API van het register om jouw API toe te voegen.
 
 > **Tip:** Controleer altijd of je OpenAPI-spec up-to-date is en alle verplichte contactinformatie bevat voordat je een API aanmaakt of wijzigt.
