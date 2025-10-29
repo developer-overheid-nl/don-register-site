@@ -22,8 +22,6 @@ export const GET: APIRoute = async ({ params }) => {
 
   const type = version.substring(version.lastIndexOf(".") + 1);
 
-console.log(`${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis/${id}/oas/${version}`)
-
   const response = await fetch(
     `${API_URL}/${API_ENDPOINT}/${API_VERSION}/apis/${id}/oas/${version}`,
     {
