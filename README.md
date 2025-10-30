@@ -2,7 +2,11 @@
 
 > De website(s) van het OSS- en API-register van developer.overheid.nl.
 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/developer-overheid-nl/don-register-site/build.yml?branch=main)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/developer-overheid-nl/don-register-site/pull_request.yml?branch=main&label=quality)
 [![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
+![GitHub License](https://img.shields.io/github/license/developer-overheid-nl/don-register-site)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/developer-overheid-nl/don-register-site)
 
 Deze monorepo bevat de *nieuwe* websites van het [API-register](https://apis.developer.overheid.nl) en binnenkort ook het [OSS-register](https://oss.developer.overheid.nl).
 De codebase bestaat uit een aantal packages die de gezamelijke codebase (components, layouts, etc) vormen en een `apps`-package waarin de verschillende websites staan.
@@ -12,19 +16,19 @@ De codebase bestaat uit een aantal packages die de gezamelijke codebase (compone
 ### Components
 
 De package `components` bevat de generieke React componenten voor de sites. Deze zijn gebaseerd op de [Rijkshuisstijl Community Componenten](https://github.com/nl-design-system/rijkshuisstijl-community).  
-Deze package zal gepubliceerd worden op [NPM](https://www.npmjs.com/)
+Deze package zal gepubliceerd worden op [NPM]
 
 ### Layouts
 
 De package `layouts` bevat de (generieke) Astro layouts voor de sites. Op dit moment zitten ze in de map `don` zodat er evt andere organisaties bij kunnen komen. Dit kan veranderen.  
 Deze package bevat ook een aantal helper-scripts.  
-Deze package zal gepubliceerd worden op [NPM](https://www.npmjs.com/)
+Deze package zal gepubliceerd worden op [NPM]
 
 ### Locales
 
 De packages `locales` bevat het localization-bestand voor de (kleine) teksten op de site. Dit is op basis van [i18next](https://www.i18next.com/).  
 Op dit moment is er maar 1 locale beschikbaar, namelijk Nederlands (`nl/translation.json`), mogelijk dat er in de toekomst meer talen beschikbaar komen. De `apps` en andere packages kunnen dan aangepast worden met taaldetectielogica.  
-Deze package zal gepubliceerd worden op [NPM](https://www.npmjs.com/)
+Deze package zal gepubliceerd worden op [NPM]
 
 ## Apps
 
@@ -97,7 +101,7 @@ graph LR
 
 ## Formatting and Linting
 
-Deze repository maakt gebruik van [Biome][biome] voor formatting en linting. Download de VSCode extensie: [![Install Biome in VS Code](https://img.shields.io/badge/Install%20Biome-in%20VS%20Code-007ACC?style=flat&logo=biome)](vscode:extension/biomejs.biome)  
+Deze repository maakt gebruik van [Biome] voor formatting en linting. Download de VSCode extensie: [![Install Biome in VS Code](https://img.shields.io/badge/Install%20Biome-in%20VS%20Code-007ACC?style=flat&logo=biome)](vscode:extension/biomejs.biome)  
 Als code styleguide kijken we naar de default settings en de [Google Style Guides](https://google.github.io/styleguide/) voor inspiratie.
 Voor Astro-bestanden zijn een aantal features uitgezet om false positives te voorkomen.
 
@@ -125,4 +129,6 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help` | Get help using the Astro CLI                     |
 
-[biome]: https://biomejs.dev/
+[Astro]: https://astro.build/
+[Biome]: https://biomejs.dev/
+[NPM]: https://www.npmjs.com/
