@@ -92,7 +92,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/apis/{id}/oas31": {
+    "/v1/apis/{id}/oas/{version}": {
         parameters: {
             query?: never;
             header?: never;
@@ -100,10 +100,10 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Download OAS 3.1 documentatie
-         * @description Geeft de gegenereerde OAS 3.1 JSON terug.
+         * Download OAS document
+         * @description Geeft de OAS 3.0 of 3.1 specificatie in JSON of YAML terug.
          */
-        get: operations["getOas31"];
+        get: operations["getOasVersion"];
         put?: never;
         post?: never;
         delete?: never;
@@ -362,7 +362,9 @@ export interface operations {
     searchApis: {
         parameters: {
             query?: {
-                limit?: number;
+                organisation?: string | null;
+                page?: number;
+                perPage?: number;
                 q?: string;
             };
             header?: never;
@@ -479,12 +481,13 @@ export interface operations {
             };
         };
     };
-    getOas31: {
+    getOasVersion: {
         parameters: {
             query?: never;
             header?: never;
             path: {
                 id: string;
+                version: string;
             };
             cookie?: never;
         };
