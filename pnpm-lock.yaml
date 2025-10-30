@@ -19,8 +19,8 @@ catalogs:
       specifier: 8.0.0
       version: 8.0.0
     '@rijkshuisstijl-community/components-react':
-      specifier: 7.0.0
-      version: 7.0.0
+      specifier: 7.1.0
+      version: 7.1.0
     '@rijkshuisstijl-community/design-tokens':
       specifier: 8.0.0
       version: 8.0.0
@@ -144,7 +144,7 @@ importers:
         version: link:../../packages/layouts
       '@rijkshuisstijl-community/components-react':
         specifier: 'catalog:'
-        version: 7.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 7.1.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       astro:
         specifier: 'catalog:'
         version: 5.15.2(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.9.3)
@@ -175,7 +175,7 @@ importers:
         version: 8.0.0(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1)
       '@rijkshuisstijl-community/components-react':
         specifier: 'catalog:'
-        version: 7.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 7.1.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
         version: 8.0.0
@@ -229,7 +229,7 @@ importers:
         version: 8.0.0(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1)
       '@rijkshuisstijl-community/components-react':
         specifier: 'catalog:'
-        version: 7.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 7.1.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
         version: 8.0.0
@@ -842,8 +842,8 @@ packages:
   '@rijkshuisstijl-community/components-css@8.0.0':
     resolution: {integrity: sha512-mH/4H896wuxe0odNEbsF6DKT6WMtD7se2utwq5gNu0WIOoIatarH+00M8JZk94ttwnIp6zMq9oJJXk/gXeb/vQ==}
 
-  '@rijkshuisstijl-community/components-react@7.0.0':
-    resolution: {integrity: sha512-xiBn7W/A87jt85/Xhqb6BY7DVAe0bHSJ4VMnVnZ5PWrtQLmEskJ0HbH52asy4NUxO0J0Dz6mpq/IgVYxKvewbA==}
+  '@rijkshuisstijl-community/components-react@7.1.0':
+    resolution: {integrity: sha512-ljfnUIBknFg259sLyCxW8+jNaLR/YZSvQJ4qX2cNQ6PBzTKat3scox8OdkvkJC7Z/R08yEI9xrUq9TKp6PzEOw==}
     peerDependencies:
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
@@ -3192,7 +3192,7 @@ snapshots:
       - '@amsterdam/design-system-assets'
       - '@amsterdam/design-system-tokens'
 
-  '@rijkshuisstijl-community/components-react@7.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@rijkshuisstijl-community/components-react@7.1.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@amsterdam/design-system-react': 1.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@nl-design-system-candidate/link-react': 1.1.1(@babel/runtime@7.28.4)(react@19.1.0)
