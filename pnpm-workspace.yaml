@@ -15,7 +15,7 @@ catalog:
   clsx: 2.1.1
   i18next: 25.6.0
   openapi-fetch: 0.15.0
-  openapi-typescript: 7.1.1
+  openapi-typescript: 7.10.1
   postcss-custom-media: 11.0.6
   react-dom: 19.1.0
   react-markdown: 10.1.0
