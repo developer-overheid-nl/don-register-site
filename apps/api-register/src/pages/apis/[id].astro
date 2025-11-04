@@ -110,9 +110,9 @@ const details = error ? null : data;
         <div>{t(`components.version`, {version: details.lifecycle?.version || '-'})}</div>
         <AlignBox gap="small" display="inline">
           <figure class="adr-score-figure">
-            <figcaption class="adr-score-label">{t(`components.adr-score`)}:</figcaption>
-            <ScoreBadge name={`ADR`} score={details.adrScore} max={100} inPercentage />
-            <span class="adr-score-info"><Link href={`https://developer-overheid-nl.github.io/oas-checker/?url=${details.oasUrl}`} target="_blank" rel="noopener noreferrer">Uitleg <Icon name="externe-link-inline" /></Link></span>
+            <figcaption class="adr-score-label">{t(`components.adr-score`)}: {details.adrScore}%</figcaption>
+            {/* <ScoreBadge name={`ADR`} score={details.adrScore} max={100} inPercentage /> */}
+            <span class="adr-score-info"><Link href={`https://developer-overheid-nl.github.io/oas-checker/?url=https://apis.developer.overheid.nl/apis/download/${id}/oas3.0.json`} target="_blank" rel="noopener noreferrer">Uitleg <Icon name="externe-link-inline" /></Link></span>
           </figure>
         </AlignBox>
         <AlignBox gap="small" display="inline">
