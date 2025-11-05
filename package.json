@@ -17,7 +17,9 @@
     "preview": "pnpm --filter @developer-overheid-nl/api-register preview",
     "astro": "astro",
     "ts:oas": "pnpx openapi-typescript",
-    "ts:test": "tsc --noEmit"
+    "ts:test": "tsc --noEmit",
+    "biome:check": "biome check --write",
+    "biome:migrate": "biome migrate --write"
   },
   "dependencies": {
     "@astrojs/node": "catalog:",

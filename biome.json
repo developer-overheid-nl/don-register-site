@@ -18,7 +18,8 @@
   },
   "formatter": {
     "enabled": true,
-    "indentStyle": "space"
+    "indentStyle": "space",
+    "lineEnding": "auto"
   },
   "linter": {
     "enabled": true,
@@ -44,6 +45,12 @@
     },
     "parser": {
       "cssModules": true
+    }
+  },
+  "html": {
+    "formatter": {
+      "enabled": true,
+      "indentScriptAndStyle": true
     }
   },
   "assist": {
