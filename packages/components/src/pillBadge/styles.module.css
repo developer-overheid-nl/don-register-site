@@ -1,0 +1,71 @@
+:root {
+  --don-pill-badge-font-size: 0.875rem;
+  --don-pill-badge-gap: 0.5rem;
+  --don-pill-badge-border-radius: 5px;
+  --don-pill-badge-padding-inline: 0.5rem;
+  --don-pill-badge-padding-block: 0.25rem;
+  --don-pill-badge-background-color: var(--rhc-color-cool-grey-200);
+  --don-pill-badge-start-color: var(--rhc-color-foreground-on-dark-color);
+  --don-pill-badge-start-background-color: var(--rhc-color-cool-grey-700);
+  --don-pill-badge-end-color: var(--rhc-color-foreground-on-light-color);
+  --don-pill-badge-end-background-color: var(--rhc-color-groen-100);
+  --don-pill-badge-border-color: linear-gradient(
+    to top,
+    rgba(51, 51, 51, 0.25),
+    rgba(204, 204, 204, 0.25)
+  );
+  --don-pill-badge-border-width: 1px;
+}
+
+.pill-badge {
+  position: relative;
+  display: inline-block;
+  align-items: center;
+  height: auto;
+  overflow: clip;
+  font-size: var(--don-pill-badge-font-size);
+  background-color: var(--don-pill-badge-background-color);
+  border-radius: var(--don-pill-badge-border-radius);
+  --percentage: attr(data-percentage %, 100%);
+}
+
+.pill-badge::before {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: var(--don-pill-badge-border-color) border-box;
+  border: var(--don-pill-badge-border-width) solid transparent;
+  border-radius: var(--don-pill-badge-border-radius);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.pill-badge--type-percentage {
+  outline: 1mm dashed salmon;
+}
+
+.pill-badge__start {
+  padding-block: var(--don-pill-badge-padding-block);
+  padding-inline: var(--don-pill-badge-padding-inline);
+  padding-inline-end: calc(0.5 * var(--don-pill-badge-gap));
+  color: var(--don-pill-badge-start-color);
+  background-color: var(--don-pill-badge-start-background-color);
+}
+
+.pill-badge__end {
+  padding-block: var(--don-pill-badge-padding-block);
+  padding-inline: var(--don-pill-badge-padding-inline);
+  padding-inline-start: calc(0.5 * var(--don-pill-badge-gap));
+  color: var(--don-pill-badge-end-color);
+  background-color: var(--don-pill-badge-end-background-color);
+}
+
+.pill-badge--type-percentage .pill-badge__end {
+  background: linear-gradient(
+    to right,
+    var(--don-pill-badge-end-background-color) var(--percentage),
+    var(--don-pill-badge-background-color) var(--percentage)
+  );
+}
