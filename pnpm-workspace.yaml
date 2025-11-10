@@ -4,7 +4,7 @@ packages:
 
 catalog:
   '@astrojs/node': 9.5.0
-  '@astrojs/react': 4.4.1
+  '@astrojs/react': 4.4.2
   '@csstools/postcss-global-data': 3.1.0
   '@rijkshuisstijl-community/components-css': 8.0.0
   '@rijkshuisstijl-community/components-react': 7.0.0
