@@ -37,8 +37,8 @@ catalogs:
       specifier: 2.1.1
       version: 2.1.1
     i18next:
-      specifier: 25.6.0
-      version: 25.6.0
+      specifier: 25.6.2
+      version: 25.6.2
     openapi-fetch:
       specifier: 0.15.0
       version: 0.15.0
@@ -107,7 +107,7 @@ importers:
         version: 2.1.1
       i18next:
         specifier: 'catalog:'
-        version: 25.6.0(typescript@5.9.3)
+        version: 25.6.2(typescript@5.9.3)
       openapi-fetch:
         specifier: 'catalog:'
         version: 0.15.0
@@ -150,7 +150,7 @@ importers:
         version: 5.15.2(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.9.3)
       i18next:
         specifier: 'catalog:'
-        version: 25.6.0(typescript@5.9.3)
+        version: 25.6.2(typescript@5.9.3)
       openapi-fetch:
         specifier: 'catalog:'
         version: 0.15.0
@@ -193,7 +193,7 @@ importers:
         version: 2.1.1
       i18next:
         specifier: 'catalog:'
-        version: 25.6.0(typescript@5.9.3)
+        version: 25.6.2(typescript@5.9.3)
       parse-link-header:
         specifier: ^2.0.0
         version: 2.0.0
@@ -205,7 +205,7 @@ importers:
         version: 19.1.0(react@19.1.0)
       react-i18next:
         specifier: 16.2.1
-        version: 16.2.1(i18next@25.6.0(typescript@5.9.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.9.3)
+        version: 16.2.1(i18next@25.6.2(typescript@5.9.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.9.3)
       react-markdown:
         specifier: 'catalog:'
         version: 10.1.0(@types/react@19.1.8)(react@19.1.0)
@@ -244,7 +244,7 @@ importers:
         version: 19.1.6(@types/react@19.1.8)
       i18next:
         specifier: 'catalog:'
-        version: 25.6.0(typescript@5.9.3)
+        version: 25.6.2(typescript@5.9.3)
       parse-link-header:
         specifier: 2.0.0
         version: 2.0.0
@@ -262,7 +262,7 @@ importers:
     dependencies:
       i18next:
         specifier: 'catalog:'
-        version: 25.6.0(typescript@5.9.3)
+        version: 25.6.2(typescript@5.9.3)
 
 packages:
 
@@ -395,10 +395,6 @@ packages:
 
   '@babel/runtime@7.27.1':
     resolution: {integrity: sha512-1x3D2xEk2fRo3PAhwQwu5UubzgiVWSXTBfWpVd2Mx2AzRqJuDJCsgaDVZ7HB5iGzDW1Hl1sWN2mFyKjmR9uAog==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/runtime@7.27.6':
-    resolution: {integrity: sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==}
     engines: {node: '>=6.9.0'}
 
   '@babel/runtime@7.28.4':
@@ -1724,8 +1720,8 @@ packages:
     resolution: {integrity: sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw==}
     engines: {node: '>= 14'}
 
-  i18next@25.6.0:
-    resolution: {integrity: sha512-tTn8fLrwBYtnclpL5aPXK/tAYBLWVvoHM1zdfXoRNLcI+RvtMsoZRV98ePlaW3khHYKuNh/Q65W/+NVFUeIwVw==}
+  i18next@25.6.2:
+    resolution: {integrity: sha512-0GawNyVUw0yvJoOEBq1VHMAsqdM23XrHkMtl2gKEjviJQSLVXsrPqsoYAxBEugW5AB96I2pZkwRxyl8WZVoWdw==}
     peerDependencies:
       typescript: ^5
     peerDependenciesMeta:
@@ -2857,8 +2853,6 @@ snapshots:
       '@babel/helper-plugin-utils': 7.27.1
 
   '@babel/runtime@7.27.1': {}
-
-  '@babel/runtime@7.27.6': {}
 
   '@babel/runtime@7.28.4': {}
 
@@ -4192,9 +4186,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  i18next@25.6.0(typescript@5.9.3):
+  i18next@25.6.2(typescript@5.9.3):
     dependencies:
-      '@babel/runtime': 7.27.6
+      '@babel/runtime': 7.28.4
     optionalDependencies:
       typescript: 5.9.3
 
@@ -4779,11 +4773,11 @@ snapshots:
       react: 19.1.0
       scheduler: 0.26.0
 
-  react-i18next@16.2.1(i18next@25.6.0(typescript@5.9.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.9.3):
+  react-i18next@16.2.1(i18next@25.6.2(typescript@5.9.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.9.3):
     dependencies:
       '@babel/runtime': 7.28.4
       html-parse-stringify: 3.0.1
-      i18next: 25.6.0(typescript@5.9.3)
+      i18next: 25.6.2(typescript@5.9.3)
       react: 19.1.0
       use-sync-external-store: 1.6.0(react@19.1.0)
     optionalDependencies:
