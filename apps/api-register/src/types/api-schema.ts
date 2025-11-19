@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/v1/apis": {
+    "/apis": {
         parameters: {
             query?: never;
             header?: never;
@@ -13,13 +13,13 @@ export interface paths {
         };
         /**
          * Alle API's ophalen
-         * @description Geeft een lijst met alle geregistreerde API's terug.
+         * @description Alle API's ophalen
          */
         get: operations["listApis"];
         put?: never;
         /**
-         * Registreer een nieuwe API
-         * @description Registreer een nieuwe API met een OpenAPI URL.
+         * Registreer een nieuwe API met een OpenAPI URL
+         * @description Registreer een nieuwe API met een OpenAPI URL
          */
         post: operations["createApi"];
         delete?: never;
@@ -28,41 +28,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/apis/_search": {
+    "/apis/{id}": {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Zoek API's
-         * @description Zoekt geregistreerde API's op basis van titel.
-         */
-        get: operations["searchApis"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/apis/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
+            path: {
+                id: string;
+            };
             cookie?: never;
         };
         /**
          * Specifieke API ophalen
-         * @description Geeft de details van een specifieke API terug.
+         * @description Specifieke API ophalen
          */
-        get: operations["retrieveApi"];
+        get: operations["retreiveApi"];
         /**
          * Specifieke API updaten
-         * @description Update een bestaande API.
+         * @description Specifieke API updaten
          */
         put: operations["updateApi"];
         post?: never;
@@ -72,67 +54,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/apis/{id}/bruno": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Download Bruno project
-         * @description Geeft de gegenereerde Bruno ZIP terug.
-         */
-        get: operations["getBruno"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/apis/{id}/oas/{version}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Download OAS document
-         * @description Geeft de OAS 3.0 of 3.1 specificatie in JSON of YAML terug.
-         */
-        get: operations["getOasVersion"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/apis/{id}/postman": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Download Postman collectie
-         * @description Geeft de gegenereerde Postman JSON terug.
-         */
-        get: operations["getPostman"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/organisations": {
+    "/organisations": {
         parameters: {
             query?: never;
             header?: never;
@@ -141,15 +63,11 @@ export interface paths {
         };
         /**
          * Alle organisaties ophalen
-         * @description Geeft een lijst van alle organisaties terug.
+         * @description Alle organisaties ophalen
          */
         get: operations["listOrganisations"];
         put?: never;
-        /**
-         * Voeg een nieuwe organisatie toe
-         * @description Voeg een organisatie toe op basis van URI en label.
-         */
-        post: operations["createOrganisation"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -160,117 +78,127 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        CreateApiInput: {
-            contact?: components["schemas"]["ModelsContact"];
-            id?: string;
-            oasUrl?: string;
-            organisationUri?: string;
+        Contact: {
+            /**
+             * Format: email
+             * @example developer.overheid@geonovum.nl
+             */
+            email: string;
+            /** @example Team developer.overheid.nl */
+            name: string;
+            /**
+             * Format: uri
+             * @example https://github.com/developer-overheid-nl/don-api-register/issues
+             */
+            url: string;
         };
-        CreateOrganisationInput: {
-            label?: string;
-            uri?: string;
-        };
-        ModelsApiDetail: {
-            _links?: components["schemas"]["ModelsLinks"];
-            /** Format: int32 */
-            adrScore?: number | null;
-            auth?: string[];
-            contact?: components["schemas"]["ModelsContact"];
+        ApiDetail: components["schemas"]["ApiSummary"] & {
+            auth?: string[] | null;
             description?: string;
-            docsUrl?: string;
-            id?: string;
-            lifecycle?: components["schemas"]["ModelsLifecycle"];
-            lintResults?: components["schemas"]["ModelsLintResult"][];
-            oasUrl?: string;
-            organisation?: components["schemas"]["ModelsOrganisationSummary"];
-            servers?: components["schemas"]["ModelsServerInfo"][];
-            title?: string;
+            /**
+             * Format: uri
+             * @example https://apis.developer.overheid.nl/apis/3fa85f64-5717-4562-b3fc-2c963f66afa6
+             */
+            docsUri?: string;
+            servers?: components["schemas"]["Server"][];
         };
-        ModelsApiSummary: {
-            _links?: components["schemas"]["ModelsLinks"];
-            /** Format: int32 */
-            adrScore?: number | null;
-            contact?: components["schemas"]["ModelsContact"];
+        ApiSummary: WithRequired<components["schemas"]["ApiPost"], "contact"> & {
+            /** @example API register API v1 */
+            title: string;
+            /** @example API van het API register (apis.developer.overheid.nl) */
             description?: string;
-            id?: string;
-            lifecycle?: components["schemas"]["ModelsLifecycle"];
+            organisation: components["schemas"]["Organisation"];
+            /**
+             * Format: int32
+             * @default null
+             */
+            adrScore: number | null;
+            lifecycle?: {
+                /** @enum {string} */
+                status?: "active" | "deprecated" | "sunset";
+                /** @example 1.0.0 */
+                version?: string;
+            };
+            _links?: {
+                self?: {
+                    /**
+                     * Format: uri
+                     * @example https://api.developer.overheid.nl/v1/apis/90szfOzDg
+                     */
+                    href?: string;
+                };
+            };
+        };
+        Server: {
+            /**
+             * Format: uri
+             * @example https://api.developer.overheid.nl/v1
+             */
+            url: string;
+            /** @example Production */
+            description: string;
+        };
+        ApiPost: {
+            /** @example 90szfOzDg */
+            readonly id: string;
+            /**
+             * Format: uri
+             * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
+             */
             oasUrl?: string;
-            organisation?: components["schemas"]["ModelsOrganisationSummary"];
-            title?: string;
-        };
-        ModelsContact: {
-            email?: string;
-            name?: string;
-            url?: string;
-        };
-        ModelsLifecycle: {
-            deprecated?: string;
-            status?: string;
-            sunset?: string;
-            version?: string;
-        };
-        ModelsLink: {
-            href?: string;
-        };
-        ModelsLinks: {
-            apis?: components["schemas"]["ModelsLink"];
-            first?: components["schemas"]["ModelsLink"];
-            last?: components["schemas"]["ModelsLink"];
-            next?: components["schemas"]["ModelsLink"];
-            prev?: components["schemas"]["ModelsLink"];
-            self?: components["schemas"]["ModelsLink"];
-        };
-        ModelsLintMessage: {
-            /** Format: date-time */
-            CreatedAt?: string;
-            code?: string;
-            /** Format: int32 */
-            column?: number;
-            id?: string;
-            infos?: components["schemas"]["ModelsLintMessageInfo"][];
-            /** Format: int32 */
-            line?: number;
-            lintResultId?: string;
-            severity?: string;
-        };
-        ModelsLintMessageInfo: {
-            id?: string;
-            lintMessageId?: string;
-            message?: string;
-            path?: string;
-        };
-        ModelsLintResult: {
-            ApiID?: string;
-            /** Format: date-time */
-            CreatedAt?: string;
-            ID?: string;
-            /** Format: int32 */
-            failures?: number;
-            messages?: components["schemas"]["ModelsLintMessage"][];
-            successes?: boolean;
-            /** Format: int32 */
-            warnings?: number;
-        };
-        ModelsOrganisation: {
-            label?: string;
-            uri?: string;
-        };
-        ModelsOrganisationSummary: {
-            _links?: components["schemas"]["ModelsLinks"];
-            label?: string;
-            uri?: string;
-        };
-        ModelsServerInfo: {
-            description?: string;
-            url?: string;
-        };
-        UpdateApiInput: {
-            contact?: components["schemas"]["ModelsContact"];
-            oasUrl?: string;
-            organisationUri?: string;
+            /** @description Inline OpenAPI spec (JSON of YAML) */
+            oasBody?: string;
+            /**
+             * Format: uri
+             * @example https://api.developer.overheid.nl/api-register/v1/arazzo.yaml
+             */
+            arazzoUrl?: string;
+            /** @description Inline Arazzo spec (JSON of YAML) */
+            arazzoBody?: string;
+            /**
+             * Format: uri
+             * @example https://identifier.overheid.nl/tooi/id/gemeente/gm0363
+             */
+            organisationUri: string;
+            contact?: components["schemas"]["Contact"];
+        } | unknown | unknown;
+        Organisation: {
+            /** @example Binnenlandse Zaken en Koninkrijksrelaties (BZK) */
+            label: string;
+            /**
+             * Format: uri
+             * @example https://identifier.overheid.nl/tooi/id/ministerie/mnre1034
+             */
+            uri: string;
+            _links?: {
+                apis?: {
+                    /** @example /v1/apis?organisation=https://identifier.overheid.nl/tooi/id/ministerie/mnre1034 */
+                    href?: string;
+                };
+            };
         };
     };
     responses: {
+        /** @description Bad request */
+        400: {
+            headers: {
+                "API-Version": components["headers"]["headers-API-Version"];
+                Link: components["headers"]["Link"];
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": {
+                    /** @example Request validation failed */
+                    title?: string;
+                    invalidParams?: {
+                        /** @example url */
+                        name?: string;
+                        /** @example Invalid URI format */
+                        reason?: string;
+                    };
+                };
+            };
+        };
         /** @description Resource does not exist */
         404: {
             headers: {
@@ -287,6 +215,8 @@ export interface components {
         "API-Version": string;
         /** @description Semver of this API */
         "headers-API-Version": string;
+        /** @description Links to the previous, next, last or first pages */
+        Link: string;
     };
     pathItems: never;
 }
@@ -294,12 +224,7 @@ export type $defs = Record<string, never>;
 export interface operations {
     listApis: {
         parameters: {
-            query?: {
-                ids?: string | null;
-                organisation?: string | null;
-                page?: number;
-                perPage?: number;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
@@ -309,20 +234,12 @@ export interface operations {
             /** @description OK */
             200: {
                 headers: {
-                    /** @description De API-versie van de response */
-                    "API-Version"?: string;
+                    "API-Version": components["headers"]["API-Version"];
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ModelsApiSummary"][];
+                    "application/json": components["schemas"]["ApiSummary"][];
                 };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
         };
     };
@@ -335,7 +252,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["CreateApiInput"];
+                "application/json": components["schemas"]["ApiPost"];
             };
         };
         responses: {
@@ -347,46 +264,13 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ModelsApiSummary"];
+                    "application/json": components["schemas"]["ApiSummary"];
                 };
             };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+            400: components["responses"]["400"];
         };
     };
-    searchApis: {
-        parameters: {
-            query?: {
-                organisation?: string | null;
-                page?: number;
-                perPage?: number;
-                q?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    /** @description De API-versie van de response */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ModelsApiSummary"][];
-                };
-            };
-        };
-    };
-    retrieveApi: {
+    retreiveApi: {
         parameters: {
             query?: never;
             header?: never;
@@ -405,16 +289,10 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ModelsApiDetail"];
+                    "application/json": components["schemas"]["ApiDetail"];
                 };
             };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+            404: components["responses"]["404"];
         };
     };
     updateApi: {
@@ -428,7 +306,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["UpdateApiInput"];
+                "application/json": components["schemas"]["ApiPost"];
             };
         };
         responses: {
@@ -440,104 +318,11 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ModelsApiSummary"];
+                    "application/json": components["schemas"]["ApiSummary"];
                 };
             };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getBruno: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    /** @description De API-versie van de response */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getOasVersion: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-                version: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    /** @description De API-versie van de response */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getPostman: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    /** @description De API-versie van de response */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+            400: components["responses"]["400"];
+            404: components["responses"]["404"];
         };
     };
     listOrganisations: {
@@ -552,54 +337,18 @@ export interface operations {
             /** @description OK */
             200: {
                 headers: {
-                    /** @description De API-versie van de response */
-                    "API-Version"?: string;
+                    "API-Version": components["headers"]["API-Version"];
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ModelsOrganisationSummary"][];
+                    "application/json": {
+                        organisations?: components["schemas"]["Organisation"][];
+                    };
                 };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    createOrganisation: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["CreateOrganisationInput"];
-            };
-        };
-        responses: {
-            /** @description Created */
-            201: {
-                headers: {
-                    /** @description De API-versie van de response */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ModelsOrganisation"];
-                };
-            };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
         };
     };
 }
+type WithRequired<T, K extends keyof T> = T & {
+    [P in K]-?: T[P];
+};

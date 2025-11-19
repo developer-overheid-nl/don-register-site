@@ -1,5 +1,9 @@
 apis:
   api-register@v1:
-    root: https://api.don.apps.digilab.network/api-register/v1/openapi.json
+    root: https://api.developer.overheid.nl/api-register/v1/openapi.json
     x-openapi-ts:
       output: ./apps/api-register/src/types/api-schema.ts
+  tools@v1:
+    root: https://api.developer.overheid.nl/tools/v1/openapi.json
+    x-openapi-ts:
+      output: ./apps/api-register/src/types/tools-schema.ts
