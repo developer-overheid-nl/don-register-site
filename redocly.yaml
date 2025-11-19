@@ -3,3 +3,7 @@ apis:
     root: https://api.don.apps.digilab.network/api-register/v1/openapi.json
     x-openapi-ts:
       output: ./apps/api-register/src/types/api-schema.ts
+  oss-register@v1:
+    root: https://gist.githubusercontent.com/pasibun/f226d9cfe0ec6bd1532208363d15353a/raw/ada5418726fc42cc3f7c6f70a81d8b38eeef66d3/oss-oas.json
+    x-openapi-ts:
+      output: ./apps/oss-register/src/types/api-schema.ts
