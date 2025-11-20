@@ -53,7 +53,7 @@ const routingObj = getRouting(
   Astro.params,
 );
 
-const client = createClient<paths>({ baseUrl: `${API_VERSION}/${API_URL}/${API_ENDPOINT}` });
+const client = createClient<paths>({ baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}` });
 
 const {
   data,
