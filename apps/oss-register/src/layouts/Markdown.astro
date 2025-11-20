@@ -1,0 +1,32 @@
+---
+import { DonBasic } from "@developer-overheid-nl/don-register-layouts";
+import type { MarkdownLayoutProps } from "astro";
+import appConfig from "../../app.config";
+
+export const prerender = true;
+
+type Props = MarkdownLayoutProps<{
+  title: string;
+}>;
+
+const { frontmatter, headings } = Astro.props;
+
+/* Get the title, markdownlint will do some checkin', but TODO: check md files before commit */
+const titlePage =
+  frontmatter.title ||
+  headings.filter((mdHeading) => mdHeading.depth === 1).shift()?.text ||
+  frontmatter.url?.replace("/", " ").trim();
+--- 
+
+<DonBasic appConfig={appConfig} titlePage={titlePage}>
+  <div class="markdown-content utrecht-html">
+    <slot />
+  </div>
+</DonBasic>
+
+<style>
+  .markdown-content {
+    --utrecht-article-max-inline-size: 100ch;
+    max-inline-size: var(--utrecht-article-max-inline-size);
+  }
+</style>

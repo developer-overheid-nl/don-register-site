@@ -39,9 +39,9 @@ import type { paths } from "../../types/api-schema";
 
 Astro.response.headers.set("Cache-Control", "public, max-age=7200");
 const { id = "" } = Astro.params;
-const API_RESOURCE: keyof paths = `/${API_VERSION}/apis/{id}`;
+const API_RESOURCE: keyof paths = `/apis/{id}`;
 
-const client = createClient<paths>({ baseUrl: `${API_URL}/${API_ENDPOINT}` });
+const client = createClient<paths>({ baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}` });
 const {
   data,
   error,
