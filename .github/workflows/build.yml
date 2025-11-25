@@ -11,7 +11,7 @@ on:
 
 env:
   API_IMAGE_NAME: ghcr.io/developer-overheid-nl/don-register-site
-  OSS_IMAGE_NAME: ghcr.io/developer-overheid-nl/api-register-oss-site
+  OSS_IMAGE_NAME: ghcr.io/developer-overheid-nl/don-register-oss-site
 
 jobs:
   build:
