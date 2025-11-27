@@ -1,0 +1,82 @@
+---
+interface Props {
+  type?: string;
+  url: string;
+}
+const { type, url } = Astro.props;
+
+/**
+ * Repository providers with their logos and alt text
+ * key is used in the regex to match from the url
+ */
+const repoProviders = {
+  github: {
+    logo: '/logos/github-mark.svg',
+    alt: 'GitHub logo',
+  },
+  gitlab: {
+    logo: '/logos/gitlab-logo-500-rgb.svg',
+    alt: 'GitLab logo',
+  },
+  bitbucket: {
+    logo: '/logos/bitbucket-mark-brand-rgb.svg',
+    alt: 'Bitbucket logo',
+  },
+  azure: {
+    logo: '/logos/azure-devops-icon.svg',
+    alt: 'Azure DevOps logo',
+  },
+  codeberg: {
+    logo: '/logos/codeberg-logo_icon_blue.svg',
+    alt: 'Codeberg logo',
+  },
+  forgejo: {
+    logo: '/logos/forgejo.svg',
+    alt: 'Forgejo',
+  },
+};
+
+---
+
+<a href={url} target="_blank" rel="noopener noreferrer" class="repo-link">
+  {Object.entries(repoProviders).map(([key, { logo, alt }]) =>
+    type === key || url.match(new RegExp(key, 'i')) ? (
+      <img class={`repo-logo ${key}-logo`} src={logo} alt={alt} width="24" height="24" />
+    ) : null
+  )}
+</a>
+
+<style>
+    .repo-link {
+    display: inline-block;
+    position: relative;
+    place-content: center;
+    &:hover::after {
+      content: '';
+      position: absolute;
+      top: -0.5rem;
+      bottom: -0.5rem;
+      left: -0.5rem;
+      right: -0.5rem;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.1);
+      z-index: -1;
+    }
+  }
+
+  .repo-logo {
+    display: block;
+    width: 24px;
+    height: 24px;
+  }
+
+  .gitlab-logo {
+    object-fit: cover;
+    object-view-box: inset(28% 28% 28% 28%);
+  }
+
+  .bitbucket-logo {
+    object-fit: cover;
+    object-view-box: inset(14% 14% 14% 14%);
+  }
+</style>
