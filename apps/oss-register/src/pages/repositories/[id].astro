@@ -37,7 +37,7 @@ const client = createClient<paths>({
 const {
   data,
   error,
-  response: { headers },
+  response: { status, statusText, headers },
 } = await client.GET(API_RESOURCE, {
   params: {
     path: { id },
@@ -68,7 +68,7 @@ const details = error ? null : data;
 
 { error && (
   <DonBasic appConfig={appConfig} titlePage="API niet gevonden">
-    <Alert type="error">{(error as unknown as any).message || (error as unknown as any).detail || t('components.fuzz-error')}</Alert>
+    <Alert type="error">{(error as unknown as any).message || (error as unknown as any).detail || `${status}: ${statusText}` || t('components.fuzz-error')}</Alert>
     <Paragraph>{t('components.item-not-found-error')}</Paragraph>
   </DonBasic>
 )}
@@ -93,8 +93,8 @@ const details = error ? null : data;
     <Fragment slot="aside">
       <DataSummary appearance="row">
         <DataSummaryItem itemKey="Organisatie" itemValue={details?.organisation?.label || '-'} />
-        <DataSummaryItem itemKey="Contactpersoon" itemValue={details?.contact?.name || '-'} />
-        <DataSummaryItem itemKey="Email" itemValue={details?.contact?.email || '-'} />
+        {/* <DataSummaryItem itemKey="Contactpersoon" itemValue={details?.contact?.name || '-'} />
+        <DataSummaryItem itemKey="Email" itemValue={details?.contact?.email || '-'} /> */}
       </DataSummary>
     </Fragment>
     <Fragment slot="meta">
@@ -102,7 +102,7 @@ const details = error ? null : data;
       <Block appearance="outlined">
         <Heading level={5}>{t(`pages.repository-url`)}</Heading>
         <DataSummary appearance="column" contained>
-          <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={details?.repositorieUri} />
+          <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={details?.repositoryUrl} />
         </DataSummary>
       </Block>
     </Fragment>

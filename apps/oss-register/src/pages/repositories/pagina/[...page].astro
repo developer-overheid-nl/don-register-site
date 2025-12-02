@@ -41,7 +41,7 @@ import type { paths } from "../../../types/api-schema";
 Astro.response.headers.set("Cache-Control", "public, max-age=7200");
 const { page = 1 } = Astro.params;
 
-console.log(page);
+console.log("page", page);
 
 const APIS_RESOURCE: keyof paths = `/repositories`;
 const ORGS_RESOURCE: keyof paths = `/organisations`;
@@ -80,12 +80,16 @@ const {
     return { data: null, error, response: new Response() };
   });
 
-console.log(/*data, error,*/ status, statusText);
+console.log(/*data,*/ error, status, statusText);
 
 const {
   data: filters,
   error: filtersError,
-  response: { headers: filtersHeaders },
+  response: {
+    status: filtersStatus,
+    statusText: filtersStatusText,
+    headers: filtersHeaders,
+  },
 } = await client
   .GET(ORGS_RESOURCE, {
     headers: {
@@ -96,6 +100,8 @@ const {
     console.error(error);
     return { data: null, error, response: new Response() };
   });
+
+console.log(/*data,*/ filtersError, filtersStatus, filtersStatusText);
 
 const paginationObj = parseHeaders(headers);
 const pagination = getPagination(paginationObj, routingObj.url);
@@ -123,15 +129,15 @@ const items = error ? null : data;
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
   <Article className="markdown-content utrecht-html" slot="header"><Intro /></Article>
-  <span slot="search">[search]</span>
-  <span slot="filters">[filters]</span>
+  <Search slot="search" searchUrl={new URL(`/apis/zoeken`, routingObj?.url).toString()} searchKey={SEARCH_QUERY_KEY} searchTerm={routingObj.query[SEARCH_QUERY_KEY]}></Search>
+  <Filters slot="filters" routing={routingObj} data={filters} headers={filtersHeaders} error={filtersError} status={filtersStatus} statusText={filtersStatusText} />
 
   <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2}>
     <Paragraph role="status">{t('components.search-results-amount', {context: i18nContext, amount: paginationObj.totalCount})}</Paragraph>
   </HeadingGroup>
 
   { error && (
-    <Alert type="error">{(error as unknown as any).message || (error as unknown as any).error_msg || t('components.fuzz-error')}</Alert>
+    <Alert type="error">{(error as unknown as any).message || (error as unknown as any).error_msg || `${status}: ${statusText}` || t('components.fuzz-error')}</Alert>
   )}
 
   { outOfBounds && (
