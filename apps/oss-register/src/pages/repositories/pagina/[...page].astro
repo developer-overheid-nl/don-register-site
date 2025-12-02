@@ -129,7 +129,7 @@ const items = error ? null : data;
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
   <Article className="markdown-content utrecht-html" slot="header"><Intro /></Article>
-  <Search slot="search" searchUrl={new URL(`/apis/zoeken`, routingObj?.url).toString()} searchKey={SEARCH_QUERY_KEY} searchTerm={routingObj.query[SEARCH_QUERY_KEY]}></Search>
+  <Search slot="search" searchUrl={new URL(`/repositories/zoeken`, routingObj?.url).toString()} searchKey={SEARCH_QUERY_KEY} searchTerm={routingObj.query[SEARCH_QUERY_KEY]}></Search>
   <Filters slot="filters" routing={routingObj} data={filters} headers={filtersHeaders} error={filtersError} status={filtersStatus} statusText={filtersStatusText} />
 
   <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2}>
