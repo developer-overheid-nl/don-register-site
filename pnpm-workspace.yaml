@@ -9,7 +9,7 @@ catalog:
   '@rijkshuisstijl-community/components-css': 8.0.0
   '@rijkshuisstijl-community/components-react': 7.0.0
   '@rijkshuisstijl-community/design-tokens': 8.0.0
-  '@types/react-dom': 19.1.6
+  '@types/react-dom': 19.2.3
   '@types/react': 19.1.8
   astro: 5.16.3
   clsx: 2.1.1
@@ -17,7 +17,7 @@ catalog:
   openapi-fetch: 0.15.0
   openapi-typescript: 7.10.1
   postcss-custom-media: 11.0.6
-  react-dom: 19.1.0
+  react-dom: 19.2.0
   react-markdown: 10.1.0
   react: 19.1.0
   typescript: 5.9.3
