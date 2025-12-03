@@ -17,16 +17,77 @@
   --don-pill-badge-border-width: 1px;
 }
 
+.pill-badge-figure {
+  display: contents;
+}
+
 .pill-badge {
+  --percentage: 100%;
   position: relative;
   display: inline-block;
   align-items: center;
+  width: fit-content;
   height: auto;
   overflow: clip;
   font-size: var(--don-pill-badge-font-size);
   background-color: var(--don-pill-badge-background-color);
   border-radius: var(--don-pill-badge-border-radius);
-  --percentage: attr(data-percentage %, 100%);
+
+  /* Because Biome CSS parser does not yet support modern attr() some of the following is commented out.
+   * Fixme: remove this workaround when https://github.com/biomejs/biome/issues/6183 is closed and tested */
+
+  /* Browser has modern attr() support */
+  /*
+  @supports (x: attr(x type(*))) {
+    --percentage: attr(data-percentage %, 100%);
+  }
+  */
+
+  /* Browser does not have modern attr() support */
+  /* @supports not (x: attr(x type(*))) { */
+  &[data-percentage^='1'] {
+    --percentage: 10%;
+  }
+  &[data-percentage^='2'] {
+    --percentage: 20%;
+  }
+  &[data-percentage^='3'] {
+    --percentage: 30%;
+  }
+  &[data-percentage^='4'] {
+    --percentage: 40%;
+  }
+  &[data-percentage^='5'] {
+    --percentage: 50%;
+  }
+  &[data-percentage^='6'] {
+    --percentage: 60%;
+  }
+  &[data-percentage^='7'] {
+    --percentage: 70%;
+  }
+  &[data-percentage^='8'] {
+    --percentage: 80%;
+  }
+  &[data-percentage^='9'] {
+    --percentage: 90%;
+  }
+  &[data-percentage='100'] {
+    --percentage: 100%;
+  }
+  &[data-percentage='9'],
+  &[data-percentage='8'],
+  &[data-percentage='7'],
+  &[data-percentage='6'],
+  &[data-percentage='5'],
+  &[data-percentage='4'],
+  &[data-percentage='3'],
+  &[data-percentage='2'],
+  &[data-percentage='1'],
+  &[data-percentage='0'] {
+    --percentage: 0%;
+  }
+  /*}*/
 }
 
 .pill-badge::before {
@@ -40,10 +101,6 @@
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   mask-composite: exclude;
-}
-
-.pill-badge--type-percentage {
-  outline: 1mm dashed salmon;
 }
 
 .pill-badge__start {

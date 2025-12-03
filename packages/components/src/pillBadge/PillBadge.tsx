@@ -1,38 +1,44 @@
 import clsx from "clsx";
+import type { PropsWithChildren } from "react";
 import styles from "./styles.module.css";
 
 export interface PillBadgeProps {
   className?: string;
   startValue: string | number | null | undefined;
   endValue: string | number | null | undefined;
+  caption?: string;
   type?: "color" | "percentage";
 }
 
-const PillBadge = (props: PillBadgeProps) => {
+const PillBadge = (props: PropsWithChildren<PillBadgeProps>) => {
   const {
     className,
     startValue,
     endValue,
+    caption,
     type = "color",
+    children,
     ...restProps
   } = props;
 
   return (
-    <div
-      className={clsx(
-        styles["pill-badge"],
-        type === "percentage" && styles["pill-badge--type-percentage"],
-        className,
-      )}
-      data-percentage={type === "percentage" ? endValue : undefined}
-      {...restProps}
-    >
-      <span className={styles["pill-badge__start"]}>{startValue || "■"}</span>
-      <span className={styles["pill-badge__end"]}>
-        {endValue || "-"}
-        {type === "percentage" ? "%" : ""}
-      </span>
-    </div>
+    <figure className={clsx(styles["pill-badge-figure"], className)} {...restProps}>
+      <div
+        className={clsx(
+          styles["pill-badge"],
+          type === "percentage" && styles["pill-badge--type-percentage"],
+        )}
+        data-percentage={type === "percentage" ? endValue : undefined}
+      >
+        <span className={styles["pill-badge__start"]}>{startValue || "■"}</span>
+        <span className={styles["pill-badge__end"]}>
+          {endValue || "-"}
+          {type === "percentage" ? "%" : ""}
+        </span>
+      </div>
+      {children}
+      {caption && <figcaption>{caption}</figcaption>}
+    </figure>
   );
 };
 

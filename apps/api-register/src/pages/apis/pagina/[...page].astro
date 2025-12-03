@@ -21,6 +21,7 @@ import {
   Markdown,
   Pagination,
   Paragraph,
+  PillBadge,
   ScoreBadge,
   Search,
 } from "@developer-overheid-nl/don-register-components";
@@ -162,7 +163,8 @@ const items = error ? null : data;
               </div>
               </HeadingGroup>
               <div slot="description" class="description utrecht-html"><Markdown text={item.description} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
-              <span slot="metadata" class="adr-score-label">{t(`components.adr-score`)}: {item.adrScore}%</span>
+              <PillBadge startValue={`ADR Score`} endValue={item.adrScore} type="percentage" />
+              {/* <span slot="metadata" class="adr-score-label">{t(`components.adr-score`)}: {item.adrScore}%</span> */}
               {/* <ScoreBadge slot="metadata" className="meta" name={`ADR`} score={item.adrScore} max={100} inPercentage /> */}
             </CardAsLink>
           </CardsListItem>
