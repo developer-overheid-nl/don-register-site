@@ -22,7 +22,10 @@ const PillBadge = (props: PropsWithChildren<PillBadgeProps>) => {
   } = props;
 
   return (
-    <figure className={clsx(styles["pill-badge-figure"], className)} {...restProps}>
+    <figure
+      className={clsx(styles["pill-badge-figure"], className)}
+      {...restProps}
+    >
       <div
         className={clsx(
           styles["pill-badge"],
