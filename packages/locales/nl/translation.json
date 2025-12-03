@@ -61,7 +61,10 @@
     "documentation": "Documentatie",
     "servers-and-auth": "Servers en authenticatie",
     "authentication": "Authenticatie",
+    "tbd-metadata": "[Te bepalen] Metadata",
     "servers": "Servers",
-    "repository-url": "Repository URL"
+    "links": "Links",
+    "repository-url": "Repository URL",
+    "public-code-url": "PublicCode URL"
   }
 }

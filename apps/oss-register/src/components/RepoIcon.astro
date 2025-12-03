@@ -39,7 +39,7 @@ const repoProviders = {
 
 <a href={url} target="_blank" rel="noopener noreferrer" class="repo-link">
   {Object.entries(repoProviders).map(([key, { logo, alt }]) =>
-    type === key || url.match(new RegExp(key, 'i')) ? (
+    type === key || url && url.match(new RegExp(key, 'i')) ? (
       <img class={`repo-logo ${key}-logo`} src={logo} alt={alt} width="24" height="24" />
     ) : null
   )}
