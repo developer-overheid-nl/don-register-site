@@ -11,7 +11,7 @@ catalog:
   '@rijkshuisstijl-community/design-tokens': 8.0.0
   '@types/react-dom': 19.1.6
   '@types/react': 19.1.8
-  astro: 5.16.0
+  astro: 5.16.3
   clsx: 2.1.1
   i18next: 25.6.3
   openapi-fetch: 0.15.0
