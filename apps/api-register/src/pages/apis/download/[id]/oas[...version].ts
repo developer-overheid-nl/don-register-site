@@ -10,8 +10,6 @@ export const GET: APIRoute = async ({ params }) => {
   const { id } = params;
   let { version } = params;
 
-  console.log({ id, version });
-
   const DEFAULT_VERSION = "3.1.json";
   // const DEFAULT_TYPE = "json";
   const availableVersions = ["3.0.json", "3.1.json", "3.0.yaml", "3.1.yaml"];
