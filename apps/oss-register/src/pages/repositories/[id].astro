@@ -100,9 +100,10 @@ const details = error ? null : data;
     <Fragment slot="meta">
       <Heading level={4}>{t(`pages.tbd-metadata`)}</Heading>
       <Block appearance="outlined">
-        <Heading level={5}>{t(`pages.repository-url`)}</Heading>
+        <Heading level={5}>{t(`pages.links`)}</Heading>
         <DataSummary appearance="column" contained>
           <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={details?.repositoryUrl} />
+          <DataSummaryItem itemKey={t(`pages.public-code-url`)} itemValue={details?.publicCodeUrl || '-'} />
         </DataSummary>
       </Block>
     </Fragment>
