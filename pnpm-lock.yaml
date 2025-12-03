@@ -61,8 +61,8 @@ catalogs:
       specifier: 5.9.3
       version: 5.9.3
     vite:
-      specifier: 7.1.12
-      version: 7.1.12
+      specifier: 7.2.6
+      version: 7.2.6
   react19:
     '@types/react':
       specifier: '>=19'
@@ -129,7 +129,7 @@ importers:
         version: 7.10.1(typescript@5.9.3)
       vite:
         specifier: 'catalog:'
-        version: 7.1.12(@types/node@24.0.8)
+        version: 7.2.6(@types/node@24.0.8)
 
   apps/api-register:
     dependencies:
@@ -163,7 +163,7 @@ importers:
         version: 11.0.6(postcss@8.5.6)
       vite:
         specifier: 'catalog:'
-        version: 7.1.12(@types/node@24.0.8)
+        version: 7.2.6(@types/node@24.0.8)
 
   packages/components:
     dependencies:
@@ -2617,8 +2617,8 @@ packages:
       yaml:
         optional: true
 
-  vite@7.1.12:
-    resolution: {integrity: sha512-ZWyE8YXEXqJrrSLvYgrRP7p62OziLW7xI5HYGWFzOvupfAlrLvURSzv/FyGyy0eidogEM3ujU+kUG1zuHgb6Ug==}
+  vite@7.2.6:
+    resolution: {integrity: sha512-tI2l/nFHC5rLh7+5+o7QjKjSR04ivXDF4jcgV0f/bTQ+OJiITy5S6gaynVsEM+7RqzufMnVbIon6Sr5x1SDYaQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -5405,7 +5405,7 @@ snapshots:
       '@types/node': 24.0.8
       fsevents: 2.3.3
 
-  vite@7.1.12(@types/node@24.0.8):
+  vite@7.2.6(@types/node@24.0.8):
     dependencies:
       esbuild: 0.25.5
       fdir: 6.5.0(picomatch@4.0.3)
