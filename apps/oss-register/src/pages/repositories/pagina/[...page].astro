@@ -165,8 +165,8 @@ const items = error ? null : data;
                       {item.organisation?.label}
                     </DataBadgeLink></span>
                   </Paragraph>
-                  <div class="header-meta" class="moveAbove">
-                    <RepoIcon url={item.repositoryUrl}></RepoIcon>
+                  <div class="header-meta">
+                    <RepoIcon url={item.repositoryUrl} name={item.name} className="moveAbove"></RepoIcon>
                     {/* <IconBadge 
                       className={`moveAbove`} 
                       name={item.lifecycle?.status || 'unknown'} 
@@ -178,7 +178,7 @@ const items = error ? null : data;
               </div>
               </HeadingGroup>
               <div slot="description" class="description utrecht-html"><Markdown text={item.description} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
-              <span slot="metadata" class="last-updated">{t(`components.updated-at`)}: {new Date(parseInt(item.updatedAt) * 1000).toLocaleDateString('nl-NL')}</span>
+              <span slot="metadata" class="last-updated">{t(`components.updated-at`)}: {new Date(item.updatedAt).toLocaleDateString('nl-NL')}</span>
               {/* <ScoreBadge slot="metadata" className="meta" name={`ADR`} score={item.adrScore} max={100} inPercentage /> */}
             </CardAsLink>
           </CardsListItem>
