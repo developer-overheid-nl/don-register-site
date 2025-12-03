@@ -37,7 +37,7 @@
     "react-markdown": "catalog:"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.3",
+    "@biomejs/biome": "2.3.8",
     "openapi-typescript": "catalog:",
     "vite": "catalog:"
   }

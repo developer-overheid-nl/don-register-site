@@ -3,17 +3,17 @@ packages:
   - 'apps/*'
 
 catalog:
-  '@astrojs/node': 9.5.0
-  '@astrojs/react': 4.4.1
+  '@astrojs/node': 9.5.1
+  '@astrojs/react': 4.4.2
   '@csstools/postcss-global-data': 3.1.0
   '@rijkshuisstijl-community/components-css': 8.0.0
   '@rijkshuisstijl-community/components-react': 7.0.0
   '@rijkshuisstijl-community/design-tokens': 8.0.0
   '@types/react-dom': 19.1.6
   '@types/react': 19.1.8
-  astro: 5.15.2
+  astro: 5.16.3
   clsx: 2.1.1
-  i18next: 25.6.0
+  i18next: 25.7.1
   openapi-fetch: 0.15.0
   openapi-typescript: 7.10.1
   postcss-custom-media: 11.0.6
@@ -21,7 +21,7 @@ catalog:
   react-markdown: 10.1.0
   react: 19.1.0
   typescript: 5.9.3
-  vite: 7.1.12
+  vite: 7.2.6
 
 catalogs: 
   react18: 
