@@ -1,9 +1,24 @@
 ---
+import i18n from "@developer-overheid-nl/don-register-components/i18n";
+import { t } from "i18next";
+import appConfig from "../../app.config";
+
 interface Props {
   type?: string;
   url: string;
+  name?: string;
+  className?: string;
 }
-const { type, url } = Astro.props;
+const { type, url, name, className } = Astro.props;
+
+const { i18n: i18nApp } = appConfig;
+i18n.addResourceBundle(
+  i18n.language,
+  "translation",
+  i18nApp ? i18nApp[i18n.language] : {},
+  true,
+  true,
+);
 
 /**
  * Repository providers with their logos and alt text
@@ -12,38 +27,44 @@ const { type, url } = Astro.props;
 const repoProviders = {
   github: {
     logo: "/logos/github-mark.svg",
+    name: "GitHub",
     alt: "GitHub logo",
   },
   gitlab: {
     logo: "/logos/gitlab-logo-500-rgb.svg",
+    name: "GitLab",
     alt: "GitLab logo",
   },
   bitbucket: {
     logo: "/logos/bitbucket-mark-brand-rgb.svg",
+    name: "Bitbucket",
     alt: "Bitbucket logo",
   },
   azure: {
     logo: "/logos/azure-devops-icon.svg",
+    name: "Azure DevOps",
     alt: "Azure DevOps logo",
   },
   codeberg: {
     logo: "/logos/codeberg-logo_icon_blue.svg",
+    name: "Codeberg",
     alt: "Codeberg logo",
   },
   forgejo: {
     logo: "/logos/forgejo.svg",
+    name: "Forgejo",
     alt: "Forgejo",
   },
 };
 ---
 
-<a href={url} target="_blank" rel="noopener noreferrer" class="repo-link">
-  {Object.entries(repoProviders).map(([key, { logo, alt }]) =>
+  {Object.entries(repoProviders).map(([key, { logo, alt, name: provider }]) =>
     type === key || url && url.match(new RegExp(key, 'i')) ? (
+    <a href={url} target="_blank" rel="noopener noreferrer" class={`repo-link ${className}`} aria-label={t('components.goto-name-on-site', {name: name, site: provider})}>
       <img class={`repo-logo ${key}-logo`} src={logo} alt={alt} width="24" height="24" />
+    </a>
     ) : null
   )}
-</a>
 
 <style>
     .repo-link {
