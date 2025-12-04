@@ -57,6 +57,10 @@ export {
   type PaginationProps,
 } from "./pagination/Pagination";
 export { default as Paragraph } from "./paragraph/Paragraph";
+export {
+  default as PillBadge,
+  type PillBadgeProps,
+} from "./pillBadge/PillBadge";
 export { default as ReadOnlyTextInput } from "./readOnlyTextInput/ReadOnlyTextInput";
 export {
   default as ScoreBadge,

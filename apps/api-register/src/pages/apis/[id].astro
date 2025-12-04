@@ -24,6 +24,7 @@ import {
   Link,
   Markdown,
   Paragraph,
+  PillBadge,
   ReadOnlyTextInput,
   ScoreBadge,
 } from "@developer-overheid-nl/don-register-components";
@@ -110,11 +111,13 @@ const details = error ? null : data;
       <Block layout="flex-row">
         <div>{t(`components.version`, {version: details.lifecycle?.version || '-'})}</div>
         <AlignBox gap="small" display="inline">
-          <figure class="adr-score-figure">
-            <figcaption class="adr-score-label">{t(`components.adr-score`)}: {details.adrScore}%</figcaption>
+          {/* <figure class=""> */}
+            {/* <figcaption class="adr-score-label">{t(`components.adr-score`)}: {details.adrScore}%</figcaption> */}
+            <PillBadge className="adr-score-figure" startValue={`ADR Score`} endValue={details.adrScore} type="percentage">
+              <span class="adr-score-info"><Link href={`https://developer-overheid-nl.github.io/oas-checker/?url=https://apis.developer.overheid.nl/apis/download/${id}/oas3.0.json`} target="_blank" rel="noopener noreferrer">Uitleg <Icon name="externe-link-inline" /></Link></span>
+            </PillBadge>
             {/* <ScoreBadge name={`ADR`} score={details.adrScore} max={100} inPercentage /> */}
-            <span class="adr-score-info"><Link href={`https://developer-overheid-nl.github.io/oas-checker/?url=https://apis.developer.overheid.nl/apis/download/${id}/oas3.0.json`} target="_blank" rel="noopener noreferrer">Uitleg <Icon name="externe-link-inline" /></Link></span>
-          </figure>
+          {/* </figure> */}
         </AlignBox>
         <AlignBox gap="small" display="inline">
           <IconBadge
@@ -182,11 +185,11 @@ const details = error ? null : data;
 </DonDetail>)
 }
 
-<style>
+<!-- <style>
   .adr-score-figure {
     display: contents;
   }
   .adr-score-label {
     display: inline-block;
   }
-</style>
+</style> -->
