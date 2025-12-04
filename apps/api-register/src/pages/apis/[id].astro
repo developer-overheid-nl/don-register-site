@@ -103,6 +103,7 @@ const details = error ? null : data;
         <DataSummaryItem itemKey="Organisatie" itemValue={details?.organisation?.label || '-'} />
         <DataSummaryItem itemKey="Contactpersoon" itemValue={details?.contact?.name || '-'} />
         <DataSummaryItem itemKey="Email" itemValue={details?.contact?.email || '-'} />
+        <DataSummaryItem itemKey="URL" href={details?.contact?.url} itemValue="">{details?.contact?.url || '-'}</DataSummaryItem>
       </DataSummary>
     </Fragment>
     <Fragment slot="meta">
