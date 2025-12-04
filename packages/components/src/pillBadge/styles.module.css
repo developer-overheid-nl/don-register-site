@@ -1,0 +1,128 @@
+:root {
+  --don-pill-badge-font-size: 0.875rem;
+  --don-pill-badge-gap: 0.5rem;
+  --don-pill-badge-border-radius: 5px;
+  --don-pill-badge-padding-inline: 0.5rem;
+  --don-pill-badge-padding-block: 0.25rem;
+  --don-pill-badge-background-color: var(--rhc-color-cool-grey-200);
+  --don-pill-badge-start-color: var(--rhc-color-foreground-on-dark-color);
+  --don-pill-badge-start-background-color: var(--rhc-color-cool-grey-700);
+  --don-pill-badge-end-color: var(--rhc-color-foreground-on-light-color);
+  --don-pill-badge-end-background-color: var(--rhc-color-groen-100);
+  --don-pill-badge-border-color: linear-gradient(
+    to top,
+    rgba(51, 51, 51, 0.25),
+    rgba(204, 204, 204, 0.25)
+  );
+  --don-pill-badge-border-width: 1px;
+}
+
+.pill-badge-figure {
+  display: contents;
+}
+
+.pill-badge {
+  --percentage: 100%;
+  position: relative;
+  display: inline-block;
+  align-items: center;
+  width: fit-content;
+  height: auto;
+  overflow: clip;
+  font-size: var(--don-pill-badge-font-size);
+  background-color: var(--don-pill-badge-background-color);
+  border-radius: var(--don-pill-badge-border-radius);
+
+  /* Because Biome CSS parser does not yet support modern attr() some of the following is commented out.
+   * Fixme: remove this workaround when https://github.com/biomejs/biome/issues/6183 is closed and tested */
+
+  /* Browser has modern attr() support */
+  /*
+  @supports (x: attr(x type(*))) {
+    --percentage: attr(data-percentage %, 100%);
+  }
+  */
+
+  /* Browser does not have modern attr() support */
+  /* @supports not (x: attr(x type(*))) { */
+  &[data-percentage^='1'] {
+    --percentage: 10%;
+  }
+  &[data-percentage^='2'] {
+    --percentage: 20%;
+  }
+  &[data-percentage^='3'] {
+    --percentage: 30%;
+  }
+  &[data-percentage^='4'] {
+    --percentage: 40%;
+  }
+  &[data-percentage^='5'] {
+    --percentage: 50%;
+  }
+  &[data-percentage^='6'] {
+    --percentage: 60%;
+  }
+  &[data-percentage^='7'] {
+    --percentage: 70%;
+  }
+  &[data-percentage^='8'] {
+    --percentage: 80%;
+  }
+  &[data-percentage^='9'] {
+    --percentage: 90%;
+  }
+  &[data-percentage='100'] {
+    --percentage: 100%;
+  }
+  &[data-percentage='9'],
+  &[data-percentage='8'],
+  &[data-percentage='7'],
+  &[data-percentage='6'],
+  &[data-percentage='5'],
+  &[data-percentage='4'],
+  &[data-percentage='3'],
+  &[data-percentage='2'],
+  &[data-percentage='1'],
+  &[data-percentage='0'] {
+    --percentage: 0%;
+  }
+  /*}*/
+}
+
+.pill-badge::before {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: var(--don-pill-badge-border-color) border-box;
+  border: var(--don-pill-badge-border-width) solid transparent;
+  border-radius: var(--don-pill-badge-border-radius);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.pill-badge__start {
+  padding-block: var(--don-pill-badge-padding-block);
+  padding-inline: var(--don-pill-badge-padding-inline);
+  padding-inline-end: calc(0.5 * var(--don-pill-badge-gap));
+  color: var(--don-pill-badge-start-color);
+  background-color: var(--don-pill-badge-start-background-color);
+}
+
+.pill-badge__end {
+  padding-block: var(--don-pill-badge-padding-block);
+  padding-inline: var(--don-pill-badge-padding-inline);
+  padding-inline-start: calc(0.5 * var(--don-pill-badge-gap));
+  color: var(--don-pill-badge-end-color);
+  background-color: var(--don-pill-badge-end-background-color);
+}
+
+.pill-badge--type-percentage .pill-badge__end {
+  background: linear-gradient(
+    to right,
+    var(--don-pill-badge-end-background-color) var(--percentage),
+    var(--don-pill-badge-background-color) var(--percentage)
+  );
+}
