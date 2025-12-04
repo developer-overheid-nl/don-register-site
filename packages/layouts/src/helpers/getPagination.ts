@@ -17,10 +17,16 @@ export const parseHeaders = (headers: Headers) => {
   const links = parseLinkHeader(headers.get("link"));
 
   const pagination = <paginationHeaders>{
-    currentPage: Number(headers.get("x-current-page")),
-    perPage: Number(headers.get("x-per-page")),
-    totalCount: Number(headers.get("x-total-count")),
-    totalPages: Number(headers.get("x-total-pages")),
+    currentPage: Number(
+      headers.get("current-page") || headers.get("x-current-page"),
+    ),
+    perPage: Number(headers.get("per-page") || headers.get("x-per-page")),
+    totalCount: Number(
+      headers.get("total-count") || headers.get("x-total-count"),
+    ),
+    totalPages: Number(
+      headers.get("total-pages") || headers.get("x-total-pages"),
+    ),
     ...links,
   };
 

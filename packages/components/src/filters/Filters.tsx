@@ -20,6 +20,8 @@ export interface FiltersProps extends HTMLProps<HTMLDivElement> {
   data: any;
   headers: any;
   error: any;
+  status?: number;
+  statusText?: string;
 }
 
 const ListLinkIcon = ({ isActive }: { isActive: boolean }) => {
@@ -35,7 +37,8 @@ const ListLinkIcon = ({ isActive }: { isActive: boolean }) => {
 
 const Filters = (props: PropsWithChildren<FiltersProps>) => {
   const { t } = useTranslation();
-  const { data, headers, error, className, routing } = props;
+  const { data, headers, error, status, statusText, className, routing } =
+    props;
   const organisations = data && !data.message ? data : [];
   const currentOrganisation =
     organisations &&
@@ -43,14 +46,6 @@ const Filters = (props: PropsWithChildren<FiltersProps>) => {
 
   return (
     <div className={clsx([styles.filters, className])}>
-      {error && (
-        <Alert type="error">
-          {(error as unknown as any).message ||
-            (error as unknown as any).error_msg ||
-            t("components.fuzz-error")}
-        </Alert>
-      )}
-
       {currentOrganisation && (
         <div
           className={clsx("utrecht-badge-list", styles.currentFilter)}
@@ -97,6 +92,15 @@ const Filters = (props: PropsWithChildren<FiltersProps>) => {
             </LinkListLink>
           ))}
       </LinkList>
+
+      {error && (
+        <Alert type="error">
+          {(error as unknown as any).message ||
+            (error as unknown as any).error_msg ||
+            `${status}: ${statusText}` ||
+            t("components.fuzz-error")}
+        </Alert>
+      )}
     </div>
   );
 };

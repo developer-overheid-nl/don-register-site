@@ -21,7 +21,6 @@ import {
   Markdown,
   Pagination,
   Paragraph,
-  PillBadge,
   ScoreBadge,
   Search,
 } from "@developer-overheid-nl/don-register-components";
@@ -35,15 +34,18 @@ import {
 import { t } from "i18next";
 import createClient from "openapi-fetch";
 import appConfig from "../../../../app.config";
+import RepoIcon from "../../../components/RepoIcon.astro";
 import { Content as Intro } from "../../../partials/intro.md";
 import type { paths } from "../../../types/api-schema";
 
 Astro.response.headers.set("Cache-Control", "public, max-age=7200");
 const { page = 1 } = Astro.params;
 
-const APIS_RESOURCE: keyof paths = `/apis`;
+console.log("page", page);
+
+const APIS_RESOURCE: keyof paths = `/repositories`;
 const ORGS_RESOURCE: keyof paths = `/organisations`;
-const SEARCH_RESOURCE: keyof paths = `/apis/_search`;
+const SEARCH_RESOURCE: keyof paths = `/repositories/_search`;
 const SEARCH_QUERY_KEY = "q";
 
 const routingObj = getRouting(
@@ -60,7 +62,7 @@ const client = createClient<paths>({
 const {
   data,
   error,
-  response: { headers },
+  response: { status, statusText, headers },
 } = await client
   .GET(routingObj.query[SEARCH_QUERY_KEY] ? SEARCH_RESOURCE : APIS_RESOURCE, {
     params: {
@@ -78,10 +80,16 @@ const {
     return { data: null, error, response: new Response() };
   });
 
+console.log(/*data,*/ error, status, statusText);
+
 const {
   data: filters,
   error: filtersError,
-  response: { headers: filtersHeaders },
+  response: {
+    status: filtersStatus,
+    statusText: filtersStatusText,
+    headers: filtersHeaders,
+  },
 } = await client
   .GET(ORGS_RESOURCE, {
     headers: {
@@ -92,6 +100,8 @@ const {
     console.error(error);
     return { data: null, error, response: new Response() };
   });
+
+console.log(/*data,*/ filtersError, filtersStatus, filtersStatusText);
 
 const paginationObj = parseHeaders(headers);
 const pagination = getPagination(paginationObj, routingObj.url);
@@ -119,15 +129,15 @@ const items = error ? null : data;
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
   <Article className="markdown-content utrecht-html" slot="header"><Intro /></Article>
-  <Search slot="search" searchUrl={new URL(`/apis/zoeken`, routingObj?.url).toString()} searchKey={SEARCH_QUERY_KEY} searchTerm={routingObj.query[SEARCH_QUERY_KEY]}></Search>
-  <Filters slot="filters" routing={routingObj} data={filters} headers={filtersHeaders} error={filtersError} />
+  <Search slot="search" searchUrl={new URL(`/repositories/zoeken`, routingObj?.url).toString()} searchKey={SEARCH_QUERY_KEY} searchTerm={routingObj.query[SEARCH_QUERY_KEY]}></Search>
+  <Filters slot="filters" routing={routingObj} data={filters} headers={filtersHeaders} error={filtersError} status={filtersStatus} statusText={filtersStatusText} />
 
   <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2}>
     <Paragraph role="status">{t('components.search-results-amount', {context: i18nContext, amount: paginationObj.totalCount})}</Paragraph>
   </HeadingGroup>
 
   { error && (
-    <Alert type="error">{(error as unknown as any).message || (error as unknown as any).error_msg || t('components.fuzz-error')}</Alert>
+    <Alert type="error">{(error as unknown as any).message || (error as unknown as any).error_msg || `${status}: ${statusText}` || t('components.fuzz-error')}</Alert>
   )}
 
   { outOfBounds && (
@@ -136,6 +146,8 @@ const items = error ? null : data;
       {t('components.pagination-out-of-bounds', {page: page, count: paginationObj.totalPages})}
     </Alert>
   )}
+
+<!-- <pre style="white-space: pre-wrap;">{JSON.stringify(items)}</pre> -->
 
   { items && items.length > 0 ? (
     <CardsList>
@@ -146,7 +158,7 @@ const items = error ? null : data;
               href={new URL(`../${item.id}`, routingObj?.url).toString()}
               linkLabel={t('components.view-details')}
             >
-              <HeadingGroup slot="heading" title={item.title || '🐒'} level={2} appearanceLevel={4}>
+              <HeadingGroup slot="heading" title={item.name || '🗄️'} level={2} appearanceLevel={4}>
                 <div class="subtitle" slot="subTitle">
                   <Paragraph slot="subTitle" itemScope={true} itemType="https://schema.org/Organization" itemID={item.organisation?.uri} className="moveAbove">
                     <span itemprop="name"><DataBadgeLink appearance="subtle" className="orgLink" href={new URL(`../?organisation=${item.organisation?.uri}`, routingObj.url).toString()}>
@@ -154,19 +166,19 @@ const items = error ? null : data;
                     </DataBadgeLink></span>
                   </Paragraph>
                   <div class="header-meta">
-                    <IconBadge 
+                    <RepoIcon url={item.repositoryUrl} name={item.name} className="moveAbove"></RepoIcon>
+                    {/* <IconBadge 
                       className={`moveAbove`} 
                       name={item.lifecycle?.status || 'unknown'} 
                       appearance={getAppearance(item.lifecycle)} 
                       title={t(`components.status-${item.lifecycle?.status}`, {context: getAppearance(item.lifecycle), date: getDate(item.lifecycle)})} 
                       /> 
-                    <div class="version">{t('components.version', {version: item.lifecycle?.version})}</div>
+                    <div class="version">{t('components.version', {version: item.lifecycle?.version})}</div> */}
                   </div>
               </div>
               </HeadingGroup>
               <div slot="description" class="description utrecht-html"><Markdown text={item.description} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
-              <PillBadge startValue={`ADR Score`} endValue={item.adrScore} type="percentage" />
-              {/* <span slot="metadata" class="adr-score-label">{t(`components.adr-score`)}: {item.adrScore}%</span> */}
+              <span slot="metadata" class="last-updated">{t(`components.updated-at`)}: {new Date(item.updatedAt).toLocaleDateString('nl-NL')}</span>
               {/* <ScoreBadge slot="metadata" className="meta" name={`ADR`} score={item.adrScore} max={100} inPercentage /> */}
             </CardAsLink>
           </CardsListItem>
@@ -196,6 +208,7 @@ const items = error ? null : data;
     align-items: center;
     font-size: 1rem;
   }
+
 
   .description {
     word-break: break-word;
