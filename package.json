@@ -12,7 +12,7 @@
   "version": "0.0.1-alpha.1",
   "scripts": {
     "start": "node apps/api-register/dist/server/entry.mjs --host 0.0.0.0 --port 4321",
-    "dev": "pnpm --filter @developer-overheid-nl/api-register dev",
+    "dev": "pnpm --verbose --filter @developer-overheid-nl/api-register dev",
     "build": "pnpm --filter @developer-overheid-nl/api-register build",
     "preview": "pnpm --filter @developer-overheid-nl/api-register preview",
     "astro": "astro",
