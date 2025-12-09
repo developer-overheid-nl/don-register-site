@@ -88,6 +88,8 @@
     --percentage: 0%;
   }
   /*}*/
+
+  /* --_don-pill-badge-end-color: attr(data-color type(<color>), var(--don-pill-badge-end-color));*/
 }
 
 .pill-badge::before {
@@ -125,4 +127,68 @@
     var(--don-pill-badge-end-background-color) var(--percentage),
     var(--don-pill-badge-background-color) var(--percentage)
   );
+}
+
+/* Pre-defined Rijkshuisstijl colors, 
+ * AA contrast checked, most are AAA prove, but not all because of font-size 
+ */
+[data-color="robijnrood"] .pill-badge__end {
+  --don-pill-badge-end-background-color: var(--rhc-color-robijnrood-200);
+}
+[data-color="roze"] .pill-badge__end {
+  --don-pill-badge-end-background-color: var(--rhc-color-roze-300);
+}
+[data-color="rood"] .pill-badge__end {
+  /* Not AAA prove */
+  --don-pill-badge-end-background-color: var(--rhc-color-rood-500);
+  --don-pill-badge-end-color: var(--rhc-color-foreground-on-dark-color);
+  --don-pill-badge-background-color: var(--rhc-color-cool-grey-500);
+}
+[data-color="oranje"] .pill-badge__end {
+  --don-pill-badge-end-background-color: var(--rhc-color-oranje-300);
+}
+[data-color="donkergeel"] .pill-badge__end {
+  --don-pill-badge-end-background-color: var(--rhc-color-donkergeel-400);
+}
+[data-color="geel"] .pill-badge__end {
+  --don-pill-badge-end-background-color: var(--rhc-color-geel-400);
+}
+[data-color="donkergroen"] .pill-badge__end {
+  --don-pill-badge-end-background-color: var(--rhc-color-donkergroen-500);
+  --don-pill-badge-end-color: var(--rhc-color-foreground-on-dark-color);
+  --don-pill-badge-background-color: var(--rhc-color-cool-grey-500);
+}
+[data-color="groen"] .pill-badge__end {
+  --don-pill-badge-end-background-color: var(--rhc-color-groen-300);
+}
+[data-color="mosgroen"] .pill-badge__end {
+  --don-pill-badge-end-background-color: var(--rhc-color-mosgroen-300);
+}
+[data-color="mintgroen"] .pill-badge__end {
+  --don-pill-badge-end-background-color: var(--rhc-color-mintgroen-400);
+}
+[data-color="donkerblauw"] .pill-badge__end {
+  /* Not AAA prove */
+  --don-pill-badge-end-background-color: var(--rhc-color-donkerblauw-500);
+  --don-pill-badge-end-color: var(--rhc-color-foreground-on-dark-color);
+  --don-pill-badge-background-color: var(--rhc-color-cool-grey-500);
+}
+[data-color="hemelblauw"] .pill-badge__end {
+  --don-pill-badge-end-background-color: var(--rhc-color-hemelblauw-200);
+}
+[data-color="paars"] .pill-badge__end {
+  --don-pill-badge-end-background-color: var(--rhc-color-paars-500);
+  --don-pill-badge-end-color: var(--rhc-color-foreground-on-dark-color);
+  --don-pill-badge-background-color: var(--rhc-color-cool-grey-500);
+}
+[data-color="violet"] .pill-badge__end {
+  --don-pill-badge-end-background-color: var(--rhc-color-violet-200);
+}
+[data-color="lichtblauw"] .pill-badge__end {
+  --don-pill-badge-end-background-color: var(--rhc-color-lichtblauw-300);
+}
+[data-color="coolgrey"] .pill-badge__end,
+[data-color="grijs"] .pill-badge__end,
+[data-color="grey"] .pill-badge__end {
+  --don-pill-badge-end-background-color: var(--rhc-color-cool-grey-300);
 }

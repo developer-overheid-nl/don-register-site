@@ -165,7 +165,9 @@ const items = error ? null : data;
               </div>
               </HeadingGroup>
               <div slot="description" class="description utrecht-html"><Markdown text={item.description} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
-              <PillBadge startValue={`ADR Score`} endValue={item.adrScore} type="percentage" />
+              <div slot="metadata" class="meta">
+                <PillBadge startValue={`ADR Score`} endValue={item.adrScore} type="percentage" />
+              </div>
               {/* <span slot="metadata" class="adr-score-label">{t(`components.adr-score`)}: {item.adrScore}%</span> */}
               {/* <ScoreBadge slot="metadata" className="meta" name={`ADR`} score={item.adrScore} max={100} inPercentage /> */}
             </CardAsLink>

@@ -88,7 +88,7 @@ const details = error ? null : data;
     </HeadingGroup>
     <Fragment slot="description">
       <Heading level={3} className="sr-only">{t(`pages.description`)}</Heading>
-      <div class="utrecht-html"><Markdown text={details?.description} minHeadingDepth={4} /></div>
+      <div class="utrecht-html"><Markdown text={details?.longDescription || details?.description} minHeadingDepth={4} /></div>
     </Fragment>
     <Fragment slot="aside">
       <DataSummary appearance="row">
@@ -102,7 +102,7 @@ const details = error ? null : data;
       <Block appearance="outlined">
         <Heading level={5}>{t(`pages.links`)}</Heading>
         <DataSummary appearance="column" contained>
-          <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={details?.repositoryUrl} />
+          <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={details?.url} />
           <DataSummaryItem itemKey={t(`pages.public-code-url`)} itemValue={details?.publicCodeUrl || '-'} />
         </DataSummary>
       </Block>
