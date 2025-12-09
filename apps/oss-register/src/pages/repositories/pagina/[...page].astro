@@ -7,7 +7,9 @@ import {
 } from "astro:env/server";
 import {
   Alert,
+  AlignBox,
   Article,
+  Block,
   CardAsLink,
   CardsList,
   CardsListItem,
@@ -21,6 +23,7 @@ import {
   Markdown,
   Pagination,
   Paragraph,
+  PillBadge,
   ScoreBadge,
   Search,
 } from "@developer-overheid-nl/don-register-components";
@@ -166,20 +169,15 @@ const items = error ? null : data;
                     </DataBadgeLink></span>
                   </Paragraph>
                   <div class="header-meta">
-                    <RepoIcon url={item.repositoryUrl} name={item.name} className="moveAbove"></RepoIcon>
-                    {/* <IconBadge 
-                      className={`moveAbove`} 
-                      name={item.lifecycle?.status || 'unknown'} 
-                      appearance={getAppearance(item.lifecycle)} 
-                      title={t(`components.status-${item.lifecycle?.status}`, {context: getAppearance(item.lifecycle), date: getDate(item.lifecycle)})} 
-                      /> 
-                    <div class="version">{t('components.version', {version: item.lifecycle?.version})}</div> */}
+                    <RepoIcon url={item.url} name={item.name} className="moveAbove"></RepoIcon>
                   </div>
               </div>
               </HeadingGroup>
-              <div slot="description" class="description utrecht-html"><Markdown text={item.description} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
-              <span slot="metadata" class="last-updated">{t(`components.updated-at`)}: {new Date(item.updatedAt).toLocaleDateString('nl-NL')}</span>
-              {/* <ScoreBadge slot="metadata" className="meta" name={`ADR`} score={item.adrScore} max={100} inPercentage /> */}
+              <div slot="description" class="description utrecht-html"><Markdown text={item.shortDescription || item.description} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
+              <AlignBox align="space-between" slot="metadata" className="meta">
+                <PillBadge startValue={`publiccode.yml`} endValue={!item.publicCodeUrl ? "✔" : "NA"} type="color" color={!item.publicCodeUrl ? "mintgroen" : "grijs"} />
+                <span class="last-updated">{t(`components.updated-at`)}: {new Date(item.updatedAt).toLocaleDateString('nl-NL')}</span>
+              </AlignBox>
             </CardAsLink>
           </CardsListItem>
         ))
