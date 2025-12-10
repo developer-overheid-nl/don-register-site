@@ -44,8 +44,6 @@ import type { paths } from "../../../types/api-schema";
 Astro.response.headers.set("Cache-Control", "public, max-age=7200");
 const { page = 1 } = Astro.params;
 
-console.log("page", page);
-
 const APIS_RESOURCE: keyof paths = `/repositories`;
 const ORGS_RESOURCE: keyof paths = `/organisations`;
 const SEARCH_RESOURCE: keyof paths = `/repositories/_search`;
@@ -83,8 +81,6 @@ const {
     return { data: null, error, response: new Response() };
   });
 
-console.log(/*data,*/ error, status, statusText);
-
 const {
   data: filters,
   error: filtersError,
@@ -103,8 +99,6 @@ const {
     console.error(error);
     return { data: null, error, response: new Response() };
   });
-
-console.log(/*data,*/ filtersError, filtersStatus, filtersStatusText);
 
 const paginationObj = parseHeaders(headers);
 const pagination = getPagination(paginationObj, routingObj.url);
@@ -175,7 +169,8 @@ const items = error ? null : data;
               </HeadingGroup>
               <div slot="description" class="description utrecht-html"><Markdown text={item.shortDescription || item.description} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
               <AlignBox align="space-between" slot="metadata" className="meta">
-                <PillBadge startValue={`publiccode.yml`} endValue={!item.publicCodeUrl ? "✔" : "NA"} type="color" color={!item.publicCodeUrl ? "mintgroen" : "grijs"} />
+                {/* TODO: when publicCodeUrl is in the data again, show it again */}
+                {/* <PillBadge startValue={`publiccode.yml`} endValue={item.publicCodeUrl ? "✔" : "NA"} type="color" color={item.publicCodeUrl ? "mintgroen" : "grijs"} /> */}
                 <span class="last-updated">{t(`components.updated-at`)}: {new Date(item.updatedAt).toLocaleDateString('nl-NL')}</span>
               </AlignBox>
             </CardAsLink>

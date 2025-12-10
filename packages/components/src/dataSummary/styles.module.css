@@ -51,7 +51,8 @@
   }
 }
 
-:global(.rhc-data-summary__item-key):empty {
+:global(.rhc-data-summary__item-key):empty,
+:global(.rhc-data-summary__item-value):empty {
   display: none;
 }
 
