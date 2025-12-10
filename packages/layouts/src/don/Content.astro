@@ -17,8 +17,6 @@ type Props = MarkdownLayoutProps<{
 }; // TODO: Define the props type
 
 const { frontmatter } = Astro.props;
-
-console.log("Markdown Layout Props:", frontmatter, appConfig);
 ---
 
 <Base titlePage={frontmatter.title} appConfig={appConfig}>

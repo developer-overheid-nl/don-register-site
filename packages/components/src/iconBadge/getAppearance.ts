@@ -1,7 +1,7 @@
 /* biome-ignore-all lint: TODO: needs a refactor maybe */
 type status = "active" | "deprecated" | "sunset" | "retired";
 
-export function getDate(object?: Partial<Record<status, any>>) {
+export function getDate(object?: Partial<Record<"status" | status, any>>) {
   if (!object) return;
 
   const keys = Object.keys(object);

@@ -40,9 +40,11 @@ import type { paths } from "../../types/api-schema";
 
 Astro.response.headers.set("Cache-Control", "public, max-age=7200");
 const { id = "" } = Astro.params;
-const API_RESOURCE: keyof paths = `/${API_VERSION}/apis/{id}`;
+const API_RESOURCE: keyof paths = `/apis/{id}`;
 
-const client = createClient<paths>({ baseUrl: `${API_URL}/${API_ENDPOINT}` });
+const client = createClient<paths>({
+  baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
+});
 const {
   data,
   error,
@@ -71,8 +73,6 @@ i18n.addResourceBundle(
 i18n.addResources(i18n.language, "translation", i18nPage);
 
 const details = error ? null : data;
-
-// console.log(headers)
 ---
 
 { error && (
@@ -173,7 +173,7 @@ const details = error ? null : data;
         <Heading level={5}>{t(`pages.servers`)}</Heading>
         <DataSummary appearance="column" contained={details.auth ? false : true}>
           {details.servers ? details.servers?.map((server) => (
-            <DataSummaryItem itemKey={server.description} itemValue={server.url} />
+            <DataSummaryItem itemKey={server.description} itemValue={``} href={server.url}>{server.url}</DataSummaryItem>
           )) : <DataSummaryItem itemValue={t('components.no-items-present', { items: 'servers'})} />}
         </DataSummary>
         {details.auth ? (<>

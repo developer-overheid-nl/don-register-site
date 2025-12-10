@@ -8,6 +8,7 @@ export interface PillBadgeProps {
   endValue: string | number | null | undefined;
   caption?: string;
   type?: "color" | "percentage";
+  color?: string; // todo: enum
 }
 
 const PillBadge = (props: PropsWithChildren<PillBadgeProps>) => {
@@ -17,6 +18,7 @@ const PillBadge = (props: PropsWithChildren<PillBadgeProps>) => {
     endValue,
     caption,
     type = "color",
+    color,
     children,
     ...restProps
   } = props;
@@ -32,6 +34,7 @@ const PillBadge = (props: PropsWithChildren<PillBadgeProps>) => {
           type === "percentage" && styles["pill-badge--type-percentage"],
         )}
         data-percentage={type === "percentage" ? endValue : undefined}
+        data-color={color}
       >
         <span className={styles["pill-badge__start"]}>{startValue || "■"}</span>
         <span className={styles["pill-badge__end"]}>
