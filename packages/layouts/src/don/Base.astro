@@ -22,17 +22,19 @@ const {
   titlePage,
 } = Astro.props;
 const { routePattern } = Astro;
-const defaultMatomoUrl = "https://overheid.matomo.cloud/";
-const defaultMatomoScriptUrl =
-  "https://cdn.matomo.cloud/overheid.matomo.cloud/matomo.js";
-const defaultMatomoSiteId = "2";
-const matomoUrl = import.meta.env.PUBLIC_MATOMO_URL || defaultMatomoUrl;
-const matomoScriptUrl =
-  import.meta.env.PUBLIC_MATOMO_SCRIPT_URL || defaultMatomoScriptUrl;
-const matomoSiteId =
-  import.meta.env.PUBLIC_MATOMO_SITE_ID || defaultMatomoSiteId;
-const matomoEnabled = Boolean(matomoUrl && matomoScriptUrl && matomoSiteId);
-const shouldRenderMatomo = matomoEnabled && !import.meta.env.DEV;
+// const defaultMatomoUrl = "https://overheid.matomo.cloud/";
+// const defaultMatomoScriptUrl =
+//   "https://cdn.matomo.cloud/overheid.matomo.cloud/matomo.js";
+// const defaultMatomoSiteId = "2";
+// const matomoUrl = import.meta.env.PUBLIC_MATOMO_URL || defaultMatomoUrl;
+// const matomoScriptUrl =
+//   import.meta.env.PUBLIC_MATOMO_SCRIPT_URL || defaultMatomoScriptUrl;
+// const matomoSiteId =
+//   import.meta.env.PUBLIC_MATOMO_SITE_ID || defaultMatomoSiteId;
+// const matomoEnabled = Boolean(matomoUrl && matomoScriptUrl && matomoSiteId);
+// const shouldRenderMatomo = matomoEnabled && !import.meta.env.DEV;
+const matomoUrl = "", matomoSiteId = "", matomoScriptUrl = "";
+const shouldRenderMatomo = false;
 
 i18next.init({
   // Right now we are using the locales directly, but in the future we can use the i18next-fs-backend to load them from files
