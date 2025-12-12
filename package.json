@@ -51,8 +51,8 @@
   },
   "pnpm": {
     "overrides": {
-      "react": "19.1.2",
-      "react-dom": "19.1.2"
+      "react": "catalog:react19",
+      "react-dom": "catalog:react19"
     }
   }
 }
