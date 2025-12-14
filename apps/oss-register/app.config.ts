@@ -3,7 +3,7 @@ type i18nTranslations = Record<string, string | Record<string, string>>;
 const mainSiteUrl = "https://developer.overheid.nl";
 
 export default {
-  title: "Open Source-register",
+  title: "OSS-register",
   mainSite: {
     name: "developer.overheid.nl",
     url: mainSiteUrl,
@@ -20,7 +20,7 @@ export default {
       components: {
         items_one: "repository",
         items_other: "repositories",
-        "back-to-homepage": "Terug naar het Open Source-registeroverzicht",
+        "back-to-homepage": "Terug naar het OSS-registeroverzicht",
       },
     },
   } as Record<string, i18nTranslations>,
@@ -43,7 +43,7 @@ export default {
       },
       {
         id: "oss",
-        label: "Open Source",
+        label: "Repositories",
         href: "/repositories",
         current: true,
       },
@@ -93,22 +93,34 @@ export default {
 `,
       },
       {
-        title: "Open Source-register",
+        title: "Registers",
         items: [
           {
-            id: "add",
-            label: "Repository toevoegen",
-            href: "/repositories/toevoegen",
+            id: "add-apis",
+            label: "API's toevoegen",
+            href: "https://apis.developer.overheid.nl/apis/toevoegen",
+          },
+          {
+            id: "add-repositories",
+            label: "Repositories toevoegen",
+            href: "https://oss.developer.overheid.nl/repositories/toevoegen",
           },
           {
             id: "statistics",
-            label: "Statistieken",
-            href: "/oss-statistieken",
+            label: "API-statistieken",
+            href: "https://apis.developer.overheid.nl/api-statistieken",
           },
           {
             id: "api-archive",
-            label: "Sitearchief",
-            href: "https://minbzk.sitearchief.nl/?subsite=devoverheidoss",
+            label: "Sitearchief API-register",
+            href: "https://minbzk.sitearchief.nl/?subsite=devoverheidapis",
+            icon: "_external",
+            target: "_blank",
+          },
+          {
+            id: "oss-archive",
+            label: "Sitearchief OSS-register",
+            href: "https://minbzk.sitearchief.nl/?subsite=ossdevoverheid",
             icon: "_external",
             target: "_blank",
           },
