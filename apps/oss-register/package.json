@@ -20,7 +20,9 @@
     "@rijkshuisstijl-community/components-react": "catalog:",
     "astro": "catalog:",
     "i18next": "catalog:",
-    "openapi-fetch": "catalog:"
+    "openapi-fetch": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "catalog:",
