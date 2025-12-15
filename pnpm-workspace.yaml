@@ -13,7 +13,7 @@ catalog:
   '@types/react': 19.1.17
   astro: 5.16.5
   clsx: 2.1.1
-  i18next: 25.7.1
+  i18next: 25.7.3
   openapi-fetch: 0.15.0
   openapi-typescript: 7.10.1
   postcss-custom-media: 11.0.6
