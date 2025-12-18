@@ -171,7 +171,7 @@ const items = error ? null : data;
               <AlignBox align="space-between" slot="metadata" className="meta">
                 {/* TODO: when publicCodeUrl is in the data again, show it again */}
                 {/* <PillBadge startValue={`publiccode.yml`} endValue={item.publicCodeUrl ? "✔" : "NA"} type="color" color={item.publicCodeUrl ? "mintgroen" : "grijs"} /> */}
-                <span class="last-updated">{t(`components.updated-at`)}: {new Date(item.updatedAt).toLocaleDateString('nl-NL')}</span>
+                <span class="last-updated">{t(`components.last-activity-at`)}: {new Date(item.lastActivityAt).toLocaleDateString('nl-NL')}</span>
               </AlignBox>
             </CardAsLink>
           </CardsListItem>
