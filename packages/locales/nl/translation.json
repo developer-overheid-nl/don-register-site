@@ -40,6 +40,8 @@
     "page-and-results-range": "Pagina {{label}}: $t(components.results-range)",
     "created-at": "Aangemaakt op",
     "updated-at": "Laatst bijgewerkt op",
+    "last-crawled-at": "Laatst gecrawld op",
+    "last-activity-at": "Laatste activiteit op",
     "adr-score": "ADR Score",
     "open-in": "Open in",
     "download-as": "Download als",
