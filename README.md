@@ -98,12 +98,19 @@ graph LR
 - OpenAPI TypeScript: Type declarations & fetch
 - RijkshuisstijlCommunity: React Components
 - Biome: formatting, linting and assist
+- Changesets, manage versioning and changelogs
 
 ## Formatting and Linting
 
 Deze repository maakt gebruik van [Biome] voor formatting en linting. Download de VSCode extensie: [![Install Biome in VS Code](https://img.shields.io/badge/Install%20Biome-in%20VS%20Code-007ACC?style=flat&logo=biome)](vscode:extension/biomejs.biome)  
 Als code styleguide kijken we naar de default settings en de [Google Style Guides](https://google.github.io/styleguide/) voor inspiratie.
 Voor Astro-bestanden zijn een aantal features uitgezet om false positives te voorkomen.
+
+## Versionering en Changelogs
+
+Voor de publieke packages wordt gebruik gemaakt van [Changesets](https://changesets-docs.vercel.app/) voor het bijhouden van versies en changelogs.  
+Versienummering volgt [SemVer](https://semver.org/), waarbij ook bij mogelijke (visuele) brekende wijzigingen een major-versie wordt uitgebracht.  
+Zie ook de [README](/.changeset/README.md) in de `.changeset`-map hoe het werkt en de [CHANGELOG](CHANGELOG.md) van de packages.
 
 ## Contact
 
