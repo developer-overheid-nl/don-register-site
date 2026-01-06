@@ -22,8 +22,8 @@ catalogs:
       specifier: 7.0.0
       version: 7.0.0
     '@rijkshuisstijl-community/design-tokens':
-      specifier: 8.0.0
-      version: 8.0.0
+      specifier: 11.0.0
+      version: 11.0.0
     '@types/react':
       specifier: 19.1.17
       version: 19.1.17
@@ -216,7 +216,7 @@ importers:
         version: 7.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.4)(react-dom@19.1.4(react@19.1.4))(react@19.1.4)
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
-        version: 8.0.0
+        version: 11.0.0
       '@types/parse-link-header':
         specifier: ^2.0.3
         version: 2.0.3
@@ -270,7 +270,7 @@ importers:
         version: 7.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.4)(react-dom@19.1.4(react@19.1.4))(react@19.1.4)
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
-        version: 8.0.0
+        version: 11.0.0
       '@types/parse-link-header':
         specifier: ^2.0.3
         version: 2.0.3
@@ -886,8 +886,8 @@ packages:
       react: 19.1.4
       react-dom: 19.1.4
 
-  '@rijkshuisstijl-community/design-tokens@8.0.0':
-    resolution: {integrity: sha512-yZHZ0/KKmyGjjBz6vZO1bP+/KdTpcylC5FuAASiZwCBMuqIbyqSRVjR6hikPJhySsRon9dphRhuXV5d0T4FB0A==}
+  '@rijkshuisstijl-community/design-tokens@11.0.0':
+    resolution: {integrity: sha512-tYlzF+FCHEHVy80W89HRBU0UVlgqsUp8IwdXT9BwiiQvvLDkZN5d2ZRA7UrMB0X4NXmp9zfcsSLG9Zw8b/Ev7w==}
 
   '@rolldown/pluginutils@1.0.0-beta.27':
     resolution: {integrity: sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA==}
@@ -3306,7 +3306,7 @@ snapshots:
       - '@amsterdam/design-system-css'
       - '@babel/runtime'
 
-  '@rijkshuisstijl-community/design-tokens@8.0.0': {}
+  '@rijkshuisstijl-community/design-tokens@11.0.0': {}
 
   '@rolldown/pluginutils@1.0.0-beta.27': {}
 
