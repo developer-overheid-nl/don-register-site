@@ -6,7 +6,7 @@
   "private": true,
   "engines": {
     "node": ">=22",
-    "pnpm": ">=9"
+    "pnpm": ">=10"
   },
   "type": "module",
   "version": "0.0.1-beta.1",
@@ -50,6 +50,7 @@
     "openapi-typescript": "catalog:",
     "vite": "catalog:"
   },
+  "packageManager": "pnpm@10.27.0",
   "pnpm": {
     "overrides": {
       "react": "catalog:react19",
