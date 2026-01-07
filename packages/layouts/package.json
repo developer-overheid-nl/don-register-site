@@ -26,6 +26,7 @@
     "@rijkshuisstijl-community/components-css": "catalog:",
     "@rijkshuisstijl-community/components-react": "catalog:",
     "@rijkshuisstijl-community/design-tokens": "catalog:",
+    "@utrecht/component-library-css": "catalog:",
     "i18next": "catalog:",
     "parse-link-header": "2.0.0",
     "typescript": "catalog:"
