@@ -1,9 +1,9 @@
 import {
   Heading,
   type HeadingProps,
-  type HeadingGroupProps as RHCHeadingGroupProps,
   Paragraph,
   HeadingGroup as RHCHeadingGroup,
+  type HeadingGroupProps as RHCHeadingGroupProps,
 } from "@rijkshuisstijl-community/components-react";
 import clsx from "clsx";
 import type { HTMLProps, PropsWithChildren, ReactNode } from "react";
