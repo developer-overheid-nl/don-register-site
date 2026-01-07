@@ -9,7 +9,7 @@
     "pnpm": ">=9"
   },
   "type": "module",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-beta.1",
   "scripts": {
     "start": "pnpm run start:api",
     "dev": "pnpm run /^dev:.*/ --parallel",
@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.11",
+    "@changesets/cli": "2.29.8",
     "openapi-typescript": "catalog:",
     "vite": "catalog:"
   },
