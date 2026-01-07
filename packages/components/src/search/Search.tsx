@@ -31,7 +31,6 @@ const Search = (props: SearchProps) => {
       </Heading>
       <form action={searchUrl} method="GET" className={styles.form}>
         <FormFieldTextInput
-          /* @ts-expect-error className not exposed */
           className={styles.input}
           aria-describedby="search-help"
           label={t("components.search-label")}

@@ -42,7 +42,7 @@ const Filters = (props: PropsWithChildren<FiltersProps>) => {
   const organisations = data && !data.message ? data : [];
   const currentOrganisation =
     organisations &&
-    organisations.find((org) => org?.uri === routing?.query?.organisation);
+    organisations.find((org: any) => org?.uri === routing?.query?.organisation);
 
   return (
     <div className={clsx([styles.filters, className])}>
@@ -71,11 +71,11 @@ const Filters = (props: PropsWithChildren<FiltersProps>) => {
       </Heading>
       <LinkList>
         {organisations &&
-          organisations.map((organisation) => (
+          organisations.map((organisation: any) => (
             <LinkListLink
               className={clsx([
                 organisation.uri === routing?.query?.organisation &&
-                  styles.active,
+                styles.active,
               ])}
               key={organisation.uri}
               href={new URL(
