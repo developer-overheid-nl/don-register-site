@@ -14,7 +14,7 @@ catalog:
   '@utrecht/component-library-css': 9.0.0
   astro: 5.16.6
   clsx: 2.1.1
-  i18next: 25.7.3
+  i18next: 25.7.4
   openapi-fetch: 0.15.0
   openapi-typescript: 7.10.1
   postcss-custom-media: 11.0.6
