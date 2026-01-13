@@ -6,6 +6,10 @@
   "private": false,
   "type": "module",
   "version": "0.0.1-beta.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/developer-overheid-nl/don-register-site"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
