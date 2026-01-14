@@ -1,6 +1,7 @@
 packages:
-  - 'packages/*'
-  - 'apps/*'
+  - apps/*
+  - packages/*
+  - proprietary
 
 catalog:
   '@astrojs/node': 9.5.1
@@ -9,8 +10,8 @@ catalog:
   '@rijkshuisstijl-community/components-css': 11.0.0
   '@rijkshuisstijl-community/components-react': 10.0.0
   '@rijkshuisstijl-community/design-tokens': 11.0.0
-  '@types/react-dom': 19.1.11
   '@types/react': 19.1.17
+  '@types/react-dom': 19.1.11
   '@utrecht/component-library-css': 9.0.0
   astro: 5.16.6
   clsx: 2.1.1
@@ -18,20 +19,20 @@ catalog:
   openapi-fetch: 0.15.0
   openapi-typescript: 7.10.1
   postcss-custom-media: 11.0.6
+  react: 19.2.3
   react-dom: 19.2.3
   react-markdown: 10.1.0
-  react: 19.2.3
   typescript: 5.9.3
   vite: 7.3.0
 
-catalogs: 
-  react18: 
-    react: '18.2.0 <19.0.0'
-    react-dom: '18.2.0 <19.0.0'
+catalogs:
+  react18:
     '@types/react': '>=18 <19'
     '@types/react-dom': '>=18 <19'
-  react19: 
-    react: '19.2.3'
-    react-dom: '19.2.3'
+    react: 18.2.0 <19.0.0
+    react-dom: 18.2.0 <19.0.0
+  react19:
     '@types/react': '>=19.2 <19.3'
     '@types/react-dom': '>=19.2 <19.3'
+    react: 19.2.3
+    react-dom: 19.2.3

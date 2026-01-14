@@ -1,8 +1,8 @@
+import { Lint } from "@developer-overheid-nl/proprietary";
 import {
   Heading /*, Link */,
 } from "@rijkshuisstijl-community/components-react";
 import { I18nextProvider, useTranslation } from "react-i18next";
-import { Lint } from "../../../../proprietary";
 import i18n from "../i18n";
 import SiteLogo from "../siteLogo/SiteLogo";
 import styles from "./styles.module.css";
@@ -33,10 +33,10 @@ interface LogoNavProps {
    * Note: translation keys: `components.back-to-homepage-landmark`, ...
    */
   logoLinkBehaviour?:
-    | "no-link"
-    | "site-home"
-    | "main-site"
-    | "main-site-on-home";
+  | "no-link"
+  | "site-home"
+  | "main-site"
+  | "main-site-on-home";
 }
 
 function LogoNav(props: LogoNavProps) {
@@ -67,8 +67,8 @@ function LogoNav(props: LogoNavProps) {
       href = isRoot ? mainSite.url : urlHomepage[0] || "/";
       landmark = isRoot
         ? t("components.back-to-main-site-landmark", {
-            siteName: mainSite.name,
-          })
+          siteName: mainSite.name,
+        })
         : t("components.back-to-homepage-landmark");
       title = isRoot
         ? t("components.back-to-main-site", { siteName: mainSite.name })

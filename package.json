@@ -57,7 +57,8 @@
   "pnpm": {
     "overrides": {
       "react": "catalog:react19",
-      "react-dom": "catalog:react19"
+      "react-dom": "catalog:react19",
+      "@utrecht/button-group-css": "2.0.1"
     },
     "ignoredBuiltDependencies": [
       "sharp"

@@ -1,5 +1,5 @@
+import { Logo } from "@developer-overheid-nl/proprietary";
 import type { JSX } from "react";
-import { Logo } from "../../../../proprietary";
 
 export default function SiteLogo({
   isRoot,
