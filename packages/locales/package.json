@@ -14,9 +14,21 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      "./nl": {
+        "import": "./nl/translation.json",
+        "require": "./nl/translation.json"
+      }
+    }
+  },
   "exports": {
     "./nl": "./nl/translation.json"
   },
+  "files": [
+    "nl/"
+  ],
   "dependencies": {
     "i18next": "catalog:"
   },
