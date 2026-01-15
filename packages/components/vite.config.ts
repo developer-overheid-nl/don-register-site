@@ -19,7 +19,14 @@ export default defineConfig({
       // fileName: "components",
       cssFileName: "styles",
     },
+    ssr: 'src/index.ts',
+    ssrEmitAssets: true,
     rollupOptions: {
+      // input: {
+      //   index: resolve(__dirname, "src/index.ts"),
+      //   client: resolve(__dirname, "src/client.ts"),
+      //   i18n: resolve(__dirname, "src/i18n.ts"),
+      // },
       external: [
         "react",
       ],

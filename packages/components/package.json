@@ -28,7 +28,8 @@
       "./i18n": {
         "import": "./dist/i18n.js",
         "require": "./dist/i18n.cjs"
-      }
+      },
+      "./styles.css": "./dist/styles.css"
     }
   },
   "exports": {
