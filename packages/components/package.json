@@ -5,7 +5,7 @@
   "license": "EUPL-1.2",
   "private": false,
   "type": "module",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1-beta.2",
   "scripts": {
     "prebuild": "npm run clean",
     "prepack": "npm run build",
