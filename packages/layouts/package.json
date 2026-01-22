@@ -15,19 +15,16 @@
   },
   "keywords": [],
   "publishConfig": {
-    "exports": {
-      ".": {
-        "import": "./dist/index.js",
-        "require": "./dist/index.js"
-      }
-    }
+    "access": "public"
   },
   "exports": "./src/index.ts",
   "main": "./src/index.ts",
+  "files": [
+    "src/"
+  ],
   "dependencies": {
     "@developer-overheid-nl/don-register-components": "workspace:*",
     "@developer-overheid-nl/don-register-locales": "workspace:*",
-    "@developer-overheid-nl/proprietary": "workspace:@developer-overheid-nl/proprietary-example@*",
     "@rijkshuisstijl-community/components-css": "catalog:",
     "@rijkshuisstijl-community/components-react": "catalog:",
     "@rijkshuisstijl-community/design-tokens": "catalog:",

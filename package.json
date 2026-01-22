@@ -38,6 +38,7 @@
     "@astrojs/react": "catalog:",
     "@developer-overheid-nl/don-register-components": "workspace:*",
     "@developer-overheid-nl/don-register-layouts": "workspace:*",
+    "@developer-overheid-nl/proprietary": "workspace:@developer-overheid-nl/proprietary-example@*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "astro": "catalog:",
