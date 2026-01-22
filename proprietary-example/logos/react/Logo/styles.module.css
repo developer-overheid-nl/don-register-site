@@ -1,0 +1,30 @@
+:global(.site-logo) {
+  text-decoration: none;
+}
+
+.logo {
+  display: grid;
+  width: max-content;
+  color: #154273;
+  font-size: x-large;
+  font-weight: bold;
+
+  &.forced-dark {
+    outline: 0.25rem solid #000000;
+    background-color: #000000;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo:not(.forced-light) {
+    color: #ffffff;
+  }
+}
+
+@media (forced-colors: active) {
+  color: #000000;
+}
+
+@media (forced-colors: active) and (prefers-color-scheme: dark) {
+  color: #ffffff;
+}

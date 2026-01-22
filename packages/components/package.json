@@ -43,7 +43,7 @@
   ],
   "dependencies": {
     "@developer-overheid-nl/don-register-locales": "workspace:*",
-    "@developer-overheid-nl/proprietary": "workspace:*",
+    "@developer-overheid-nl/proprietary": "workspace:@developer-overheid-nl/proprietary-example@*",
     "@rijkshuisstijl-community/components-css": "catalog:",
     "@rijkshuisstijl-community/components-react": "catalog:",
     "@rijkshuisstijl-community/design-tokens": "catalog:",
