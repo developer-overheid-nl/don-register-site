@@ -115,4 +115,7 @@
     // "../../proprietary",
     "../../types",
   ],
+  "ts-node": {
+    "esm": true
+  }
 }
