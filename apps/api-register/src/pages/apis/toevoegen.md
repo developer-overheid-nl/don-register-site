@@ -7,6 +7,7 @@ title: API's toevoegen
 
 Het API-register maakt API's van overheidsorganisaties vindbaar, bruikbaar en duurzaam toegankelijk. Het toevoegen en bijwerken van API's verloopt uitsluitend via de **API van het register**.
 Hiervoor zijn schrijfrechten nodig, die alleen verstrekt worden aan zogenaamde *trusted clients*. Dit zijn clients die bekend zijn bij ons en alleen (semi-)overheidsorganisaties komen hiervoor in aanmerking.
+Met deze credentials heb je ook toegang tot de API van het [OSS-register](https://oss.developer.overheid.nl/repositories/toevoegen).
 
 ### Schrijfrechten aanvragen
 
