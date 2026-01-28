@@ -5,32 +5,15 @@
   "license": "EUPL-1.2",
   "private": false,
   "type": "module",
-  "version": "0.0.1-beta.3",
+  "version": "0.0.1-beta.5",
   "scripts": {
     "prebuild": "npm run clean",
-    "prepack": "npm run build",
-    "build": "tsc -b && vite build",
     "clean": "rimraf dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "publishConfig": {
-    "access": "public",
-    "exports": {
-      ".": {
-        "import": "./dist/index.js",
-        "require": "./dist/index.cjs"
-      },
-      "./client": {
-        "import": "./dist/client.js",
-        "require": "./dist/client.cjs"
-      },
-      "./i18n": {
-        "import": "./dist/i18n.js",
-        "require": "./dist/i18n.cjs"
-      },
-      "./styles.css": "./dist/styles.css"
-    }
+    "access": "public"
   },
   "exports": {
     ".": "./src/index.ts",
@@ -39,7 +22,7 @@
   },
   "main": "./src/index.ts",
   "files": [
-    "dist/"
+    "src/"
   ],
   "dependencies": {
     "@developer-overheid-nl/don-register-locales": "workspace:*",
