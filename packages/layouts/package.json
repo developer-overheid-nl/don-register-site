@@ -5,7 +5,7 @@
   "license": "EUPL-1.2",
   "private": false,
   "type": "module",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1-beta.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/developer-overheid-nl/don-register-site"
@@ -20,7 +20,8 @@
   "exports": "./src/index.ts",
   "main": "./src/index.ts",
   "files": [
-    "src/"
+    "src/",
+    "tsconfig.json"
   ],
   "dependencies": {
     "@developer-overheid-nl/don-register-components": "workspace:*",
