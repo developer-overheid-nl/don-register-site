@@ -1,6 +1,6 @@
 ---
 layout: "../../layouts/Markdown.astro"
-title: API's toevoegen
+title: Repositories toevoegen
 ---
 
 ## Repositories toevoegen aan het OSS-register
