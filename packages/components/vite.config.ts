@@ -19,7 +19,7 @@ export default defineConfig({
       // fileName: "components",
       cssFileName: "styles",
     },
-    ssr: 'src/index.ts',
+    ssr: "src/index.ts",
     ssrEmitAssets: true,
     rollupOptions: {
       // input: {

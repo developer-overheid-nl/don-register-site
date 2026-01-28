@@ -5,9 +5,9 @@
 .logo {
   display: grid;
   width: max-content;
-  color: #154273;
   font-size: x-large;
   font-weight: bold;
+  color: #154273;
 
   &.forced-dark {
     outline: 0.25rem solid #000000;

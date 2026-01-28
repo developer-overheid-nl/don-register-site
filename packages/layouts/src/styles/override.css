@@ -1,5 +1,7 @@
 :root {
-  --rhc-font-family-primary: 'RijksoverheidSansWeb', 'Fira Sans', 'Arial Adjusted', 'Verdana Adjusted', sans-serif;
+  --rhc-font-family-primary:
+    'RijksoverheidSansWeb', 'Fira Sans', 'Arial Adjusted', 'Verdana Adjusted',
+    sans-serif;
   --rhc-font-size-xl-mobile: 2.5rem;
   --rhc-font-size-xl-tablet: 2.5rem;
   --rhc-font-size-xl-desktop: 2.5rem;
