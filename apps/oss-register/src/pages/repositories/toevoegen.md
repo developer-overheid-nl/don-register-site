@@ -17,7 +17,7 @@ Stuur een mail naar [developer.overheid@geonovum.nl](mailto:developer.overheid@g
 
 Om repositories toe te voegen stuur je onderstaande informatie middels een `POST`-request naar onze API:
 
-- `organisationUri`:  De identifier van de organisatie waaronder de repositories vallen
+- `organisationUri`: De identifier van de organisatie waaronder de repositories vallen
 - `url`: Een link naar de git organisatie/group waaronder de repositories vallen (bijvoorbeeld `https://github.com/developer-overheid-nl`)
 
 Bekijk voor de technische werking van de API onze API-documentatie: <https://apis.developer.overheid.nl/apis/kIDmDnHvg>
