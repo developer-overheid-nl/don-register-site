@@ -16,6 +16,7 @@ COPY pnpm-workspace.yaml ./
 COPY pnpm-lock.yaml ./
 COPY package.json ./
 COPY apps/api-register/package.json ./apps/api-register/
+COPY apps/oss-register/package.json ./apps/oss-register/
 COPY packages/components/package.json ./packages/components/
 COPY packages/layouts/package.json ./packages/layouts/
 
@@ -29,20 +30,32 @@ WORKDIR /opt/astro
 COPY . .
 COPY --from=deps /opt/astro/node_modules ./node_modules
 COPY --from=deps /opt/astro/apps/api-register/node_modules ./apps/api-register/node_modules
+COPY --from=deps /opt/astro/apps/oss-register/node_modules ./apps/oss-register/node_modules
 COPY --from=deps /opt/astro/packages/components/node_modules ./packages/components/node_modules
 COPY --from=deps /opt/astro/packages/layouts/node_modules ./packages/layouts/node_modules
 
-RUN pnpm --filter @developer-overheid-nl/api-register build
+RUN pnpm --filter @developer-overheid-nl/api-register build && \
+    pnpm --filter @developer-overheid-nl/oss-register build
 
-# ---- Runtime container ----
-FROM node:lts-alpine AS runtime
+# ---- Runtime containers ----
+FROM node:lts-alpine AS runtime-base
 
 WORKDIR /opt/astro
 
 COPY --from=deps /opt/astro/node_modules ./node_modules
-COPY --from=build /opt/astro/apps/api-register/dist ./apps/api-register/dist
-COPY --from=deps /opt/astro/apps/api-register/node_modules ./apps/api-register/node_modules
 
 EXPOSE 4321
 
+FROM runtime-base AS runtime-api
+
+COPY --from=build /opt/astro/apps/api-register/dist ./apps/api-register/dist
+COPY --from=deps /opt/astro/apps/api-register/node_modules ./apps/api-register/node_modules
+
 CMD ["node", "./apps/api-register/dist/server/entry.mjs", "--host", "0.0.0.0", "--port", "4321"]
+
+FROM runtime-base AS runtime-oss
+
+COPY --from=build /opt/astro/apps/oss-register/dist ./apps/oss-register/dist
+COPY --from=deps /opt/astro/apps/oss-register/node_modules ./apps/oss-register/node_modules
+
+CMD ["node", "./apps/oss-register/dist/server/entry.mjs", "--host", "0.0.0.0", "--port", "4321"]

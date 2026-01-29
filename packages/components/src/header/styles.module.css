@@ -63,7 +63,6 @@
   text-decoration-line: underline;
   /* first skip-ink needed for Chromium browsers, otherwise .nl-link `none` is used */
   text-decoration-skip-ink: auto;
-  /* biome-ignore lint/suspicious/noDuplicateProperties: this duplication is needed */
   text-decoration-skip-ink: all; /* bugged in Chromium */
 
   .icon {

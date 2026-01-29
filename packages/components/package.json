@@ -3,9 +3,9 @@
   "author": "developer.overheid.nl",
   "description": "The components for the API- and OSS registers",
   "license": "EUPL-1.2",
-  "private": true,
+  "private": false,
   "type": "module",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-beta.1",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -38,7 +38,7 @@
     "clsx": "catalog:",
     "i18next": "catalog:",
     "parse-link-header": "^2.0.0",
-    "react-i18next": "16.2.1",
+    "react-i18next": "16.5.1",
     "react-markdown": "catalog:",
     "remark-behead": "^3.1.0",
     "typescript": "catalog:"

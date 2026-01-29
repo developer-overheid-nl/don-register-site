@@ -20,6 +20,8 @@ export interface FiltersProps extends HTMLProps<HTMLDivElement> {
   data: any;
   headers: any;
   error: any;
+  status?: number;
+  statusText?: string;
 }
 
 const ListLinkIcon = ({ isActive }: { isActive: boolean }) => {
@@ -35,22 +37,15 @@ const ListLinkIcon = ({ isActive }: { isActive: boolean }) => {
 
 const Filters = (props: PropsWithChildren<FiltersProps>) => {
   const { t } = useTranslation();
-  const { data, headers, error, className, routing } = props;
+  const { data, headers, error, status, statusText, className, routing } =
+    props;
   const organisations = data && !data.message ? data : [];
   const currentOrganisation =
     organisations &&
-    organisations.find((org) => org?.uri === routing?.query?.organisation);
+    organisations.find((org: any) => org?.uri === routing?.query?.organisation);
 
   return (
     <div className={clsx([styles.filters, className])}>
-      {error && (
-        <Alert type="error">
-          {(error as unknown as any).message ||
-            (error as unknown as any).error_msg ||
-            t("components.fuzz-error")}
-        </Alert>
-      )}
-
       {currentOrganisation && (
         <div
           className={clsx("utrecht-badge-list", styles.currentFilter)}
@@ -76,7 +71,7 @@ const Filters = (props: PropsWithChildren<FiltersProps>) => {
       </Heading>
       <LinkList>
         {organisations &&
-          organisations.map((organisation) => (
+          organisations.map((organisation: any) => (
             <LinkListLink
               className={clsx([
                 organisation.uri === routing?.query?.organisation &&
@@ -97,6 +92,15 @@ const Filters = (props: PropsWithChildren<FiltersProps>) => {
             </LinkListLink>
           ))}
       </LinkList>
+
+      {error && (
+        <Alert type="error">
+          {(error as unknown as any).message ||
+            (error as unknown as any).error_msg ||
+            `${status}: ${statusText}` ||
+            t("components.fuzz-error")}
+        </Alert>
+      )}
     </div>
   );
 };

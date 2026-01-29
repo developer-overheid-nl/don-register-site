@@ -17,6 +17,19 @@
   --rhc-font-size-xs-desktop: 1rem;
   --rhc-font-size-body-default: 1rem;
   --rhc-font-size-body-intro: 1.25rem;
+
+  --rhc-text-font-size-max-md: 1rem;
+  --rhc-text-font-size-max-lg: 1.25rem;
+  --rhc-text-font-size-max-xl: 1.5rem;
+  --rhc-text-font-size-max-2xl: 2rem;
+  --rhc-text-font-size-max-3xl: 2.5rem;
+  --rhc-text-font-size-min-md: 1rem;
+  --rhc-text-font-size-min-lg: 1.25rem;
+  --rhc-text-font-size-min-xl: 1.5rem;
+  --rhc-text-font-size-min-2xl: 2rem;
+  --rhc-text-font-size-min-3xl: 2.5rem;
+  --rhc-text-font-family-default: var(--rhc-font-family-primary);
+
   --rhc-font-size-heading-level-5: 1.25rem;
   --rhc-font-size-heading-level-4: 1.5rem;
   --rhc-font-size-heading-level-3: 1.75rem;
@@ -54,6 +67,7 @@
   --utrecht-paragraph-font-size: var(--nl-paragraph-font-size);
   --utrecht-ordered-list-font-size: var(--nl-paragraph-font-size);
   --utrecht-unordered-list-font-size: var(--nl-paragraph-font-size);
+  --utrecht-link-list-link-font-weight: inherit;
   --utrecht-alert-icon-inset-block-start: 0;
   --utrecht-link-hover-text-decoration-thickness: 1px;
   --utrecht-badge-list-column-gap: 0.25rem;

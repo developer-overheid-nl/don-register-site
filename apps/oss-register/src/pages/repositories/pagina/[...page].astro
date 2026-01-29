@@ -1,0 +1,225 @@
+---
+import {
+  API_ENDPOINT,
+  API_URL,
+  API_VERSION,
+  API_X_API_KEY,
+} from "astro:env/server";
+import {
+  Alert,
+  AlignBox,
+  Article,
+  Block,
+  CardAsLink,
+  CardsList,
+  CardsListItem,
+  DataBadgeLink,
+  Filters,
+  getAppearance,
+  getDate,
+  Heading,
+  HeadingGroup,
+  IconBadge,
+  Markdown,
+  Pagination,
+  Paragraph,
+  PillBadge,
+  ScoreBadge,
+  Search,
+} from "@developer-overheid-nl/don-register-components";
+import i18n from "@developer-overheid-nl/don-register-components/i18n";
+import {
+  DonOverview,
+  getPagination,
+  getRouting,
+  parseHeaders,
+} from "@developer-overheid-nl/don-register-layouts";
+import { t } from "i18next";
+import createClient from "openapi-fetch";
+import appConfig from "../../../../app.config";
+import RepoIcon from "../../../components/RepoIcon.astro";
+import { Content as Intro } from "../../../partials/intro.md";
+import type { paths } from "../../../types/api-schema";
+
+Astro.response.headers.set("Cache-Control", "public, max-age=7200");
+const { page = 1 } = Astro.params;
+
+const APIS_RESOURCE: keyof paths = `/repositories`;
+const ORGS_RESOURCE: keyof paths = `/organisations`;
+const SEARCH_RESOURCE: keyof paths = `/repositories/_search`;
+const SEARCH_QUERY_KEY = "q";
+
+const routingObj = getRouting(
+  Astro.url,
+  Astro.originPathname,
+  Astro.routePattern,
+  Astro.params,
+);
+
+const client = createClient<paths>({
+  baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
+});
+
+const {
+  data,
+  error,
+  response: { status, statusText, headers },
+} = await client
+  .GET(routingObj.query[SEARCH_QUERY_KEY] ? SEARCH_RESOURCE : APIS_RESOURCE, {
+    params: {
+      query: {
+        page: Number(page),
+        ...routingObj.query,
+      },
+    },
+    headers: {
+      "x-api-key": API_X_API_KEY,
+    },
+  })
+  .catch((error) => {
+    console.error(error);
+    return { data: null, error, response: new Response() };
+  });
+
+const {
+  data: filters,
+  error: filtersError,
+  response: {
+    status: filtersStatus,
+    statusText: filtersStatusText,
+    headers: filtersHeaders,
+  },
+} = await client
+  .GET(ORGS_RESOURCE, {
+    headers: {
+      "x-api-key": API_X_API_KEY,
+    },
+  })
+  .catch((error) => {
+    console.error(error);
+    return { data: null, error, response: new Response() };
+  });
+
+const paginationObj = parseHeaders(headers);
+const pagination = getPagination(paginationObj, routingObj.url);
+
+const outOfBounds = Boolean(
+  paginationObj.totalPages && Number(page) > paginationObj.totalPages,
+);
+
+const { i18n: i18nApp } = appConfig;
+i18n.addResourceBundle(
+  i18n.language,
+  "translation",
+  i18nApp ? i18nApp[i18n.language] : {},
+  true,
+  true,
+);
+
+const i18nContext =
+  routingObj.query && Object.keys(routingObj.query).length > 0
+    ? "filtered"
+    : "all";
+
+const items = error ? null : data;
+---
+
+<DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
+  <Article className="markdown-content utrecht-html" slot="header"><Intro /></Article>
+  <Search slot="search" searchUrl={new URL(`/repositories/zoeken`, routingObj?.url).toString()} searchKey={SEARCH_QUERY_KEY} searchTerm={routingObj.query[SEARCH_QUERY_KEY]}></Search>
+  <Filters slot="filters" routing={routingObj} data={filters} headers={filtersHeaders} error={filtersError} status={filtersStatus} statusText={filtersStatusText} />
+
+  <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2}>
+    <Paragraph role="status">{t('components.search-results-amount', {context: i18nContext, amount: paginationObj.totalCount})}</Paragraph>
+  </HeadingGroup>
+
+  { error && (
+    <Alert type="error">{(error as unknown as any).message || (error as unknown as any).error_msg || `${status}: ${statusText}` || t('components.fuzz-error')}</Alert>
+  )}
+
+  { outOfBounds && (
+    <Alert type="warning">
+      <Heading level={2} appearanceLevel={5}>{t('components.fuzz-error')}</Heading>
+      {t('components.pagination-out-of-bounds', {page: page, count: paginationObj.totalPages})}
+    </Alert>
+  )}
+
+<!-- <pre style="white-space: pre-wrap;">{JSON.stringify(items)}</pre> -->
+
+  { items && items.length > 0 ? (
+    <CardsList>
+      {
+        items.map((item, index, array) => (
+          <CardsListItem index={index} setsize={array.length}>
+            <CardAsLink
+              href={new URL(`../${item.id}`, routingObj?.url).toString()}
+              linkLabel={t('components.view-details')}
+            >
+              <HeadingGroup slot="heading" title={item.name || '🗄️'} level={2} appearanceLevel={4}>
+                <div class="subtitle" slot="subTitle">
+                  <Paragraph slot="subTitle" itemScope={true} itemType="https://schema.org/Organization" itemID={item.organisation?.uri} className="moveAbove">
+                    <span itemprop="name"><DataBadgeLink appearance="subtle" className="orgLink" href={new URL(`../?organisation=${item.organisation?.uri}`, routingObj.url).toString()}>
+                      {item.organisation?.label}
+                    </DataBadgeLink></span>
+                  </Paragraph>
+                  <div class="header-meta">
+                    <RepoIcon url={item.url} name={item.name} className="moveAbove"></RepoIcon>
+                  </div>
+              </div>
+              </HeadingGroup>
+              <div slot="description" class="description utrecht-html"><Markdown text={item.shortDescription || item.description} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
+              <AlignBox align="space-between" slot="metadata" className="meta">
+                {/* TODO: when publicCodeUrl is in the data again, show it again */}
+                {/* <PillBadge startValue={`publiccode.yml`} endValue={item.publicCodeUrl ? "✔" : "NA"} type="color" color={item.publicCodeUrl ? "mintgroen" : "grijs"} /> */}
+                <span class="last-updated">{t(`components.last-activity-at`)}: {new Date(item.lastActivityAt).toLocaleDateString('nl-NL')}</span>
+              </AlignBox>
+            </CardAsLink>
+          </CardsListItem>
+        ))
+      }
+    </CardsList>
+  ) : 
+  ( 
+    <Alert type="warning">{t('components.no-items-found')}</Alert> 
+  )}
+  <Pagination slot="pagination" {...pagination} />
+</DonOverview>
+
+<style>
+  .heading-results {
+    padding-inline-start: calc(var(--rhc-card-as-link-border-width, 1px) + var(--rhc-card-as-link-padding-inline-start, 16px));
+  }
+
+  .subtitle {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .header-meta {
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+  }
+
+
+  .description {
+    word-break: break-word;
+    
+    a:hover {
+      text-decoration-line: none;
+    }
+  }
+
+  .meta {
+    place-content: center;
+  }
+
+  .version {
+    text-decoration: none;
+  }
+
+  .orgLink {
+    font-size: 0.875rem;
+  }
+</style>

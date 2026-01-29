@@ -38,11 +38,16 @@
     "results-range_one": "Resultaat {{range.0}}",
     "results-range_other": "Resultaten {{range.0}} tot en met {{range.1}}",
     "page-and-results-range": "Pagina {{label}}: $t(components.results-range)",
+    "created-at": "Aangemaakt op",
+    "updated-at": "Laatst bijgewerkt op",
+    "last-crawled-at": "Laatst gecrawld op",
+    "last-activity-at": "Laatste activiteit op",
     "adr-score": "ADR Score",
     "open-in": "Open in",
     "download-as": "Download als",
     "read-documentation-at": "Lees de documentatie op",
     "copy-to-clipboard": "Kopieer naar klembord",
+    "goto-name-on-site": "Ga naar {{name}} op {{site}}",
     "no-items-present": "Geen {{items}} gedefinieerd",
     "item-not-found-error": "$t(components.items, {\"count\": 1 }) niet gevonden. Controleer of het ID correct is en probeer het opnieuw. Als het probleem zich blijft voordoen, neem dan contact op met de beheerder van het register.",
     "fuzz-error": "These aren't the droids you're looking for"
@@ -60,6 +65,10 @@
     "documentation": "Documentatie",
     "servers-and-auth": "Servers en authenticatie",
     "authentication": "Authenticatie",
-    "servers": "Servers"
+    "tbd-metadata": "Metadata",
+    "servers": "Servers",
+    "links": "Links",
+    "repository-url": "Repository URL",
+    "public-code-url": "PublicCode URL"
   }
 }

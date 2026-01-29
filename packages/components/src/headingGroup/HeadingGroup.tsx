@@ -3,12 +3,13 @@ import {
   type HeadingProps,
   Paragraph,
   HeadingGroup as RHCHeadingGroup,
+  type HeadingGroupProps as RHCHeadingGroupProps,
 } from "@rijkshuisstijl-community/components-react";
 import clsx from "clsx";
 import type { HTMLProps, PropsWithChildren, ReactNode } from "react";
 import styles from "./styles.module.css";
 
-export interface HeadingGroupProps extends HTMLProps<RHCHeadingGroup> {
+export interface HeadingGroupProps extends RHCHeadingGroupProps {
   title: string;
   subTitle?: string | ReactNode;
   level: HeadingProps["level"];

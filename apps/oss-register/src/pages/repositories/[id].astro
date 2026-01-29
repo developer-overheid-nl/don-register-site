@@ -1,0 +1,114 @@
+---
+export const prerender = false; // Not needed in 'server' mode
+
+import {
+  API_ENDPOINT,
+  API_URL,
+  API_VERSION,
+  API_X_API_KEY,
+} from "astro:env/server";
+import {
+  Alert,
+  Block,
+  DataSummary,
+  DataSummaryItem,
+  Heading,
+  HeadingGroup,
+  Link,
+  Markdown,
+  Paragraph,
+} from "@developer-overheid-nl/don-register-components";
+import i18n from "@developer-overheid-nl/don-register-components/i18n";
+import {
+  DonBasic,
+  DonDetail,
+} from "@developer-overheid-nl/don-register-layouts";
+import { t } from "i18next";
+import createClient from "openapi-fetch";
+import appConfig from "../../../app.config";
+import type { paths } from "../../types/api-schema";
+
+const { id = "" } = Astro.params;
+const API_RESOURCE: keyof paths = `/repositories/{id}`;
+
+const client = createClient<paths>({
+  baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
+});
+const {
+  data,
+  error,
+  response: { status, statusText, headers },
+} = await client.GET(API_RESOURCE, {
+  params: {
+    path: { id },
+  },
+  headers: {
+    "x-api-key": API_X_API_KEY,
+  },
+});
+
+// Localization
+const { i18n: i18nApp } = appConfig;
+const i18nPage = {
+  "pages.aside-landmark": "Contactinformatie",
+};
+i18n.addResourceBundle(
+  i18n.language,
+  "translation",
+  i18nApp ? i18nApp[i18n.language] : {},
+  true,
+  true,
+);
+i18n.addResources(i18n.language, "translation", i18nPage);
+
+const details = error ? null : data;
+---
+
+{ error && (
+  <DonBasic appConfig={appConfig} titlePage="API niet gevonden">
+    <Alert type="error">{(error as unknown as any).message || (error as unknown as any).detail || `${status}: ${statusText}` || t('components.fuzz-error')}</Alert>
+    <Paragraph>{t('components.item-not-found-error')}</Paragraph>
+  </DonBasic>
+)}
+
+{details && (
+  <DonDetail appConfig={appConfig} titlePage={details?.name}>
+    <HeadingGroup
+      slot="header"
+      title={`${t(`pages.details-of-item`)}: ${details?.name}`}
+      level={2} 
+    >
+      <Paragraph itemScope={true} itemType="https://schema.org/Organization" itemID={details?.organisation?.uri} className={`styles.aboveLink styles.publisher`}>
+          <span itemprop="name"><Link className={`styles.orgLink`} href={new URL(`./?organisation=${details?.organisation?.uri}`, Astro.url).toString()}>
+              {details?.organisation?.label}
+          </Link></span>
+      </Paragraph>
+    </HeadingGroup>
+    <Fragment slot="description">
+      <Heading level={3} className="sr-only">{t(`pages.description`)}</Heading>
+      <div class="utrecht-html"><Markdown text={details.longDescription || details.description} minHeadingDepth={4} /></div>
+    </Fragment>
+    <Fragment slot="aside">
+      <DataSummary appearance="row">
+        <DataSummaryItem itemKey="Organisatie" itemValue={details?.organisation?.label || '-'} />
+        {/* <DataSummaryItem itemKey="Contactpersoon" itemValue={details?.contact?.name || '-'} />
+        <DataSummaryItem itemKey="Email" itemValue={details?.contact?.email || '-'} /> */}
+      </DataSummary>
+    </Fragment>
+    <Fragment slot="meta">
+      <Heading level={4}>{t(`pages.tbd-metadata`)}</Heading>
+      <Block appearance="outlined">
+        <Heading level={5}>{t(`pages.links`)}</Heading>
+        <DataSummary appearance="column" contained>
+          <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={``} href={details.url || details.repositoryUrl}>{details.url || details.repositoryUrl}</DataSummaryItem>
+          <DataSummaryItem itemKey={t(`components.created-at`)} itemValue={new Date(details.createdAt as string | number).toLocaleDateString('nl-NL')} />
+          <DataSummaryItem itemKey={t(`components.last-activity-at`)} itemValue={new Date(details.lastActivityAt as string | number).toLocaleDateString('nl-NL')} />
+          <DataSummaryItem itemKey={t(`components.last-crawled-at`)} itemValue={new Date(details.lastCrawledAt as string | number).toLocaleDateString('nl-NL')} />
+          {/* TODO: when publicCodeUrl is in the data again, show it again */}
+          {/* <DataSummaryItem itemKey={t(`pages.public-code-url`)} itemValue={details?.publicCodeUrl || '-'} /> */}
+        </DataSummary>
+      </Block>
+    </Fragment>
+  </DonDetail>
+  )
+}

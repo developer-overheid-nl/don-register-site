@@ -59,7 +59,6 @@ const Footer = (props: PropsWithChildren<FooterProps>) => {
 
   return (
     <RHCFooter
-      /* @ts-expect-error className is not exposed */
       className={clsx(className, styles.footer, styles[columnsClass])}
       background="primary-outlined"
       preFooter

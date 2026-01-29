@@ -24,6 +24,7 @@ import {
   Link,
   Markdown,
   Paragraph,
+  PillBadge,
   ReadOnlyTextInput,
   ScoreBadge,
 } from "@developer-overheid-nl/don-register-components";
@@ -39,9 +40,11 @@ import type { paths } from "../../types/api-schema";
 
 Astro.response.headers.set("Cache-Control", "public, max-age=7200");
 const { id = "" } = Astro.params;
-const API_RESOURCE: keyof paths = `/${API_VERSION}/apis/{id}`;
+const API_RESOURCE: keyof paths = `/apis/{id}`;
 
-const client = createClient<paths>({ baseUrl: `${API_URL}/${API_ENDPOINT}` });
+const client = createClient<paths>({
+  baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
+});
 const {
   data,
   error,
@@ -70,8 +73,6 @@ i18n.addResourceBundle(
 i18n.addResources(i18n.language, "translation", i18nPage);
 
 const details = error ? null : data;
-
-// console.log(headers)
 ---
 
 { error && (
@@ -103,17 +104,20 @@ const details = error ? null : data;
         <DataSummaryItem itemKey="Organisatie" itemValue={details?.organisation?.label || '-'} />
         <DataSummaryItem itemKey="Contactpersoon" itemValue={details?.contact?.name || '-'} />
         <DataSummaryItem itemKey="Email" itemValue={details?.contact?.email || '-'} />
+        <DataSummaryItem itemKey="URL" href={details?.contact?.url} itemValue="">{details?.contact?.url || '-'}</DataSummaryItem>
       </DataSummary>
     </Fragment>
     <Fragment slot="meta">
       <Block layout="flex-row">
         <div>{t(`components.version`, {version: details.lifecycle?.version || '-'})}</div>
         <AlignBox gap="small" display="inline">
-          <figure class="adr-score-figure">
-            <figcaption class="adr-score-label">{t(`components.adr-score`)}: {details.adrScore}%</figcaption>
+          {/* <figure class=""> */}
+            {/* <figcaption class="adr-score-label">{t(`components.adr-score`)}: {details.adrScore}%</figcaption> */}
+            <PillBadge className="adr-score-figure" startValue={`ADR Score`} endValue={details.adrScore} type="percentage">
+              <span class="adr-score-info"><Link href={`https://developer-overheid-nl.github.io/oas-checker/?url=https://apis.developer.overheid.nl/apis/download/${id}/oas3.0.json`} target="_blank" rel="noopener noreferrer">Uitleg <Icon name="externe-link-inline" /></Link></span>
+            </PillBadge>
             {/* <ScoreBadge name={`ADR`} score={details.adrScore} max={100} inPercentage /> */}
-            <span class="adr-score-info"><Link href={`https://developer-overheid-nl.github.io/oas-checker/?url=https://apis.developer.overheid.nl/apis/download/${id}/oas3.0.json`} target="_blank" rel="noopener noreferrer">Uitleg <Icon name="externe-link-inline" /></Link></span>
-          </figure>
+          {/* </figure> */}
         </AlignBox>
         <AlignBox gap="small" display="inline">
           <IconBadge
@@ -169,7 +173,7 @@ const details = error ? null : data;
         <Heading level={5}>{t(`pages.servers`)}</Heading>
         <DataSummary appearance="column" contained={details.auth ? false : true}>
           {details.servers ? details.servers?.map((server) => (
-            <DataSummaryItem itemKey={server.description} itemValue={server.url} />
+            <DataSummaryItem itemKey={server.description} itemValue={``} href={server.url}>{server.url}</DataSummaryItem>
           )) : <DataSummaryItem itemValue={t('components.no-items-present', { items: 'servers'})} />}
         </DataSummary>
         {details.auth ? (<>
@@ -181,11 +185,11 @@ const details = error ? null : data;
 </DonDetail>)
 }
 
-<style>
+<!-- <style>
   .adr-score-figure {
     display: contents;
   }
   .adr-score-label {
     display: inline-block;
   }
-</style>
+</style> -->

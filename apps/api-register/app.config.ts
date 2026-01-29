@@ -43,6 +43,11 @@ export default {
         current: true,
       },
       {
+        id: "oss",
+        label: "Repositories",
+        href: "https://oss.developer.overheid.nl",
+      },
+      {
         id: "communities",
         label: "Communities",
         href: `${mainSiteUrl}/communities`,
@@ -54,13 +59,6 @@ export default {
       },
     ],
     endItems: [
-      {
-        id: "oss",
-        label: "Open Source",
-        href: "https://oss.developer.overheid.nl",
-        icon: "_external",
-        target: "_blank",
-      },
       {
         id: "opendata",
         label: "Open Data",
@@ -95,22 +93,34 @@ export default {
 `,
       },
       {
-        title: "API-register",
+        title: "Registers",
         items: [
           {
-            id: "add",
-            label: "API toevoegen",
-            href: "/apis/toevoegen",
+            id: "add-apis",
+            label: "API's toevoegen",
+            href: "https://apis.developer.overheid.nl/apis/toevoegen",
+          },
+          {
+            id: "add-repositories",
+            label: "Repositories toevoegen",
+            href: "https://oss.developer.overheid.nl/repositories/toevoegen",
           },
           {
             id: "statistics",
-            label: "Statistieken",
-            href: "/api-statistieken",
+            label: "API-statistieken",
+            href: "https://apis.developer.overheid.nl/api-statistieken",
           },
           {
             id: "api-archive",
-            label: "Sitearchief",
+            label: "Sitearchief API-register",
             href: "https://minbzk.sitearchief.nl/?subsite=devoverheidapis",
+            icon: "_external",
+            target: "_blank",
+          },
+          {
+            id: "oss-archive",
+            label: "Sitearchief OSS-register",
+            href: "https://minbzk.sitearchief.nl/?subsite=ossdevoverheid",
             icon: "_external",
             target: "_blank",
           },
