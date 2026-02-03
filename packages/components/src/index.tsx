@@ -35,6 +35,7 @@ export {
   default as Footer,
   type FooterProps,
 } from "./footer/Footer";
+export { default as FormFieldLabel } from "./formFieldLabel/FormFieldLabel";
 export { default as FormFieldTextInput } from "./formFieldTextInput/FormFieldTextInput";
 export { default as Header, type HeaderProps } from "./header/Header";
 export { default as Heading } from "./heading/Heading";
