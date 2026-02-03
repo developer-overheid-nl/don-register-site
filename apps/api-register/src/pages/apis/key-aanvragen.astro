@@ -1,23 +1,38 @@
 ---
-
 import {
-  API_ENDPOINT,
-  API_URL,
-  API_VERSION,
-  API_X_API_KEY,
-} from "astro:env/server";
+  Paragraph,
+} from "@developer-overheid-nl/don-register-components";
+import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import {
-  DonBasic,
-  DonDetail,
+  DonBasicWithAside,
 } from "@developer-overheid-nl/don-register-layouts";
 import { t } from "i18next";
-import createClient from "openapi-fetch";
 import appConfig from "../../../app.config";
+import ApiKeyForm from "../../components/ApiKeyForm";
 
+// Localization
+const { i18n: i18nApp } = appConfig;
+const i18nPage = {
+  "pages.aside-landmark": "Contactinformatie",
+  "pages.key-aanvragen-title": "API-sleutel aanvragen",
+  "pages.get-key-form": "Aanvraagformulier",
+};
+i18n.addResourceBundle(
+  i18n.language,
+  "translation",
+  i18nApp ? i18nApp[i18n.language] : {},
+  true,
+  true,
+);
+i18n.addResources(i18n.language, "translation", i18nPage);
 --- 
 
-<DonBasic appConfig={appConfig} titlePage={t("pages.apis.key-aanvragen.title")}>
+<DonBasicWithAside appConfig={appConfig} titlePage={t("pages.key-aanvragen-title")}>
 
-  TODO: AanvraagFormulier voor een API sleutel.
+  <ApiKeyForm client:load />
 
-</DonBasic>
+  <Paragraph slot="aside">
+    TODO: contactinformatie
+  </Paragraph>
+
+</DonBasicWithAside>

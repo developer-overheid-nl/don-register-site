@@ -52,6 +52,10 @@ export default defineConfig({
         context: "server",
         access: "secret",
       }),
+      TOOLS_ENDPOINT: envField.string({
+        context: "server",
+        access: "secret",
+      }),
       API_X_API_KEY: envField.string({
         context: "server",
         access: "secret",

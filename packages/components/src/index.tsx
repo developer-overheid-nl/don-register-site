@@ -3,6 +3,7 @@ export { type AlertProps, default as Alert } from "./alert/Alert";
 export { type AlignBoxProps, default as AlignBox } from "./alignBox/AlignBox";
 export { default as Article } from "./article/Article";
 export { type BlockProps, default as Block } from "./block/Block";
+export { default as Button } from "./button/Button";
 export {
   type CardAsLinksProps,
   default as CardAsLink,
@@ -27,12 +28,14 @@ export {
   type DataSummaryItemProps,
   default as DataSummaryItem,
 } from "./dataSummary/DataSummaryItem";
+export { default as Fieldset } from "./fieldset/FieldSet";
 export { default as Filters } from "./filters/Filters";
 export {
   type ColumnProps,
   default as Footer,
   type FooterProps,
 } from "./footer/Footer";
+export { default as FormFieldTextInput } from "./formFieldTextInput/FormFieldTextInput";
 export { default as Header, type HeaderProps } from "./header/Header";
 export { default as Heading } from "./heading/Heading";
 export {

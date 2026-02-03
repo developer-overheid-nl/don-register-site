@@ -98,7 +98,7 @@ export default {
           {
             id: "add-apis",
             label: "API's toevoegen",
-            href: "https://apis.developer.overheid.nl/apis/toevoegen",
+            href: "/apis/toevoegen",
           },
           {
             id: "add-repositories",
