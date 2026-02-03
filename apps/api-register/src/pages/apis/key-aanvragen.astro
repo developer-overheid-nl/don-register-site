@@ -1,11 +1,7 @@
 ---
-import {
-  Paragraph,
-} from "@developer-overheid-nl/don-register-components";
+import { Paragraph } from "@developer-overheid-nl/don-register-components";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
-import {
-  DonBasicWithAside,
-} from "@developer-overheid-nl/don-register-layouts";
+import { DonBasicWithAside } from "@developer-overheid-nl/don-register-layouts";
 import { t } from "i18next";
 import appConfig from "../../../app.config";
 import ApiKeyForm from "../../components/ApiKeyForm";
@@ -16,12 +12,14 @@ const i18nPage = {
   "pages.aside-landmark": "Contactinformatie",
   "pages.key-aanvragen-title": "API-sleutel aanvragen",
   "pages.get-key-form": "Aanvraagformulier",
-  "pages.get-key-form-intro": "Vul uw e-mailadres in om een API-sleutel aan te vragen. We gebruiken uw e-mailadres alleen om u op de hoogte te houden bij wijzigen in onze API's.",
+  "pages.get-key-form-intro":
+    "Vul uw e-mailadres in om een API-sleutel aan te vragen. We gebruiken uw e-mailadres alleen om u op de hoogte te houden bij wijzigen in onze API's.",
   "pages.get-key-form-email-label": "Uw e-mailadres",
   "pages.get-key-form-submit-label": "Verstuur aanvraag",
   "pages.get-key-form-submitting-label": "Versturen...",
   "pages.key-shown-label": "Uw API-sleutel",
-  "pages.key-shown-warning": "De API-sleutel is alleen zichtbaar direct na de aanvraag. Kopieer deze nu en bewaar deze op een veilige plek.",
+  "pages.key-shown-warning":
+    "De API-sleutel is alleen zichtbaar direct na de aanvraag. Kopieer deze nu en bewaar deze op een veilige plek.",
 };
 i18n.addResourceBundle(
   i18n.language,

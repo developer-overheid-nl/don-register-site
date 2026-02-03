@@ -62,23 +62,32 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
               appearance="primary-action-button"
               disabled={pending}
             >
-              {pending ? labels.form.submittingLabel : labels.form.submitLabel || "Submit"}
+              {pending
+                ? labels.form.submittingLabel
+                : labels.form.submitLabel || "Submit"}
             </Button>
           </AlignBox>
-          {error && error?.type !== 'AstroActionInputError' ? (<Alert type="error">{error?.message}</Alert>) : null}
+          {error && error?.type !== "AstroActionInputError" ? (
+            <Alert type="error">{error?.message}</Alert>
+          ) : null}
         </Fieldset>
       </form>
       <Activity mode={data?.key ? "visible" : "hidden"}>
         <AlignBox align="top-left" direction="column" gap="small">
-          <FormFieldLabel htmlFor="api-key">{labels.keyShownLabel}</FormFieldLabel>
+          <FormFieldLabel htmlFor="api-key">
+            {labels.keyShownLabel}
+          </FormFieldLabel>
           <AlignBox align="left" gap="small">
-            <ReadOnlyTextInput id="api-key" value={data?.key || ""} size={42} fontVariant="monospace" />
+            <ReadOnlyTextInput
+              id="api-key"
+              value={data?.key || ""}
+              size={42}
+              fontVariant="monospace"
+            />
             <CopyButton text={data?.key} />
           </AlignBox>
         </AlignBox>
-        <Alert type="info">
-          {labels.keyShownWarning}
-        </Alert>
+        <Alert type="info">{labels.keyShownWarning}</Alert>
       </Activity>
     </Block>
   );
