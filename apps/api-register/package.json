@@ -22,7 +22,8 @@
     "i18next": "catalog:",
     "openapi-fetch": "catalog:",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "altcha-lib": "catalog:"
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "catalog:",
