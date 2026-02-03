@@ -1,4 +1,9 @@
 {
+  "actions": {
+    "error-unknown": "Onbekende fout.",
+    "error-request-key": "Er is een fout opgetreden bij het aanvragen van de API-sleutel.",
+    "error-invalid-email": "Voer een geldig e-mailadres in."
+  },
   "components": {
     "back-to-homepage": "Terug naar de homepage",
     "back-to-homepage-landmark": "$t(components.back-to-homepage)",
