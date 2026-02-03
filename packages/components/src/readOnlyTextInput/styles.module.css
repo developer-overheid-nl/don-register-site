@@ -4,3 +4,16 @@
   /* field-sizing: content; */
   inline-size: -webkit-fill-available;
 }
+
+.normal {
+  font-variant: normal;
+}
+
+.input.slashed-zero {
+  /* find a way to use RO font with slashed zero */
+  font-variant-numeric: slashed-zero;
+}
+
+.input.monospace {
+  font-family: monospace;
+}

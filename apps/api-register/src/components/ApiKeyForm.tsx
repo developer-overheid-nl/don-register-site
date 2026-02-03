@@ -1,7 +1,4 @@
-import {
-  /*type ActionError, type ActionInputError,*/ actions,
-  isInputError,
-} from "astro:actions";
+import { actions, isInputError } from "astro:actions";
 import { withState } from "@astrojs/react/actions";
 import {
   Alert,
@@ -10,22 +7,33 @@ import {
   Button,
   CopyButton,
   Fieldset,
+  FormFieldLabel,
   FormFieldTextInput,
   Paragraph,
   ReadOnlyTextInput,
 } from "@developer-overheid-nl/don-register-components";
 import { Activity, useActionState } from "react";
 
-const ApiKeyForm = () => {
+interface ApiKeyFormProps {
+  labels: {
+    title: string;
+    intro: string;
+    form: {
+      emailLabel: string;
+      submitLabel?: string;
+      submittingLabel?: string;
+    };
+    keyShownLabel: string;
+    keyShownWarning: string;
+  };
+}
+
+const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
   const [{ data, error }, action, pending] = useActionState(
     withState(actions.keyRequest),
     {
       data: { email: "", key: "" },
       error: undefined,
-      // error: undefined as
-      //   | ActionError
-      //   | ActionInputError<Record<"email", [string]>>
-      //   | undefined,
     },
   );
 
@@ -34,12 +42,12 @@ const ApiKeyForm = () => {
   return (
     <Block appearance="outlined" layout="flex-col">
       <form id="get-api-key" action={action}>
-        <Fieldset legend={"T:pages.get-key-form"}>
-          <Paragraph>T: beschrijving en wat we doen met e-mail</Paragraph>
+        <Fieldset legend={labels.title}>
+          <Paragraph>{labels.intro}</Paragraph>
           <AlignBox align="bottom-left" gap="small">
             <FormFieldTextInput
               id="input-email"
-              label="T:Uw e-mailadres"
+              label={labels.form.emailLabel}
               name="email"
               type="email"
               autoComplete="email"
@@ -54,7 +62,9 @@ const ApiKeyForm = () => {
               appearance="primary-action-button"
               disabled={pending}
             >
-              {pending ? `T:Aanvraag verstuurd` : `T:Verstuur aanvraag`}
+              {pending
+                ? labels.form.submittingLabel
+                : labels.form.submitLabel || "Submit"}
             </Button>
           </AlignBox>
           {error && error?.type !== "AstroActionInputError" ? (
@@ -63,11 +73,21 @@ const ApiKeyForm = () => {
         </Fieldset>
       </form>
       <Activity mode={data?.key ? "visible" : "hidden"}>
-        <Paragraph>T: Hieronder ziet u uw code, kopieer deze nu...</Paragraph>
-        <AlignBox align="left" gap="small">
-          <ReadOnlyTextInput id="api-key" value={data?.key || ""} size={42} />
-          <CopyButton text={data?.key} />
+        <AlignBox align="top-left" direction="column" gap="small">
+          <FormFieldLabel htmlFor="api-key">
+            {labels.keyShownLabel}
+          </FormFieldLabel>
+          <AlignBox align="left" gap="small">
+            <ReadOnlyTextInput
+              id="api-key"
+              value={data?.key || ""}
+              size={42}
+              fontVariant="monospace"
+            />
+            <CopyButton text={data?.key} />
+          </AlignBox>
         </AlignBox>
+        <Alert type="info">{labels.keyShownWarning}</Alert>
       </Activity>
     </Block>
   );

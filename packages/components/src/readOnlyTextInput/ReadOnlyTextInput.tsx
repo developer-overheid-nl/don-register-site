@@ -5,13 +5,17 @@ import {
 import { clsx } from "clsx";
 import styles from "./styles.module.css";
 
-const ReadOnlyTextInput = (props: TextInputProps) => {
-  const { className, ...restProps } = props;
+interface ReadOnlyTextInputProps extends TextInputProps {
+  fontVariant?: "slashed-zero" | "monospace" | "normal";
+}
+
+const ReadOnlyTextInput = (props: ReadOnlyTextInputProps) => {
+  const { className, fontVariant = "normal", ...restProps } = props;
 
   return (
     <TextInput
       readOnly
-      className={clsx(styles.input, className)}
+      className={clsx(styles.input, styles[fontVariant], className)}
       {...restProps}
     />
   );
