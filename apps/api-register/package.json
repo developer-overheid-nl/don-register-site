@@ -18,6 +18,7 @@
     "@developer-overheid-nl/don-register-components": "workspace:*",
     "@developer-overheid-nl/don-register-layouts": "workspace:*",
     "@rijkshuisstijl-community/components-react": "catalog:",
+    "altcha": "catalog:",
     "astro": "catalog:",
     "i18next": "catalog:",
     "openapi-fetch": "catalog:",

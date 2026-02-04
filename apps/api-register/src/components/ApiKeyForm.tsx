@@ -12,7 +12,7 @@ import {
   Paragraph,
   ReadOnlyTextInput,
 } from "@developer-overheid-nl/don-register-components";
-import { Activity, useActionState } from "react";
+import { Activity, useActionState, useEffect } from "react";
 
 interface ApiKeyFormProps {
   labels: {
@@ -20,6 +20,7 @@ interface ApiKeyFormProps {
     intro: string;
     form: {
       emailLabel: string;
+      captchaLabel?: string;
       submitLabel?: string;
       submittingLabel?: string;
     };
@@ -29,6 +30,10 @@ interface ApiKeyFormProps {
 }
 
 const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
+  useEffect(() => {
+    void import("altcha");
+  }, []);
+
   const [{ data, error }, action, pending] = useActionState(
     withState(actions.keyRequest),
     {
@@ -44,6 +49,14 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
       <form id="get-api-key" action={action}>
         <Fieldset legend={labels.title}>
           <Paragraph>{labels.intro}</Paragraph>
+          <altcha-widget
+            id="altcha-widget"
+            challengeurl="/api/altcha/challenge"
+            name="altcha"
+            auto="onsubmit"
+            hidefooter
+            floating
+          ></altcha-widget>
           <AlignBox align="bottom-left" gap="small">
             <FormFieldTextInput
               id="input-email"
