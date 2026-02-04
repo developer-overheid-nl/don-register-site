@@ -1,10 +1,12 @@
 import { ActionError, defineAction } from "astro:actions";
 import {
+  ALTCHA_HMAC_KEY,
   API_URL,
   API_VERSION,
   API_X_API_KEY,
   TOOLS_ENDPOINT,
 } from "astro:env/server";
+import { verifySolution } from "altcha-lib";
 import { z } from "astro/zod";
 import { t } from "i18next";
 import createClient from "openapi-fetch";
@@ -21,8 +23,17 @@ export const server = {
     accept: "form",
     input: z.object({
       email: z.string().email(t("actions.error-invalid-email")),
+      altcha: z.string().min(1, t("actions.error-captcha-missing")),
     }),
     handler: async (input) => {
+      const altchaValid = await verifySolution(input.altcha, ALTCHA_HMAC_KEY);
+      if (!altchaValid) {
+        throw new ActionError({
+          code: "BAD_REQUEST",
+          message: t("actions.error-captcha-invalid"),
+        });
+      }
+
       // Post the email to the backend to generate an API key
       const { data, error } = await client.POST(CLIENTS_RESOURCE, {
         body: {

@@ -2,7 +2,9 @@
   "actions": {
     "error-unknown": "Onbekende fout.",
     "error-request-key": "Er is een fout opgetreden bij het aanvragen van de API-sleutel.",
-    "error-invalid-email": "Voer een geldig e-mailadres in."
+    "error-invalid-email": "Voer een geldig e-mailadres in.",
+    "error-captcha-missing": "Bevestig dat u geen robot bent.",
+    "error-captcha-invalid": "Captcha verificatie mislukt."
   },
   "components": {
     "back-to-homepage": "Terug naar de homepage",

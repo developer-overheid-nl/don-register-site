@@ -12,7 +12,7 @@ import {
   Paragraph,
   ReadOnlyTextInput,
 } from "@developer-overheid-nl/don-register-components";
-import { Activity, useActionState } from "react";
+import { Activity, useActionState, useEffect } from "react";
 import styles from "./ApiKeyForm.module.css";
 
 interface ApiKeyFormProps {
@@ -30,6 +30,11 @@ interface ApiKeyFormProps {
 }
 
 const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
+  useEffect(() => {
+    void import("altcha");
+    void import("altcha/i18n/nl");
+  }, []);
+
   const [{ data, error }, action, pending] = useActionState(
     withState(actions.keyRequest),
     {
@@ -65,9 +70,18 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
             >
               {pending
                 ? labels.form.submittingLabel
-                : labels.form.submitLabel || "Submit"}
+                : labels.form.submitLabel || "Verzenden"}
             </Button>
           </AlignBox>
+          <altcha-widget
+            id="altcha-widget"
+            challengeurl="/api/altcha/challenge"
+            name="altcha"
+            auto="onsubmit"
+            language="nl"
+            hidefooter
+            floating
+          ></altcha-widget>
           {error && error?.type !== "AstroActionInputError" ? (
             <Alert type="error">{error?.message}</Alert>
           ) : null}
