@@ -36,7 +36,7 @@ const Search = (props: SearchProps) => {
           label={t("components.search-label")}
           name={searchKey}
           type="text"
-          value={searchTerm}
+          defaultValue={searchTerm}
         >
           <div className="sr-only" id="search-help">
             {t("components.search-help")}
