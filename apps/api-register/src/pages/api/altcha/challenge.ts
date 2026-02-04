@@ -1,6 +1,6 @@
-import type { APIRoute } from "astro";
 import { ALTCHA_HMAC_KEY } from "astro:env/server";
 import { createChallenge } from "altcha-lib";
+import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async () => {
   const challenge = await createChallenge({

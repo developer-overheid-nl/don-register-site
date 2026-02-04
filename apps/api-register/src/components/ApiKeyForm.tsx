@@ -1,4 +1,7 @@
-import { /*type ActionError, type ActionInputError,*/ actions, isInputError } from "astro:actions";
+import {
+  /*type ActionError, type ActionInputError,*/ actions,
+  isInputError,
+} from "astro:actions";
 import { withState } from "@astrojs/react/actions";
 import {
   Alert,
@@ -18,7 +21,7 @@ const ApiKeyForm = () => {
     withState(actions.keyRequest),
     {
       data: { email: "", key: "" },
-      error: undefined
+      error: undefined,
       // error: undefined as
       //   | ActionError
       //   | ActionInputError<Record<"email", [string]>>
@@ -54,13 +57,13 @@ const ApiKeyForm = () => {
               {pending ? `T:Aanvraag verstuurd` : `T:Verstuur aanvraag`}
             </Button>
           </AlignBox>
-          {error && error?.type !== 'AstroActionInputError' ? (<Alert type="error">{error?.message}</Alert>) : null}
+          {error && error?.type !== "AstroActionInputError" ? (
+            <Alert type="error">{error?.message}</Alert>
+          ) : null}
         </Fieldset>
       </form>
       <Activity mode={data?.key ? "visible" : "hidden"}>
-        <Paragraph>
-          T: Hieronder ziet u uw code, kopieer deze nu...
-        </Paragraph>
+        <Paragraph>T: Hieronder ziet u uw code, kopieer deze nu...</Paragraph>
         <AlignBox align="left" gap="small">
           <ReadOnlyTextInput id="api-key" value={data?.key || ""} size={42} />
           <CopyButton text={data?.key} />

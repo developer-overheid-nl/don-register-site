@@ -23,10 +23,7 @@ export const server = {
     }),
     handler: async (input) => {
       // Post the email to the backend to generate an API key
-      const {
-        data,
-        error,
-      } = await client.POST(CLIENTS_RESOURCE, {
+      const { data, error } = await client.POST(CLIENTS_RESOURCE, {
         body: {
           email: input.email,
         },
@@ -39,7 +36,7 @@ export const server = {
         throw new ActionError({
           code: "INTERNAL_SERVER_ERROR",
           // biome-ignore lint/suspicious/noExplicitAny: oas needs update
-          message: `T:Er is een fout opgetreden bij het aanvragen van de API-sleutel. ${(error as any).detail || 'T:Onbekende fout'}`,
+          message: `T:Er is een fout opgetreden bij het aanvragen van de API-sleutel. ${(error as any).detail || "T:Onbekende fout"}`,
           stack: JSON.stringify(error),
         });
       }
