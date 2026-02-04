@@ -13,6 +13,7 @@ import {
   ReadOnlyTextInput,
 } from "@developer-overheid-nl/don-register-components";
 import { Activity, useActionState } from "react";
+import styles from "./ApiKeyForm.module.css";
 
 interface ApiKeyFormProps {
   labels: {
@@ -41,7 +42,7 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
 
   return (
     <Block appearance="outlined" layout="flex-col">
-      <form id="get-api-key" action={action}>
+      <form id="get-api-key" action={action} className={styles.apiKeyForm}>
         <Fieldset legend={labels.title}>
           <Paragraph>{labels.intro}</Paragraph>
           <AlignBox align="bottom-left" gap="small">

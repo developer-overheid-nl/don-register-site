@@ -1,10 +1,11 @@
 ---
-import { Paragraph } from "@developer-overheid-nl/don-register-components";
+import { Heading } from "@developer-overheid-nl/don-register-components";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import { DonBasicWithAside } from "@developer-overheid-nl/don-register-layouts";
 import { t } from "i18next";
 import appConfig from "../../../app.config";
 import ApiKeyForm from "../../components/ApiKeyForm";
+import { Content as Contact } from "../../partials/contact.md";
 
 // Localization
 const { i18n: i18nApp } = appConfig;
@@ -45,10 +46,17 @@ const labels = {
 
 <DonBasicWithAside appConfig={appConfig} titlePage={t("pages.key-aanvragen-title")}>
 
+  <Heading slot="header" level={2} appearanceLevel={2}>
+    {t("pages.key-aanvragen-title")}
+  </Heading>
+
   <ApiKeyForm client:load labels={labels} />
 
-  <Paragraph slot="aside">
-    TODO: contactinformatie
-  </Paragraph>
+  <Fragment slot="aside">
+    <Heading level={2} appearanceLevel={3}>Contact</Heading>
+    <div class="markdown-content utrecht-html">
+      <Contact />
+    </div>
+  </Fragment>
 
 </DonBasicWithAside>
