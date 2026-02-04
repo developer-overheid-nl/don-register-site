@@ -13,6 +13,7 @@ import {
   ReadOnlyTextInput,
 } from "@developer-overheid-nl/don-register-components";
 import { Activity, useActionState, useEffect } from "react";
+import styles from "./ApiKeyForm.module.css";
 
 interface ApiKeyFormProps {
   labels: {
@@ -20,7 +21,6 @@ interface ApiKeyFormProps {
     intro: string;
     form: {
       emailLabel: string;
-      captchaLabel?: string;
       submitLabel?: string;
       submittingLabel?: string;
     };
@@ -32,6 +32,7 @@ interface ApiKeyFormProps {
 const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
   useEffect(() => {
     void import("altcha");
+    void import("altcha/i18n/nl");
   }, []);
 
   const [{ data, error }, action, pending] = useActionState(
@@ -46,17 +47,9 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
 
   return (
     <Block appearance="outlined" layout="flex-col">
-      <form id="get-api-key" action={action}>
+      <form id="get-api-key" action={action} className={styles.apiKeyForm}>
         <Fieldset legend={labels.title}>
           <Paragraph>{labels.intro}</Paragraph>
-          <altcha-widget
-            id="altcha-widget"
-            challengeurl="/api/altcha/challenge"
-            name="altcha"
-            auto="onsubmit"
-            hidefooter
-            floating
-          ></altcha-widget>
           <AlignBox align="bottom-left" gap="small">
             <FormFieldTextInput
               id="input-email"
@@ -77,9 +70,18 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
             >
               {pending
                 ? labels.form.submittingLabel
-                : labels.form.submitLabel || "Submit"}
+                : labels.form.submitLabel || "Verzenden"}
             </Button>
           </AlignBox>
+          <altcha-widget
+            id="altcha-widget"
+            challengeurl="/api/altcha/challenge"
+            name="altcha"
+            auto="onsubmit"
+            language="nl"
+            hidefooter
+            floating
+          ></altcha-widget>
           {error && error?.type !== "AstroActionInputError" ? (
             <Alert type="error">{error?.message}</Alert>
           ) : null}

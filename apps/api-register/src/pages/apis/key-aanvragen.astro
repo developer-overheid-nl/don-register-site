@@ -1,10 +1,11 @@
 ---
-import { Paragraph } from "@developer-overheid-nl/don-register-components";
+import { Heading } from "@developer-overheid-nl/don-register-components";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import { DonBasicWithAside } from "@developer-overheid-nl/don-register-layouts";
 import { t } from "i18next";
 import appConfig from "../../../app.config";
 import ApiKeyForm from "../../components/ApiKeyForm";
+import { Content as Contact } from "../../partials/contact.md";
 
 // Localization
 const { i18n: i18nApp } = appConfig;
@@ -15,7 +16,6 @@ const i18nPage = {
   "pages.get-key-form-intro":
     "Vul uw e-mailadres in om een API-sleutel aan te vragen. We gebruiken uw e-mailadres alleen om u op de hoogte te houden bij wijzigen in onze API's.",
   "pages.get-key-form-email-label": "Uw e-mailadres",
-  "pages.get-key-form-captcha-label": "Bevestig dat u geen robot bent",
   "pages.get-key-form-submit-label": "Verstuur aanvraag",
   "pages.get-key-form-submitting-label": "Versturen...",
   "pages.key-shown-label": "Uw API-sleutel",
@@ -36,7 +36,6 @@ const labels = {
   intro: t("pages.get-key-form-intro"),
   form: {
     emailLabel: t("pages.get-key-form-email-label"),
-    captchaLabel: t("pages.get-key-form-captcha-label"),
     submitLabel: t("pages.get-key-form-submit-label"),
     submittingLabel: t("pages.get-key-form-submitting-label"),
   },
@@ -47,10 +46,17 @@ const labels = {
 
 <DonBasicWithAside appConfig={appConfig} titlePage={t("pages.key-aanvragen-title")}>
 
+  <Heading slot="header" level={2} appearanceLevel={2}>
+    {t("pages.key-aanvragen-title")}
+  </Heading>
+
   <ApiKeyForm client:load labels={labels} />
 
-  <Paragraph slot="aside">
-    TODO: contactinformatie
-  </Paragraph>
+  <Fragment slot="aside">
+    <Heading level={2} appearanceLevel={3}>Contact</Heading>
+    <div class="markdown-content utrecht-html">
+      <Contact />
+    </div>
+  </Fragment>
 
 </DonBasicWithAside>
