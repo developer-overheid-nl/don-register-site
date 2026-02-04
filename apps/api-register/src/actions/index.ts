@@ -26,6 +26,7 @@ export const server = {
       altcha: z.string().min(1, t("actions.error-captcha-missing")),
     }),
     handler: async (input) => {
+      // Verify the altcha captcha solution
       const altchaValid = await verifySolution(input.altcha, ALTCHA_HMAC_KEY);
       if (!altchaValid) {
         throw new ActionError({

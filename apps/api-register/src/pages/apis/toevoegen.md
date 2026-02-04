@@ -11,7 +11,8 @@ Met deze credentials heb je ook toegang tot de API van het [OSS-register](https:
 
 ### Schrijfrechten aanvragen
 
-Stuur een mail naar [developer.overheid@geonovum.nl](mailto:developer.overheid@geonovum.nl) om schrijfrechten te krijgen. Vermeld hierbij je contactgegevens en bij welke (semi-)overheidsorganisatie je hoort. Na goedkeuring ontvang je de benodigde credentials.
+Stuur een mail naar [developer.overheid@geonovum.nl](mailto:developer.overheid@geonovum.nl) om schrijfrechten te krijgen. Vermeld hierbij je contactgegevens en bij welke (semi-)overheidsorganisatie je hoort. Na goedkeuring ontvang je de benodigde credentials.  
+Wil je alleen leesrechten op het API-register? Kijk dan op de pagina [API-sleutel aanvragen](/apis/key-aanvragen).
 
 ### API toevoegen of wijzigen
 
@@ -57,3 +58,8 @@ info:
   x-sunset: 2027-12-31 # deze versie is vanaf 31 december 2027 niet meer te gebruiken...
   x-deprecated: 2027-01-01 # ...en wordt vanaf 1 januari 2027 al niet meer ondersteund.
 ```
+
+## Publieke endpoint API-register
+
+Het API-register is publiek toegankelijk. Er is wel een API-key nodig om gebruik te maken van de API. Kijk op de pagina [API-sleutel aanvragen](/apis/key-aanvragen) voor meer informatie.  
+Voor de technische werking van de API van het register, zie onze API-documentatie: <https://apis.developer.overheid.nl/apis/90szfOzDg>
