@@ -1,14 +1,14 @@
 import { ActionError, defineAction } from "astro:actions";
 import {
+  ALTCHA_HMAC_KEY,
   API_URL,
   API_VERSION,
   API_X_API_KEY,
-  ALTCHA_HMAC_KEY,
   TOOLS_ENDPOINT,
 } from "astro:env/server";
+import { verifySolution } from "altcha-lib";
 import { z } from "astro/zod";
 import { t } from "i18next";
-import { verifySolution } from "altcha-lib";
 import createClient from "openapi-fetch";
 import type { paths } from "../types/tools-schema";
 
