@@ -20,7 +20,14 @@ import resources from "@developer-overheid-nl/don-register-locales/nl" with {
 import i18next from "i18next";
 
 const {
-  appConfig: { title: titleSite, mainSite, urlHomepage, topNavigation, footer },
+  appConfig: {
+    title: titleSite,
+    meta,
+    mainSite,
+    urlHomepage,
+    topNavigation,
+    footer,
+  },
   titlePage,
 } = Astro.props;
 const { routePattern } = Astro;
@@ -59,7 +66,7 @@ i18next.init({
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={ i18next.t('layouts.meta-description') } />
+    <meta name="description" content={meta.description || i18next.t('layouts.meta-description')} />
     <title>{titlePage} | {titleSite}</title>
     <slot name="head" />
     {shouldRenderMatomo && (

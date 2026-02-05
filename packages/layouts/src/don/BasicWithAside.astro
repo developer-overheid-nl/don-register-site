@@ -3,32 +3,23 @@ import {
   Article,
   Container,
 } from "@developer-overheid-nl/don-register-components";
-import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import Base from "./Base.astro";
 
-const { t } = i18n;
-
-const { appConfig, titlePage } = Astro.props;
+const { appConfig, titlePage, asideLandmark } = Astro.props;
 ---
 
 <Base titlePage={titlePage} appConfig={appConfig}>
   <slot name="head" slot="head" />
   <slot name="body-start" slot="body-start" />
   <Container>
-    <div class="detail-content">
-      <div class="header">
-        <slot name="header" />
-      </div>
-      <Article className="description">
-        <slot name="description" />
+    <div class="basic-content">
+      <div class="header"><slot name="header" /></div>
+      <Article className="main">
+        <slot />
       </Article>
-      <aside class="aside" aria-label={t('pages.aside-landmark')}>
+      <aside class="aside" aria-label={asideLandmark}>
         <slot name="aside" />
       </aside>
-      <aside class="meta" aria-label={t('pages.meta-landmark')}>
-        <slot name="meta" />
-      </aside>
-      <slot />
     </div>
   </Container>
   <slot name="body-end" slot="body-end" />
@@ -59,43 +50,39 @@ const { appConfig, titlePage } = Astro.props;
     }
   }
 
-  .detail-content {
+  .basic-content {
     display: grid;
     grid-template-columns: 
-      [header-start description-start meta-start] var(--first-column, 9fr) [description-end meta-end
+      [header-start main-start] var(--first-column, 9fr) [main-end
       aside-start] var(--second-column, 3fr) [header-end aside-end];
     grid-template-rows: 
       [header-start]auto[header-end 
-      description-start aside-start]auto[description-end
-      meta-start]auto[aside-end meta-end];
+      main-start aside-start]auto[main-end aside-end];
     gap: 1rem;
   }
 
   @media (--sm-and-below-viewport) {
     /* 1 column */
-    .detail-content {
+    .basic-content {
       grid-template-columns: 
-        [header-start description-start meta-start aside-start] 1fr [description-end meta-end header-end aside-end];
+        [header-start main-start aside-start] 1fr [main-end header-end aside-end];
     grid-template-rows: 
       [header-start] auto [header-end 
-      description-start] auto [description-end 
-      meta-start] auto [meta-end
+      main-start] auto [main-end 
       aside-start] auto [aside-end];
     }
+  }
+
+  .basic-content:has(.header:empty) {
+    row-gap: 0;
   }
 
   .header {
     grid-area: header;
   }
 
-  .description {
-    grid-area: description;
-  }
-
-  .meta {
-    grid-area: meta;
-    display: grid;
-    gap: 1rem;
+  .main {
+    grid-area: main;
   }
 
   .aside {

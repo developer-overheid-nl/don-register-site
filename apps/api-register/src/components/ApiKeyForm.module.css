@@ -1,0 +1,11 @@
+.apiKeyForm {
+  --altcha-color-border: var(--utrecht-textbox-border-color);
+  --altcha-border-radius: var(--utrecht-textbox-border-radius);
+  --altcha-color-error-text: var(--utrecht-form-field-error-message-color);
+
+  :global(.utrecht-form-fieldset__fieldset) {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+  }
+}
