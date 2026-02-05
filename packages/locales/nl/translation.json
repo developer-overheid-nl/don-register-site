@@ -3,7 +3,7 @@
     "error-unknown": "Onbekende fout.",
     "error-request-key": "Er is een fout opgetreden bij het aanvragen van de API-sleutel.",
     "error-invalid-email": "Voer een geldig e-mailadres in.",
-    "error-captcha-missing": "Bevestig dat u geen robot bent.",
+    "error-captcha-missing": "Bevestig dat je geen robot bent.",
     "error-captcha-invalid": "Captcha verificatie mislukt."
   },
   "components": {
@@ -60,7 +60,7 @@
     "fuzz-error": "These aren't the droids you're looking for"
   },
   "layouts": {
-    "meta-description": "Welkom bij het API-Register. Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid."
+    "meta-description": "Welkom bij dit register. Hier vind je informatie over de {{items}} die beschikbaar zijn."
   },
   "pages": {
     "aside-landmark": "Zijbalk",

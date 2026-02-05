@@ -3,4 +3,6 @@
 ---
 
 Nieuwe layouts
-- BasicWithAside
+  - BasicWithAside
+- Wijzigingen
+  - Base.astro: meta description gewijzigd, nu dynamisch vanuit app-config.ts

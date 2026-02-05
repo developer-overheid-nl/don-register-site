@@ -59,7 +59,7 @@ info:
   x-deprecated: 2027-01-01 # ...en wordt vanaf 1 januari 2027 al niet meer ondersteund.
 ```
 
-## Publieke endpoint API-register
+## Publieke endpoint API-register en OSS-register
 
-Het API-register is publiek toegankelijk. Er is wel een API-key nodig om gebruik te maken van de API. Kijk op de pagina [API-sleutel aanvragen](/apis/key-aanvragen) voor meer informatie.  
-Voor de technische werking van de API van het register, zie onze API-documentatie: <https://apis.developer.overheid.nl/apis/90szfOzDg>
+Het API- en OSS-register zijn publiek toegankelijk. Er is wel een API-key nodig om gebruik te maken van de API's. Kijk op de pagina [API-sleutel aanvragen](/apis/key-aanvragen) voor meer informatie.  
+Voor de technische werking van de API van de registers, zie onze API-documentatie: <https://apis.developer.overheid.nl/apis/90szfOzDg> en <https://apis.developer.overheid.nl/apis/kIDmDnHvg>.

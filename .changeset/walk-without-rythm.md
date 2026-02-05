@@ -3,10 +3,10 @@
 ---
 
 Nieuwe componenten
-- Button
-- Fieldset
-- FormFieldLabel
-- FormFieldTextInput
+  - Button
+  - Fieldset
+  - FormFieldLabel
+  - FormFieldTextInput
 
 Wijzigingen
-- ReadOnlyTextInput: fontVariant toegevoegd.
+  - ReadOnlyTextInput: fontVariant toegevoegd.
