@@ -1,0 +1,30 @@
+{
+  "name": "@developer-overheid-nl/proprietary-don",
+  "version": "0.0.1",
+  "description": "Proprietary assets for the register sites of developer.overheid.nl",
+  "private": true,
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "exports": {
+    ".": "./index.ts",
+    "./fonts": "./fonts/index.css",
+    "./icons": "./icons/index.ts"
+  },
+  "main": "./index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "See LICENSE.md",
+  "dependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:"
+  },
+  "packageManager": "pnpm@10.27.0"
+}

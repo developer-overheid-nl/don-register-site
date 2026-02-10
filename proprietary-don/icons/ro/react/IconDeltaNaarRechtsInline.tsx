@@ -1,3 +1,4 @@
+/* DEPRECATED ICON, use sprite */
 import type { SVGProps } from "react";
 
 /**
