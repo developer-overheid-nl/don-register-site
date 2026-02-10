@@ -1,0 +1,62 @@
+---
+import { Heading } from "@developer-overheid-nl/don-register-components";
+import i18n from "@developer-overheid-nl/don-register-components/i18n";
+import { DonBasicWithAside } from "@developer-overheid-nl/don-register-layouts";
+import { t } from "i18next";
+import appConfig from "../../../app.config";
+import ApiKeyForm from "../../components/ApiKeyForm";
+import { Content as Contact } from "../../partials/contact.md";
+
+// Localization
+const { i18n: i18nApp } = appConfig;
+const i18nPage = {
+  "pages.aside-landmark": "Contactinformatie",
+  "pages.key-aanvragen-title": "API-sleutel aanvragen",
+  "pages.get-key-form": "Aanvraagformulier",
+  "pages.get-key-form-intro":
+    "Vul je e-mailadres in om een API-sleutel aan te vragen. We gebruiken je e-mailadres alleen om je op de hoogte te houden bij wijzigen in onze API's.",
+  "pages.get-key-form-email-label": "E-mailadres",
+  "pages.get-key-form-submit-label": "Verstuur aanvraag",
+  "pages.get-key-form-submitting-label": "Versturen...",
+  "pages.key-shown-label": "Je API-sleutel",
+  "pages.key-shown-warning":
+    "De API-sleutel is alleen zichtbaar direct na de aanvraag. Kopieer deze nu en bewaar deze op een veilige plek.",
+};
+i18n.addResourceBundle(
+  i18n.language,
+  "translation",
+  i18nApp ? i18nApp[i18n.language] : {},
+  true,
+  true,
+);
+i18n.addResources(i18n.language, "translation", i18nPage);
+
+const labels = {
+  title: t("pages.get-key-form"),
+  intro: t("pages.get-key-form-intro"),
+  form: {
+    emailLabel: t("pages.get-key-form-email-label"),
+    submitLabel: t("pages.get-key-form-submit-label"),
+    submittingLabel: t("pages.get-key-form-submitting-label"),
+  },
+  keyShownLabel: t("pages.key-shown-label"),
+  keyShownWarning: t("pages.key-shown-warning"),
+};
+--- 
+
+<DonBasicWithAside appConfig={appConfig} titlePage={t("pages.key-aanvragen-title")}>
+
+  <Heading slot="header" level={2} appearanceLevel={2}>
+    {t("pages.key-aanvragen-title")}
+  </Heading>
+
+  <ApiKeyForm client:load labels={labels} />
+
+  <Fragment slot="aside">
+    <Heading level={2} appearanceLevel={3}>Contact</Heading>
+    <div class="markdown-content utrecht-html">
+      <Contact />
+    </div>
+  </Fragment>
+
+</DonBasicWithAside>

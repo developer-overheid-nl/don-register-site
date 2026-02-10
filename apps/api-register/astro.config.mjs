@@ -52,6 +52,10 @@ export default defineConfig({
         context: "server",
         access: "secret",
       }),
+      TOOLS_ENDPOINT: envField.string({
+        context: "server",
+        access: "secret",
+      }),
       API_X_API_KEY: envField.string({
         context: "server",
         access: "secret",
@@ -64,6 +68,10 @@ export default defineConfig({
         context: "server",
         access: "public",
         default: "v1",
+      }),
+      ALTCHA_HMAC_KEY: envField.string({
+        context: "server",
+        access: "secret",
       }),
       PUBLIC_MATOMO_URL: envField.string({
         context: "client",

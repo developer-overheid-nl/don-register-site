@@ -4,6 +4,10 @@ const mainSiteUrl = "https://developer.overheid.nl";
 
 export default {
   title: "API-register",
+  meta: {
+    description:
+      "Welkom bij het API-Register. Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid.",
+  },
   mainSite: {
     name: "developer.overheid.nl",
     url: mainSiteUrl,
@@ -98,7 +102,7 @@ export default {
           {
             id: "add-apis",
             label: "API's toevoegen",
-            href: "https://apis.developer.overheid.nl/apis/toevoegen",
+            href: "/apis/toevoegen",
           },
           {
             id: "add-repositories",
