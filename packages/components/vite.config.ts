@@ -1,4 +1,4 @@
-// OBSOLETE or do we want to publish a bundled version? 
+// OBSOLETE or do we want to publish a bundled version?
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
