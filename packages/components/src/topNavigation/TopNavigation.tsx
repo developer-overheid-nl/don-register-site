@@ -42,7 +42,7 @@ export const processNavBarItems = (
 ): NavBarItemProps[] => {
   return items.map((item) => ({
     ...item,
-    // TODO: remove current from this output
+    // TODO: remove current from this output. Issue #188
     bold: item.current,
     icon: processIcon(item.icon),
   }));
