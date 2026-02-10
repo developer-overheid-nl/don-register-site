@@ -1,6 +1,6 @@
-# developer.overheid.nl Register Site(s)
+# developer.overheid.nl Register Sites
 
-> De website(s) van het OSS- en API-register van developer.overheid.nl.
+> De websites en packages van het OSS- en API-register van developer.overheid.nl en het [register-site-template].
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/developer-overheid-nl/don-register-site/build.yml?branch=main)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/developer-overheid-nl/don-register-site/pull_request.yml?branch=main&label=quality)
@@ -8,27 +8,27 @@
 ![GitHub License](https://img.shields.io/github/license/developer-overheid-nl/don-register-site)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/developer-overheid-nl/don-register-site)
 
-Deze monorepo bevat de *nieuwe* websites van het [API-register](https://apis.developer.overheid.nl) en binnenkort ook het [OSS-register](https://oss.developer.overheid.nl).
-De codebase bestaat uit een aantal packages die de gezamelijke codebase (components, layouts, etc) vormen en een `apps`-package waarin de verschillende websites staan.
+Deze monorepo bevat de *nieuwe* websites van het [API-register](https://apis.developer.overheid.nl) en het [OSS-register](https://oss.developer.overheid.nl).
+De codebase bestaat uit een aantal packages die de gezamelijke codebase (components, layouts, etc) vormen en een `apps`-package waarin de verschillende websites staan. Deze packages worden ook gebruikt in het [register-site-template].
 
 ## Packages
 
 ### Components
 
 De package `components` bevat de generieke React componenten voor de sites. Deze zijn gebaseerd op de [Rijkshuisstijl Community Componenten](https://github.com/nl-design-system/rijkshuisstijl-community).  
-Deze package zal gepubliceerd worden op [NPM]
+Deze package wordt gepubliceerd op [NPM]: <https://www.npmjs.com/package/@developer-overheid-nl/don-register-components>
 
 ### Layouts
 
 De package `layouts` bevat de (generieke) Astro layouts voor de sites. Op dit moment zitten ze in de map `don` zodat er evt andere organisaties bij kunnen komen. Dit kan veranderen.  
 Deze package bevat ook een aantal helper-scripts.  
-Deze package zal gepubliceerd worden op [NPM]
+Deze package wordt gepubliceerd op [NPM]: <https://www.npmjs.com/package/@developer-overheid-nl/don-register-layouts>
 
 ### Locales
 
 De packages `locales` bevat het localization-bestand voor de (kleine) teksten op de site. Dit is op basis van [i18next](https://www.i18next.com/).  
 Op dit moment is er maar 1 locale beschikbaar, namelijk Nederlands (`nl/translation.json`), mogelijk dat er in de toekomst meer talen beschikbaar komen. De `apps` en andere packages kunnen dan aangepast worden met taaldetectielogica.  
-Deze package zal gepubliceerd worden op [NPM]
+Deze package wordt gepubliceerd op [NPM]: <https://www.npmjs.com/package/@developer-overheid-nl/don-register-locales>
 
 ## Apps
 
@@ -41,22 +41,29 @@ De [Astro] site van het API-register.
 
 Zie ook de [README](/apps/api-register/README.md) van deze package.
 
-### TBD: OSS-register
+### OSS-register
 
-TODO: De [Astro] site van het OSS-register.
+> Dit is het vernieuwde OSS-register van de Nederlandse overheid (bèta): alle open source repositories op één plek.  
+> [oss.developer.overheid.nl](https://oss.developer.overheid.nl)
 
-### TBD: Demo
+De [Astro] site van het OSS-register.
 
-TODO: een template site die gekloond kan worden door andere organisaties, waarin uitgelegd kan worden hoe de opzet veranderd kan worden etc.
+### Je eigen register
+
+In de repository [register-site-template] staat een template voor het bouwen van sites op basis van de packages in deze monorepo.
 
 ## Overige mappen en bestanden
 
-### Proprietary
+### Proprietary-*
 
-De map `proprietary` bevat bestanden die niet zomaar gebruikt mogen worden, zoals logo's, fonts en iconen.  
-Deze "package" zal ook niet gepubliceerd worden op NPM.  
-TODO: Een generieke optie aanbieden...  
-TODO: fix linking naar packages
+De map `proprietary-example` bevat voorbeeldbestanden voor bestanden waar meestal een copyright op zit, zoals logo's, fonts en iconen. Dit zijn rechtenvrije bestanden, die in het register-template gebruikt kunnen worden als voorbeeld. Deze package wordt ook gepubliceerd op [NPM]: <https://www.npmjs.com/package/@developer-overheid-nl/proprietary-example>  
+De map `proprietary-don` bevat bestanden voor onze eigen register-sites die niet zomaar gebruikt mogen worden, zoals logo's, fonts en iconen. Dit zal ook niet gepubliceerd worden op NPM.  
+
+Om je eigen `proprietary-*` package te registreren wordt in de `pnpm-workspace.yaml` een override toegevoegd, bijvoorbeeld:
+
+```yaml
+TODO: na merge: voorbeeld toevoegen
+```
 
 ### Types
 
@@ -139,3 +146,4 @@ All commands are run from the root of the project, from a terminal:
 [Astro]: https://astro.build/
 [Biome]: https://biomejs.dev/
 [NPM]: https://www.npmjs.com/
+[register-site-template]: https://github.com/developer-overheid-nl/register-site-template
