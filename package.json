@@ -4,6 +4,9 @@
   "description": "The sites for the API- and OSS registers",
   "license": "EUPL-1.2",
   "private": true,
+  "publishConfig": {
+    "access": "restricted"
+  },
   "engines": {
     "node": ">=22",
     "pnpm": ">=10"
