@@ -37,8 +37,7 @@ const ListLinkIcon = ({ isActive }: { isActive: boolean }) => {
 
 const Filters = (props: PropsWithChildren<FiltersProps>) => {
   const { t } = useTranslation();
-  const { data, headers, error, status, statusText, className, routing } =
-    props;
+  const { data, error, status, statusText, className, routing } = props;
   const organisations = data && !data.message ? data : [];
   const currentOrganisation =
     organisations &&

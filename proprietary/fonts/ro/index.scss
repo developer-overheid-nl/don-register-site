@@ -1,5 +1,0 @@
-@import "ro-font-face-mixin";
-
-$font-folder: "." !default;
-
-@include ro-font-face($font-folder);
