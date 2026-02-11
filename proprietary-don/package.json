@@ -1,6 +1,6 @@
 {
   "name": "@developer-overheid-nl/proprietary-don",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Proprietary assets for the register sites of developer.overheid.nl",
   "private": true,
   "publishConfig": {

@@ -5,7 +5,7 @@
   "license": "EUPL-1.2",
   "private": false,
   "type": "module",
-  "version": "0.0.1-beta.2",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/developer-overheid-nl/don-register-site"
