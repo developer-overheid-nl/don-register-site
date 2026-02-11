@@ -7,7 +7,8 @@ When you make changes that should be released, please create a changeset by runn
 pnpm changeset
 ```
 
-This will create a markdown file in the `.changeset` folder where you can describe the changes made and select the type of version bump (major, minor, patch) for each package affected. You can create multiple changesets before releasing.
+This will create a markdown file in the `.changeset` folder where you can describe the changes made and select the type
+of version bump (major, minor, patch) for each package affected. You can create multiple changesets before releasing.
 
 When you're ready to release new versions, run:
 

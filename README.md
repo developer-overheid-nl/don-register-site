@@ -59,11 +59,28 @@ In de repository [register-site-template] staat een template voor het bouwen van
 De map `proprietary-example` bevat voorbeeldbestanden voor bestanden waar meestal een copyright op zit, zoals logo's, fonts en iconen. Dit zijn rechtenvrije bestanden, die in het register-template gebruikt kunnen worden als voorbeeld. Deze package wordt ook gepubliceerd op [NPM]: <https://www.npmjs.com/package/@developer-overheid-nl/proprietary-example>  
 De map `proprietary-don` bevat bestanden voor onze eigen register-sites die niet zomaar gebruikt mogen worden, zoals logo's, fonts en iconen. Dit zal ook niet gepubliceerd worden op NPM.  
 
-Om je eigen `proprietary-*` package te registreren wordt in de `pnpm-workspace.yaml` een override toegevoegd, bijvoorbeeld:
+Om onze eigen `proprietary-don` package te registreren wordt in de `package.json` een alias toegevoegd, bijvoorbeeld:
 
-```yaml
-TODO: na merge: voorbeeld toevoegen
+```json
+{
+  "dependencies": {
+    "@developer-overheid-nl/proprietary": "workspace:@developer-overheid-nl/proprietary-don@*"
+  }
+}
 ```
+
+Op dezelfde manier wordt in de [register-site-template] een alias toegevoegd, maar dan naar het `proprietary-example` package:
+
+```json
+{
+  "dependencies": {
+    "@developer-overheid-nl/proprietary": "workspace:@developer-overheid-nl/proprietary-example@*"
+  }
+}
+```
+
+En kan er naar een eigen implementatie verwezen worden in de eigen register-site.  
+In de codebase wordt er dus altijd verwezen naar `@developer-overheid-nl/proprietary`.
 
 ### Types
 
