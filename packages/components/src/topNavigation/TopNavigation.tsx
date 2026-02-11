@@ -38,17 +38,17 @@ const processIcon = (
 };
 
 export const processNavBarItems = (
-    items: Array<NavBarItem>,
+  items: Array<NavBarItem>,
 ): NavBarItemProps[] => {
   return items.map((item) => {
-    const { current, ...rest } = item
+    const { current, ...rest } = item;
 
-    return{
+    return {
       ...rest,
       bold: current,
-      icon: processIcon(item.icon)
-    }
-  })
+      icon: processIcon(item.icon),
+    };
+  });
 };
 
 export default function TopNavigation({ items, endItems }: TopNavigationProps) {
