@@ -1,6 +1,6 @@
 {
   "name": "@developer-overheid-nl/proprietary-example",
-  "version": "0.0.1-beta.2",
+  "version": "1.0.0",
   "description": "Placeholder assets for the proprietary assets for register sites based of the template register site",
   "private": false,
   "publishConfig": {
