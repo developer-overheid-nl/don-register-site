@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write
+
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
@@ -28,8 +31,29 @@ jobs:
 
       - name: Install Dependencies
         run: pnpm install      
-        
-      - name: Create Release Pull Request
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
         uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
+        with: 
+          publish: pnpm publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish canary version to npm
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
+        with: 
+          version: pnpm version:canary
+          publish: pnpm publish:canary
+
+      - name: Send a Slack notification if a publish happens
+        if: steps.changesets.outputs.published == 'true'
+        uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
+            text: "A new version of ${GITHUB_REPOSITORY} was published!"
