@@ -7,6 +7,7 @@ const i18nInstance: i18n = createInstance({
   lng: "nl",
   fallbackLng: "nl",
   // debug: true,
+  showSupportNotice: false,
 
   interpolation: {
     escapeValue: false, // not needed for react as it escapes by default

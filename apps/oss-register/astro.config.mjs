@@ -2,7 +2,9 @@
 
 import node from "@astrojs/node";
 import react from "@astrojs/react";
+import postcssGlobalData from "@csstools/postcss-global-data";
 import { defineConfig, envField } from "astro/config";
+import postcssCustomMedia from "postcss-custom-media";
 import { loadEnv } from "vite";
 
 // Settings for parse-link-header, see .env file
@@ -40,6 +42,18 @@ export default defineConfig({
       noExternal: [
         "@astrojs/react",
       ],
+    },
+    css: {
+      postcss: {
+        plugins: [
+          postcssGlobalData({
+            files: [
+              "../../packages/layouts/src/styles/breakpoints.css",
+            ],
+          }),
+          postcssCustomMedia(),
+        ],
+      },
     },
   },
   env: {
