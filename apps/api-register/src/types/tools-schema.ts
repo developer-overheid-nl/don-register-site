@@ -239,6 +239,7 @@ export interface components {
          *       "score": 6,
          *       "failures": 0,
          *       "successes": true,
+         *       "rulesetVersion": "2.1",
          *       "messages": [
          *         {
          *           "severity": "severity",
@@ -296,6 +297,8 @@ export interface components {
             /** Format: int32 */
             score?: number;
             successes?: boolean;
+            /** @description De gebruikte ruleset-versie voor validatie. */
+            rulesetVersion?: string;
         };
         /**
          * @example {
