@@ -35,10 +35,10 @@
     "ts:test": "tsc --noEmit",
     "biome:check": "biome check --write",
     "biome:migrate": "biome migrate --write",
-    "version": "changeset version",
-    "version:canary": "changeset version --snapshot canary",
-    "publish": "changeset publish",
-    "publish:canary": "changeset publish --tag canary"
+    "changesets:version": "changeset version",
+    "changesets:version:canary": "changeset version --snapshot canary",
+    "changesets:publish": "changeset publish -r",
+    "changesets:publish:canary": "changeset publish -r --tag canary"
   },
   "dependencies": {
     "@astrojs/node": "catalog:",
