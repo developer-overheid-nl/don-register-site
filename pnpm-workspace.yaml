@@ -9,7 +9,7 @@ overrides:
   "@utrecht/button-group-css": "2.0.1"
 
 catalog:
-  '@astrojs/node': 9.5.1
+  '@astrojs/node': 9.5.3
   '@astrojs/react': 4.4.2
   '@csstools/postcss-global-data': 4.0.0
   '@rijkshuisstijl-community/components-css': 11.0.0
