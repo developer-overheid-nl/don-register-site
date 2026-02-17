@@ -13,8 +13,8 @@ catalogs:
       specifier: 4.4.2
       version: 4.4.2
     '@csstools/postcss-global-data':
-      specifier: 3.1.0
-      version: 3.1.0
+      specifier: 4.0.0
+      version: 4.0.0
     '@rijkshuisstijl-community/components-css':
       specifier: 11.0.0
       version: 11.0.0
@@ -64,8 +64,8 @@ catalogs:
       specifier: 5.9.3
       version: 5.9.3
     vite:
-      specifier: 7.3.0
-      version: 7.3.0
+      specifier: 7.3.1
+      version: 7.3.1
   react19:
     '@types/react':
       specifier: '>=19.2 <19.3'
@@ -137,7 +137,7 @@ importers:
         version: 7.10.1(typescript@5.9.3)
       vite:
         specifier: 'catalog:'
-        version: 7.3.0(@types/node@24.0.8)
+        version: 7.3.1(@types/node@24.0.8)
 
   apps/api-register:
     dependencies:
@@ -177,13 +177,13 @@ importers:
     devDependencies:
       '@csstools/postcss-global-data':
         specifier: 'catalog:'
-        version: 3.1.0(postcss@8.5.6)
+        version: 4.0.0(postcss@8.5.6)
       postcss-custom-media:
         specifier: 'catalog:'
         version: 11.0.6(postcss@8.5.6)
       vite:
         specifier: 'catalog:'
-        version: 7.3.0(@types/node@24.0.8)
+        version: 7.3.1(@types/node@24.0.8)
 
   apps/oss-register:
     dependencies:
@@ -217,13 +217,13 @@ importers:
     devDependencies:
       '@csstools/postcss-global-data':
         specifier: 'catalog:'
-        version: 3.1.0(postcss@8.5.6)
+        version: 4.0.0(postcss@8.5.6)
       postcss-custom-media:
         specifier: 'catalog:'
         version: 11.0.6(postcss@8.5.6)
       vite:
         specifier: 'catalog:'
-        version: 7.3.0(@types/node@24.0.8)
+        version: 7.3.1(@types/node@24.0.8)
 
   packages/components:
     dependencies:
@@ -275,7 +275,7 @@ importers:
     devDependencies:
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.2(vite@7.3.0(@types/node@24.0.8))
+        version: 5.1.2(vite@7.3.1(@types/node@24.0.8))
       rimraf:
         specifier: ^6.1.2
         version: 6.1.2
@@ -284,10 +284,10 @@ importers:
         version: 5.9.3
       vite:
         specifier: 'catalog:'
-        version: 7.3.0(@types/node@24.0.8)
+        version: 7.3.1(@types/node@24.0.8)
       vite-plugin-dts:
         specifier: ^4.5.4
-        version: 4.5.4(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.9.3)(vite@7.3.0(@types/node@24.0.8))
+        version: 4.5.4(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.9.3)(vite@7.3.1(@types/node@24.0.8))
 
   packages/layouts:
     dependencies:
@@ -676,9 +676,9 @@ packages:
       '@csstools/css-parser-algorithms': ^3.0.5
       '@csstools/css-tokenizer': ^3.0.4
 
-  '@csstools/postcss-global-data@3.1.0':
-    resolution: {integrity: sha512-qfS0bUxBukuyxEyxTTZG+px2xwAQPf7Qk6B7lFdjWnovb/O6h0t3sxrVY81nJLh7z0KvEMhjxTURNtEmOrADpQ==}
-    engines: {node: '>=18'}
+  '@csstools/postcss-global-data@4.0.0':
+    resolution: {integrity: sha512-mPKrL3Tzt8k1V+hTkU8XTH6JKRekB97oKHv/MekC9nfmRa+gMf1swlHRt8YK722sYN4xOipl17FZst99jsScLA==}
+    engines: {node: '>=20.19.0'}
     peerDependencies:
       postcss: ^8.4
 
@@ -4290,8 +4290,8 @@ packages:
       yaml:
         optional: true
 
-  vite@7.3.0:
-    resolution: {integrity: sha512-dZwN5L1VlUBewiP6H9s2+B3e3Jg96D0vzN+Ry73sOefebhYr9f94wwkMNN/9ouoU8pV1BqA1d1zGk8928cx0rg==}
+  vite@7.3.1:
+    resolution: {integrity: sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -4868,7 +4868,7 @@ snapshots:
       '@csstools/css-parser-algorithms': 3.0.5(@csstools/css-tokenizer@3.0.4)
       '@csstools/css-tokenizer': 3.0.4
 
-  '@csstools/postcss-global-data@3.1.0(postcss@8.5.6)':
+  '@csstools/postcss-global-data@4.0.0(postcss@8.5.6)':
     dependencies:
       postcss: 8.5.6
 
@@ -6642,7 +6642,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-react@5.1.2(vite@7.3.0(@types/node@24.0.8))':
+  '@vitejs/plugin-react@5.1.2(vite@7.3.1(@types/node@24.0.8))':
     dependencies:
       '@babel/core': 7.28.6
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.6)
@@ -6650,7 +6650,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.53
       '@types/babel__core': 7.20.5
       react-refresh: 0.18.0
-      vite: 7.3.0(@types/node@24.0.8)
+      vite: 7.3.1(@types/node@24.0.8)
     transitivePeerDependencies:
       - supports-color
 
@@ -8782,7 +8782,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite-plugin-dts@4.5.4(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.9.3)(vite@7.3.0(@types/node@24.0.8)):
+  vite-plugin-dts@4.5.4(@types/node@24.0.8)(rollup@4.44.1)(typescript@5.9.3)(vite@7.3.1(@types/node@24.0.8)):
     dependencies:
       '@microsoft/api-extractor': 7.55.2(@types/node@24.0.8)
       '@rollup/pluginutils': 5.3.0(rollup@4.44.1)
@@ -8795,7 +8795,7 @@ snapshots:
       magic-string: 0.30.21
       typescript: 5.9.3
     optionalDependencies:
-      vite: 7.3.0(@types/node@24.0.8)
+      vite: 7.3.1(@types/node@24.0.8)
     transitivePeerDependencies:
       - '@types/node'
       - rollup
@@ -8813,7 +8813,7 @@ snapshots:
       '@types/node': 24.0.8
       fsevents: 2.3.3
 
-  vite@7.3.0(@types/node@24.0.8):
+  vite@7.3.1(@types/node@24.0.8):
     dependencies:
       esbuild: 0.27.2
       fdir: 6.5.0(picomatch@4.0.3)
