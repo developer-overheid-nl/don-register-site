@@ -4,6 +4,30 @@
  */
 
 export interface paths {
+    "/git-organisations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List git organisations
+         * @description Returns a list of git organisations that are included in the register.
+         */
+        get: operations["listGitOrganisations"];
+        put?: never;
+        /**
+         * Create git organisation
+         * @description Register a new git organisation in the register.
+         */
+        post: operations["createGitOrganisation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/repositories": {
         parameters: {
             query?: never;
@@ -13,15 +37,35 @@ export interface paths {
         };
         /**
          * List repositories
-         * @description Geeft een lijst terug met OSS repositories die in het register zijn opgenomen.
+         * @description Returns a list of OSS repositories included in the register. Omit publiccode for all repositories, publiccode=true for repositories with a publiccode.yaml URL only, publiccode=false for repositories without a publiccode.yaml URL.
          */
         get: operations["listRepositories"];
         put?: never;
         /**
          * Create repository
-         * @description Registreer een nieuwe OSS repository in het register.
+         * @description Register a new OSS repository in the register.
          */
         post: operations["createRepository"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/repositories/_search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search repositories
+         * @description Returns a list of OSS repositories included in the register.
+         */
+        get: operations["searchRepositories"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -32,15 +76,22 @@ export interface paths {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Unique identifier of the resource. */
+                id: string;
+            };
             cookie?: never;
         };
         /**
          * Get repository by id
-         * @description Geeft één OSS repository terug op basis van het id.
+         * @description Returns a single OSS repository by id.
          */
         get: operations["getRepositoryById"];
-        put?: never;
+        /**
+         * Specifieke repository updaten
+         * @description Specifieke repository updaten
+         */
+        put: operations["updateRepository"];
         post?: never;
         delete?: never;
         options?: never;
@@ -56,14 +107,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Alle organisaties ophalen
-         * @description Alle organisaties ophalen
+         * List organisations
+         * @description List organisations
          */
         get: operations["listOrganisations"];
         put?: never;
         /**
-         * Organisatie aanmaken
-         * @description Maak een nieuwe organisatie aan.
+         * Create organisation
+         * @description Create a new organisation.
          */
         post: operations["createOrganisation"];
         delete?: never;
@@ -76,109 +127,398 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        Link: {
-            /** Format: uri */
-            href: string;
-        };
-        /** @description HAL style links object. */
-        Links: {
-            [key: string]: components["schemas"]["Link"];
-        };
-        OrganisationSummary: {
-            /** Format: uri */
+        /**
+         * Organisation URI
+         * Format: uri
+         * @description The unique identifier for an organisation
+         * @example https://developer.overheid.nl
+         */
+        "OrganisationUri.schema": string;
+        /**
+         * Organisation summary
+         * @description An organisation from the catalog
+         */
+        "OrganisationSummary.schema": {
+            /**
+             * Organisation URI
+             * Format: uri
+             * @description The unique identifier for an organisation
+             * @example https://developer.overheid.nl
+             */
             uri: string;
+            /**
+             * @description The label of the organisation
+             * @example developer.overheid.nl
+             */
             label: string;
-            _links?: components["schemas"]["Links"];
         };
-        PostRepository: {
+        /**
+         * Git organisation URI
+         * Format: uri
+         * @description URL of the git organisation
+         * @example https://github.com/developer-overheid-nl
+         */
+        "GitOrganisationUrl.schema": string;
+        /**
+         * GitOrganisation
+         * @description A git organisation from the catalog
+         */
+        "GitOrganisation.schema": {
+            /** Format: uuid */
+            readonly id: string;
+            /**
+             * Organisation summary
+             * @description An organisation from the catalog
+             */
+            organisation: {
+                /**
+                 * Organisation URI
+                 * Format: uri
+                 * @description The unique identifier for an organisation
+                 * @example https://developer.overheid.nl
+                 */
+                uri: string;
+                /**
+                 * @description The label of the organisation
+                 * @example developer.overheid.nl
+                 */
+                label: string;
+            };
+            /**
+             * Git organisation URI
+             * Format: uri
+             * @description URL of the git organisation
+             * @example https://github.com/developer-overheid-nl
+             */
+            url: string;
+        };
+        /**
+         * Problem JSON
+         * @description Problem JSON schema representing errors and status code
+         */
+        "ProblemJson.schema": {
+            /**
+             * @description The HTTP status code generated by the origin server for this occurrence of the problem
+             * @example 400
+             */
+            status: number;
+            /**
+             * @description A short, human-readable summary of the problem type
+             * @example Request validation failed
+             */
+            title: string;
+            errors?: {
+                /**
+                 * @description Location of the error (e.g., body, query, header)
+                 * @enum {string}
+                 */
+                in: "body" | "query";
+                /**
+                 * @description Location in the document where the error occurred (JSON Pointer)
+                 * @example #/foo[0]/bar
+                 */
+                location: string;
+                /**
+                 * @description A code representing the type of error
+                 * @example date.format
+                 */
+                code: string;
+                /**
+                 * @description A detailed message describing the error
+                 * @example must be ISO 8601
+                 */
+                detail: string;
+            }[];
+        };
+        /**
+         * Git Organisation Input
+         * @description A git organisation input for creating or updating a git organisation in the catalog
+         */
+        "GitOrganisationInput.schema": {
+            /**
+             * Organisation URI
+             * Format: uri
+             * @description The unique identifier for an organisation
+             * @example https://developer.overheid.nl
+             */
+            organisationUri?: string;
             /**
              * Format: uri
-             * @description URL van de git organisatie.
+             * @description URL of the git organisation.
+             * @example https://github.com/developer-overheid-nl
              */
-            gitOrganisationUrl?: string;
-            /**
-             * Format: uri
-             * @description URL van de TOOI organisatie.
-             */
-            organisationUrl?: string;
+            url?: string;
         };
-        Repository: {
+        /**
+         * Repository
+         * @description An OSS repository from the catalog
+         */
+        "RepositorySummary.schema": {
             /** Format: uuid */
             readonly id?: string;
             /**
              * Format: uri
-             * @description URL van de broncode repository.
+             * @description URL of the source code repository.
+             * @example https://github.com/developer-overheid-nl/don-site
              */
-            repositoryUrl: string;
-            organisation?: components["schemas"]["OrganisationSummary"];
-            /** @description Url van publiccode.yaml in de repository. */
+            url?: string;
+            /**
+             * Organisation summary
+             * @description An organisation from the catalog
+             */
+            organisation?: {
+                /**
+                 * Organisation URI
+                 * Format: uri
+                 * @description The unique identifier for an organisation
+                 * @example https://developer.overheid.nl
+                 */
+                uri: string;
+                /**
+                 * @description The label of the organisation
+                 * @example developer.overheid.nl
+                 */
+                label: string;
+            };
+            /** @description URL of publiccode.yaml in the repository. */
             publicCodeUrl?: string;
-            /** @description Beschrijving van de repository afkomstig uit de git-hosting (bijvoorbeeld de repository description). Wordt gebruikt als alternatief wanneer geen publiccode.yaml beschikbaar is. */
-            description?: string;
-            /** @description naam van de repository afkomstig uit de git-hosting. Wordt gebruikt als alternatief wanneer geen publiccode.yaml beschikbaar is. */
+            /** @description Description of the repository from the git hosting (e.g. the repository description). Used as a fallback when no publiccode.yaml is available. */
+            shortDescription?: string;
+            /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yaml is available. */
             name?: string;
             /** Format: date-time */
             readonly createdAt?: string;
             /** Format: date-time */
-            readonly updatedAt?: string;
+            readonly lastCrawledAt?: string;
+            /** Format: date-time */
+            readonly lastActivityAt?: string;
         };
-        RepositoryListResponse: {
-            data: components["schemas"]["Repository"][];
+        /**
+         * Repository
+         * @description An OSS repository from the catalog
+         */
+        "RepositoryInput.schema": {
             /**
-             * @description Huidige pagina (1-based).
-             * @example 1
+             * Format: uri
+             * @description URL of the source code repository.
+             * @example https://github.com/developer-overheid-nl/don-site
              */
-            page?: number;
+            url?: string;
             /**
-             * @description Aantal resultaten per pagina.
-             * @example 20
+             * Organisation URI
+             * Format: uri
+             * @description The unique identifier for an organisation
+             * @example https://developer.overheid.nl
              */
-            perPage?: number;
+            organisationUri?: string;
+            /** @description URL of publiccode.yaml in the repository. */
+            publicCodeUrl?: string;
+            /** @description Description of the repository from the git hosting (e.g. the repository description). Used as a fallback when no publiccode.yaml is available. */
+            shortDescription?: string;
+            /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yaml is available. */
+            name?: string;
+            /** Format: date-time */
+            readonly createdAt?: string;
+            /** Format: date-time */
+            readonly lastCrawledAt?: string;
+            /** Format: date-time */
+            lastActivityAt?: string;
+        };
+        /**
+         * Repository
+         * @description An OSS repository from the catalog
+         */
+        "Repository.schema": {
+            /** Format: uuid */
+            readonly id?: string;
             /**
-             * @description Totaal aantal resultaten zonder paginering.
-             * @example 134
+             * Format: uri
+             * @description URL of the source code repository.
+             * @example https://github.com/developer-overheid-nl/don-site
              */
-            total?: number;
+            url?: string;
             /**
-             * @description Totaal aantal pagina's.
-             * @example 7
+             * Organisation summary
+             * @description An organisation from the catalog
              */
-            totalPages?: number;
+            organisation?: {
+                /**
+                 * Organisation URI
+                 * Format: uri
+                 * @description The unique identifier for an organisation
+                 * @example https://developer.overheid.nl
+                 */
+                uri: string;
+                /**
+                 * @description The label of the organisation
+                 * @example developer.overheid.nl
+                 */
+                label: string;
+            };
+            /** @description URL of publiccode.yaml in the repository. */
+            publicCodeUrl?: string;
+            /** @description Description of the repository from the git hosting (e.g. the repository description). Used as a fallback when no publiccode.yaml is available. */
+            shortDescription?: string;
+            /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yaml is available. */
+            name?: string;
+            /** Format: date-time */
+            readonly createdAt?: string;
+            /** Format: date-time */
+            readonly lastCrawledAt?: string;
+            /** Format: date-time */
+            readonly lastActivityAt?: string;
+            /** @description Long description of the repository, typically from publiccode.yaml. */
+            longDescription?: string;
+        };
+        /**
+         * Organisation
+         * @description An organisation from the catalog
+         */
+        "Organisation.schema": {
+            /**
+             * Organisation URI
+             * Format: uri
+             * @description The unique identifier for an organisation
+             * @example https://developer.overheid.nl
+             */
+            uri: string;
+            /**
+             * @description The label of the organisation
+             * @example developer.overheid.nl
+             */
+            label: string;
         };
     };
     responses: {
+        /** @description Bad request */
+        400: {
+            headers: {
+                /** @description Semver of this API */
+                "API-Version"?: string;
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": {
+                    /**
+                     * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                     * @example 400
+                     */
+                    status: number;
+                    /**
+                     * @description A short, human-readable summary of the problem type
+                     * @example Request validation failed
+                     */
+                    title: string;
+                    errors?: {
+                        /**
+                         * @description Location of the error (e.g., body, query, header)
+                         * @enum {string}
+                         */
+                        in: "body" | "query";
+                        /**
+                         * @description Location in the document where the error occurred (JSON Pointer)
+                         * @example #/foo[0]/bar
+                         */
+                        location: string;
+                        /**
+                         * @description A code representing the type of error
+                         * @example date.format
+                         */
+                        code: string;
+                        /**
+                         * @description A detailed message describing the error
+                         * @example must be ISO 8601
+                         */
+                        detail: string;
+                    }[];
+                };
+            };
+        };
         /** @description Resource does not exist */
         404: {
             headers: {
-                "API-Version": components["headers"]["API-Version"];
+                /** @description Semver of this API */
+                "API-Version"?: string;
                 [name: string]: unknown;
             };
-            content?: never;
+            content: {
+                "application/problem+json": {
+                    /**
+                     * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                     * @example 400
+                     */
+                    status: number;
+                    /**
+                     * @description A short, human-readable summary of the problem type
+                     * @example Request validation failed
+                     */
+                    title: string;
+                    errors?: {
+                        /**
+                         * @description Location of the error (e.g., body, query, header)
+                         * @enum {string}
+                         */
+                        in: "body" | "query";
+                        /**
+                         * @description Location in the document where the error occurred (JSON Pointer)
+                         * @example #/foo[0]/bar
+                         */
+                        location: string;
+                        /**
+                         * @description A code representing the type of error
+                         * @example date.format
+                         */
+                        code: string;
+                        /**
+                         * @description A detailed message describing the error
+                         * @example must be ISO 8601
+                         */
+                        detail: string;
+                    }[];
+                };
+            };
         };
     };
-    parameters: never;
+    parameters: {
+        /** @description Page number (1-based). */
+        page: number;
+        /** @description Number of results per page. */
+        perPage: number;
+        /** @description Filter on organisation URI. */
+        organisation: string;
+        /** @description Search term. */
+        q: string;
+        /** @description Unique identifier of the resource. */
+        id: string;
+    };
     requestBodies: never;
     headers: {
-        /** @description De API-versie van de response */
+        /** @description Semver of this API */
         "API-Version": string;
-        /** @description Totaal aantal dat voldoet aan de huidige filter (zonder paginering). */
+        /** @description Links to the previous, next, last or first pages */
+        Link: string;
+        /** @description Total number of items available */
         "Total-Count": number;
+        /** @description Current page number */
+        "Current-Page": number;
+        /** @description Number of items per page */
+        "Per-Page": number;
+        /** @description Total number of pages available */
+        "Total-Pages": number;
     };
     pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    listRepositories: {
+    listGitOrganisations: {
         parameters: {
             query?: {
-                /** @description Paginanummer (1-based). */
+                /** @description Page number (1-based). */
                 page?: number;
-                /** @description Aantal resultaten per pagina. */
+                /** @description Number of results per page. */
                 perPage?: number;
-                /** @description Filter op organisatie (bijvoorbeeld de organisation URI). */
+                /** @description Filter on organisation URI. */
                 organisation?: string;
-                /** @description Kommagescheiden lijst met repository-id's (uuid). */
-                ids?: string;
             };
             header?: never;
             path?: never;
@@ -189,15 +529,332 @@ export interface operations {
             /** @description OK */
             200: {
                 headers: {
-                    "API-Version": components["headers"]["API-Version"];
-                    "Total-Count": components["headers"]["Total-Count"];
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    /** @description Links to the previous, next, last or first pages */
+                    Link?: string;
+                    /** @description Total number of items available */
+                    "Total-Count"?: number;
+                    /** @description Current page number */
+                    "Current-Page"?: number;
+                    /** @description Number of items per page */
+                    "Per-Page"?: number;
+                    /** @description Total number of pages available */
+                    "Total-Pages"?: number;
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["RepositoryListResponse"];
+                    "application/json": {
+                        /** Format: uuid */
+                        readonly id: string;
+                        /**
+                         * Organisation summary
+                         * @description An organisation from the catalog
+                         */
+                        organisation: {
+                            /**
+                             * Organisation URI
+                             * Format: uri
+                             * @description The unique identifier for an organisation
+                             * @example https://developer.overheid.nl
+                             */
+                            uri: string;
+                            /**
+                             * @description The label of the organisation
+                             * @example developer.overheid.nl
+                             */
+                            label: string;
+                        };
+                        /**
+                         * Git organisation URI
+                         * Format: uri
+                         * @description URL of the git organisation
+                         * @example https://github.com/developer-overheid-nl
+                         */
+                        url: string;
+                    }[];
                 };
             };
-            404: components["responses"]["404"];
+            /** @description Bad request */
+            400: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        /**
+                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                         * @example 400
+                         */
+                        status: number;
+                        /**
+                         * @description A short, human-readable summary of the problem type
+                         * @example Request validation failed
+                         */
+                        title: string;
+                        errors?: {
+                            /**
+                             * @description Location of the error (e.g., body, query, header)
+                             * @enum {string}
+                             */
+                            in: "body" | "query";
+                            /**
+                             * @description Location in the document where the error occurred (JSON Pointer)
+                             * @example #/foo[0]/bar
+                             */
+                            location: string;
+                            /**
+                             * @description A code representing the type of error
+                             * @example date.format
+                             */
+                            code: string;
+                            /**
+                             * @description A detailed message describing the error
+                             * @example must be ISO 8601
+                             */
+                            detail: string;
+                        }[];
+                    };
+                };
+            };
+        };
+    };
+    createGitOrganisation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /**
+                     * Organisation URI
+                     * Format: uri
+                     * @description The unique identifier for an organisation
+                     * @example https://developer.overheid.nl
+                     */
+                    organisationUri?: string;
+                    /**
+                     * Format: uri
+                     * @description URL of the git organisation.
+                     * @example https://github.com/developer-overheid-nl
+                     */
+                    url?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        readonly id: string;
+                        /**
+                         * Organisation summary
+                         * @description An organisation from the catalog
+                         */
+                        organisation: {
+                            /**
+                             * Organisation URI
+                             * Format: uri
+                             * @description The unique identifier for an organisation
+                             * @example https://developer.overheid.nl
+                             */
+                            uri: string;
+                            /**
+                             * @description The label of the organisation
+                             * @example developer.overheid.nl
+                             */
+                            label: string;
+                        };
+                        /**
+                         * Git organisation URI
+                         * Format: uri
+                         * @description URL of the git organisation
+                         * @example https://github.com/developer-overheid-nl
+                         */
+                        url: string;
+                    };
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        /**
+                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                         * @example 400
+                         */
+                        status: number;
+                        /**
+                         * @description A short, human-readable summary of the problem type
+                         * @example Request validation failed
+                         */
+                        title: string;
+                        errors?: {
+                            /**
+                             * @description Location of the error (e.g., body, query, header)
+                             * @enum {string}
+                             */
+                            in: "body" | "query";
+                            /**
+                             * @description Location in the document where the error occurred (JSON Pointer)
+                             * @example #/foo[0]/bar
+                             */
+                            location: string;
+                            /**
+                             * @description A code representing the type of error
+                             * @example date.format
+                             */
+                            code: string;
+                            /**
+                             * @description A detailed message describing the error
+                             * @example must be ISO 8601
+                             */
+                            detail: string;
+                        }[];
+                    };
+                };
+            };
+        };
+    };
+    listRepositories: {
+        parameters: {
+            query?: {
+                /** @description Page number (1-based). */
+                page?: number;
+                /** @description Number of results per page. */
+                perPage?: number;
+                /** @description Filter on organisation URI. */
+                organisation?: string;
+                /** @description Filter on publiccode.yaml presence. true: only repositories with a publiccode.yaml URL, false: only repositories without a publiccode.yaml URL. Omit for all repositories. */
+                publiccode?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    /** @description Links to the previous, next, last or first pages */
+                    Link?: string;
+                    /** @description Total number of items available */
+                    "Total-Count"?: number;
+                    /** @description Current page number */
+                    "Current-Page"?: number;
+                    /** @description Number of items per page */
+                    "Per-Page"?: number;
+                    /** @description Total number of pages available */
+                    "Total-Pages"?: number;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        readonly id?: string;
+                        /**
+                         * Format: uri
+                         * @description URL of the source code repository.
+                         * @example https://github.com/developer-overheid-nl/don-site
+                         */
+                        url?: string;
+                        /**
+                         * Organisation summary
+                         * @description An organisation from the catalog
+                         */
+                        organisation?: {
+                            /**
+                             * Organisation URI
+                             * Format: uri
+                             * @description The unique identifier for an organisation
+                             * @example https://developer.overheid.nl
+                             */
+                            uri: string;
+                            /**
+                             * @description The label of the organisation
+                             * @example developer.overheid.nl
+                             */
+                            label: string;
+                        };
+                        /** @description URL of publiccode.yaml in the repository. */
+                        publicCodeUrl?: string;
+                        /** @description Description of the repository from the git hosting (e.g. the repository description). Used as a fallback when no publiccode.yaml is available. */
+                        shortDescription?: string;
+                        /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yaml is available. */
+                        name?: string;
+                        /** Format: date-time */
+                        readonly createdAt?: string;
+                        /** Format: date-time */
+                        readonly lastCrawledAt?: string;
+                        /** Format: date-time */
+                        readonly lastActivityAt?: string;
+                    }[];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        /**
+                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                         * @example 400
+                         */
+                        status: number;
+                        /**
+                         * @description A short, human-readable summary of the problem type
+                         * @example Request validation failed
+                         */
+                        title: string;
+                        errors?: {
+                            /**
+                             * @description Location of the error (e.g., body, query, header)
+                             * @enum {string}
+                             */
+                            in: "body" | "query";
+                            /**
+                             * @description Location in the document where the error occurred (JSON Pointer)
+                             * @example #/foo[0]/bar
+                             */
+                            location: string;
+                            /**
+                             * @description A code representing the type of error
+                             * @example date.format
+                             */
+                            code: string;
+                            /**
+                             * @description A detailed message describing the error
+                             * @example must be ISO 8601
+                             */
+                            detail: string;
+                        }[];
+                    };
+                };
+            };
         };
     };
     createRepository: {
@@ -209,63 +866,145 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["PostRepository"];
+                "application/json": {
+                    /**
+                     * Format: uri
+                     * @description URL of the source code repository.
+                     * @example https://github.com/developer-overheid-nl/don-site
+                     */
+                    url?: string;
+                    /**
+                     * Organisation URI
+                     * Format: uri
+                     * @description The unique identifier for an organisation
+                     * @example https://developer.overheid.nl
+                     */
+                    organisationUri?: string;
+                    /** @description URL of publiccode.yaml in the repository. */
+                    publicCodeUrl?: string;
+                    /** @description Description of the repository from the git hosting (e.g. the repository description). Used as a fallback when no publiccode.yaml is available. */
+                    shortDescription?: string;
+                    /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yaml is available. */
+                    name?: string;
+                    /** Format: date-time */
+                    readonly createdAt?: string;
+                    /** Format: date-time */
+                    readonly lastCrawledAt?: string;
+                    /** Format: date-time */
+                    lastActivityAt?: string;
+                };
             };
         };
         responses: {
-            /** @description Repository aangemaakt */
+            /** @description Created */
             201: {
                 headers: {
-                    "API-Version": components["headers"]["API-Version"];
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Repository"];
+                    "application/json": {
+                        /** Format: uuid */
+                        readonly id?: string;
+                        /**
+                         * Format: uri
+                         * @description URL of the source code repository.
+                         * @example https://github.com/developer-overheid-nl/don-site
+                         */
+                        url?: string;
+                        /**
+                         * Organisation summary
+                         * @description An organisation from the catalog
+                         */
+                        organisation?: {
+                            /**
+                             * Organisation URI
+                             * Format: uri
+                             * @description The unique identifier for an organisation
+                             * @example https://developer.overheid.nl
+                             */
+                            uri: string;
+                            /**
+                             * @description The label of the organisation
+                             * @example developer.overheid.nl
+                             */
+                            label: string;
+                        };
+                        /** @description URL of publiccode.yaml in the repository. */
+                        publicCodeUrl?: string;
+                        /** @description Description of the repository from the git hosting (e.g. the repository description). Used as a fallback when no publiccode.yaml is available. */
+                        shortDescription?: string;
+                        /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yaml is available. */
+                        name?: string;
+                        /** Format: date-time */
+                        readonly createdAt?: string;
+                        /** Format: date-time */
+                        readonly lastCrawledAt?: string;
+                        /** Format: date-time */
+                        readonly lastActivityAt?: string;
+                        /** @description Long description of the repository, typically from publiccode.yaml. */
+                        longDescription?: string;
+                    };
                 };
             };
-            /** @description Ongeldige repository data */
+            /** @description Bad request */
             400: {
                 headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getRepositoryById: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description Het id van de repository. */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    "API-Version": components["headers"]["API-Version"];
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Repository"];
+                    "application/problem+json": {
+                        /**
+                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                         * @example 400
+                         */
+                        status: number;
+                        /**
+                         * @description A short, human-readable summary of the problem type
+                         * @example Request validation failed
+                         */
+                        title: string;
+                        errors?: {
+                            /**
+                             * @description Location of the error (e.g., body, query, header)
+                             * @enum {string}
+                             */
+                            in: "body" | "query";
+                            /**
+                             * @description Location in the document where the error occurred (JSON Pointer)
+                             * @example #/foo[0]/bar
+                             */
+                            location: string;
+                            /**
+                             * @description A code representing the type of error
+                             * @example date.format
+                             */
+                            code: string;
+                            /**
+                             * @description A detailed message describing the error
+                             * @example must be ISO 8601
+                             */
+                            detail: string;
+                        }[];
+                    };
                 };
             };
-            404: components["responses"]["404"];
         };
     };
-    listOrganisations: {
+    searchRepositories: {
         parameters: {
-            query?: {
-                /** @description Paginanummer (1-based). */
+            query: {
+                /** @description Page number (1-based). */
                 page?: number;
-                /** @description Aantal resultaten per pagina. */
+                /** @description Number of results per page. */
                 perPage?: number;
-                /** @description Kommagescheiden lijst met id's. */
-                ids?: string;
+                /** @description Filter on organisation URI. */
+                organisation?: string;
+                /** @description Search term. */
+                q: string;
             };
             header?: never;
             path?: never;
@@ -276,13 +1015,492 @@ export interface operations {
             /** @description OK */
             200: {
                 headers: {
-                    "API-Version": components["headers"]["API-Version"];
-                    "Total-Count": components["headers"]["Total-Count"];
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    /** @description Links to the previous, next, last or first pages */
+                    Link?: string;
+                    /** @description Total number of items available */
+                    "Total-Count"?: number;
+                    /** @description Current page number */
+                    "Current-Page"?: number;
+                    /** @description Number of items per page */
+                    "Per-Page"?: number;
+                    /** @description Total number of pages available */
+                    "Total-Pages"?: number;
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": {
-                        organisations?: components["schemas"]["OrganisationSummary"][];
+                        /** Format: uuid */
+                        readonly id?: string;
+                        /**
+                         * Format: uri
+                         * @description URL of the source code repository.
+                         * @example https://github.com/developer-overheid-nl/don-site
+                         */
+                        url?: string;
+                        /**
+                         * Organisation summary
+                         * @description An organisation from the catalog
+                         */
+                        organisation?: {
+                            /**
+                             * Organisation URI
+                             * Format: uri
+                             * @description The unique identifier for an organisation
+                             * @example https://developer.overheid.nl
+                             */
+                            uri: string;
+                            /**
+                             * @description The label of the organisation
+                             * @example developer.overheid.nl
+                             */
+                            label: string;
+                        };
+                        /** @description URL of publiccode.yaml in the repository. */
+                        publicCodeUrl?: string;
+                        /** @description Description of the repository from the git hosting (e.g. the repository description). Used as a fallback when no publiccode.yaml is available. */
+                        shortDescription?: string;
+                        /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yaml is available. */
+                        name?: string;
+                        /** Format: date-time */
+                        readonly createdAt?: string;
+                        /** Format: date-time */
+                        readonly lastCrawledAt?: string;
+                        /** Format: date-time */
+                        readonly lastActivityAt?: string;
+                    }[];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        /**
+                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                         * @example 400
+                         */
+                        status: number;
+                        /**
+                         * @description A short, human-readable summary of the problem type
+                         * @example Request validation failed
+                         */
+                        title: string;
+                        errors?: {
+                            /**
+                             * @description Location of the error (e.g., body, query, header)
+                             * @enum {string}
+                             */
+                            in: "body" | "query";
+                            /**
+                             * @description Location in the document where the error occurred (JSON Pointer)
+                             * @example #/foo[0]/bar
+                             */
+                            location: string;
+                            /**
+                             * @description A code representing the type of error
+                             * @example date.format
+                             */
+                            code: string;
+                            /**
+                             * @description A detailed message describing the error
+                             * @example must be ISO 8601
+                             */
+                            detail: string;
+                        }[];
+                    };
+                };
+            };
+        };
+    };
+    getRepositoryById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Unique identifier of the resource. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        readonly id?: string;
+                        /**
+                         * Format: uri
+                         * @description URL of the source code repository.
+                         * @example https://github.com/developer-overheid-nl/don-site
+                         */
+                        url?: string;
+                        /**
+                         * Organisation summary
+                         * @description An organisation from the catalog
+                         */
+                        organisation?: {
+                            /**
+                             * Organisation URI
+                             * Format: uri
+                             * @description The unique identifier for an organisation
+                             * @example https://developer.overheid.nl
+                             */
+                            uri: string;
+                            /**
+                             * @description The label of the organisation
+                             * @example developer.overheid.nl
+                             */
+                            label: string;
+                        };
+                        /** @description URL of publiccode.yaml in the repository. */
+                        publicCodeUrl?: string;
+                        /** @description Description of the repository from the git hosting (e.g. the repository description). Used as a fallback when no publiccode.yaml is available. */
+                        shortDescription?: string;
+                        /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yaml is available. */
+                        name?: string;
+                        /** Format: date-time */
+                        readonly createdAt?: string;
+                        /** Format: date-time */
+                        readonly lastCrawledAt?: string;
+                        /** Format: date-time */
+                        readonly lastActivityAt?: string;
+                        /** @description Long description of the repository, typically from publiccode.yaml. */
+                        longDescription?: string;
+                    };
+                };
+            };
+            /** @description Resource does not exist */
+            404: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        /**
+                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                         * @example 400
+                         */
+                        status: number;
+                        /**
+                         * @description A short, human-readable summary of the problem type
+                         * @example Request validation failed
+                         */
+                        title: string;
+                        errors?: {
+                            /**
+                             * @description Location of the error (e.g., body, query, header)
+                             * @enum {string}
+                             */
+                            in: "body" | "query";
+                            /**
+                             * @description Location in the document where the error occurred (JSON Pointer)
+                             * @example #/foo[0]/bar
+                             */
+                            location: string;
+                            /**
+                             * @description A code representing the type of error
+                             * @example date.format
+                             */
+                            code: string;
+                            /**
+                             * @description A detailed message describing the error
+                             * @example must be ISO 8601
+                             */
+                            detail: string;
+                        }[];
+                    };
+                };
+            };
+        };
+    };
+    updateRepository: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Unique identifier of the resource. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /**
+                     * Format: uri
+                     * @description URL of the source code repository.
+                     * @example https://github.com/developer-overheid-nl/don-site
+                     */
+                    url?: string;
+                    /**
+                     * Organisation URI
+                     * Format: uri
+                     * @description The unique identifier for an organisation
+                     * @example https://developer.overheid.nl
+                     */
+                    organisationUri?: string;
+                    /** @description URL of publiccode.yaml in the repository. */
+                    publicCodeUrl?: string;
+                    /** @description Description of the repository from the git hosting (e.g. the repository description). Used as a fallback when no publiccode.yaml is available. */
+                    shortDescription?: string;
+                    /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yaml is available. */
+                    name?: string;
+                    /** Format: date-time */
+                    readonly createdAt?: string;
+                    /** Format: date-time */
+                    readonly lastCrawledAt?: string;
+                    /** Format: date-time */
+                    lastActivityAt?: string;
+                };
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        readonly id?: string;
+                        /**
+                         * Format: uri
+                         * @description URL of the source code repository.
+                         * @example https://github.com/developer-overheid-nl/don-site
+                         */
+                        url?: string;
+                        /**
+                         * Organisation summary
+                         * @description An organisation from the catalog
+                         */
+                        organisation?: {
+                            /**
+                             * Organisation URI
+                             * Format: uri
+                             * @description The unique identifier for an organisation
+                             * @example https://developer.overheid.nl
+                             */
+                            uri: string;
+                            /**
+                             * @description The label of the organisation
+                             * @example developer.overheid.nl
+                             */
+                            label: string;
+                        };
+                        /** @description URL of publiccode.yaml in the repository. */
+                        publicCodeUrl?: string;
+                        /** @description Description of the repository from the git hosting (e.g. the repository description). Used as a fallback when no publiccode.yaml is available. */
+                        shortDescription?: string;
+                        /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yaml is available. */
+                        name?: string;
+                        /** Format: date-time */
+                        readonly createdAt?: string;
+                        /** Format: date-time */
+                        readonly lastCrawledAt?: string;
+                        /** Format: date-time */
+                        readonly lastActivityAt?: string;
+                        /** @description Long description of the repository, typically from publiccode.yaml. */
+                        longDescription?: string;
+                    };
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        /**
+                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                         * @example 400
+                         */
+                        status: number;
+                        /**
+                         * @description A short, human-readable summary of the problem type
+                         * @example Request validation failed
+                         */
+                        title: string;
+                        errors?: {
+                            /**
+                             * @description Location of the error (e.g., body, query, header)
+                             * @enum {string}
+                             */
+                            in: "body" | "query";
+                            /**
+                             * @description Location in the document where the error occurred (JSON Pointer)
+                             * @example #/foo[0]/bar
+                             */
+                            location: string;
+                            /**
+                             * @description A code representing the type of error
+                             * @example date.format
+                             */
+                            code: string;
+                            /**
+                             * @description A detailed message describing the error
+                             * @example must be ISO 8601
+                             */
+                            detail: string;
+                        }[];
+                    };
+                };
+            };
+            /** @description Resource does not exist */
+            404: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        /**
+                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                         * @example 400
+                         */
+                        status: number;
+                        /**
+                         * @description A short, human-readable summary of the problem type
+                         * @example Request validation failed
+                         */
+                        title: string;
+                        errors?: {
+                            /**
+                             * @description Location of the error (e.g., body, query, header)
+                             * @enum {string}
+                             */
+                            in: "body" | "query";
+                            /**
+                             * @description Location in the document where the error occurred (JSON Pointer)
+                             * @example #/foo[0]/bar
+                             */
+                            location: string;
+                            /**
+                             * @description A code representing the type of error
+                             * @example date.format
+                             */
+                            code: string;
+                            /**
+                             * @description A detailed message describing the error
+                             * @example must be ISO 8601
+                             */
+                            detail: string;
+                        }[];
+                    };
+                };
+            };
+        };
+    };
+    listOrganisations: {
+        parameters: {
+            query?: {
+                /** @description Page number (1-based). */
+                page?: number;
+                /** @description Number of results per page. */
+                perPage?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    /** @description Links to the previous, next, last or first pages */
+                    Link?: string;
+                    /** @description Total number of items available */
+                    "Total-Count"?: number;
+                    /** @description Current page number */
+                    "Current-Page"?: number;
+                    /** @description Number of items per page */
+                    "Per-Page"?: number;
+                    /** @description Total number of pages available */
+                    "Total-Pages"?: number;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * Organisation URI
+                         * Format: uri
+                         * @description The unique identifier for an organisation
+                         * @example https://developer.overheid.nl
+                         */
+                        uri: string;
+                        /**
+                         * @description The label of the organisation
+                         * @example developer.overheid.nl
+                         */
+                        label: string;
+                    }[];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        /**
+                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                         * @example 400
+                         */
+                        status: number;
+                        /**
+                         * @description A short, human-readable summary of the problem type
+                         * @example Request validation failed
+                         */
+                        title: string;
+                        errors?: {
+                            /**
+                             * @description Location of the error (e.g., body, query, header)
+                             * @enum {string}
+                             */
+                            in: "body" | "query";
+                            /**
+                             * @description Location in the document where the error occurred (JSON Pointer)
+                             * @example #/foo[0]/bar
+                             */
+                            location: string;
+                            /**
+                             * @description A code representing the type of error
+                             * @example date.format
+                             */
+                            code: string;
+                            /**
+                             * @description A detailed message describing the error
+                             * @example must be ISO 8601
+                             */
+                            detail: string;
+                        }[];
                     };
                 };
             };
@@ -295,28 +1513,92 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody: {
+        requestBody?: {
             content: {
-                "application/json": components["schemas"]["OrganisationSummary"];
+                "application/json": {
+                    /**
+                     * Organisation URI
+                     * Format: uri
+                     * @description The unique identifier for an organisation
+                     * @example https://developer.overheid.nl
+                     */
+                    uri: string;
+                    /**
+                     * @description The label of the organisation
+                     * @example developer.overheid.nl
+                     */
+                    label: string;
+                };
             };
         };
         responses: {
-            /** @description Organisatie aangemaakt */
+            /** @description Created */
             201: {
                 headers: {
-                    "API-Version": components["headers"]["API-Version"];
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["OrganisationSummary"];
+                    "application/json": {
+                        /**
+                         * Organisation URI
+                         * Format: uri
+                         * @description The unique identifier for an organisation
+                         * @example https://developer.overheid.nl
+                         */
+                        uri: string;
+                        /**
+                         * @description The label of the organisation
+                         * @example developer.overheid.nl
+                         */
+                        label: string;
+                    };
                 };
             };
-            /** @description Ongeldige organisatie data */
+            /** @description Bad request */
             400: {
                 headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/problem+json": {
+                        /**
+                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                         * @example 400
+                         */
+                        status: number;
+                        /**
+                         * @description A short, human-readable summary of the problem type
+                         * @example Request validation failed
+                         */
+                        title: string;
+                        errors?: {
+                            /**
+                             * @description Location of the error (e.g., body, query, header)
+                             * @enum {string}
+                             */
+                            in: "body" | "query";
+                            /**
+                             * @description Location in the document where the error occurred (JSON Pointer)
+                             * @example #/foo[0]/bar
+                             */
+                            location: string;
+                            /**
+                             * @description A code representing the type of error
+                             * @example date.format
+                             */
+                            code: string;
+                            /**
+                             * @description A detailed message describing the error
+                             * @example must be ISO 8601
+                             */
+                            detail: string;
+                        }[];
+                    };
+                };
             };
         };
     };

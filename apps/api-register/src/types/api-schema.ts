@@ -12,14 +12,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Alle API's ophalen
-         * @description Alle API's ophalen
+         * List all APIs
+         * @description List all APIs
          */
         get: operations["listApis"];
         put?: never;
         /**
-         * Registreer een nieuwe API
-         * @description Registreer een nieuwe API
+         * Register a new API
+         * @description Register a new API
          */
         post: operations["createApi"];
         delete?: never;
@@ -48,6 +48,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/lint-results": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List all lint results
+         * @description Returns all lint results.
+         */
+        get: operations["listLintResults"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/apis/{id}": {
         parameters: {
             query?: never;
@@ -59,13 +79,13 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Specifieke API ophalen
-         * @description Specifieke API ophalen
+         * Retrieve a specific API
+         * @description Retrieve a specific API
          */
         get: operations["retreiveApi"];
         /**
-         * Specifieke API updaten
-         * @description Specifieke API updaten
+         * Update a specific API
+         * @description Update a specific API
          */
         put: operations["updateApi"];
         post?: never;
@@ -86,8 +106,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Download Postman collectie
-         * @description Geeft de gegenereerde Postman JSON terug.
+         * Download Postman collection
+         * @description Returns the generated Postman JSON.
          */
         get: operations["getPostman"];
         put?: never;
@@ -105,14 +125,14 @@ export interface paths {
             path: {
                 /** @description Unique identifier of the resource. */
                 id: string;
-                /** @description OAS versie en formaat, bijv. 3.0.json of 3.1.yaml. */
+                /** @description OAS version and format, e.g. 3.0.json or 3.1.yaml. */
                 version: string;
             };
             cookie?: never;
         };
         /**
          * Download OAS document
-         * @description Geeft de OAS 3.0 of 3.1 specificatie in JSON of YAML terug.
+         * @description Returns the OAS 3.0 or 3.1 specification in JSON or YAML.
          */
         get: operations["getOasVersion"];
         put?: never;
@@ -131,8 +151,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * OpenAPI documentatie
-         * @description Download de OpenAPI specificatie van deze API.
+         * OpenAPI documentation
+         * @description Download the OpenAPI specification for this API.
          */
         get: operations["getOpenApiSpecification"];
         put?: never;
@@ -151,14 +171,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Alle organisaties ophalen
-         * @description Alle organisaties ophalen
+         * List all organisations
+         * @description List all organisations
          */
         get: operations["listOrganisations"];
         put?: never;
         /**
-         * Organisatie aanmaken
-         * @description Maak een nieuwe organisatie aan.
+         * Create organisation
+         * @description Create a new organisation.
          */
         post: operations["createOrganisation"];
         delete?: never;
@@ -284,7 +304,7 @@ export interface components {
             title: string;
             /**
              * @description The description of the API
-             * @example Dit is versie 1 van het API-register. Deze omschrijving kan ook Markdown bevatten.
+             * @example This is version 1 of the API register. This description can also contain Markdown.
              */
             description: string;
             /**
@@ -464,7 +484,7 @@ export interface components {
             title: string;
             /**
              * @description The description of the API
-             * @example Dit is versie 1 van het API-register. Deze omschrijving kan ook Markdown bevatten.
+             * @example This is version 1 of the API register. This description can also contain Markdown.
              */
             description: string;
             /**
@@ -694,7 +714,7 @@ export interface operations {
                 perPage?: number;
                 /** @description Filter on organisation URI. */
                 organisation?: string;
-                /** @description Kommagescheiden lijst met API-id's. */
+                /** @description Comma-separated list of API IDs. */
                 ids?: string;
             };
             header?: never;
@@ -757,7 +777,7 @@ export interface operations {
                         title: string;
                         /**
                          * @description The description of the API
-                         * @example Dit is versie 1 van het API-register. Deze omschrijving kan ook Markdown bevatten.
+                         * @example This is version 1 of the API register. This description can also contain Markdown.
                          */
                         description: string;
                         /**
@@ -952,7 +972,7 @@ export interface operations {
                         title: string;
                         /**
                          * @description The description of the API
-                         * @example Dit is versie 1 van het API-register. Deze omschrijving kan ook Markdown bevatten.
+                         * @example This is version 1 of the API register. This description can also contain Markdown.
                          */
                         description: string;
                         /**
@@ -1153,7 +1173,7 @@ export interface operations {
                         title: string;
                         /**
                          * @description The description of the API
-                         * @example Dit is versie 1 van het API-register. Deze omschrijving kan ook Markdown bevatten.
+                         * @example This is version 1 of the API register. This description can also contain Markdown.
                          */
                         description: string;
                         /**
@@ -1204,6 +1224,97 @@ export interface operations {
                              */
                             from?: string | null;
                         };
+                    }[];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        /**
+                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                         * @example 400
+                         */
+                        status: number;
+                        /**
+                         * @description A short, human-readable summary of the problem type
+                         * @example Request validation failed
+                         */
+                        title: string;
+                        errors?: {
+                            /**
+                             * @description Location of the error (e.g., body, query, header)
+                             * @enum {string}
+                             */
+                            in: "body" | "query";
+                            /**
+                             * @description Location in the document where the error occurred (JSON Pointer)
+                             * @example #/foo[0]/bar
+                             */
+                            location: string;
+                            /**
+                             * @description A code representing the type of error
+                             * @example date.format
+                             */
+                            code: string;
+                            /**
+                             * @description A detailed message describing the error
+                             * @example must be ISO 8601
+                             */
+                            detail: string;
+                        }[];
+                    };
+                };
+            };
+        };
+    };
+    listLintResults: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        ID: string;
+                        ApiID: string;
+                        successes: boolean;
+                        failures: number;
+                        warnings: number;
+                        /** Format: date-time */
+                        CreatedAt: string;
+                        messages?: {
+                            id: string;
+                            lintResultId: string;
+                            line: number;
+                            column: number;
+                            severity: string;
+                            code: string;
+                            /** Format: date-time */
+                            CreatedAt: string;
+                            infos?: {
+                                id: string;
+                                lintMessageId: string;
+                                message: string;
+                                path: string;
+                            }[];
+                        }[];
+                        rulesetVersion?: string;
                     }[];
                 };
             };
@@ -1309,7 +1420,7 @@ export interface operations {
                         title: string;
                         /**
                          * @description The description of the API
-                         * @example Dit is versie 1 van het API-register. Deze omschrijving kan ook Markdown bevatten.
+                         * @example This is version 1 of the API register. This description can also contain Markdown.
                          */
                         description: string;
                         /**
@@ -1536,7 +1647,7 @@ export interface operations {
                         title: string;
                         /**
                          * @description The description of the API
-                         * @example Dit is versie 1 van het API-register. Deze omschrijving kan ook Markdown bevatten.
+                         * @example This is version 1 of the API register. This description can also contain Markdown.
                          */
                         description: string;
                         /**
@@ -1742,7 +1853,7 @@ export interface operations {
             path: {
                 /** @description Unique identifier of the resource. */
                 id: string;
-                /** @description OAS versie en formaat, bijv. 3.0.json of 3.1.yaml. */
+                /** @description OAS version and format, e.g. 3.0.json or 3.1.yaml. */
                 version: string;
             };
             cookie?: never;
@@ -1754,10 +1865,10 @@ export interface operations {
                 headers: {
                     /** @description Semver of this API */
                     "API-Version"?: string;
-                    /** @description Geleverde OAS-versie (bijv. 3.0 of 3.1). */
-                    "X-OAS-Version"?: string;
-                    /** @description Bron van het OAS-document. */
-                    "X-OAS-Source"?: string;
+                    /** @description Returned OAS version (e.g. 3.0 or 3.1). */
+                    "OAS-Version"?: string;
+                    /** @description Source of the OAS document. */
+                    "OAS-Source"?: string;
                     [name: string]: unknown;
                 };
                 content: {

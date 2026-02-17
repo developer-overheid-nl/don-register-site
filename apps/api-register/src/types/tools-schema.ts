@@ -310,7 +310,7 @@ export interface components {
         /** @description Resource does not exist */
         404: {
             headers: {
-                "API-Version": components["headers"]["API-Version"];
+                "API-Version": headers["API-Version"];
                 [name: string]: unknown;
             };
             content?: never;
