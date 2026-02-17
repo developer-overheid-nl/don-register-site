@@ -12,7 +12,7 @@ catalog:
   '@astrojs/node': 9.5.3
   '@astrojs/react': 4.4.2
   '@csstools/postcss-global-data': 4.0.0
-  '@rijkshuisstijl-community/components-css': 11.0.0
+  '@rijkshuisstijl-community/components-css': 12.0.0
   '@rijkshuisstijl-community/components-react': 10.0.0
   '@rijkshuisstijl-community/design-tokens': 11.0.0
   '@types/react': 19.1.17
