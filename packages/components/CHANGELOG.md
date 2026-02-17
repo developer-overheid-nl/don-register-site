@@ -1,5 +1,11 @@
 # @developer-overheid-nl/don-register-components
 
+## 1.0.1
+
+### Patch Changes
+
+- ded15aa: fix: exclude 'current' property when mapping NavBar items
+
 ## 1.0.0
 
 ### Major Changes
