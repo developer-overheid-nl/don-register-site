@@ -1,16 +1,25 @@
 apis:
-  api-register@v1:
-    # root: https://api.developer.overheid.nl/api-register/v1/openapi.json
+  api-register@v1@test:
     root: https://api.don.apps.digilab.network/api-register/v1/openapi.json
     x-openapi-ts:
-      output: ./apps/api-register/src/types/api-schema.ts
-  tools@v1:
-    # root: https://api.developer.overheid.nl/tools/v1/openapi.json
+      output: ./apps/api-register/src/types/api-schema.test.ts
+  api-register@v1@prod:
+    root: https://api.developer.overheid.nl/api-register/v1/openapi.json
+    x-openapi-ts:
+      output: ./apps/api-register/src/types/api-schema.prod.ts
+  tools@v1@test:
     root: https://api.don.apps.digilab.network/tools/v1/openapi.json
     x-openapi-ts:
-      output: ./apps/api-register/src/types/tools-schema.ts
-  oss-register@v1:
-    # root: https://api.developer.overheid.nl/oss-register/v1/openapi.json
+      output: ./apps/api-register/src/types/tools-schema.test.ts
+  tools@v1@prod:
+    root: https://api.developer.overheid.nl/tools/v1/openapi.json
+    x-openapi-ts:
+      output: ./apps/api-register/src/types/tools-schema.prod.ts
+  oss-register@v1@test:
     root: https://api.don.apps.digilab.network/oss-register/v1/openapi.json
     x-openapi-ts:
-      output: ./apps/oss-register/src/types/api-schema.ts
+      output: ./apps/oss-register/src/types/api-schema.test.ts
+  oss-register@v1@prod:
+    root: https://api.developer.overheid.nl/oss-register/v1/openapi.json
+    x-openapi-ts:
+      output: ./apps/oss-register/src/types/api-schema.prod.ts

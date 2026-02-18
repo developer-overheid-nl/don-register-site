@@ -36,14 +36,14 @@ import { t } from "i18next";
 import createClient from "openapi-fetch";
 import appConfig from "../../../../app.config";
 import { Content as Intro } from "../../../partials/intro.md";
-import type { paths } from "../../../types/api-schema";
+import { ApiPaths, type paths } from "../../../types/api-schema";
 
 Astro.response.headers.set("Cache-Control", "public, max-age=7200");
 const { page = 1 } = Astro.params;
 
-const APIS_RESOURCE: keyof paths = `/apis`;
-const ORGS_RESOURCE: keyof paths = `/organisations`;
-const SEARCH_RESOURCE: keyof paths = `/apis/_search`;
+const APIS_RESOURCE = ApiPaths.listApis;
+const ORGS_RESOURCE = ApiPaths.listOrganisations;
+const SEARCH_RESOURCE = ApiPaths.searchApis;
 const SEARCH_QUERY_KEY = "q";
 
 const routingObj = getRouting(

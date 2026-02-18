@@ -26,10 +26,10 @@ import {
 import { t } from "i18next";
 import createClient from "openapi-fetch";
 import appConfig from "../../../app.config";
-import type { paths } from "../../types/api-schema";
+import { ApiPaths,  type paths } from "../../types/api-schema";
 
 const { id = "" } = Astro.params;
-const API_RESOURCE: keyof paths = `/repositories/{id}`;
+const API_RESOURCE = ApiPaths.getRepositoryById;
 
 const client = createClient<paths>({
   baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
