@@ -12,14 +12,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Alle API's ophalen
-         * @description Alle API's ophalen
+         * List all APIs
+         * @description List all APIs
          */
         get: operations["listApis"];
         put?: never;
         /**
-         * Registreer een nieuwe API
-         * @description Registreer een nieuwe API
+         * Register a new API
+         * @description Register a new API
          */
         post: operations["createApi"];
         delete?: never;
@@ -48,6 +48,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/lint-results": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List all lint results
+         * @description Returns all lint results.
+         */
+        get: operations["listLintResults"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/apis/{id}": {
         parameters: {
             query?: never;
@@ -59,13 +79,13 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Specifieke API ophalen
-         * @description Specifieke API ophalen
+         * Retrieve a specific API
+         * @description Retrieve a specific API
          */
         get: operations["retreiveApi"];
         /**
-         * Specifieke API updaten
-         * @description Specifieke API updaten
+         * Update a specific API
+         * @description Update a specific API
          */
         put: operations["updateApi"];
         post?: never;
@@ -86,8 +106,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Download Postman collectie
-         * @description Geeft de gegenereerde Postman JSON terug.
+         * Download Postman collection
+         * @description Returns the generated Postman JSON.
          */
         get: operations["getPostman"];
         put?: never;
@@ -105,14 +125,14 @@ export interface paths {
             path: {
                 /** @description Unique identifier of the resource. */
                 id: string;
-                /** @description OAS versie en formaat, bijv. 3.0.json of 3.1.yaml. */
+                /** @description OAS version and format, e.g. 3.0.json or 3.1.yaml. */
                 version: string;
             };
             cookie?: never;
         };
         /**
          * Download OAS document
-         * @description Geeft de OAS 3.0 of 3.1 specificatie in JSON of YAML terug.
+         * @description Returns the OAS 3.0 or 3.1 specification in JSON or YAML.
          */
         get: operations["getOasVersion"];
         put?: never;
@@ -131,8 +151,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * OpenAPI documentatie
-         * @description Download de OpenAPI specificatie van deze API.
+         * OpenAPI documentation
+         * @description Download the OpenAPI specification for this API.
          */
         get: operations["getOpenApiSpecification"];
         put?: never;
@@ -151,14 +171,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Alle organisaties ophalen
-         * @description Alle organisaties ophalen
+         * List all organisations
+         * @description List all organisations
          */
         get: operations["listOrganisations"];
         put?: never;
         /**
-         * Organisatie aanmaken
-         * @description Maak een nieuwe organisatie aan.
+         * Create organisation
+         * @description Create a new organisation.
          */
         post: operations["createOrganisation"];
         delete?: never;
@@ -170,400 +190,7 @@ export interface paths {
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: {
-        /**
-         * Contact
-         * @description Contact details
-         */
-        "Contact.schema": {
-            /**
-             * Format: email
-             * @description The email address of the contact
-             * @example developer.overheid@geonovum.nl
-             */
-            email: string;
-            /**
-             * @description The name of the contact
-             * @example Developer Overheid
-             */
-            name: string;
-            /**
-             * Format: uri
-             * @description The URL of the contact
-             * @example https://developer.overheid.nl
-             */
-            url: string;
-        };
-        /**
-         * Organisation URI
-         * Format: uri
-         * @description The unique identifier for an organisation
-         * @example https://developer.overheid.nl
-         */
-        "OrganisationUri.schema": string;
-        /**
-         * Organisation summary
-         * @description An organisation from the catalog
-         */
-        "OrganisationSummary.schema": {
-            /**
-             * Organisation URI
-             * Format: uri
-             * @description The unique identifier for an organisation
-             * @example https://developer.overheid.nl
-             */
-            uri: string;
-            /**
-             * @description The label of the organisation
-             * @example developer.overheid.nl
-             */
-            label: string;
-        };
-        /**
-         * Lifecycle
-         * @description The lifecycle status of the API
-         */
-        "Lifecycle.schema": {
-            /**
-             * @description The lifecycle status
-             * @example deprecated
-             * @example sunset
-             * @example retired
-             * @enum {string}
-             */
-            status: "active" | "deprecated" | "sunset" | "retired";
-            /**
-             * @description The version of the API
-             * @example 1.0.0
-             */
-            version: string;
-            /**
-             * Format: date
-             * @description The date from which the lifecycle status is/has been deprecated, sunset or retired.
-             * @example 2025-01-15
-             */
-            from?: string | null;
-        };
-        /**
-         * API
-         * @description An API from the catalog
-         */
-        "ApiSummary.schema": {
-            /**
-             * @description The unique identifier for an API
-             * @example dicF0B3HR
-             */
-            readonly id: string;
-            /**
-             * Contact
-             * @description Contact details
-             */
-            contact: {
-                /**
-                 * Format: email
-                 * @description The email address of the contact
-                 * @example developer.overheid@geonovum.nl
-                 */
-                email: string;
-                /**
-                 * @description The name of the contact
-                 * @example Developer Overheid
-                 */
-                name: string;
-                /**
-                 * Format: uri
-                 * @description The URL of the contact
-                 * @example https://developer.overheid.nl
-                 */
-                url: string;
-            };
-            /**
-             * @description The title of the API
-             * @example API register API v1
-             */
-            title: string;
-            /**
-             * @description The description of the API
-             * @example Dit is versie 1 van het API-register. Deze omschrijving kan ook Markdown bevatten.
-             */
-            description: string;
-            /**
-             * Organisation summary
-             * @description An organisation from the catalog
-             */
-            organisation: {
-                /**
-                 * Organisation URI
-                 * Format: uri
-                 * @description The unique identifier for an organisation
-                 * @example https://developer.overheid.nl
-                 */
-                uri: string;
-                /**
-                 * @description The label of the organisation
-                 * @example developer.overheid.nl
-                 */
-                label: string;
-            };
-            /**
-             * @description The ADR score of the API
-             * @example 85
-             */
-            adrScore: number | null;
-            /**
-             * Lifecycle
-             * @description The lifecycle status of the API
-             */
-            lifecycle: {
-                /**
-                 * @description The lifecycle status
-                 * @example deprecated
-                 * @example sunset
-                 * @example retired
-                 * @enum {string}
-                 */
-                status: "active" | "deprecated" | "sunset" | "retired";
-                /**
-                 * @description The version of the API
-                 * @example 1.0.0
-                 */
-                version: string;
-                /**
-                 * Format: date
-                 * @description The date from which the lifecycle status is/has been deprecated, sunset or retired.
-                 * @example 2025-01-15
-                 */
-                from?: string | null;
-            };
-        };
-        /**
-         * Problem JSON
-         * @description Problem JSON schema representing errors and status code
-         */
-        "ProblemJson.schema": {
-            /**
-             * @description The HTTP status code generated by the origin server for this occurrence of the problem
-             * @example 400
-             */
-            status: number;
-            /**
-             * @description A short, human-readable summary of the problem type
-             * @example Request validation failed
-             */
-            title: string;
-            errors?: {
-                /**
-                 * @description Location of the error (e.g., body, query, header)
-                 * @enum {string}
-                 */
-                in: "body" | "query";
-                /**
-                 * @description Location in the document where the error occurred (JSON Pointer)
-                 * @example #/foo[0]/bar
-                 */
-                location: string;
-                /**
-                 * @description A code representing the type of error
-                 * @example date.format
-                 */
-                code: string;
-                /**
-                 * @description A detailed message describing the error
-                 * @example must be ISO 8601
-                 */
-                detail: string;
-            }[];
-        };
-        /**
-         * OAS Url
-         * Format: uri
-         * @description The URL of the OAS document
-         * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
-         */
-        "OasUrl.schema": string;
-        /**
-         * API Input
-         * @description An OSS repository from the catalog
-         */
-        "ApiInput.schema": {
-            /**
-             * OAS Url
-             * Format: uri
-             * @description The URL of the OAS document
-             * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
-             */
-            oasUrl: string;
-            /**
-             * Organisation URI
-             * Format: uri
-             * @description The unique identifier for an organisation
-             * @example https://developer.overheid.nl
-             */
-            organisationUri: string;
-            /**
-             * Contact
-             * @description Contact details
-             */
-            contact?: {
-                /**
-                 * Format: email
-                 * @description The email address of the contact
-                 * @example developer.overheid@geonovum.nl
-                 */
-                email: string;
-                /**
-                 * @description The name of the contact
-                 * @example Developer Overheid
-                 */
-                name: string;
-                /**
-                 * Format: uri
-                 * @description The URL of the contact
-                 * @example https://developer.overheid.nl
-                 */
-                url: string;
-            };
-        };
-        /**
-         * API
-         * @description An API from the catalog
-         */
-        "Api.schema": {
-            /**
-             * @description The unique identifier for an API
-             * @example dicF0B3HR
-             */
-            readonly id: string;
-            /**
-             * Contact
-             * @description Contact details
-             */
-            contact: {
-                /**
-                 * Format: email
-                 * @description The email address of the contact
-                 * @example developer.overheid@geonovum.nl
-                 */
-                email: string;
-                /**
-                 * @description The name of the contact
-                 * @example Developer Overheid
-                 */
-                name: string;
-                /**
-                 * Format: uri
-                 * @description The URL of the contact
-                 * @example https://developer.overheid.nl
-                 */
-                url: string;
-            };
-            /**
-             * @description The title of the API
-             * @example API register API v1
-             */
-            title: string;
-            /**
-             * @description The description of the API
-             * @example Dit is versie 1 van het API-register. Deze omschrijving kan ook Markdown bevatten.
-             */
-            description: string;
-            /**
-             * Organisation summary
-             * @description An organisation from the catalog
-             */
-            organisation: {
-                /**
-                 * Organisation URI
-                 * Format: uri
-                 * @description The unique identifier for an organisation
-                 * @example https://developer.overheid.nl
-                 */
-                uri: string;
-                /**
-                 * @description The label of the organisation
-                 * @example developer.overheid.nl
-                 */
-                label: string;
-            };
-            /**
-             * @description The ADR score of the API
-             * @example 85
-             */
-            adrScore: number | null;
-            /**
-             * Lifecycle
-             * @description The lifecycle status of the API
-             */
-            lifecycle: {
-                /**
-                 * @description The lifecycle status
-                 * @example deprecated
-                 * @example sunset
-                 * @example retired
-                 * @enum {string}
-                 */
-                status: "active" | "deprecated" | "sunset" | "retired";
-                /**
-                 * @description The version of the API
-                 * @example 1.0.0
-                 */
-                version: string;
-                /**
-                 * Format: date
-                 * @description The date from which the lifecycle status is/has been deprecated, sunset or retired.
-                 * @example 2025-01-15
-                 */
-                from?: string | null;
-            };
-        } & {
-            /**
-             * Format: uri
-             * @description The URL of the OAS document
-             * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
-             */
-            oasUrl: string | null;
-            /** @description The authentication methods supported by the API */
-            auth: string[];
-            /**
-             * Format: uri
-             * @description The URL to the documentation of the API
-             * @example https://developer.overheid.nl/kennisbank/
-             */
-            docsUrl: string | null;
-            /** @description The servers where the API is hosted */
-            servers: {
-                /**
-                 * Format: uri
-                 * @description The URL of the server
-                 * @example https://api.developer.overheid.nl/api-register/v1
-                 */
-                url: string;
-                /**
-                 * @description A description of the server
-                 * @example Production server
-                 */
-                description: string;
-            }[];
-        };
-        /**
-         * Organisation
-         * @description An organisation from the catalog
-         */
-        "Organisation.schema": {
-            /**
-             * Organisation URI
-             * Format: uri
-             * @description The unique identifier for an organisation
-             * @example https://developer.overheid.nl
-             */
-            uri: string;
-            /**
-             * @description The label of the organisation
-             * @example developer.overheid.nl
-             */
-            label: string;
-        };
-    };
+    schemas: never;
     responses: {
         /** @description Bad request */
         400: {
@@ -654,33 +281,9 @@ export interface components {
             };
         };
     };
-    parameters: {
-        /** @description Page number (1-based). */
-        page: number;
-        /** @description Number of results per page. */
-        perPage: number;
-        /** @description Filter on organisation URI. */
-        organisation: string;
-        /** @description Search term. */
-        q: string;
-        /** @description Unique identifier of the resource. */
-        id: string;
-    };
+    parameters: never;
     requestBodies: never;
-    headers: {
-        /** @description Semver of this API */
-        "API-Version": string;
-        /** @description Links to the previous, next, last or first pages */
-        Link: string;
-        /** @description Total number of items available */
-        "Total-Count": number;
-        /** @description Current page number */
-        "Current-Page": number;
-        /** @description Number of items per page */
-        "Per-Page": number;
-        /** @description Total number of pages available */
-        "Total-Pages": number;
-    };
+    headers: never;
     pathItems: never;
 }
 export type $defs = Record<string, never>;
@@ -694,7 +297,7 @@ export interface operations {
                 perPage?: number;
                 /** @description Filter on organisation URI. */
                 organisation?: string;
-                /** @description Kommagescheiden lijst met API-id's. */
+                /** @description Comma-separated list of API IDs. */
                 ids?: string;
             };
             header?: never;
@@ -757,7 +360,7 @@ export interface operations {
                         title: string;
                         /**
                          * @description The description of the API
-                         * @example Dit is versie 1 van het API-register. Deze omschrijving kan ook Markdown bevatten.
+                         * @example This is version 1 of the API register. This description can also contain Markdown.
                          */
                         description: string;
                         /**
@@ -808,7 +411,7 @@ export interface operations {
                              */
                             from?: string | null;
                         };
-                    };
+                    }[];
                 };
             };
             /** @description Bad request */
@@ -952,7 +555,7 @@ export interface operations {
                         title: string;
                         /**
                          * @description The description of the API
-                         * @example Dit is versie 1 van het API-register. Deze omschrijving kan ook Markdown bevatten.
+                         * @example This is version 1 of the API register. This description can also contain Markdown.
                          */
                         description: string;
                         /**
@@ -1018,20 +621,7 @@ export interface operations {
                          * @example https://developer.overheid.nl/kennisbank/
                          */
                         docsUrl: string | null;
-                        /** @description The servers where the API is hosted */
-                        servers: {
-                            /**
-                             * Format: uri
-                             * @description The URL of the server
-                             * @example https://api.developer.overheid.nl/api-register/v1
-                             */
-                            url: string;
-                            /**
-                             * @description A description of the server
-                             * @example Production server
-                             */
-                            description: string;
-                        }[];
+                        servers: unknown;
                     };
                 };
             };
@@ -1153,7 +743,7 @@ export interface operations {
                         title: string;
                         /**
                          * @description The description of the API
-                         * @example Dit is versie 1 van het API-register. Deze omschrijving kan ook Markdown bevatten.
+                         * @example This is version 1 of the API register. This description can also contain Markdown.
                          */
                         description: string;
                         /**
@@ -1204,6 +794,97 @@ export interface operations {
                              */
                             from?: string | null;
                         };
+                    }[];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        /**
+                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                         * @example 400
+                         */
+                        status: number;
+                        /**
+                         * @description A short, human-readable summary of the problem type
+                         * @example Request validation failed
+                         */
+                        title: string;
+                        errors?: {
+                            /**
+                             * @description Location of the error (e.g., body, query, header)
+                             * @enum {string}
+                             */
+                            in: "body" | "query";
+                            /**
+                             * @description Location in the document where the error occurred (JSON Pointer)
+                             * @example #/foo[0]/bar
+                             */
+                            location: string;
+                            /**
+                             * @description A code representing the type of error
+                             * @example date.format
+                             */
+                            code: string;
+                            /**
+                             * @description A detailed message describing the error
+                             * @example must be ISO 8601
+                             */
+                            detail: string;
+                        }[];
+                    };
+                };
+            };
+        };
+    };
+    listLintResults: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        ID: string;
+                        ApiID: string;
+                        successes: boolean;
+                        failures: number;
+                        warnings: number;
+                        /** Format: date-time */
+                        CreatedAt: string;
+                        messages?: {
+                            id: string;
+                            lintResultId: string;
+                            line: number;
+                            column: number;
+                            severity: string;
+                            code: string;
+                            /** Format: date-time */
+                            CreatedAt: string;
+                            infos?: {
+                                id: string;
+                                lintMessageId: string;
+                                message: string;
+                                path: string;
+                            }[];
+                        }[];
+                        rulesetVersion?: string;
                     }[];
                 };
             };
@@ -1309,7 +990,7 @@ export interface operations {
                         title: string;
                         /**
                          * @description The description of the API
-                         * @example Dit is versie 1 van het API-register. Deze omschrijving kan ook Markdown bevatten.
+                         * @example This is version 1 of the API register. This description can also contain Markdown.
                          */
                         description: string;
                         /**
@@ -1375,20 +1056,7 @@ export interface operations {
                          * @example https://developer.overheid.nl/kennisbank/
                          */
                         docsUrl: string | null;
-                        /** @description The servers where the API is hosted */
-                        servers: {
-                            /**
-                             * Format: uri
-                             * @description The URL of the server
-                             * @example https://api.developer.overheid.nl/api-register/v1
-                             */
-                            url: string;
-                            /**
-                             * @description A description of the server
-                             * @example Production server
-                             */
-                            description: string;
-                        }[];
+                        servers: unknown;
                     };
                 };
             };
@@ -1536,7 +1204,7 @@ export interface operations {
                         title: string;
                         /**
                          * @description The description of the API
-                         * @example Dit is versie 1 van het API-register. Deze omschrijving kan ook Markdown bevatten.
+                         * @example This is version 1 of the API register. This description can also contain Markdown.
                          */
                         description: string;
                         /**
@@ -1602,20 +1270,7 @@ export interface operations {
                          * @example https://developer.overheid.nl/kennisbank/
                          */
                         docsUrl: string | null;
-                        /** @description The servers where the API is hosted */
-                        servers: {
-                            /**
-                             * Format: uri
-                             * @description The URL of the server
-                             * @example https://api.developer.overheid.nl/api-register/v1
-                             */
-                            url: string;
-                            /**
-                             * @description A description of the server
-                             * @example Production server
-                             */
-                            description: string;
-                        }[];
+                        servers: unknown;
                     };
                 };
             };
@@ -1742,7 +1397,7 @@ export interface operations {
             path: {
                 /** @description Unique identifier of the resource. */
                 id: string;
-                /** @description OAS versie en formaat, bijv. 3.0.json of 3.1.yaml. */
+                /** @description OAS version and format, e.g. 3.0.json or 3.1.yaml. */
                 version: string;
             };
             cookie?: never;
@@ -1754,9 +1409,9 @@ export interface operations {
                 headers: {
                     /** @description Semver of this API */
                     "API-Version"?: string;
-                    /** @description Geleverde OAS-versie (bijv. 3.0 of 3.1). */
+                    /** @description Returned OAS version (e.g. 3.0 or 3.1). */
                     "OAS-Version"?: string;
-                    /** @description Bron van het OAS-document. */
+                    /** @description Source of the OAS document. */
                     "OAS-Source"?: string;
                     [name: string]: unknown;
                 };
@@ -1927,6 +1582,7 @@ export enum ApiPaths {
     listApis = "/apis",
     createApi = "/apis",
     searchApis = "/apis/_search",
+    listLintResults = "/lint-results",
     retreiveApi = "/apis/{id}",
     updateApi = "/apis/{id}",
     getPostman = "/apis/{id}/postman",
