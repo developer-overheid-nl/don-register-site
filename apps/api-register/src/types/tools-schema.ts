@@ -175,7 +175,7 @@ export interface components {
          *       "targetVersion": "3.1"
          *     }
          */
-        OASInput: {
+        OasInput: {
             oasBody?: string;
             oasUrl?: string;
             /** @description Doelversie. Voor conversie: 3.0 of 3.1. Voor validatie: 2.0 of 2.1. */
@@ -313,7 +313,7 @@ export interface components {
         /** @description Resource does not exist */
         404: {
             headers: {
-                "API-Version": headers["API-Version"];
+                "API-Version": components["headers"]["API-Version"];
                 [name: string]: unknown;
             };
             content?: never;
@@ -338,7 +338,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["OASInput"];
+                "application/json": components["schemas"]["OasInput"];
             };
         };
         responses: {
@@ -353,13 +353,7 @@ export interface operations {
                     "text/markdown": string;
                 };
             };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+            404: components["responses"]["404"];
         };
     };
     arazzoMermaid: {
@@ -371,7 +365,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["OASInput"];
+                "application/json": components["schemas"]["OasInput"];
             };
         };
         responses: {
@@ -386,13 +380,7 @@ export interface operations {
                     "text/plain": string;
                 };
             };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+            404: components["responses"]["404"];
         };
     };
     untrustClient: {
@@ -419,13 +407,7 @@ export interface operations {
                     "application/json": components["schemas"]["ModelsKeycloakClientResult"];
                 };
             };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+            404: components["responses"]["404"];
         };
     };
     convertOAS: {
@@ -437,7 +419,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["OASInput"];
+                "application/json": components["schemas"]["OasInput"];
             };
         };
         responses: {
@@ -450,13 +432,7 @@ export interface operations {
                 };
                 content?: never;
             };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+            404: components["responses"]["404"];
         };
     };
     bundleOAS: {
@@ -468,7 +444,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["OASInput"];
+                "application/json": components["schemas"]["OasInput"];
             };
         };
         responses: {
@@ -481,13 +457,7 @@ export interface operations {
                 };
                 content?: never;
             };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+            404: components["responses"]["404"];
         };
     };
     generateOAS: {
@@ -499,7 +469,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["OASInput"];
+                "application/json": components["schemas"]["OasInput"];
             };
         };
         responses: {
@@ -514,13 +484,7 @@ export interface operations {
                     "application/json": Record<string, never>;
                 };
             };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+            404: components["responses"]["404"];
         };
     };
     validatorOpenAPIPost: {
@@ -532,7 +496,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["OASInput"];
+                "application/json": components["schemas"]["OasInput"];
             };
         };
         responses: {
@@ -547,13 +511,7 @@ export interface operations {
                     "application/json": components["schemas"]["ModelsLintResult"];
                 };
             };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+            404: components["responses"]["404"];
         };
     };
     createPostmanCollection: {
@@ -565,7 +523,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["OASInput"];
+                "application/json": components["schemas"]["OasInput"];
             };
         };
         responses: {
@@ -578,13 +536,7 @@ export interface operations {
                 };
                 content?: never;
             };
-            /** @description Not Found */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
+            404: components["responses"]["404"];
         };
     };
 }
