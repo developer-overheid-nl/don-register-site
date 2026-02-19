@@ -163,14 +163,14 @@ const items = error ? null : data;
                     </DataBadgeLink></span>
                   </Paragraph>
                   <div class="header-meta">
-                    <RepoIcon url={item.url} name={item.name} className="moveAbove"></RepoIcon>
+                    <RepoIcon url={item.url || ''} name={item.name} className="moveAbove"></RepoIcon>
                   </div>
               </div>
               </HeadingGroup>
-              <div slot="description" class="description utrecht-html"><Markdown text={item.shortDescription || item.description} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
+              <div slot="description" class="description utrecht-html"><Markdown text={item.shortDescription} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
               <AlignBox align="space-between" slot="metadata" className="meta">
                 <PillBadge startValue={`publiccode.yml`} endValue={item.publicCodeUrl ? "✔" : "NA"} type="color" color={item.publicCodeUrl ? "mintgroen" : "grijs"} />
-                <span class="last-updated">{t(`components.last-activity-at`)}: {new Date(item.lastActivityAt).toLocaleDateString('nl-NL')}</span>
+                <span class="last-updated">{t(`components.last-activity-at`)}: {new Date(item.lastActivityAt || '').toLocaleDateString('nl-NL')}</span>
               </AlignBox>
             </CardAsLink>
           </CardsListItem>
