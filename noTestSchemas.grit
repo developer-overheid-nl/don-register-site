@@ -3,8 +3,5 @@ language js
 
 JsExport() as $export where {
   $export <: r"*.-schema\.test.*",
-  register_diagnostic(
-    span=$export,
-    message="Always check-in the production schema."
-  )
+  register_diagnostic(span=$export, message="Always check-in the production schema.")
 }
