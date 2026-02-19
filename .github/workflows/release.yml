@@ -49,7 +49,7 @@ jobs:
         if: steps.changesets.outputs.hasChangesets == 'true' && steps.changesets.outputs.published != 'true'
         # workaround for `No unreleased changesets found, exiting.` bug: https://github.com/changesets/changesets/issues/1815
         run: |
-          if [ -n "$(find .changeset -name '*.md')" ]
+          if [ -n "$(find .changeset -name '*.md')" ]; then
             pnpm changesets:version:canary
             pnpm changesets:publish:canary
           else 
