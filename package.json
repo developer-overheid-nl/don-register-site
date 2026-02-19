@@ -35,6 +35,7 @@
     "ts:test": "tsc --noEmit",
     "biome:check": "biome check --write",
     "biome:migrate": "biome migrate --write",
+    "changesets:status": "changeset status --verbose",
     "changesets:version": "changeset version",
     "changesets:version:canary": "changeset version --snapshot canary",
     "changesets:publish": "changeset publish -r",

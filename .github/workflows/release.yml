@@ -43,17 +43,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create canary version
+      - name: Create canary version and publish to npm
         id: canary
         if: steps.changesets.outputs.hasChangesets == 'true' && steps.changesets.outputs.published != 'true'
         run: |
           pnpm changesets:version:canary
-
-      - name: Publish canary version to npm
-        if: steps.canary.conclusion == 'success'
-        uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1.7.0
-        with: 
-          publish: pnpm changesets:publish:canary
+          pnpm changesets:publish:canary
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
