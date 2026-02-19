@@ -39,7 +39,7 @@
     "remark-behead": "^3.1.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^5.1.2",
+    "@vitejs/plugin-react": "^5.1.4",
     "rimraf": "^6.1.2",
     "typescript": "catalog:",
     "vite": "catalog:",
