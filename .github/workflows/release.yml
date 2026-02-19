@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - canary-release-publishing
 
 permissions:
   contents: write
@@ -46,9 +47,14 @@ jobs:
       - name: Create canary version and publish to npm
         id: canary
         if: steps.changesets.outputs.hasChangesets == 'true' && steps.changesets.outputs.published != 'true'
+        # workaround for `No unreleased changesets found, exiting.` bug: https://github.com/changesets/changesets/issues/1815
         run: |
-          pnpm changesets:version:canary
-          pnpm changesets:publish:canary
+          if [ -n "$(find .changeset -name '*.md')" ]
+            pnpm changesets:version:canary
+            pnpm changesets:publish:canary
+          else 
+            echo "No changesets found, skipping canary publish"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
