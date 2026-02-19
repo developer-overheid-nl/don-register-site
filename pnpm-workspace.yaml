@@ -23,7 +23,7 @@ catalog:
   altcha-lib: 1.4.1
   clsx: 2.1.1
   i18next: 25.8.4
-  openapi-fetch: 0.15.0
+  openapi-fetch: 0.17.0
   openapi-typescript: 7.10.1
   postcss-custom-media: 12.0.0
   react: 19.2.3
