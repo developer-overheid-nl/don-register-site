@@ -7,8 +7,8 @@ updates:
       interval: weekly
     groups:
       react:
-        patterns:
-          - "react"
-          - "react-dom"
-          - "@types/react"
-          - "@types/react-dom"
+        patterns: ["react", "react-dom", "@types/react", "@types/react-dom"]
+      i18next:
+        patterns: ["i18next", "react-i18next"]
+      astro: 
+        patterns: ["astro", "@astrojs/*"]
