@@ -4,5 +4,7 @@
     "source.fixAll.biome": "explicit",
     "source.organizeImports.biome": "explicit",
     "source.action.useSortedProperties.biome": "explicit"
-  }
+  },
+  "files.autoSave": "afterDelay",
+  "biome.requireConfiguration": true,
 }

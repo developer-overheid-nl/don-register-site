@@ -6,12 +6,12 @@
 export type paths = Record<string, unknown>;
 export type webhooks = Record<string, unknown>;
 export interface components {
-    schemas: unknown;
-    responses: unknown;
-    parameters: unknown;
-    requestBodies: unknown;
-    headers: unknown;
-    pathItems: unknown;
+  schemas: unknown;
+  responses: unknown;
+  parameters: unknown;
+  requestBodies: unknown;
+  headers: unknown;
+  pathItems: unknown;
 }
 export type $defs = Record<string, unknown>;
 export type operations = Record<string, unknown>;
