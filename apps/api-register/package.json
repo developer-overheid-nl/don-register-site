@@ -2,7 +2,7 @@
   "name": "@developer-overheid-nl/api-register",
   "author": "developer.overheid.nl",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "dev": "astro dev",
