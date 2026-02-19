@@ -22,8 +22,8 @@ catalogs:
       specifier: 11.0.0
       version: 11.0.0
     '@rijkshuisstijl-community/design-tokens':
-      specifier: 11.0.0
-      version: 11.0.0
+      specifier: 11.1.0
+      version: 11.1.0
     '@types/react':
       specifier: 19.1.17
       version: 19.1.17
@@ -143,7 +143,7 @@ importers:
     dependencies:
       '@astrojs/react':
         specifier: 'catalog:'
-        version: 4.4.2(@types/node@24.0.8)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 4.4.2(@types/node@24.0.8)(@types/react-dom@19.1.11(@types/react@19.1.17))(@types/react@19.1.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@developer-overheid-nl/don-register-components':
         specifier: workspace:*
         version: link:../../packages/components
@@ -189,7 +189,7 @@ importers:
     dependencies:
       '@astrojs/react':
         specifier: 'catalog:'
-        version: 4.4.2(@types/node@24.0.8)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 4.4.2(@types/node@24.0.8)(@types/react-dom@19.1.11(@types/react@19.1.17))(@types/react@19.1.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@developer-overheid-nl/don-register-components':
         specifier: workspace:*
         version: link:../../packages/components
@@ -238,7 +238,7 @@ importers:
         version: 11.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.6)(date-fns@2.30.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
-        version: 11.0.0
+        version: 11.1.0
       '@types/parse-link-header':
         specifier: ^2.0.3
         version: 2.0.3
@@ -305,7 +305,7 @@ importers:
         version: 11.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.6)(date-fns@2.30.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
-        version: 11.0.0
+        version: 11.1.0
       '@types/parse-link-header':
         specifier: ^2.0.3
         version: 2.0.3
@@ -1233,8 +1233,8 @@ packages:
       react: 19.2.3
       react-dom: 19.2.3
 
-  '@rijkshuisstijl-community/design-tokens@11.0.0':
-    resolution: {integrity: sha512-tYlzF+FCHEHVy80W89HRBU0UVlgqsUp8IwdXT9BwiiQvvLDkZN5d2ZRA7UrMB0X4NXmp9zfcsSLG9Zw8b/Ev7w==}
+  '@rijkshuisstijl-community/design-tokens@11.1.0':
+    resolution: {integrity: sha512-QWAsFCEVv9AlOnISFMlBvU1M75D/LmI4sUU5RegMkj3HZH1a9A218rlExlIy/6KfmtvL67TUTnuZYkDEZmQ/UQ==}
 
   '@rolldown/pluginutils@1.0.0-beta.27':
     resolution: {integrity: sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA==}
@@ -4469,29 +4469,6 @@ snapshots:
       - tsx
       - yaml
 
-  '@astrojs/react@4.4.2(@types/node@24.0.8)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
-    dependencies:
-      '@types/react': 19.2.9
-      '@types/react-dom': 19.2.3(@types/react@19.2.9)
-      '@vitejs/plugin-react': 4.7.0(vite@6.4.1(@types/node@24.0.8))
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
-      ultrahtml: 1.6.0
-      vite: 6.4.1(@types/node@24.0.8)
-    transitivePeerDependencies:
-      - '@types/node'
-      - jiti
-      - less
-      - lightningcss
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - tsx
-      - yaml
-
   '@astrojs/telemetry@3.3.0':
     dependencies:
       ci-info: 4.3.1
@@ -5298,7 +5275,7 @@ snapshots:
       - react-vega
       - vega
 
-  '@rijkshuisstijl-community/design-tokens@11.0.0': {}
+  '@rijkshuisstijl-community/design-tokens@11.1.0': {}
 
   '@rolldown/pluginutils@1.0.0-beta.27': {}
 
