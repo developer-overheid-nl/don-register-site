@@ -43,12 +43,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish canary version to npm
+      - name: Create canary version and publish to npm
+        id: canary
         if: steps.changesets.outputs.published != 'true'
-        uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1.7.0
-        with: 
-          version: pnpm changesets:version:canary
-          publish: pnpm changesets:publish:canary
+        # run: |
+        #   pnpm changesets:version:canary
+        #   pnpm changesets:publish:canary --dry-run
+        run: |
+          echo "::notice title=Skipped Step::This step is skipped for now because it does not create `canary` versions on CI and then publishes prematurely."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
