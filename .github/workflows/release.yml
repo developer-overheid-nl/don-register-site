@@ -50,7 +50,7 @@ jobs:
           pnpm changesets:version:canary
 
       - name: Publish canary version to npm
-        if: steps.canary.conclusion == 'success' && steps.changesets.outputs.published != 'true'
+        if: steps.canary.conclusion == 'success'
         uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1.7.0
         with: 
           publish: pnpm changesets:publish:canary
