@@ -29,7 +29,7 @@ description:
       - layouts
   en:
     localisedName: Websites for developer.overheid.nl API- and OSS registers
-    shortDescription: The websites and packages belonging to the OSS- ans API-register from developer.overheid.nl and the register-site-template
+    shortDescription: The websites and packages belonging to the OSS- and API-register from developer.overheid.nl and the register-site-template
 legal:
   license: EUPL-1.2
   mainCopyrightOwner: Stichting Geonovum
