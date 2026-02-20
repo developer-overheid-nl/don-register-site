@@ -21,7 +21,7 @@ description:
       Deze monorepo bevat de *nieuwe* websites van het [API-register](https://apis.developer.overheid.nl) en het [OSS-register](https://oss.developer.overheid.nl). Deze registers
       worden ontsloten vanuit een REST API.
 
-      De codebase bestaat uit een aantal packages die de gezamelijke codebase (components, layouts, etc) vormen en een `apps`-package waarin de verschillende websites staan.
+      De codebase bestaat uit een aantal packages die de gezamenlijke codebase (components, layouts, etc) vormen en een `apps`-package waarin de verschillende websites staan.
       Deze packages worden ook gebruikt in het [register-site-template](https://github.com/developer-overheid-nl/register-site-template).
     features:
       - informatie
