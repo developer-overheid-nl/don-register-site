@@ -4,6 +4,8 @@ import {
   API_URL,
   API_VERSION,
   API_X_API_KEY,
+  PIWIK_PRO_ACCOUNT_ADDRESS,
+  PIWIK_PRO_SITE_ID,
 } from "astro:env/server";
 import {
   Alert,
@@ -25,6 +27,7 @@ import {
   ScoreBadge,
   Search,
 } from "@developer-overheid-nl/don-register-components";
+import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import {
   DonOverview,
@@ -118,6 +121,11 @@ const items = error ? null : data;
 ---
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
+  <PiwikPro slot="head" client:only="react" 
+    accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS} 
+    siteId={PIWIK_PRO_SITE_ID} 
+    linkedDomains={[".developer.overheid.nl"]} 
+    pageTitle={`${t('pages.overview')}: ${t('components.search-results', {context: i18nContext})} | ${appConfig.title}`} />
   <Article className="markdown-content utrecht-html" slot="header"><Intro /></Article>
   <Search slot="search" searchUrl={new URL(`/apis/zoeken`, routingObj?.url).toString()} searchKey={SEARCH_QUERY_KEY} searchTerm={routingObj.query[SEARCH_QUERY_KEY]}></Search>
   <Filters slot="filters" routing={routingObj} data={filters} headers={filtersHeaders} error={filtersError} />
@@ -145,11 +153,13 @@ const items = error ? null : data;
             <CardAsLink
               href={new URL(`../${item.id}`, routingObj?.url).toString()}
               linkLabel={t('components.view-details')}
+              data-track-content
+              data-content-name="Overview Page Card"
             >
               <HeadingGroup slot="heading" title={item.title || '🐒'} level={2} appearanceLevel={4}>
                 <div class="subtitle" slot="subTitle">
                   <Paragraph slot="subTitle" itemScope={true} itemType="https://schema.org/Organization" itemID={item.organisation?.uri} className="moveAbove">
-                    <span itemprop="name"><DataBadgeLink appearance="subtle" className="orgLink" href={new URL(`../?organisation=${item.organisation?.uri}`, routingObj.url).toString()}>
+                    <span itemprop="name"><DataBadgeLink data-content-target="Organisation Badge" appearance="subtle" className="orgLink" href={new URL(`../?organisation=${item.organisation?.uri}`, routingObj.url).toString()}>
                       {item.organisation?.label}
                     </DataBadgeLink></span>
                   </Paragraph>

@@ -15,6 +15,9 @@ catalogs:
     '@csstools/postcss-global-data':
       specifier: 4.0.0
       version: 4.0.0
+    '@piwikpro/react-piwik-pro':
+      specifier: ^2.5.0
+      version: 2.5.0
     '@rijkshuisstijl-community/components-css':
       specifier: 12.0.0
       version: 12.0.0
@@ -98,6 +101,9 @@ importers:
       '@developer-overheid-nl/proprietary':
         specifier: workspace:@developer-overheid-nl/proprietary-don@*
         version: link:proprietary-don
+      '@piwikpro/react-piwik-pro':
+        specifier: 'catalog:'
+        version: 2.5.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@types/react':
         specifier: 'catalog:'
         version: 19.1.17
@@ -150,6 +156,9 @@ importers:
       '@developer-overheid-nl/don-register-layouts':
         specifier: workspace:*
         version: link:../../packages/layouts
+      '@piwikpro/react-piwik-pro':
+        specifier: 'catalog:'
+        version: 2.5.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@rijkshuisstijl-community/components-react':
         specifier: 'catalog:'
         version: 11.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.6)(date-fns@2.30.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -196,6 +205,9 @@ importers:
       '@developer-overheid-nl/don-register-layouts':
         specifier: workspace:*
         version: link:../../packages/layouts
+      '@piwikpro/react-piwik-pro':
+        specifier: 'catalog:'
+        version: 2.5.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@rijkshuisstijl-community/components-react':
         specifier: 'catalog:'
         version: 11.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.6)(date-fns@2.30.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -230,6 +242,9 @@ importers:
       '@developer-overheid-nl/don-register-locales':
         specifier: workspace:*
         version: link:../locales
+      '@piwikpro/react-piwik-pro':
+        specifier: 'catalog:'
+        version: 2.5.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@rijkshuisstijl-community/components-css':
         specifier: 'catalog:'
         version: 12.0.0(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1)
@@ -1213,6 +1228,17 @@ packages:
 
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
+
+  '@piwikpro/react-piwik-pro@2.5.0':
+    resolution: {integrity: sha512-g+Jep6pFq5QvhIOOicELVK5oMqsXH6g4F6xt6CXfoKymq21DFivz0ADNZdsbUsd/ZrtUQFib0Efk9DKo5Q8udA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      react: 19.2.3
+      react-dom: 19.2.3
+
+  '@piwikpro/tracking-base-library@1.6.0':
+    resolution: {integrity: sha512-jd88qqxGAtjSfdDLPuFzrk1hjnIQKCdSFynm3GE/fHB0drPsXZ/o1oXPY9YpAVX2dIkurrycRAzEhtC6KwSlfw==}
+    engines: {node: '>=18.0.0'}
 
   '@redocly/ajv@8.11.3':
     resolution: {integrity: sha512-4P3iZse91TkBiY+Dx5DUgxQ9GXkVJf++cmI0MOyLDxV9b5MUBI4II6ES8zA5JCbO72nKAJxWrw4PUPW+YP3ZDQ==}
@@ -5202,6 +5228,14 @@ snapshots:
       fastq: 1.20.1
 
   '@oslojs/encoding@1.1.0': {}
+
+  '@piwikpro/react-piwik-pro@2.5.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@piwikpro/tracking-base-library': 1.6.0
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+
+  '@piwikpro/tracking-base-library@1.6.0': {}
 
   '@redocly/ajv@8.11.3':
     dependencies:

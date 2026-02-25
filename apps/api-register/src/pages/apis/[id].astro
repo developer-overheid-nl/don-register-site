@@ -6,6 +6,8 @@ import {
   API_URL,
   API_VERSION,
   API_X_API_KEY,
+  PIWIK_PRO_ACCOUNT_ADDRESS,
+  PIWIK_PRO_SITE_ID,
 } from "astro:env/server";
 import {
   Alert,
@@ -28,6 +30,7 @@ import {
   ReadOnlyTextInput,
   ScoreBadge,
 } from "@developer-overheid-nl/don-register-components";
+import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import {
   DonBasic,
@@ -83,14 +86,21 @@ const details = error ? null : data;
 )}
 
 {details && (
-  <DonDetail appConfig={appConfig} titlePage={details?.title}>
+  <DonDetail appConfig={appConfig} titlePage={details.title}>
+    <PiwikPro slot="head" client:only="react" 
+      accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS} 
+      siteId={PIWIK_PRO_SITE_ID} 
+      linkedDomains={[".developer.overheid.nl"]} 
+      pageTitle={`${t(`pages.details-of-item`)}: ${details.title} | ${appConfig.title}`} />
     <HeadingGroup
       slot="header"
       title={`${t(`pages.details-of-item`)}: ${details?.title}`}
       level={2} 
+      data-track-content
+      data-content-name="Detail Page Header"
     >
       <Paragraph itemScope={true} itemType="https://schema.org/Organization" itemID={details?.organisation?.uri} className={`styles.aboveLink styles.publisher`}>
-          <span itemprop="name"><Link className={`styles.orgLink`} href={new URL(`./?organisation=${details?.organisation?.uri}`, Astro.url).toString()}>
+          <span itemprop="name"><Link data-content-target="organisationLink" className={`styles.orgLink`} href={new URL(`./?organisation=${details?.organisation?.uri}`, Astro.url).toString()}>
               {details?.organisation?.label}
           </Link></span>
       </Paragraph>
@@ -108,13 +118,13 @@ const details = error ? null : data;
       </DataSummary>
     </Fragment>
     <Fragment slot="meta">
-      <Block layout="flex-row">
+      <Block layout="flex-row" data-track-content data-content-name="Detail Page Meta">
         <div>{t(`components.version`, {version: details.lifecycle?.version || '-'})}</div>
         <AlignBox gap="small" display="inline">
           {/* <figure class=""> */}
             {/* <figcaption class="adr-score-label">{t(`components.adr-score`)}: {details.adrScore}%</figcaption> */}
             <PillBadge className="adr-score-figure" startValue={`ADR Score`} endValue={details.adrScore} type="percentage">
-              <span class="adr-score-info"><Link href={`https://developer-overheid-nl.github.io/oas-checker/?url=https://apis.developer.overheid.nl/apis/download/${id}/oas3.0.json`} target="_blank" rel="noopener noreferrer">Uitleg <Icon name="externe-link-inline" /></Link></span>
+              <span class="adr-score-info"><Link data-content-target="OAS Checker Link" href={`https://developer-overheid-nl.github.io/oas-checker/?url=https://apis.developer.overheid.nl/apis/download/${id}/oas3.0.json`} target="_blank" rel="noopener noreferrer">Uitleg <Icon name="externe-link-inline" /></Link></span>
             </PillBadge>
             {/* <ScoreBadge name={`ADR`} score={details.adrScore} max={100} inPercentage /> */}
           {/* </figure> */}
@@ -128,7 +138,7 @@ const details = error ? null : data;
         </AlignBox>
       </Block>
       <Heading level={3}>{t(`pages.tools`)}</Heading>
-      <Block appearance="outlined" layout="flex-col">
+      <Block appearance="outlined" layout="flex-col" data-track-content data-content-name="Detail Page Tools">
         <AlignBox align="space-between" gap="small">
           <label for="oasUrl" class="no-shrink">OpenAPI Specificatie</label>
           <ReadOnlyTextInput
@@ -138,18 +148,18 @@ const details = error ? null : data;
             defaultValue={details?.oasUrl}
             name="oasUrl"
           />
-          <CopyButton client:load text={details?.oasUrl} />
+          <CopyButton client:load text={details?.oasUrl} data-content-target="OAS Copy Button" />
           <Link href={`https://fetch.usebruno.com?url=${details?.oasUrl}&type=openapi`} target="_blank" rel="noopener noreferrer"><img src="https://fetch.usebruno.com/button.svg" alt="Fetch in Bruno" width="130" height="30" /></Link>
         </AlignBox>
         <div class="utrecht-badge-list" role="list">
           <span class="open-in-label">{t(`components.open-in`)}</span>
-          <DataBadgeLink href={`https://redocly.github.io/redoc/?url=${details?.oasUrl}`} target="_blank" rel="noopener" role="listitem">
+          <DataBadgeLink data-content-target="Open OAS In Redoc Link" href={`https://redocly.github.io/redoc/?url=${details?.oasUrl}`} target="_blank" rel="noopener" role="listitem">
             ReDoc
           </DataBadgeLink>
-          <DataBadgeLink href={`https://editor-next.swagger.io/?url=${details?.oasUrl}`} target="_blank" rel="noopener" role="listitem">
+          <DataBadgeLink data-content-target="Open OAS In Swagger Link" href={`https://editor-next.swagger.io/?url=${details?.oasUrl}`} target="_blank" rel="noopener" role="listitem">
             Swagger (Next)
           </DataBadgeLink>
-          <DataBadgeLink role="listitem" href={`https://elements-demo.stoplight.io/?spec=${details?.oasUrl}`} target="_blank" rel="noopener">
+          <DataBadgeLink data-content-target="Open OAS In Stoplight Link" role="listitem" href={`https://elements-demo.stoplight.io/?spec=${details?.oasUrl}`} target="_blank" rel="noopener">
             Stoplight
           </DataBadgeLink>
         </div>

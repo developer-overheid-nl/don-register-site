@@ -18,6 +18,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./client": "./src/client.ts",
+    "./analytics": "./src/analytics/index.ts",
     "./i18n": "./src/i18n.ts"
   },
   "main": "./src/index.ts",
@@ -27,6 +28,7 @@
   ],
   "dependencies": {
     "@developer-overheid-nl/don-register-locales": "workspace:*",
+    "@piwikpro/react-piwik-pro": "catalog:",
     "@rijkshuisstijl-community/components-css": "catalog:",
     "@rijkshuisstijl-community/components-react": "catalog:",
     "@rijkshuisstijl-community/design-tokens": "catalog:",

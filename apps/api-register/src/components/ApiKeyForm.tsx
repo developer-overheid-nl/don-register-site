@@ -46,7 +46,7 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
   const inputErrors = isInputError(error) ? error.fields : {};
 
   return (
-    <Block appearance="outlined" layout="flex-col">
+    <Block data-track-content data-content-name="API Key Request Form" appearance="outlined" layout="flex-col">
       <form id="get-api-key" action={action} className={styles.apiKeyForm}>
         <Fieldset legend={labels.title}>
           <Paragraph>{labels.intro}</Paragraph>
@@ -67,6 +67,7 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
               type="submit"
               appearance="primary-action-button"
               disabled={pending}
+              data-content-target="API Key Request Submit Button"
             >
               {pending
                 ? labels.form.submittingLabel
@@ -81,6 +82,7 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
             language="nl"
             hidefooter
             floating
+            data-content-piece="Altcha Widget"
           ></altcha-widget>
           {error && error?.type !== "AstroActionInputError" ? (
             <Alert type="error">{error?.message}</Alert>
@@ -88,7 +90,7 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
         </Fieldset>
       </form>
       <Activity mode={data?.key ? "visible" : "hidden"}>
-        <AlignBox align="top-left" direction="column" gap="small">
+        <AlignBox data-content-piece="API Key Visible" align="top-left" direction="column" gap="small">
           <FormFieldLabel htmlFor="api-key">
             {labels.keyShownLabel}
           </FormFieldLabel>
@@ -99,7 +101,7 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
               size={42}
               fontVariant="monospace"
             />
-            <CopyButton text={data?.key} />
+            <CopyButton text={data?.key} data-content-target="API Key Copy Button" />
           </AlignBox>
         </AlignBox>
         <Alert type="info">{labels.keyShownWarning}</Alert>

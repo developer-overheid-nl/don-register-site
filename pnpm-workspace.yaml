@@ -3,15 +3,11 @@ packages:
   - packages/*
   - proprietary*
 
-overrides:
-  "react": "catalog:react19"
-  "react-dom": "catalog:react19"
-  "@utrecht/button-group-css": "2.0.1"
-
 catalog:
   '@astrojs/node': 9.5.3
   '@astrojs/react': 4.4.2
   '@csstools/postcss-global-data': 4.0.0
+  '@piwikpro/react-piwik-pro': ^2.5.0
   '@rijkshuisstijl-community/components-css': 12.0.0
   '@rijkshuisstijl-community/components-react': 11.0.0
   '@rijkshuisstijl-community/design-tokens': 11.0.0
@@ -19,8 +15,8 @@ catalog:
   '@types/react-dom': 19.1.11
   '@utrecht/component-library-css': 9.0.0
   altcha: 2.3.0
-  astro: 5.17.2
   altcha-lib: 1.4.1
+  astro: 5.17.2
   clsx: 2.1.1
   i18next: 25.8.4
   openapi-fetch: 0.15.0
@@ -43,3 +39,8 @@ catalogs:
     '@types/react-dom': '>=19.2 <19.3'
     react: 19.2.3
     react-dom: 19.2.3
+
+overrides:
+  '@utrecht/button-group-css': 2.0.1
+  react: catalog:react19
+  react-dom: catalog:react19
