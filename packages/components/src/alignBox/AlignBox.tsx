@@ -87,6 +87,7 @@ const AlignBox: React.FC<AlignBoxProps> = ({
   display = "block",
   className,
   children,
+  ...restProps
 }) => {
   const alignmentClass = getAlignmentClass(align);
   const gapClass = getGapClass(gap);
@@ -101,6 +102,7 @@ const AlignBox: React.FC<AlignBoxProps> = ({
         gapClass,
         className ?? "",
       )}
+      {...restProps}
     >
       {children}
     </div>

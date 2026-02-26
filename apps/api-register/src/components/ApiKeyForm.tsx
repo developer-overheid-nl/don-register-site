@@ -12,6 +12,7 @@ import {
   Paragraph,
   ReadOnlyTextInput,
 } from "@developer-overheid-nl/don-register-components";
+import { CustomEvent, ErrorTracking } from "@piwikpro/react-piwik-pro";
 import { Activity, useActionState, useEffect } from "react";
 import styles from "./ApiKeyForm.module.css";
 
@@ -45,8 +46,31 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
 
   const inputErrors = isInputError(error) ? error.fields : {};
 
+  // Piwik Pro event tracking, only on the client side to avoid hydration issues.
+  if (!import.meta.env.SSR) {
+    let action: string;
+    switch (true) {
+      case pending:
+        action = "Submitting";
+        break;
+      case !!error:
+        action = "Error";
+        break;
+      case !!data?.key:
+        action = "Success";
+        break;
+      default:
+        action = "View";
+    }
+    CustomEvent.trackEvent("Forms", action, "API Key Request Form");
+
+    if (action === "Error") {
+      ErrorTracking.trackError(error instanceof Error ? error : new Error(JSON.stringify(error)));
+    }
+  }
+
   return (
-    <Block data-track-content data-content-name="API Key Request Form" appearance="outlined" layout="flex-col">
+    <Block appearance="outlined" layout="flex-col">
       <form id="get-api-key" action={action} className={styles.apiKeyForm}>
         <Fieldset legend={labels.title}>
           <Paragraph>{labels.intro}</Paragraph>
@@ -67,7 +91,6 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
               type="submit"
               appearance="primary-action-button"
               disabled={pending}
-              data-content-target="API Key Request Submit Button"
             >
               {pending
                 ? labels.form.submittingLabel
@@ -82,7 +105,6 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
             language="nl"
             hidefooter
             floating
-            data-content-piece="Altcha Widget"
           ></altcha-widget>
           {error && error?.type !== "AstroActionInputError" ? (
             <Alert type="error">{error?.message}</Alert>
@@ -90,7 +112,7 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
         </Fieldset>
       </form>
       <Activity mode={data?.key ? "visible" : "hidden"}>
-        <AlignBox data-content-piece="API Key Visible" align="top-left" direction="column" gap="small">
+        <AlignBox align="top-left" direction="column" gap="small">
           <FormFieldLabel htmlFor="api-key">
             {labels.keyShownLabel}
           </FormFieldLabel>
@@ -101,7 +123,7 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
               size={42}
               fontVariant="monospace"
             />
-            <CopyButton text={data?.key} data-content-target="API Key Copy Button" />
+            <CopyButton text={data?.key} />
           </AlignBox>
         </AlignBox>
         <Alert type="info">{labels.keyShownWarning}</Alert>

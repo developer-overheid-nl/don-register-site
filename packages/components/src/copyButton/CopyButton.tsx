@@ -8,6 +8,7 @@ import styles from "./styles.module.css";
 const CopyButton = ({
   text,
   className,
+  ...restProps
 }: {
   text?: string;
   className?: string;
@@ -29,6 +30,7 @@ const CopyButton = ({
         onClick={handleCopy}
         title="Kopieer naar klembord"
         aria-label="Kopieer naar klembord"
+        {...restProps}
       >
         <Icon className={styles.icon} name="kopieer-inline" />
       </SecondaryActionButton>
