@@ -144,10 +144,10 @@ const details = error ? null : data;
             id="oasUrl"
             type="url"
             aria-label="Open Api Specificatie (OAS) URL"
-            defaultValue={details?.oasUrl}
+            defaultValue={details?.oasUrl || ''}
             name="oasUrl"
           />
-          <CopyButton client:load text={details?.oasUrl} data-content-target="OAS Copy Button" />
+          <CopyButton client:load text={details?.oasUrl || ''} data-content-target="OAS Copy Button" />
           <Link data-content-target="Fetch in Bruno Button" href={`https://fetch.usebruno.com?url=${details?.oasUrl}&type=openapi`} target="_blank" rel="noopener noreferrer"><img src="https://fetch.usebruno.com/button.svg" alt="Fetch in Bruno" width="130" height="30" /></Link>
         </AlignBox>
         <div class="utrecht-badge-list" role="list" data-content-piece="Open OAS in">

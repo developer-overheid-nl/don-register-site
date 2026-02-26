@@ -95,7 +95,7 @@ const details = error ? null : data;
     </HeadingGroup>
     <Fragment slot="description">
       <Heading level={3} className="sr-only">{t(`pages.description`)}</Heading>
-      <div class="utrecht-html"><Markdown text={details.longDescription || details.description} minHeadingDepth={4} /></div>
+      <div class="utrecht-html"><Markdown text={details.longDescription} minHeadingDepth={4} /></div>
     </Fragment>
     <Fragment slot="aside">
       <DataSummary appearance="row">
@@ -109,12 +109,11 @@ const details = error ? null : data;
       <Block appearance="outlined">
         <Heading level={5}>{t(`pages.links`)}</Heading>
         <DataSummary appearance="column" contained>
-          <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={``} href={details.url || details.repositoryUrl}>{details.url || details.repositoryUrl}</DataSummaryItem>
+          <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={``} href={details.url}>{details.url}</DataSummaryItem>
+          <DataSummaryItem itemKey={t(`pages.public-code-url`)} itemValue={details?.publicCodeUrl || '-'} />
           <DataSummaryItem itemKey={t(`components.created-at`)} itemValue={new Date(details.createdAt as string | number).toLocaleDateString('nl-NL')} />
           <DataSummaryItem itemKey={t(`components.last-activity-at`)} itemValue={new Date(details.lastActivityAt as string | number).toLocaleDateString('nl-NL')} />
           <DataSummaryItem itemKey={t(`components.last-crawled-at`)} itemValue={new Date(details.lastCrawledAt as string | number).toLocaleDateString('nl-NL')} />
-          {/* TODO: when publicCodeUrl is in the data again, show it again */}
-          {/* <DataSummaryItem itemKey={t(`pages.public-code-url`)} itemValue={details?.publicCodeUrl || '-'} /> */}
         </DataSummary>
       </Block>
     </Fragment>
