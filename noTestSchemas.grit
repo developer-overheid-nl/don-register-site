@@ -2,6 +2,6 @@ engine biome(1.0)
 language js
 
 JsExport() as $export where {
-  $export <: r"*.-schema\.test.*",
+  $export <: r"*-schema\.test.*",
   register_diagnostic(span=$export, message="Always check-in the production schema.")
 }
