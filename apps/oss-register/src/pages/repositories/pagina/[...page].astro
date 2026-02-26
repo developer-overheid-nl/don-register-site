@@ -4,6 +4,8 @@ import {
   API_URL,
   API_VERSION,
   API_X_API_KEY,
+  PIWIK_PRO_ACCOUNT_ADDRESS,
+  PIWIK_PRO_SITE_ID,
 } from "astro:env/server";
 import {
   Alert,
@@ -27,6 +29,7 @@ import {
   ScoreBadge,
   Search,
 } from "@developer-overheid-nl/don-register-components";
+import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import {
   DonOverview,
@@ -116,6 +119,14 @@ i18n.addResourceBundle(
   true,
 );
 
+const isSearchPage = Boolean(routingObj.query[SEARCH_QUERY_KEY]);
+const searchObject = isSearchPage
+  ? {
+      keyword: routingObj.query[SEARCH_QUERY_KEY] as string,
+      category: undefined,
+      searchCount: paginationObj.totalCount,
+    }
+  : undefined;
 const i18nContext =
   routingObj.query && Object.keys(routingObj.query).length > 0
     ? "filtered"
@@ -125,6 +136,13 @@ const items = error ? null : data;
 ---
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
+  <PiwikPro slot="head" client:only="react" 
+    accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS} 
+    siteId={PIWIK_PRO_SITE_ID} 
+    pageTitle={`${t('pages.overview')}: ${t('components.search-results', {context: i18nContext})} | ${appConfig.title}`} 
+    isSearchPage={isSearchPage}
+    searchObject={searchObject}
+  />
   <Article className="markdown-content utrecht-html" slot="header"><Intro /></Article>
   <Search slot="search" searchUrl={new URL(`/repositories/zoeken`, routingObj?.url).toString()} searchKey={SEARCH_QUERY_KEY} searchTerm={routingObj.query[SEARCH_QUERY_KEY]}></Search>
   <Filters slot="filters" routing={routingObj} data={filters} headers={filtersHeaders} error={filtersError} status={filtersStatus} statusText={filtersStatusText} />
@@ -154,11 +172,13 @@ const items = error ? null : data;
             <CardAsLink
               href={new URL(`../${item.id}`, routingObj?.url).toString()}
               linkLabel={t('components.view-details')}
+              data-track-content
+              data-content-name="Overview Page Card"
             >
               <HeadingGroup slot="heading" title={item.name || '🗄️'} level={2} appearanceLevel={4}>
                 <div class="subtitle" slot="subTitle">
-                  <Paragraph slot="subTitle" itemScope={true} itemType="https://schema.org/Organization" itemID={item.organisation?.uri} className="moveAbove">
-                    <span itemprop="name"><DataBadgeLink appearance="subtle" className="orgLink" href={new URL(`../?organisation=${item.organisation?.uri}`, routingObj.url).toString()}>
+                  <Paragraph slot="subTitle" data-content-piece="Organisation Name" itemScope={true} itemType="https://schema.org/Organization" itemID={item.organisation?.uri} className="moveAbove">
+                    <span itemprop="name"><DataBadgeLink data-content-target="Organisation Badge" appearance="subtle" className="orgLink" href={new URL(`../?organisation=${item.organisation?.uri}`, routingObj.url).toString()}>
                       {item.organisation?.label}
                     </DataBadgeLink></span>
                   </Paragraph>
@@ -201,7 +221,6 @@ const items = error ? null : data;
     align-items: center;
     font-size: 1rem;
   }
-
 
   .description {
     word-break: break-word;
