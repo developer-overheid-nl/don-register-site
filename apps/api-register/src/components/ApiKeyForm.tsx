@@ -65,7 +65,9 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
     CustomEvent.trackEvent("Forms", action, "API Key Request Form");
 
     if (action === "Error") {
-      ErrorTracking.trackError(error instanceof Error ? error : new Error(JSON.stringify(error)));
+      ErrorTracking.trackError(
+        error instanceof Error ? error : new Error(JSON.stringify(error)),
+      );
     }
   }
 

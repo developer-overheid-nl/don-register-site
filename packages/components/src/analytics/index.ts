@@ -1,1 +1,1 @@
-export { default as PiwikPro } from './PiwikPro';
+export { default as PiwikPro } from "./PiwikPro";
