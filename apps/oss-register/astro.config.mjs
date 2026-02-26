@@ -79,6 +79,14 @@ export default defineConfig({
         access: "public",
         default: "v1",
       }),
+      PIWIK_PRO_SITE_ID: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+      PIWIK_PRO_ACCOUNT_ADDRESS: envField.string({
+        context: "server",
+        access: "public",
+      }),
     },
   },
   redirects: {
