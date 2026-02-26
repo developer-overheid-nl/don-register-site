@@ -9,7 +9,7 @@ overrides:
   "@utrecht/button-group-css": "2.0.1"
 
 catalog:
-  '@astrojs/node': 9.5.3
+  '@astrojs/node': 9.5.4
   '@astrojs/react': 4.4.2
   '@csstools/postcss-global-data': 4.0.0
   '@rijkshuisstijl-community/components-css': 12.0.0
@@ -19,7 +19,7 @@ catalog:
   '@types/react-dom': 19.1.11
   '@utrecht/component-library-css': 9.0.0
   altcha: 2.3.0
-  astro: 5.17.2
+  astro: 5.18.0
   altcha-lib: 1.4.1
   clsx: 2.1.1
   i18next: 25.8.4
