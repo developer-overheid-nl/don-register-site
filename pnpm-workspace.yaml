@@ -16,7 +16,7 @@ catalog:
   '@rijkshuisstijl-community/components-react': 11.0.0
   '@rijkshuisstijl-community/design-tokens': 11.0.0
   '@types/react': 19.1.17
-  '@types/react-dom': 19.1.11
+  '@types/react-dom': 19.2.3
   '@utrecht/component-library-css': 9.0.0
   altcha: 2.3.0
   astro: 5.17.2
@@ -27,7 +27,7 @@ catalog:
   openapi-typescript: 7.10.1
   postcss-custom-media: 12.0.0
   react: 19.2.3
-  react-dom: 19.2.3
+  react-dom: 19.2.4
   react-markdown: 10.1.0
   typescript: 5.9.3
   vite: 7.3.1
@@ -42,4 +42,4 @@ catalogs:
     '@types/react': '>=19.2 <19.3'
     '@types/react-dom': '>=19.2 <19.3'
     react: 19.2.3
-    react-dom: 19.2.3
+    react-dom: 19.2.4
