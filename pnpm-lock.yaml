@@ -22,8 +22,8 @@ catalogs:
       specifier: 11.0.0
       version: 11.0.0
     '@rijkshuisstijl-community/design-tokens':
-      specifier: 11.0.0
-      version: 11.0.0
+      specifier: 11.1.0
+      version: 11.1.0
     '@types/react':
       specifier: 19.1.17
       version: 19.1.17
@@ -241,7 +241,7 @@ importers:
         version: 11.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.6)(date-fns@2.30.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
-        version: 11.0.0
+        version: 11.1.0
       '@types/parse-link-header':
         specifier: ^2.0.3
         version: 2.0.3
@@ -308,7 +308,7 @@ importers:
         version: 11.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.28.6)(date-fns@2.30.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
-        version: 11.0.0
+        version: 11.1.0
       '@types/parse-link-header':
         specifier: ^2.0.3
         version: 2.0.3
@@ -1236,8 +1236,8 @@ packages:
       react: 19.2.3
       react-dom: 19.2.3
 
-  '@rijkshuisstijl-community/design-tokens@11.0.0':
-    resolution: {integrity: sha512-tYlzF+FCHEHVy80W89HRBU0UVlgqsUp8IwdXT9BwiiQvvLDkZN5d2ZRA7UrMB0X4NXmp9zfcsSLG9Zw8b/Ev7w==}
+  '@rijkshuisstijl-community/design-tokens@11.1.0':
+    resolution: {integrity: sha512-QWAsFCEVv9AlOnISFMlBvU1M75D/LmI4sUU5RegMkj3HZH1a9A218rlExlIy/6KfmtvL67TUTnuZYkDEZmQ/UQ==}
 
   '@rolldown/pluginutils@1.0.0-beta.27':
     resolution: {integrity: sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA==}
@@ -5332,7 +5332,7 @@ snapshots:
       - react-vega
       - vega
 
-  '@rijkshuisstijl-community/design-tokens@11.0.0': {}
+  '@rijkshuisstijl-community/design-tokens@11.1.0': {}
 
   '@rolldown/pluginutils@1.0.0-beta.27': {}
 
