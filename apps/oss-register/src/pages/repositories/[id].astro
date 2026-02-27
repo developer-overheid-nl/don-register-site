@@ -6,6 +6,8 @@ import {
   API_URL,
   API_VERSION,
   API_X_API_KEY,
+  PIWIK_PRO_ACCOUNT_ADDRESS,
+  PIWIK_PRO_SITE_ID,
 } from "astro:env/server";
 import {
   Alert,
@@ -18,6 +20,7 @@ import {
   Markdown,
   Paragraph,
 } from "@developer-overheid-nl/don-register-components";
+import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import {
   DonBasic,
@@ -73,13 +76,19 @@ const details = error ? null : data;
 
 {details && (
   <DonDetail appConfig={appConfig} titlePage={details?.name}>
+    <PiwikPro slot="head" client:only="react" 
+      accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS} 
+      siteId={PIWIK_PRO_SITE_ID} 
+      pageTitle={`${t(`pages.details-of-item`)}: ${details.title} | ${appConfig.title}`} />
     <HeadingGroup
       slot="header"
       title={`${t(`pages.details-of-item`)}: ${details?.name}`}
       level={2} 
+      data-track-content
+      data-content-name="Detail Page Header"
     >
-      <Paragraph itemScope={true} itemType="https://schema.org/Organization" itemID={details?.organisation?.uri} className={`styles.aboveLink styles.publisher`}>
-          <span itemprop="name"><Link className={`styles.orgLink`} href={new URL(`./?organisation=${details?.organisation?.uri}`, Astro.url).toString()}>
+      <Paragraph data-content-piece="Organisation Name" itemScope={true} itemType="https://schema.org/Organization" itemID={details?.organisation?.uri} className={`styles.aboveLink styles.publisher`}>
+          <span itemprop="name"><Link data-content-target="Organisation Link" className={`styles.orgLink`} href={new URL(`./?organisation=${details?.organisation?.uri}`, Astro.url).toString()}>
               {details?.organisation?.label}
           </Link></span>
       </Paragraph>

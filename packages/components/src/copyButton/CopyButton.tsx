@@ -5,13 +5,12 @@ import clsx from "clsx";
 import Icon from "../iconsSprite/Icon";
 import styles from "./styles.module.css";
 
-const CopyButton = ({
-  text,
-  className,
-}: {
+interface CopyButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text?: string;
-  className?: string;
-}) => {
+}
+
+const CopyButton = ({ text, className, ...restProps }: CopyButtonProps) => {
   const handleCopy = async () => {
     if ("clipboard" in navigator) {
       await navigator.clipboard.writeText(
@@ -29,6 +28,7 @@ const CopyButton = ({
         onClick={handleCopy}
         title="Kopieer naar klembord"
         aria-label="Kopieer naar klembord"
+        {...restProps}
       >
         <Icon className={styles.icon} name="kopieer-inline" />
       </SecondaryActionButton>

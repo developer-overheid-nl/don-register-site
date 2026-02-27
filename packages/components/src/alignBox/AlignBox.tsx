@@ -21,12 +21,11 @@ type Align =
 
 type Gap = "none" | "small" | "medium" | "large";
 
-export interface AlignBoxProps {
+export interface AlignBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   align?: Align;
   gap?: Gap;
   direction?: "row" | "column";
   display?: "block" | "inline";
-  className?: string;
   children: ReactNode;
 }
 
@@ -87,6 +86,7 @@ const AlignBox: React.FC<AlignBoxProps> = ({
   display = "block",
   className,
   children,
+  ...restProps
 }) => {
   const alignmentClass = getAlignmentClass(align);
   const gapClass = getGapClass(gap);
@@ -101,6 +101,7 @@ const AlignBox: React.FC<AlignBoxProps> = ({
         gapClass,
         className ?? "",
       )}
+      {...restProps}
     >
       {children}
     </div>

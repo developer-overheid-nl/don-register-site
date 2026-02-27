@@ -1,5 +1,7 @@
 ---
+import { PIWIK_PRO_ACCOUNT_ADDRESS, PIWIK_PRO_SITE_ID } from "astro:env/server";
 import { Heading } from "@developer-overheid-nl/don-register-components";
+import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import { DonBasicWithAside } from "@developer-overheid-nl/don-register-layouts";
 import { t } from "i18next";
@@ -45,6 +47,10 @@ const labels = {
 --- 
 
 <DonBasicWithAside appConfig={appConfig} titlePage={t("pages.key-aanvragen-title")}>
+  <PiwikPro slot="head" client:only="react" 
+    accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS} 
+    siteId={PIWIK_PRO_SITE_ID} 
+    pageTitle={`${t("pages.key-aanvragen-title")} | ${appConfig.title}`} />
 
   <Heading slot="header" level={2} appearanceLevel={2}>
     {t("pages.key-aanvragen-title")}
