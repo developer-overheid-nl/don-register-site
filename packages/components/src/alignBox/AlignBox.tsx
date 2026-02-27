@@ -21,12 +21,11 @@ type Align =
 
 type Gap = "none" | "small" | "medium" | "large";
 
-export interface AlignBoxProps {
+export interface AlignBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   align?: Align;
   gap?: Gap;
   direction?: "row" | "column";
   display?: "block" | "inline";
-  className?: string;
   children: ReactNode;
 }
 
