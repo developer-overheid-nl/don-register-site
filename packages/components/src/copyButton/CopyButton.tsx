@@ -5,15 +5,12 @@ import clsx from "clsx";
 import Icon from "../iconsSprite/Icon";
 import styles from "./styles.module.css";
 
-interface CopyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface CopyButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text?: string;
 }
 
-const CopyButton = ({
-  text,
-  className,
-  ...restProps
-}: CopyButtonProps) => {
+const CopyButton = ({ text, className, ...restProps }: CopyButtonProps) => {
   const handleCopy = async () => {
     if ("clipboard" in navigator) {
       await navigator.clipboard.writeText(
