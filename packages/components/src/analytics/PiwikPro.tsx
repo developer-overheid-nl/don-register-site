@@ -65,5 +65,5 @@ export default function Analytics(props: AnalyticsProps) {
   ContentTracking.trackAllContentImpressions();
   ContentTracking.trackVisibleContentImpressions(true);
 
-  return;
+  return null;
 }
