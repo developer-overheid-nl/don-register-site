@@ -47,29 +47,34 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
   const inputErrors = isInputError(error) ? error.fields : {};
 
   // Piwik Pro event tracking, only on the client side to avoid hydration issues.
-  if (!import.meta.env.SSR) {
-    let action: string;
+  useEffect(() => {
+    if (import.meta.env.SSR) {
+      return;
+    }
+
+    let actionName: string;
     switch (true) {
       case pending:
-        action = "Submitting";
+        actionName = "Submitting";
         break;
       case !!error:
-        action = "Error";
+        actionName = "Error";
         break;
       case !!data?.key:
-        action = "Success";
+        actionName = "Success";
         break;
       default:
-        action = "View";
+        actionName = "View";
     }
-    CustomEvent.trackEvent("Forms", action, "API Key Request Form");
 
-    if (action === "Error") {
+    CustomEvent.trackEvent("Forms", actionName, "API Key Request Form");
+
+    if (actionName === "Error") {
       ErrorTracking.trackError(
         error instanceof Error ? error : new Error(JSON.stringify(error)),
       );
     }
-  }
+  }, [pending, error, data?.key]);
 
   return (
     <Block appearance="outlined" layout="flex-col">
