@@ -4,7 +4,7 @@ packages:
   - proprietary*
 
 catalog:
-  '@astrojs/node': 9.5.3
+  '@astrojs/node': 9.5.4
   '@astrojs/react': 4.4.2
   '@csstools/postcss-global-data': 4.0.0
   '@piwikpro/react-piwik-pro': 2.5.0
@@ -16,7 +16,7 @@ catalog:
   '@utrecht/component-library-css': 9.0.0
   altcha: 2.3.0
   altcha-lib: 1.4.1
-  astro: 5.17.2
+  astro: 5.18.0
   clsx: 2.1.1
   i18next: 25.8.4
   openapi-fetch: 0.15.0
