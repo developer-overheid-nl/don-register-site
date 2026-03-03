@@ -8,6 +8,7 @@ import PiwikPro, {
   PageViews,
   SiteSearch,
 } from "@piwikpro/react-piwik-pro";
+import { useEffect } from "react";
 
 interface AnalyticsProps {
   siteId: string;
@@ -51,19 +52,21 @@ export default function Analytics(props: AnalyticsProps) {
 
   DownloadAndOutlink.addDownloadExtensions(downloadExtensions);
 
+  ContentTracking.trackAllContentImpressions();
+  ContentTracking.trackVisibleContentImpressions(true);
+
   if (trackJSErrors) {
     ErrorTracking.enableJSErrorTracking();
   }
 
-  if (pageTitle && !isSearchPage) {
-    PageViews.trackPageView(pageTitle);
-  } else if (isSearchPage && searchObject?.keyword) {
-    const { keyword, category, searchCount, dimensions } = searchObject;
-    SiteSearch.trackSiteSearch(keyword, category, searchCount, dimensions);
-  }
-
-  ContentTracking.trackAllContentImpressions();
-  ContentTracking.trackVisibleContentImpressions(true);
+  useEffect(() => {
+    if (pageTitle && !isSearchPage) {
+      PageViews.trackPageView(pageTitle);
+    } else if (isSearchPage && searchObject?.keyword) {
+      const { keyword, category, searchCount, dimensions } = searchObject;
+      SiteSearch.trackSiteSearch(keyword, category, searchCount, dimensions);
+    }
+  }, [pageTitle, isSearchPage, searchObject]);
 
   return null;
 }
