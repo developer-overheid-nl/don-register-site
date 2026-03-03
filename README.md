@@ -48,6 +48,8 @@ Zie ook de [README](/apps/api-register/README.md) van deze package.
 
 De [Astro] site van het OSS-register.
 
+Zie ook de [README](/apps/oss-register/README.md) van deze package.
+
 ### Je eigen register
 
 In de repository [register-site-template] staat een template voor het bouwen van sites op basis van de packages in deze monorepo.
@@ -151,9 +153,9 @@ Zie ook de [README](/.changeset/README.md) in de `.changeset`-map hoe het werkt 
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
+| Command                | Action                                           |
+| :--------------------- | :----------------------------------------------- |
+| `pnpm install`         | Installs dependencies                            |
 | `pnpm dev`             | Starts local dev server at `localhost:4321`      |
 | `pnpm build`           | Build your production site to `./dist/`          |
 | `pnpm preview`         | Preview your build locally, before deploying     |

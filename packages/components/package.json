@@ -24,7 +24,8 @@
   "main": "./src/index.ts",
   "files": [
     "src/",
-    "tsconfig.json"
+    "tsconfig.json",
+    "CHANGELOG.md"
   ],
   "dependencies": {
     "@developer-overheid-nl/don-register-locales": "workspace:*",
