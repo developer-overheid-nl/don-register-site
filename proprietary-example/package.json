@@ -15,7 +15,8 @@
     "index.ts",
     "/logos",
     "/fonts",
-    "/icons"
+    "/icons",
+    "CHANGELOG.md"
   ],
   "main": "index.ts",
   "scripts": {
