@@ -83,24 +83,17 @@ export default defineConfig({
         access: "public",
         default: "v1",
       }),
-      ALTCHA_HMAC_KEY: envField.string({
+      PIWIK_PRO_SITE_ID: envField.string({
         context: "server",
         access: "secret",
       }),
-      PUBLIC_MATOMO_URL: envField.string({
-        context: "client",
+      PIWIK_PRO_ACCOUNT_ADDRESS: envField.string({
+        context: "server",
         access: "public",
-        optional: true,
       }),
-      PUBLIC_MATOMO_SCRIPT_URL: envField.string({
-        context: "client",
-        access: "public",
-        optional: true,
-      }),
-      PUBLIC_MATOMO_SITE_ID: envField.string({
-        context: "client",
-        access: "public",
-        optional: true,
+      ALTCHA_HMAC_KEY: envField.string({
+        context: "server",
+        access: "secret",
       }),
     },
   },

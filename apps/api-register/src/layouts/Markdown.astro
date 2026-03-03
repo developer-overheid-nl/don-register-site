@@ -1,4 +1,6 @@
 ---
+import { PIWIK_PRO_ACCOUNT_ADDRESS, PIWIK_PRO_SITE_ID } from "astro:env/server";
+import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
 import { DonBasic } from "@developer-overheid-nl/don-register-layouts";
 import type { MarkdownLayoutProps } from "astro";
 import appConfig from "../../app.config";
@@ -19,6 +21,11 @@ const titlePage =
 --- 
 
 <DonBasic appConfig={appConfig} titlePage={titlePage}>
+  <PiwikPro slot="head" client:only="react" 
+    accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS} 
+    siteId={PIWIK_PRO_SITE_ID} 
+    pageTitle={`${titlePage} | ${appConfig.title}`} />
+
   <div class="markdown-content utrecht-html">
     <slot />
   </div>

@@ -12,6 +12,7 @@ import {
   Paragraph,
   ReadOnlyTextInput,
 } from "@developer-overheid-nl/don-register-components";
+import { CustomEvent, ErrorTracking } from "@piwikpro/react-piwik-pro";
 import { Activity, useActionState, useEffect } from "react";
 import styles from "./ApiKeyForm.module.css";
 
@@ -44,6 +45,36 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
   );
 
   const inputErrors = isInputError(error) ? error.fields : {};
+
+  // Piwik Pro event tracking, only on the client side to avoid hydration issues.
+  useEffect(() => {
+    if (import.meta.env.SSR) {
+      return;
+    }
+
+    let actionName: string;
+    switch (true) {
+      case pending:
+        actionName = "Submitting";
+        break;
+      case !!error:
+        actionName = "Error";
+        break;
+      case !!data?.key:
+        actionName = "Success";
+        break;
+      default:
+        actionName = "View";
+    }
+
+    CustomEvent.trackEvent("Forms", actionName, "API Key Request Form");
+
+    if (actionName === "Error") {
+      ErrorTracking.trackError(
+        error instanceof Error ? error : new Error(JSON.stringify(error)),
+      );
+    }
+  }, [pending, error, data?.key]);
 
   return (
     <Block appearance="outlined" layout="flex-col">
