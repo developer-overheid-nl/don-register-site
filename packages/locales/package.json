@@ -27,7 +27,8 @@
     "./nl": "./nl/translation.json"
   },
   "files": [
-    "nl/"
+    "nl/",
+    "CHANGELOG.md"
   ],
   "dependencies": {
     "i18next": "catalog:"

@@ -5,7 +5,7 @@
   "license": "EUPL-1.2",
   "private": false,
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/developer-overheid-nl/don-register-site"
@@ -21,7 +21,8 @@
   "main": "./src/index.ts",
   "files": [
     "src/",
-    "tsconfig.json"
+    "tsconfig.json",
+    "CHANGELOG.md"
   ],
   "dependencies": {
     "@developer-overheid-nl/don-register-components": "workspace:*",

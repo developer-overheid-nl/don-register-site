@@ -1,5 +1,24 @@
 # @developer-overheid-nl/don-register-components
 
+## 1.1.0
+
+### Minor Changes
+
+- 804dc03: Added Analytics component.
+  - Added `PiwikPro` component to encapsulate Piwik analytics tracking.
+  - Added restProps to `AlignBox` component and `CopyButton` component.
+
+### Patch Changes
+
+- 4447980: Updated dependencies
+
+  Removed standalone postcss.config.cjs files from apps (integrated into astro.config.mjs)
+
+- f7034b9: Updated dependencies:
+  - @rijkshuisstijl-community/components-css
+  - @rijkshuisstijl-community/components-react
+- ded15aa: fix: exclude 'current' property when mapping NavBar items
+
 ## 1.0.0
 
 ### Major Changes

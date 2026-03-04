@@ -16,7 +16,6 @@
   },
   "packageManager": "pnpm@10.27.0",
   "type": "module",
-  "version": "0.0.1-beta.1",
   "scripts": {
     "start": "pnpm run start:api",
     "dev": "pnpm run /^dev:.*/ --parallel",

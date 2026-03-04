@@ -21,6 +21,22 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 4321,
+    allowedHosts: [
+      "apis.developer.overheid.nl",
+      "**.don.apps.digilab.network",
+    ],
+  },
+  security: {
+    allowedDomains: [
+      {
+        hostname: "apis.developer.overheid.nl",
+        protocol: "https",
+      },
+      {
+        hostname: "**.don.apps.digilab.network",
+        protocol: "https",
+      },
+    ],
   },
   integrations: [
     react(),
