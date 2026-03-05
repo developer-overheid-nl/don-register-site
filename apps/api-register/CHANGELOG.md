@@ -1,5 +1,11 @@
 # @developer-overheid-nl/api-register
 
+## 1.1.1
+
+### Patch Changes
+
+- 55e64bb: Bump the astro packages with 2 updates
+
 ## 1.1.0
 
 ### Minor Changes
