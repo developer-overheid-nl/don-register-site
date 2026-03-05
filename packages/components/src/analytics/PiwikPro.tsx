@@ -2,13 +2,19 @@
 
 import PiwikPro, {
   ContentTracking,
+  CustomEvent,
   type Dimensions,
   DownloadAndOutlink,
   ErrorTracking,
-  PageViews,
   SiteSearch,
 } from "@piwikpro/react-piwik-pro";
 import { useEffect } from "react";
+
+declare global {
+  interface Window {
+    _paq: unknown[];
+  }
+}
 
 interface AnalyticsProps {
   siteId: string;
@@ -16,7 +22,11 @@ interface AnalyticsProps {
   dataLayerName?: string;
   trackJSErrors?: boolean;
   downloadExtensions?: string[];
+  /**
+   * @deprecated This property is deprecated.
+   */
   pageTitle?: string;
+  customEvent?: { category?: string; action?: string; name: string };
   isSearchPage?: boolean;
   searchObject?: {
     keyword: string;
@@ -37,6 +47,7 @@ export default function Analytics(props: AnalyticsProps) {
     dataLayerName,
     trackJSErrors = true,
     pageTitle,
+    customEvent,
     isSearchPage,
     searchObject,
   } = props;
@@ -44,6 +55,12 @@ export default function Analytics(props: AnalyticsProps) {
     ...DOWNLOAD_EXTENSIONS,
     ...(props.downloadExtensions || []),
   ];
+
+  if (pageTitle) {
+    console.warn(
+      "The 'pageTitle' property is deprecated and will be removed in future versions.",
+    );
+  }
 
   PiwikPro.initialize(siteId, accountAddress, {
     /* nonce, */
@@ -60,13 +77,18 @@ export default function Analytics(props: AnalyticsProps) {
   }
 
   useEffect(() => {
-    if (pageTitle && !isSearchPage) {
-      PageViews.trackPageView(pageTitle);
-    } else if (isSearchPage && searchObject?.keyword) {
+    if (customEvent) {
+      CustomEvent.trackEvent(
+        customEvent.category || "Pages",
+        customEvent.action || "view",
+        customEvent.name,
+      );
+    }
+    if (isSearchPage && searchObject?.keyword) {
       const { keyword, category, searchCount, dimensions } = searchObject;
       SiteSearch.trackSiteSearch(keyword, category, searchCount, dimensions);
     }
-  }, [pageTitle, isSearchPage, searchObject]);
+  }, [customEvent, isSearchPage, searchObject]);
 
   return null;
 }

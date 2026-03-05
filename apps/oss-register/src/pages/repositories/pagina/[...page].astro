@@ -139,7 +139,7 @@ const items = error ? null : data;
   <PiwikPro slot="head" client:only="react" 
     accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS} 
     siteId={PIWIK_PRO_SITE_ID} 
-    pageTitle={`${t('pages.overview')}: ${t('components.search-results', {context: i18nContext})} | ${appConfig.title}`} 
+    customEvent={{name: i18nContext as string}}
     isSearchPage={isSearchPage}
     searchObject={searchObject}
   />
