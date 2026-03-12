@@ -100,6 +100,9 @@
   --rhc-nav-bar-border-color: #01689b;
   --rhc-nav-bar-link-font-size: var(--utrecht-document-font-size, inherit);
 
+  --rhc-checkbox-group-row-gap: 0.25rem;
+  --rhc-checkbox-group-padding-block-start: 0;
+
   /* not available in RHC */
 
   /* Uncomment each custom property you need */

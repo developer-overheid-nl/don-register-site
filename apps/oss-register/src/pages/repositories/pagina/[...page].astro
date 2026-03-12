@@ -16,6 +16,7 @@ import {
   CardsList,
   CardsListItem,
   DataBadgeLink,
+  FacetFilters,
   Filters,
   getAppearance,
   getDate,
@@ -49,6 +50,7 @@ const { page = 1 } = Astro.params;
 
 const APIS_RESOURCE = ApiPaths.listRepositories;
 const ORGS_RESOURCE = ApiPaths.listOrganisations;
+const FILTERS_RESOURCE = ApiPaths.listRepositoryFilters;
 const SEARCH_RESOURCE = ApiPaths.searchRepositories;
 const SEARCH_QUERY_KEY = "q";
 
@@ -103,6 +105,33 @@ const {
     return { data: null, error, response: new Response() };
   });
 
+const {
+  data: facetfilters,
+  error: facetfiltersError,
+  response: {
+    status: facetfiltersStatus,
+    statusText: facetfiltersStatusText,
+    headers: facetfiltersHeaders,
+  },
+} = await client
+  .GET(FILTERS_RESOURCE, {
+    headers: {
+      "x-api-key": API_X_API_KEY,
+    },
+  })
+  .catch((error) => {
+    console.error(error);
+    return { data: null, error, response: new Response() };
+  });
+
+console.log("NEW FILTERS", {
+  facetfilters,
+  facetfiltersError,
+  facetfiltersStatus,
+  facetfiltersStatusText,
+  facetfiltersHeaders,
+});
+
 const paginationObj = parseHeaders(headers);
 const pagination = getPagination(paginationObj, routingObj.url);
 
@@ -145,6 +174,7 @@ const items = error ? null : data;
   />
   <Article className="markdown-content utrecht-html" slot="header"><Intro /></Article>
   <Search slot="search" searchUrl={new URL(`/repositories/zoeken`, routingObj?.url).toString()} searchKey={SEARCH_QUERY_KEY} searchTerm={routingObj.query[SEARCH_QUERY_KEY]}></Search>
+  <FacetFilters data={facetfilters} slot="filters" />
   <Filters slot="filters" routing={routingObj} data={filters} headers={filtersHeaders} error={filtersError} status={filtersStatus} statusText={filtersStatusText} />
 
   <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2}>

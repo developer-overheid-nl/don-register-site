@@ -28,6 +28,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/repositories/filters": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List repository filter options
+         * @description Returns all available filter options with counts per option. Counts are computed using faceted search: each filter group ignores its own active filter but applies all others, so counts always reflect realistic results.
+         */
+        get: operations["listRepositoryFilters"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/repositories": {
         parameters: {
             query?: never;
@@ -126,7 +146,120 @@ export interface paths {
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: never;
+    schemas: {
+        /** @description A single option within a multi-select filter group. */
+        FilterOption: {
+            /** @description The filter value to pass as a query parameter. */
+            value: string;
+            /** @description Human-readable label for the option. */
+            label: string;
+            /** @description Optional description of the filter value. */
+            description?: string | null;
+            /** @description Number of repositories matching this option, given the other active filters. */
+            count: number;
+            /** @description Whether this option is currently selected. */
+            selected: boolean;
+        };
+        /** @description A filter group with metadata and available options or current value. */
+        FilterGroup: {
+            /**
+             * @description Unique key of the filter group, matching the query parameter name.
+             * @example softwareType
+             * @example publiccode
+             * @example lastActivityAfter
+             */
+            key: string;
+            /** @description Human-readable label for the filter group. */
+            label: string;
+            /** @description Description of what this filter does. */
+            description: string;
+            /**
+             * @description Filter type. toggle: on/off switch. date: date input (ISO 8601). multi-select: multiple values selectable.
+             * @enum {string}
+             */
+            type: "toggle" | "date" | "multi-select";
+            /** @description Current filter value. For toggle: 'true' or 'false'. For date: ISO 8601 date (yyyy-MM-dd) or empty string. Not present for multi-select. */
+            value?: string;
+            /** @description Number of repositories for the current value. Always present for toggle. Only present for date when a date is set. Not present for multi-select. */
+            count?: number | null;
+            /** @description Available options with counts. Only present for multi-select type. */
+            options?: components["schemas"]["FilterOption"][];
+        };
+        /** @description Mandatory and conditionally mandatory fields extracted from publiccode.yml v0.5.0. */
+        PublicCode: {
+            /**
+             * @description Version of the publiccode.yml schema.
+             * @enum {string}
+             */
+            publiccodeYmlVersion: "0" | "0.2" | "0.2.0" | "0.2.1" | "0.2.2" | "0.3" | "0.3.0" | "0.4" | "0.4.0" | "0.5" | "0.5.0";
+            /** @description Software name from publiccode.yml. */
+            name: string;
+            /**
+             * Format: uri
+             * @description Repository or project URL from publiccode.yml.
+             */
+            url: string;
+            /** @description Supported platforms. */
+            platforms: string[];
+            /**
+             * @description Development status from publiccode.yml.
+             * @enum {string}
+             */
+            developmentStatus: "concept" | "development" | "beta" | "stable" | "obsolete";
+            /**
+             * @description Software type from publiccode.yml.
+             * @enum {string}
+             */
+            softwareType: "standalone/mobile" | "standalone/iot" | "standalone/desktop" | "standalone/web" | "standalone/backend" | "standalone/other" | "addon" | "library" | "configurationFiles";
+            legal: {
+                /** @description SPDX license expression. */
+                license: string;
+            };
+            /** @description Localized description blocks keyed by language tag. */
+            description: {
+                [key: string]: {
+                    shortDescription: string;
+                    longDescription?: string;
+                    features?: string[];
+                };
+            };
+            /** @description This section provides information on the maintenance status of the software, useful to evaluate whether the software is actively developed or not. */
+            maintenance: {
+                /** @enum {string} */
+                type: "internal" | "contract" | "community" | "none";
+                contacts?: {
+                    name: string;
+                }[];
+                contractors?: {
+                    name: string;
+                    /** Format: date */
+                    until: string;
+                }[];
+            };
+            localisation: {
+                localisationReady: boolean;
+                availableLanguages: string[];
+            };
+            organisation?: {
+                /** Format: uri */
+                uri: string;
+            };
+            dependsOn?: {
+                open?: {
+                    name: string;
+                }[];
+                proprietary?: {
+                    name: string;
+                }[];
+                hardware?: {
+                    name: string;
+                }[];
+            };
+            fundedBy?: {
+                name?: string;
+            }[];
+        };
+    };
     responses: never;
     parameters: never;
     requestBodies: never;
@@ -358,6 +491,45 @@ export interface operations {
             };
         };
     };
+    listRepositoryFilters: {
+        parameters: {
+            query?: {
+                /** @description Filter by organisation URI. */
+                organisation?: string;
+                /** @description Filter by publiccode.yaml presence. */
+                publiccode?: boolean;
+                /** @description Filter by last activity date. Format: ISO 8601 (yyyy-MM-dd). */
+                lastActivityAfter?: string;
+                /** @description Filter by software type. Repeatable for multiple values. */
+                softwareType?: string[];
+                /** @description Filter by development status. Repeatable for multiple values. */
+                developmentStatus?: string[];
+                /** @description Filter by maintenance type. Repeatable for multiple values. */
+                maintenanceType?: string[];
+                /** @description Filter by platform. Repeatable for multiple values. */
+                platforms?: string[];
+                /** @description Filter by available language (ISO 639-1). Repeatable for multiple values. */
+                availableLanguages?: string[];
+                /** @description Filter by license (SPDX identifier). Repeatable for multiple values. */
+                license?: string[];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FilterGroup"][];
+                };
+            };
+        };
+    };
     listRepositories: {
         parameters: {
             query?: {
@@ -562,6 +734,7 @@ export interface operations {
                         shortDescription?: string;
                         /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yaml is available. */
                         name?: string;
+                        publicCode?: components["schemas"]["PublicCode"];
                         /** Format: date-time */
                         readonly createdAt?: string;
                         /** Format: date-time */
@@ -672,6 +845,7 @@ export interface operations {
                         shortDescription?: string;
                         /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yaml is available. */
                         name?: string;
+                        publicCode?: components["schemas"]["PublicCode"];
                         /** Format: date-time */
                         readonly createdAt?: string;
                         /** Format: date-time */
@@ -812,6 +986,7 @@ export interface operations {
                         shortDescription?: string;
                         /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yaml is available. */
                         name?: string;
+                        publicCode?: components["schemas"]["PublicCode"];
                         /** Format: date-time */
                         readonly createdAt?: string;
                         /** Format: date-time */
@@ -1231,6 +1406,7 @@ export interface operations {
 export enum ApiPaths {
     listGitOrganisations = "/git-organisations",
     createGitOrganisation = "/git-organisations",
+    listRepositoryFilters = "/repositories/filters",
     listRepositories = "/repositories",
     createRepository = "/repositories",
     getRepositoryById = "/repositories/{id}",

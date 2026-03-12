@@ -1,0 +1,11 @@
+.checkbox.checkbox {
+  --utrecht-form-field-label-margin-block-end: 0;
+
+  :global(.utrecht-checkbox) {
+    margin-block-start: 0;
+  }
+}
+
+.amountLabel {
+  font-size: smaller;
+}

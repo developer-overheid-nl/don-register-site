@@ -28,6 +28,7 @@ export {
   type DataSummaryItemProps,
   default as DataSummaryItem,
 } from "./dataSummary/DataSummaryItem";
+export { default as FacetFilters } from "./facetFilters/FacetFilters";
 export { default as Fieldset } from "./fieldset/FieldSet";
 export { default as Filters } from "./filters/Filters";
 export {
@@ -35,6 +36,8 @@ export {
   default as Footer,
   type FooterProps,
 } from "./footer/Footer";
+export { default as FormFieldCheckboxGroup } from "./formFieldCheckboxGroup/FormFieldCheckboxGroup";
+export { default as FormFieldCheckboxOption } from "./formFieldCheckboxOption/FormFieldCheckboxOption";
 export { default as FormFieldLabel } from "./formFieldLabel/FormFieldLabel";
 export { default as FormFieldTextInput } from "./formFieldTextInput/FormFieldTextInput";
 export { default as Header, type HeaderProps } from "./header/Header";
