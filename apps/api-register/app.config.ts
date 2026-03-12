@@ -192,6 +192,11 @@ export default {
             href: "https://developer.overheid.nl/privacy",
           },
           {
+            id: "cookies",
+            label: "Cookieverklaring",
+            href: "https://developer.overheid.nl/privacy",
+          },
+          {
             id: "toegankelijkheid",
             label: "Toegankelijkheid",
             href: "https://developer.overheid.nl/toegankelijkheid",
