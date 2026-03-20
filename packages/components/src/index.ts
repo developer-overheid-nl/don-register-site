@@ -28,7 +28,11 @@ export {
   type DataSummaryItemProps,
   default as DataSummaryItem,
 } from "./dataSummary/DataSummaryItem";
-export { default as FacetFilters } from "./facetFilters/FacetFilters";
+export {
+  default as FacetFilters,
+  type FacetFiltersProps,
+  type FilterData,
+} from "./facetFilters/FacetFilters";
 export { default as Fieldset } from "./fieldset/FieldSet";
 export { default as Filters } from "./filters/Filters";
 export {
@@ -41,7 +45,11 @@ export { default as FormFieldCheckboxOption } from "./formFieldCheckboxOption/Fo
 export { default as FormFieldLabel } from "./formFieldLabel/FormFieldLabel";
 export { default as FormFieldTextInput } from "./formFieldTextInput/FormFieldTextInput";
 export { default as Header, type HeaderProps } from "./header/Header";
-export { default as Heading } from "./heading/Heading";
+export {
+  clampHeadingLevel,
+  default as Heading,
+  type HeadingProps,
+} from "./heading/Heading";
 export {
   default as HeadingGroup,
   type HeadingGroupProps,
@@ -53,6 +61,10 @@ export {
 } from "./iconBadge/IconBadge";
 export { default as Icon } from "./iconsSprite/Icon";
 export { default as IconsSprite } from "./iconsSprite/IconsSprite";
+export {
+  default as InfoButton,
+  type InfoButtonProps,
+} from "./infoButton/InfoButton";
 export { default as Link } from "./link/Link";
 export {
   default as Markdown,
@@ -75,6 +87,7 @@ export {
 } from "./scoreBadge/ScoreBadge";
 export { default as Search, type SearchProps } from "./search/Search";
 export { default as SiteLogo } from "./siteLogo/SiteLogo";
+export { default as ToolTip } from "./toolTip/ToolTip";
 export {
   default as TopNavigation,
   type NavBarItem,

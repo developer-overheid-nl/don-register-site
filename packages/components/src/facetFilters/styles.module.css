@@ -1,3 +1,7 @@
 .facet {
   margin-block-end: 0.5rem;
 }
+
+.facetHeading {
+  position: relative;
+}

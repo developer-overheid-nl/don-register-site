@@ -1,0 +1,5 @@
+.formFieldCheckboxGroup {
+  :global(& > .utrecht-form-field__label) {
+    display: none;
+  }
+}

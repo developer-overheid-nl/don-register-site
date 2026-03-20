@@ -7,30 +7,26 @@ import styles from "./styles.module.css";
 
 export interface FormFieldCheckboxOptionProps
   extends RHCFormFieldCheckboxOptionProps {
-  amount: string;
+  amount: string | number;
 }
 
-const AmountLabel = ({
-  label,
-  amount,
-}: {
-  label: FormFieldCheckboxOptionProps["label"];
-  amount: string;
-}) => (
-  <>
-    <span>{label}</span>&nbsp;
-    <span className={styles.amountLabel}>({amount})</span>
-  </>
+const AmountLabel = ({ label, amount }: FormFieldCheckboxOptionProps) => (
+  <div className={styles.amountLabel}>
+    <span className={styles.labelText}>{label}</span>&nbsp;
+    <span className={styles.amountText}>({amount})</span>
+  </div>
 );
 
 const FormFieldCheckboxOption = (props: FormFieldCheckboxOptionProps) => {
-  const { amount, label, className, ...restProps } = props;
+  const { amount, label, className, children, ...restProps } = props;
   return (
     <RHCFormFieldCheckboxOption
       className={clsx(styles.checkbox, className)}
       label={<AmountLabel label={label} amount={amount} />}
       {...restProps}
-    />
+    >
+      <span className={styles.info}>{children}</span>
+    </RHCFormFieldCheckboxOption>
   );
 };
 

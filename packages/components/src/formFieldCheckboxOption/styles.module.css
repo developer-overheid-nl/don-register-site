@@ -1,11 +1,34 @@
 .checkbox.checkbox {
   --utrecht-form-field-label-margin-block-end: 0;
 
+  grid-template-areas:
+    'input label info'
+    'input description description'
+    'input error-message error-message'
+    'input status status';
+
   :global(.utrecht-checkbox) {
+    order: initial;
     margin-block-start: 0;
+  }
+
+  :global(.utrecht-form-label--checkbox):has(.amountText) {
+    display: flex;
   }
 }
 
 .amountLabel {
+  display: inline-block;
+}
+
+.labelText {
+  word-break: break-word;
+}
+
+.amountText {
   font-size: smaller;
+}
+
+.info {
+  grid-area: info;
 }
