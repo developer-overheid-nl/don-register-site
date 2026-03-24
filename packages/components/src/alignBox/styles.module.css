@@ -23,6 +23,10 @@
   flex-direction: column;
 }
 
+.wrap {
+  flex-wrap: wrap;
+}
+
 .left {
   align-items: center;
   justify-content: flex-start;

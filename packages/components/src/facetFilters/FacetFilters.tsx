@@ -18,9 +18,10 @@ enum FilterType {
   Toggle = "toggle",
   Date = "date",
   Multi = "multi-select",
+  Single = "single-select",
 }
 
-export interface multiSelectOption {
+export interface SelectOption {
   value: string;
   label: string;
   description?: string | null;
@@ -36,25 +37,31 @@ interface BaseFilterItems {
 
 interface ToggleFilterData extends BaseFilterItems {
   type: FilterType.Toggle;
-  value?: StringOrBooleanStringType<boolean>;
+  value?: boolean; //StringOrBooleanStringType<boolean>;
   count?: number;
 }
 
 interface DateFilterData extends BaseFilterItems {
   type: FilterType.Date;
-  value?: StringOrBooleanStringType<string>;
+  value?: string; //StringOrBooleanStringType<string>;
   count?: number;
 }
 
 interface MultiSelectFilterData extends BaseFilterItems {
   type: FilterType.Multi;
-  options: multiSelectOption[];
+  options: SelectOption[];
+}
+
+interface SingleSelectFilterData extends BaseFilterItems {
+  type: FilterType.Single;
+  options: SelectOption[];
 }
 
 export type FilterData =
   | ToggleFilterData
   | DateFilterData
-  | MultiSelectFilterData;
+  | MultiSelectFilterData
+  | SingleSelectFilterData;
 
 export interface FacetFiltersProps extends HTMLProps<HTMLDivElement> {
   title?: string;
@@ -93,7 +100,7 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
               <FormFieldCheckboxOption
                 label="JA"
                 name={facet.key}
-                defaultChecked={facet.value === "true"}
+                defaultChecked={facet.value}
                 value="true"
                 amount={facet.count || 0}
               />
@@ -103,22 +110,31 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
           */}
             {facet.type === "multi-select" ? (
               <FormFieldCheckboxGroup>
-                {facet.options.map((option) => (
-                  <Fragment key={option.value}>
-                    <FormFieldCheckboxOption
-                      label={option.label}
-                      name={facet.key}
-                      value={option.value}
-                      defaultChecked={option.selected}
-                      amount={option.count}
-                    >
-                      {option.description ? (
-                        <ToolTip text={option.description} />
-                      ) : null}
-                    </FormFieldCheckboxOption>
-                  </Fragment>
+                {facet.options?.map((option) => (
+                  <FormFieldCheckboxOption
+                    key={option.value}
+                    label={option.label}
+                    name={facet.key}
+                    value={option.value}
+                    defaultChecked={option.selected}
+                    amount={option.count}
+                  >
+                    {option.description ? (
+                      <ToolTip text={option.description} />
+                    ) : null}
+                  </FormFieldCheckboxOption>
                 ))}
               </FormFieldCheckboxGroup>
+            ) : null}
+            {facet.type === "single-select" ? (
+              <div>
+                Radio Gaga
+                {facet.options?.map((option) => (
+                  <Fragment key={option.value}>
+                    <div>{option.label}</div>
+                  </Fragment>
+                ))}
+              </div>
             ) : null}
           </div>
         ))}

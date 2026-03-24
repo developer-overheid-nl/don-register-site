@@ -11,14 +11,17 @@ import {
 } from "astro:env/server";
 import {
   Alert,
+  AlignBox,
   Block,
   DataSummary,
   DataSummaryItem,
   Heading,
   HeadingGroup,
+  Icon,
   Link,
   Markdown,
   Paragraph,
+  PillBadge,
 } from "@developer-overheid-nl/don-register-components";
 import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
@@ -33,6 +36,15 @@ import { ApiPaths, type paths } from "../../types/api-schema";
 
 const { id = "" } = Astro.params;
 const API_RESOURCE = ApiPaths.getRepositoryById;
+
+const devStatusColors = {
+  concept: "lichtblauw",
+  development: "donkerblauw",
+  beta: "donkergeel",
+  stable: "groen",
+  obsolete: "rood",
+  unknown: "coolgrey",
+};
 
 const client = createClient<paths>({
   baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
@@ -65,6 +77,9 @@ i18n.addResourceBundle(
 i18n.addResources(i18n.language, "translation", i18nPage);
 
 const details = error ? null : data;
+
+const possiblefork =
+  details?.publicCode?.url && !details?.url?.includes(details.publicCode?.url);
 ---
 
 { error && (
@@ -96,6 +111,11 @@ const details = error ? null : data;
     <Fragment slot="description">
       <Heading level={3} className="sr-only">{t(`pages.description`)}</Heading>
       <div class="utrecht-html"><Markdown text={details.longDescription} minHeadingDepth={4} /></div>
+      <AlignBox align="top-left" wrap gap="small" className="features">{
+        details.publicCode?.description?.nl ? details.publicCode?.description.nl.features?.map((feature) => (
+          <span class="feature-pill">{feature}</span>
+        )) : ''
+      }</AlignBox>
     </Fragment>
     <Fragment slot="aside">
       <DataSummary appearance="row">
@@ -105,12 +125,40 @@ const details = error ? null : data;
       </DataSummary>
     </Fragment>
     <Fragment slot="meta">
-      <Heading level={4}>{t(`pages.tbd-metadata`)}</Heading>
+      <Block layout="flex-row">
+        <Link href={details?.publicCodeUrl || 'https://yml.publiccode.tools/index.html'}><PillBadge startValue={`publiccode.yml`} endValue={details.publicCodeUrl ? details.publicCode?.publiccodeYmlVersion : "NA"} type="color" color={details.publicCodeUrl ? "mintgroen" : "grijs"} /></Link>
+        <div>{t(`components.license`, {license: details.publicCode?.legal?.license || 'Onbekend'})}</div>
+        <PillBadge startValue={`Status`} endValue={details.publicCode?.developmentStatus || "Onbekend"} type="color" color={devStatusColors[details.publicCode?.developmentStatus || "unknown"]} />
+      </Block>
+      <Heading level={4}>{t(`pages.details`)}</Heading>
       <Block appearance="outlined">
+        {/* <pre style="white-space: pre-wrap;">{JSON.stringify(details.publicCode, undefined, 2)}</pre> */}
         <Heading level={5}>{t(`pages.links`)}</Heading>
         <DataSummary appearance="column" contained>
           <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={``} href={details.url}>{details.url}</DataSummaryItem>
-          <DataSummaryItem itemKey={t(`pages.public-code-url`)} itemValue={details?.publicCodeUrl || '-'} />
+          { 
+            details.publicCode ? (
+              <DataSummaryItem itemKey={t(`pages.public-code-url`)} itemValue={possiblefork ? t(`pages.possible-fork-warning`) : ""} href={details.publicCode?.url}>{details.publicCode?.url}</DataSummaryItem>
+            ) : null
+          }
+        </DataSummary>
+        <Heading level={5}>{t(`pages.platform-software`)}</Heading>
+          { 
+            details.publicCode ? (
+        <DataSummary appearance="row" contained>
+          <DataSummaryItem itemKey={t(`pages.platforms`)} itemValue={details.publicCode?.platforms?.join(" – ")} href={`https://yml.publiccode.tools/schema.core.html#key-platforms`}><Icon name="info" width="1.5rem" height="1.5rem" /></DataSummaryItem>
+          <DataSummaryItem itemKey={t(`pages.software-type`)} itemValue={details.publicCode?.softwareType} href={`https://yml.publiccode.tools/schema.core.html#key-softwaretype`}><Icon name="info" width="1.5rem" height="1.5rem" /></DataSummaryItem>
+          <DataSummaryItem itemKey={t(`pages.localisation`)} itemValue={`${details.publicCode?.localisation?.localisationReady ? "✔" : "✘"} — ${details.publicCode?.localisation?.availableLanguages?.join(" – ") || ""}`} href={`https://yml.publiccode.tools/schema.core.html#section-localisation`}><Icon name="info" width="1.5rem" height="1.5rem" /></DataSummaryItem>
+          <DataSummaryItem itemKey={t(`pages.maintenance-type`)} itemValue={details.publicCode?.maintenance?.type} href={`https://yml.publiccode.tools/schema.core.html#key-maintenance-type`}><Icon name="info" width="1.5rem" height="1.5rem" /></DataSummaryItem>
+        </DataSummary>
+            ) : (
+              <Alert type="info" className="publiccode-info utrecht-html"><Markdown text={t(`pages.create-a-public-code`)} /></Alert>
+            )
+          }
+      </Block>
+      <Heading level={4}>{t(`pages.tbd-metadata`)}</Heading>
+      <Block appearance="outlined">
+        <DataSummary appearance="column" contained>
           <DataSummaryItem itemKey={t(`components.created-at`)} itemValue={new Date(details.createdAt as string | number).toLocaleDateString('nl-NL')} />
           <DataSummaryItem itemKey={t(`components.last-activity-at`)} itemValue={new Date(details.lastActivityAt as string | number).toLocaleDateString('nl-NL')} />
           <DataSummaryItem itemKey={t(`components.last-crawled-at`)} itemValue={new Date(details.lastCrawledAt as string | number).toLocaleDateString('nl-NL')} />
@@ -120,3 +168,25 @@ const details = error ? null : data;
   </DonDetail>
   )
 }
+
+<style>
+  .features {
+    font-size: smaller;
+    margin-top: 0.5rem;
+  }
+  .feature-pill {
+    display: inline-block;
+    padding-block: 2px;
+    padding-inline: 6px;
+    background-color: var(--rhc-color-cool-grey-200);
+    border-radius: 2px;
+  }
+
+  .publiccode-info {
+    --utrecht-code-background-color: rgb(from var(--rhc-color-cool-grey-50) r g b / 0.5);
+    code {
+      padding-inline: 2px;
+    }
+  }
+
+</style>

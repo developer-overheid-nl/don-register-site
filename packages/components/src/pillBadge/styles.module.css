@@ -14,6 +14,7 @@
     rgba(51, 51, 51, 0.25),
     rgba(204, 204, 204, 0.25)
   );
+  --don-pill-badge-outline-hover-color: var(--rhc-color-cool-grey-300);
   --don-pill-badge-border-width: 1px;
 }
 
@@ -32,6 +33,25 @@
   font-size: var(--don-pill-badge-font-size);
   background-color: var(--don-pill-badge-background-color);
   border-radius: var(--don-pill-badge-border-radius);
+
+  a:any-link:has(&) {
+    text-decoration: none;
+
+    &:hover {
+      outline-width: 2px;
+      outline-style: auto;
+      outline-color: var(--don-pill-badge-outline-hover-color);
+      outline-offset: 0.125rem;
+      border-radius: var(--don-pill-badge-border-radius);
+    }
+
+    &:focus,
+    &:focus-visible {
+      outline-style: auto;
+      outline-offset: 0.125rem;
+      border-radius: var(--don-pill-badge-border-radius);
+    }
+  }
 
   /* Because Biome CSS parser does not yet support modern attr() some of the following is commented out.
    * Fixme: remove this workaround when https://github.com/biomejs/biome/issues/6183 is closed and tested */
