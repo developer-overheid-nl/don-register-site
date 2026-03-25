@@ -166,3 +166,38 @@ All commands are run from the root of the project, from a terminal:
 [Biome]: https://biomejs.dev/
 [NPM]: https://www.npmjs.com/
 [register-site-template]: https://github.com/developer-overheid-nl/register-site-template
+
+### Deploy naar test
+
+De testdeploy draait via
+`.github/workflows/deploy-test.yml`.
+
+- De workflow draait op pushes naar branches behalve `main`.
+- Alleen commits met `[deploy-test]` in de commit message worden echt gedeployed.
+- Er worden twee images gebouwd en gepusht:
+  `ghcr.io/developer-overheid-nl/don-register-site` en
+  `ghcr.io/developer-overheid-nl/don-register-oss-site`, met tags `test`
+  en de commit SHA.
+- Daarna worden in `INFRA_REPO` de bestanden
+  `${KUSTOMIZE_PATH_API}test/kustomization.yaml` en
+  `${KUSTOMIZE_PATH_OSS}test/kustomization.yaml` bijgewerkt naar de nieuwe
+  image tag en direct gecommit.
+
+Voorbeeld commit message:
+
+```text
+feat: pas content aan [deploy-test]
+```
+
+### Deploy naar productie
+
+De productiedeploy draait via
+`.github/workflows/deploy-prod.yml`.
+
+- De workflow draait bij een push naar `main`.
+- Er wordt in `INFRA_REPO` een release branch aangemaakt.
+- In `${KUSTOMIZE_PATH_API}prod/kustomization.yaml` en
+  `${KUSTOMIZE_PATH_OSS}prod/kustomization.yaml` wordt de image tag
+  bijgewerkt naar de commit SHA van deze repository.
+- Daarna wordt automatisch een pull request in de infra repository geopend.
+- De productie-uitrol gebeurt door die pull request te mergen.
