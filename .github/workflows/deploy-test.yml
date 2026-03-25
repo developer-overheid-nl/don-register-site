@@ -112,10 +112,10 @@ jobs:
           API_KUSTOMIZATION_FILE="${{ env.KUSTOMIZE_PATH_API }}${{ env.DEPLOY_ENV }}/kustomization.yaml"
           OSS_KUSTOMIZATION_FILE="${{ env.KUSTOMIZE_PATH_OSS }}${{ env.DEPLOY_ENV }}/kustomization.yaml"
 
-          yq e '(.images[] | select(.name == "static")).newTag = "${{ github.sha }}"' \
+          yq e '(.images[] | select(.newName == "${{ env.API_IMAGE_NAME }}")).newTag = "${{ github.sha }}"' \
             -i "$API_KUSTOMIZATION_FILE"
 
-          yq e '(.images[] | select(.name == "static")).newTag = "${{ github.sha }}"' \
+          yq e '(.images[] | select(.newName == "${{ env.OSS_IMAGE_NAME }}")).newTag = "${{ github.sha }}"' \
             -i "$OSS_KUSTOMIZATION_FILE"
 
       - name: Commit en push naar don-infra
