@@ -167,6 +167,20 @@ All commands are run from the root of the project, from a terminal:
 [NPM]: https://www.npmjs.com/
 [register-site-template]: https://github.com/developer-overheid-nl/register-site-template
 
+# Deployen
+
+De deployment van deze site verloopt via GitHub Actions en een aparte infra
+repository.
+
+### Benodigde variabelen en secrets
+
+- Organization variable `INFRA_REPO`, bijvoorbeeld
+  `developer-overheid-nl/don-infra`.
+- Repository variable `KUSTOMIZE_PATH_API` en `KUSTOMIZE_PATH_OSS`, met als basispad bijvoorbeeld
+  `apps/oss/overlays/`.
+- Secrets `RELEASE_PROCES_APP_ID` en `RELEASE_PROCES_APP_PRIVATE_KEY` voor het
+  aanpassen van de infra repository.
+
 ### Deploy naar test
 
 De testdeploy draait via
