@@ -3,19 +3,12 @@ import {
   type FormFieldCheckboxOptionProps as RHCFormFieldCheckboxOptionProps,
 } from "@rijkshuisstijl-community/components-react";
 import clsx from "clsx";
+import AmountLabel, { type AmountLabelProps } from "../amountLabel/AmountLabel";
 import styles from "./styles.module.css";
 
 export interface FormFieldCheckboxOptionProps
-  extends RHCFormFieldCheckboxOptionProps {
-  amount: string | number;
-}
-
-const AmountLabel = ({ label, amount }: FormFieldCheckboxOptionProps) => (
-  <div className={styles.amountLabel}>
-    <span className={styles.labelText}>{label}</span>&nbsp;
-    <span className={styles.amountText}>({amount})</span>
-  </div>
-);
+  extends Omit<RHCFormFieldCheckboxOptionProps, "label">,
+    AmountLabelProps {}
 
 const FormFieldCheckboxOption = (props: FormFieldCheckboxOptionProps) => {
   const { amount, label, className, children, ...restProps } = props;

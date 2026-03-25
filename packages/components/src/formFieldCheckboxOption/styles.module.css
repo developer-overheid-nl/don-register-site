@@ -7,26 +7,14 @@
     'input error-message error-message'
     'input status status';
 
+  :global(.utrecht-form-label) {
+    display: flex;
+  }
+
   :global(.utrecht-checkbox) {
     order: initial;
     margin-block-start: 0;
   }
-
-  :global(.utrecht-form-label--checkbox):has(.amountText) {
-    display: flex;
-  }
-}
-
-.amountLabel {
-  display: inline-block;
-}
-
-.labelText {
-  word-break: break-word;
-}
-
-.amountText {
-  font-size: smaller;
 }
 
 .info {

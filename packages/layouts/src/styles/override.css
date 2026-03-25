@@ -102,6 +102,8 @@
 
   --rhc-checkbox-group-row-gap: 0.25rem;
   --rhc-checkbox-group-padding-block-start: 0;
+  --rhc-radio-group-row-gap: 0.25rem;
+  --rhc-radio-group-padding-block-start: 0;
 
   /* not available in RHC */
 

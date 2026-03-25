@@ -1,7 +1,9 @@
 import clsx from "clsx";
-import { Fragment, type HTMLProps, type PropsWithChildren } from "react";
+import type { HTMLProps, PropsWithChildren } from "react";
 import FormFieldCheckboxGroup from "../formFieldCheckboxGroup/FormFieldCheckboxGroup";
 import FormFieldCheckboxOption from "../formFieldCheckboxOption/FormFieldCheckboxOption";
+import FormFieldRadioGroup from "../formFieldRadioGroup/FormFieldRadioGroup";
+import FormFieldRadioOption from "../formFieldRadioOption/FormFieldRadioOption";
 import Heading, {
   clampHeadingLevel,
   type HeadingProps,
@@ -10,9 +12,9 @@ import Paragraph from "../paragraph/Paragraph";
 import ToolTip from "../toolTip/ToolTip";
 import styles from "./styles.module.css";
 
-type StringOrBooleanStringType<T extends string | boolean> = T extends string
-  ? string
-  : "true" | "false";
+// type StringOrBooleanStringType<T extends string | boolean> = T extends string
+//   ? string
+//   : "true" | "false";
 
 enum FilterType {
   Toggle = "toggle",
@@ -127,14 +129,18 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
               </FormFieldCheckboxGroup>
             ) : null}
             {facet.type === "single-select" ? (
-              <div>
-                Radio Gaga
+              <FormFieldRadioGroup>
                 {facet.options?.map((option) => (
-                  <Fragment key={option.value}>
-                    <div>{option.label}</div>
-                  </Fragment>
+                  <FormFieldRadioOption
+                    key={option.value}
+                    label={option.label}
+                    name={facet.key}
+                    value={option.value}
+                    defaultChecked={option.selected}
+                    amount={option.count}
+                  />
                 ))}
-              </div>
+              </FormFieldRadioGroup>
             ) : null}
           </div>
         ))}

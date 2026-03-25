@@ -32,6 +32,7 @@ import {
 import { t } from "i18next";
 import createClient from "openapi-fetch";
 import appConfig from "../../../app.config";
+import RepoIcon from "../../components/RepoIcon.astro";
 import { ApiPaths, type paths } from "../../types/api-schema";
 
 const { id = "" } = Astro.params;
@@ -80,6 +81,8 @@ const details = error ? null : data;
 
 const possiblefork =
   details?.publicCode?.url && !details?.url?.includes(details.publicCode?.url);
+const getLang = (langKeys: Array<string>) =>
+  langKeys.includes("nl") ? "nl" : langKeys[0] || "";
 ---
 
 { error && (
@@ -102,19 +105,24 @@ const possiblefork =
       data-track-content
       data-content-name="Detail Page Header"
     >
-      <Paragraph data-content-piece="Organisation Name" itemScope={true} itemType="https://schema.org/Organization" itemID={details?.organisation?.uri} className={`styles.aboveLink styles.publisher`}>
+      <div class="subtitle" slot="subTitle">
+        <Paragraph data-content-piece="Organisation Name" itemScope={true} itemType="https://schema.org/Organization" itemID={details?.organisation?.uri} className={`styles.aboveLink styles.publisher`}>
           <span itemprop="name"><Link data-content-target="Organisation Link" className={`styles.orgLink`} href={new URL(`./?organisation=${details?.organisation?.uri}`, Astro.url).toString()}>
               {details?.organisation?.label}
           </Link></span>
-      </Paragraph>
+        </Paragraph>
+        <div class="header-meta">
+          <RepoIcon url={details.url || ''} name={details.name} className="moveAbove"></RepoIcon>
+        </div>
+      </div>
     </HeadingGroup>
     <Fragment slot="description">
       <Heading level={3} className="sr-only">{t(`pages.description`)}</Heading>
       <div class="utrecht-html"><Markdown text={details.longDescription} minHeadingDepth={4} /></div>
       <AlignBox align="top-left" wrap gap="small" className="features">{
-        details.publicCode?.description?.nl ? details.publicCode?.description.nl.features?.map((feature) => (
+        details.publicCode?.description ? details.publicCode?.description[getLang(Object.keys(details.publicCode?.description))]?.features?.map((feature) => (
           <span class="feature-pill">{feature}</span>
-        )) : ''
+        )) : null
       }</AlignBox>
     </Fragment>
     <Fragment slot="aside">
@@ -170,10 +178,23 @@ const possiblefork =
 }
 
 <style>
+  .subtitle {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .header-meta {
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+  }
+
   .features {
     font-size: smaller;
     margin-top: 0.5rem;
   }
+  
   .feature-pill {
     display: inline-block;
     padding-block: 2px;

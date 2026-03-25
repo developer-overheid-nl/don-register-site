@@ -1,0 +1,11 @@
+.amountLabel {
+  display: inline-block;
+}
+
+.labelText {
+  word-break: break-word;
+}
+
+.amountText {
+  font-size: smaller;
+}
