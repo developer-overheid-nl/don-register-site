@@ -87,7 +87,7 @@ jobs:
       - name: Maak release branch aan in don-infra
         id: branch
         run: |
-          BRANCH="release/don-site-${{ github.sha }}"
+          BRANCH="release/don-register-site-${{ github.sha }}"
           echo "branch=$BRANCH" >> $GITHUB_OUTPUT
           git checkout -b "$BRANCH"
 
@@ -110,7 +110,7 @@ jobs:
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
           git add "$API_KUSTOMIZATION_FILE" "$OSS_KUSTOMIZATION_FILE"
-          git commit -m "release: don-site → ${{ github.sha }}
+          git commit -m "release: don-register-site → ${{ github.sha }}
 
           Commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
           git push origin "${{ steps.branch.outputs.branch }}"
@@ -123,8 +123,8 @@ jobs:
             --repo "${{ env.INFRA_REPO }}" \
             --base main \
             --head "${{ steps.branch.outputs.branch }}" \
-            --title "Release: don-site → ${GITHUB_SHA::7}" \
-            --body "## don-site productie deploy
+            --title "Release: don-register-site → ${GITHUB_SHA::7}" \
+            --body "## don-register-site productie deploy
 
           **API image:** \`${{ env.API_IMAGE_NAME }}:${{ github.sha }}\`
           **OSS image:** \`${{ env.OSS_IMAGE_NAME }}:${{ github.sha }}\`

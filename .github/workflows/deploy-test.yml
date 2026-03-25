@@ -126,7 +126,7 @@ jobs:
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
           git add "$API_KUSTOMIZATION_FILE" "$OSS_KUSTOMIZATION_FILE"
-          git commit -m "test: don-site → ${{ github.sha }}
+          git commit -m "test: don-register-site → ${{ github.sha }}
 
           Branch: ${{ github.ref_name }}
           Commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
