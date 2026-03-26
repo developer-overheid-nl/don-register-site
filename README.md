@@ -6,7 +6,6 @@
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/developer-overheid-nl/don-register-site/pull_request.yml?branch=main&label=quality)
 [![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
 ![GitHub License](https://img.shields.io/github/license/developer-overheid-nl/don-register-site)
-![GitHub package.json version](https://img.shields.io/github/package-json/v/developer-overheid-nl/don-register-site)
 
 Deze monorepo bevat de *nieuwe* websites van het [API-register](https://apis.developer.overheid.nl) en het [OSS-register](https://oss.developer.overheid.nl).
 De codebase bestaat uit een aantal packages die de gezamelijke codebase (components, layouts, etc) vormen en een `apps`-package waarin de verschillende websites staan. Deze packages worden ook gebruikt in het [register-site-template].
@@ -39,7 +38,7 @@ Deze package wordt gepubliceerd op [NPM]: <https://www.npmjs.com/package/@develo
 
 De [Astro] site van het API-register.
 
-Zie ook de [README](/apps/api-register/README.md) van deze package.
+Zie ook de [README](https://github.com/developer-overheid-nl/don-register-site/blob/main/apps/api-register/README.md) van deze package.
 
 ### OSS-register
 
@@ -47,8 +46,6 @@ Zie ook de [README](/apps/api-register/README.md) van deze package.
 > [oss.developer.overheid.nl](https://oss.developer.overheid.nl)
 
 De [Astro] site van het OSS-register.
-
-Zie ook de [README](/apps/oss-register/README.md) van deze package.
 
 ### Je eigen register
 
