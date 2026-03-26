@@ -48,6 +48,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/lint-results": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List all lint results
+         * @description Returns all lint results.
+         */
+        get: operations["listLintResults"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/apis/{id}": {
         parameters: {
             query?: never;
@@ -167,161 +187,10 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/statistics/apis": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get APIs with adoption status
-         * @description Returns list of APIs with their compliance status
-         */
-        get: operations["getAdoptionApis"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/statistics/rules": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get adoption per rule
-         * @description Returns adoption rate per ADR rule
-         */
-        get: operations["getAdoptionRules"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/statistics/summary": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get adoption summary
-         * @description Returns overall adoption KPIs for the selected period
-         */
-        get: operations["getAdoptionSummary"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/statistics/timeline": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get adoption timeline
-         * @description Returns adoption over time for charts
-         */
-        get: operations["getAdoptionTimeline"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: {
-        ModelsAdoptionApis: {
-            adrVersion?: string;
-            apis?: components["schemas"]["ModelsApiAdoption"][];
-            period?: components["schemas"]["ModelsPeriod"];
-        };
-        ModelsAdoptionRules: {
-            adrVersion?: string;
-            period?: components["schemas"]["ModelsPeriod"];
-            rules?: components["schemas"]["ModelsRuleAdoption"][];
-            /** Format: int32 */
-            totalApis?: number;
-        };
-        ModelsAdoptionSummary: {
-            adrVersion?: string;
-            /** Format: int32 */
-            compliantApis?: number;
-            /** Format: double */
-            overallAdoptionRate?: number;
-            period?: components["schemas"]["ModelsPeriod"];
-            /** Format: int32 */
-            totalApis?: number;
-            /** Format: int32 */
-            totalLintRuns?: number;
-        };
-        ModelsAdoptionTimeline: {
-            adrVersion?: string;
-            granularity?: string;
-            series?: components["schemas"]["ModelsTimelineSeries"][];
-        };
-        ModelsApiAdoption: {
-            apiId?: string;
-            apiTitle?: string;
-            isCompliant?: boolean;
-            /** Format: date-time */
-            lastLintDate?: string;
-            organisation?: string;
-            /** Format: int32 */
-            totalViolations?: number;
-            /** Format: int32 */
-            totalWarnings?: number;
-            violatedRules?: string[];
-        };
-        ModelsPeriod: {
-            end?: string;
-            start?: string;
-        };
-        ModelsRuleAdoption: {
-            /** Format: double */
-            adoptionRate?: number;
-            code?: string;
-            /** Format: int32 */
-            compliantApis?: number;
-            severity?: string;
-            /** Format: int32 */
-            violatingApis?: number;
-        };
-        ModelsTimelinePoint: {
-            /** Format: double */
-            adoptionRate?: number;
-            /** Format: int32 */
-            compliantApis?: number;
-            period?: string;
-            /** Format: int32 */
-            totalApis?: number;
-        };
-        ModelsTimelineSeries: {
-            dataPoints?: components["schemas"]["ModelsTimelinePoint"][];
-            ruleCode?: string;
-            type?: string;
-        };
-    };
+    schemas: never;
     responses: {
         /** @description Bad request */
         400: {
@@ -925,6 +794,97 @@ export interface operations {
                              */
                             from?: string | null;
                         };
+                    }[];
+                };
+            };
+            /** @description Bad request */
+            400: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": {
+                        /**
+                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
+                         * @example 400
+                         */
+                        status: number;
+                        /**
+                         * @description A short, human-readable summary of the problem type
+                         * @example Request validation failed
+                         */
+                        title: string;
+                        errors?: {
+                            /**
+                             * @description Location of the error (e.g., body, query, header)
+                             * @enum {string}
+                             */
+                            in: "body" | "query";
+                            /**
+                             * @description Location in the document where the error occurred (JSON Pointer)
+                             * @example #/foo[0]/bar
+                             */
+                            location: string;
+                            /**
+                             * @description A code representing the type of error
+                             * @example date.format
+                             */
+                            code: string;
+                            /**
+                             * @description A detailed message describing the error
+                             * @example must be ISO 8601
+                             */
+                            detail: string;
+                        }[];
+                    };
+                };
+            };
+        };
+    };
+    listLintResults: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    /** @description Semver of this API */
+                    "API-Version"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        ID: string;
+                        ApiID: string;
+                        successes: boolean;
+                        failures: number;
+                        warnings: number;
+                        /** Format: date-time */
+                        CreatedAt: string;
+                        messages?: {
+                            id: string;
+                            lintResultId: string;
+                            line: number;
+                            column: number;
+                            severity: string;
+                            code: string;
+                            /** Format: date-time */
+                            CreatedAt: string;
+                            infos?: {
+                                id: string;
+                                lintMessageId: string;
+                                message: string;
+                                path: string;
+                            }[];
+                        }[];
+                        rulesetVersion?: string;
                     }[];
                 };
             };
@@ -1617,144 +1577,17 @@ export interface operations {
             };
         };
     };
-    getAdoptionApis: {
-        parameters: {
-            query?: {
-                adrVersion?: string;
-                apiIds?: string | null;
-                compliant?: boolean | null;
-                endDate?: string;
-                organisation?: string | null;
-                page?: number;
-                perPage?: number;
-                ruleCodes?: string | null;
-                startDate?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    /** @description De API-versie van de response */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ModelsAdoptionApis"];
-                };
-            };
-            400: components["responses"]["400"];
-        };
-    };
-    getAdoptionRules: {
-        parameters: {
-            query?: {
-                adrVersion?: string;
-                apiIds?: string | null;
-                endDate?: string;
-                organisation?: string | null;
-                ruleCodes?: string | null;
-                severity?: string | null;
-                startDate?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    /** @description De API-versie van de response */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ModelsAdoptionRules"];
-                };
-            };
-            400: components["responses"]["400"];
-        };
-    };
-    getAdoptionSummary: {
-        parameters: {
-            query?: {
-                adrVersion?: string;
-                apiIds?: string | null;
-                endDate?: string;
-                organisation?: string | null;
-                startDate?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    /** @description De API-versie van de response */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ModelsAdoptionSummary"];
-                };
-            };
-            400: components["responses"]["400"];
-        };
-    };
-    getAdoptionTimeline: {
-        parameters: {
-            query?: {
-                adrVersion?: string;
-                apiIds?: string | null;
-                endDate?: string;
-                granularity?: string;
-                organisation?: string | null;
-                ruleCodes?: string | null;
-                startDate?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    /** @description De API-versie van de response */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ModelsAdoptionTimeline"];
-                };
-            };
-            400: components["responses"]["400"];
-        };
-    };
 }
 export enum ApiPaths {
     listApis = "/apis",
     createApi = "/apis",
     searchApis = "/apis/_search",
+    listLintResults = "/lint-results",
     retreiveApi = "/apis/{id}",
     updateApi = "/apis/{id}",
     getPostman = "/apis/{id}/postman",
     getOasVersion = "/apis/{id}/oas/{version}",
     getOpenApiSpecification = "/openapi.json",
     listOrganisations = "/organisations",
-    createOrganisation = "/organisations",
-    getAdoptionApis = "/statistics/apis",
-    getAdoptionRules = "/statistics/rules",
-    getAdoptionSummary = "/statistics/summary",
-    getAdoptionTimeline = "/statistics/timeline"
+    createOrganisation = "/organisations"
 }

@@ -311,13 +311,13 @@ export interface components {
             /** @description Description of what this filter does. */
             description: string;
             /**
-             * @description Filter type. toggle: on/off switch. date: date input (ISO 8601). multi-select: multiple values selectable.
+             * @description Filter type. toggle: on/off switch. date: date input (ISO 8601). multi-select: multiple values selectable. single-select: one value selectable from a list.
              * @enum {string}
              */
-            type: "toggle" | "date" | "multi-select";
-            /** @description Current filter value. For toggle: 'true' or 'false'. For date: ISO 8601 date (yyyy-MM-dd) or empty string. Not present for multi-select. */
-            value?: string;
-            /** @description For toggle filters, the number of repositories that would match when the toggle is enabled (value 'true'), regardless of the current value. For date filters, the number of repositories matching the current date value; only present when a date is set. Not present for multi-select. */
+            type: "toggle" | "date" | "multi-select" | "single-select";
+            /** @description Current filter value. For toggle: boolean true or false. For date: ISO 8601 date (yyyy-MM-dd). Not present for multi-select. */
+            value?: boolean | string;
+            /** @description For toggle filters, the number of repositories that would match when the toggle is enabled (value true), regardless of the current value. For date filters, the number of repositories matching the current date value; only present when a date is set. Not present for multi-select. */
             count?: number | null;
             /** @description Available options with counts. Only present for multi-select type. */
             options?: components["schemas"]["FilterOption"][];
