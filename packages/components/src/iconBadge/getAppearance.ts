@@ -1,6 +1,9 @@
-/* biome-ignore-all lint: TODO: needs a refactor maybe */
+/* biome-ignore-all lint: is deprecated and refactored */
 type status = "active" | "deprecated" | "sunset" | "retired";
 
+/**
+ * @deprecated API Register specific function (moved and refactored to `apps/api-register/src/components/`)
+ */
 export function getDate(object?: Partial<Record<"status" | status, any>>) {
   if (!object) return;
 
@@ -24,6 +27,9 @@ export function getDate(object?: Partial<Record<"status" | status, any>>) {
   );
 }
 
+/**
+ * @deprecated API Register specific function (moved and refactored to `apps/api-register/src/components/`)
+ */
 export default function getAppearance(
   object?: Partial<Record<"status" | status, any>>,
 ) {

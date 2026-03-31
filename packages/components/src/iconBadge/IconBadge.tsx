@@ -8,6 +8,9 @@ export interface IconBadgeProps extends HTMLProps<HTMLSpanElement> {
   appearance?: string;
 }
 
+/**
+ * @deprecated API Register specific component (and not used anymore)
+ */
 export default function IconBadge(props: IconBadgeProps) {
   const { className, name, appearance, ...restProps } = props;
   const iconClassName = `don-icon don-icon-${name} ${className || ""}`.trim();

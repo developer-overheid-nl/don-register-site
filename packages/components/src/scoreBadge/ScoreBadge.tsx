@@ -17,6 +17,7 @@ export interface ScoreBadgeProps {
   };
 }
 
+/** @deprecated */
 export default function ScoreBadge(props: ScoreBadgeProps) {
   const defaultcolors: ScoreBadgeProps["colors"] = {
     background: "#CBD5E1",

@@ -9,22 +9,19 @@ import {
 } from "astro:env/server";
 import {
   Alert,
+  AlignBox,
   Article,
   CardAsLink,
   CardsList,
   CardsListItem,
   DataBadgeLink,
   Filters,
-  getAppearance,
-  getDate,
   Heading,
   HeadingGroup,
-  IconBadge,
   Markdown,
   Pagination,
   Paragraph,
   PillBadge,
-  ScoreBadge,
   Search,
 } from "@developer-overheid-nl/don-register-components";
 import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
@@ -38,6 +35,11 @@ import {
 import { t } from "i18next";
 import createClient from "openapi-fetch";
 import appConfig from "../../../../app.config";
+import {
+  getFromDate,
+  getStatus,
+  getStatusColor,
+} from "../../../components/lifecycleHelpers";
 import { Content as Intro } from "../../../partials/intro.md";
 import { ApiPaths, type paths } from "../../../types/api-schema";
 
@@ -126,6 +128,68 @@ const i18nContext =
     : "all";
 
 const items = error ? null : data;
+
+// const testLifeCycles = [
+//   {
+//     status: "active",
+//     version: "v-active",
+//     from: undefined,
+//   },
+//   {
+//     status: "active",
+//     version: "v-active-from-null",
+//     from: null,
+//   },
+//   {
+//     status: "deprecated",
+//     version: "v-deprecated-from-future",
+//     from: "2030-04-01",
+//   },
+//   {
+//     status: "deprecated",
+//     version: "v-deprecated-from-past",
+//     from: "2020-02-02",
+//   },
+//   {
+//     status: "deprecated",
+//     version: "v-deprecated-no-from",
+//   },
+//   {
+//     status: "sunset",
+//     version: "v-sunset-from-future",
+//     from: "2030-04-01",
+//   },
+//   {
+//     status: "sunset",
+//     version: "v-sunset-from-past",
+//     from: "2020-02-02",
+//   },
+//   {
+//     status: "sunset",
+//     version: "v-sunset-from-unparsable",
+//     from: "Seventeenth Day of September in the Year of our Lord one thousand seven hundred and Eighty seven",
+//   },
+//   {
+//     status: "retired",
+//     version: "v-retired-from-future",
+//     from: "2030-04-01",
+//   },
+//   {
+//     status: "retired",
+//     version: "v-retired-from-past",
+//     from: "2020-02-02",
+//   },
+//   {
+//     status: "retired",
+//     version: "v-retired-from-long-past",
+//     from: "1787-09-17",
+//   },
+//   {
+//     status: "deprecated",
+//     version: "v-deprecated-from-today",
+//     from: new Date().toLocaleDateString("en-CA"),
+//   },
+// ];
 ---
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
@@ -174,20 +238,20 @@ const items = error ? null : data;
                     </DataBadgeLink></span>
                   </Paragraph>
                   <div class="header-meta">
-                    <IconBadge 
-                      className={`moveAbove`} 
-                      name={item.lifecycle?.status || 'unknown'} 
-                      appearance={getAppearance(item.lifecycle)} 
-                      title={t(`components.status-${item.lifecycle?.status}`, {context: getAppearance(item.lifecycle), date: getDate(item.lifecycle)})} 
-                      /> 
-                    <div class="version">{t('components.version', {version: item.lifecycle?.version})}</div>
                   </div>
               </div>
               </HeadingGroup>
               <div slot="description" class="description utrecht-html"><Markdown text={item.description} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
-              <div slot="metadata" class="meta">
+              <AlignBox align="space-between" slot="metadata" className="meta">
+                <PillBadge 
+                  startValue={t('components.version', {version: item.lifecycle.version})} 
+                  endValue={t(`components.lifecycle-status-${getStatus(item.lifecycle)?.current || 'active'}`, {...getFromDate(item.lifecycle)})} 
+                  type="color"
+                  color={getStatusColor(item.lifecycle)}
+                  data-status={JSON.stringify(getStatus(item.lifecycle))}
+                />
                 <PillBadge startValue={`ADR Score`} endValue={item.adrScore} type="percentage" />
-              </div>
+              </AlignBox>
             </CardAsLink>
           </CardsListItem>
         ))
@@ -223,10 +287,6 @@ const items = error ? null : data;
     a:hover {
       text-decoration-line: none;
     }
-  }
-
-  .meta {
-    place-content: center;
   }
 
   .version {
