@@ -17,18 +17,14 @@ import {
   DataBadgeLink,
   DataSummary,
   DataSummaryItem,
-  getAppearance,
-  getDate,
   Heading,
   HeadingGroup,
   Icon,
-  IconBadge,
   Link,
   Markdown,
   Paragraph,
   PillBadge,
   ReadOnlyTextInput,
-  ScoreBadge,
 } from "@developer-overheid-nl/don-register-components";
 import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
@@ -39,6 +35,11 @@ import {
 import { t } from "i18next";
 import createClient from "openapi-fetch";
 import appConfig from "../../../app.config";
+import {
+  getFromDate,
+  getStatus,
+  getStatusColor,
+} from "../../components/lifecycleHelpers";
 import { ApiPaths, type paths } from "../../types/api-schema";
 
 Astro.response.headers.set("Cache-Control", "public, max-age=7200");
@@ -118,22 +119,17 @@ const details = error ? null : data;
     </Fragment>
     <Fragment slot="meta">
       <Block layout="flex-row" data-track-content data-content-name="Detail Page Meta">
-        <div>{t(`components.version`, {version: details.lifecycle?.version || '-'})}</div>
+        <PillBadge 
+          startValue={t('components.version', {version: details.lifecycle.version})} 
+          endValue={t(`components.lifecycle-status-${getStatus(details.lifecycle)?.current || 'active'}`, {...getFromDate(details.lifecycle)})} 
+          type="color"
+          color={getStatusColor(details.lifecycle)}
+          data-status={JSON.stringify(getStatus(details.lifecycle))}
+        />
         <AlignBox gap="small" display="inline">
-          {/* <figure class=""> */}
-            {/* <figcaption class="adr-score-label">{t(`components.adr-score`)}: {details.adrScore}%</figcaption> */}
-            <PillBadge data-content-piece="ADR Score" className="adr-score-figure" startValue={`ADR Score`} endValue={details.adrScore} type="percentage">
-              <span class="adr-score-info"><Link data-content-target="OAS Checker Link" href={`https://developer-overheid-nl.github.io/oas-checker/?url=https://apis.developer.overheid.nl/apis/download/${id}/oas3.0.json`} target="_blank" rel="noopener noreferrer">Uitleg <Icon name="externe-link-inline" /></Link></span>
-            </PillBadge>
-            {/* <ScoreBadge name={`ADR`} score={details.adrScore} max={100} inPercentage /> */}
-          {/* </figure> */}
-        </AlignBox>
-        <AlignBox gap="small" display="inline">
-          <IconBadge
-            name={details.lifecycle?.status || 'unknown'}
-            appearance={getAppearance(details.lifecycle || {status: 'active'})}
-          />
-          {t(`components.status-${details.lifecycle?.status}`, {context: getAppearance(details.lifecycle), date: getDate(details?.lifecycle)})}
+          <PillBadge data-content-piece="ADR Score" className="adr-score-figure" startValue={`ADR Score`} endValue={details.adrScore} type="percentage">
+            <span class="adr-score-info"><Link data-content-target="OAS Checker Link" href={`https://developer-overheid-nl.github.io/oas-checker/?url=https://apis.developer.overheid.nl/apis/download/${id}/oas3.0.json`} target="_blank" rel="noopener noreferrer">Uitleg <Icon name="externe-link-inline" /></Link></span>
+          </PillBadge>
         </AlignBox>
       </Block>
       <Heading level={3}>{t(`pages.tools`)}</Heading>
@@ -193,12 +189,3 @@ const details = error ? null : data;
     </Fragment>
 </DonDetail>)
 }
-
-<!-- <style>
-  .adr-score-figure {
-    display: contents;
-  }
-  .adr-score-label {
-    display: inline-block;
-  }
-</style> -->

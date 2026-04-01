@@ -1,6 +1,6 @@
 apis:
   api-register@v1@test:
-    root: https://api.don.apps.digilab.network/api-register/v1/openapi.json
+    root: https://api.projects.digilab.network/api-register/v1/openapi.json
     x-openapi-ts:
       output: ./apps/api-register/src/types/api-schema.test.ts
   api-register@v1@prod:
@@ -8,7 +8,7 @@ apis:
     x-openapi-ts:
       output: ./apps/api-register/src/types/api-schema.prod.ts
   tools@v1@test:
-    root: https://api.don.apps.digilab.network/tools/v1/openapi.json
+    root: https://api.projects.digilab.network/tools/v1/openapi.json
     x-openapi-ts:
       output: ./apps/api-register/src/types/tools-schema.test.ts
   tools@v1@prod:
@@ -16,7 +16,7 @@ apis:
     x-openapi-ts:
       output: ./apps/api-register/src/types/tools-schema.prod.ts
   oss-register@v1@test:
-    root: https://api.don.apps.digilab.network/oss-register/v1/openapi.json
+    root: https://api.projects.digilab.network/oss-register/v1/openapi.json
     x-openapi-ts:
       output: ./apps/oss-register/src/types/api-schema.test.ts
   oss-register@v1@prod:
