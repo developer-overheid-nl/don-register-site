@@ -23,7 +23,7 @@ export default defineConfig({
     port: 4321,
     allowedHosts: [
       "oss.developer.overheid.nl",
-      "**.don.apps.digilab.network",
+      "**.projects.digilab.network",
     ],
   },
   security: {
@@ -33,7 +33,7 @@ export default defineConfig({
         protocol: "https",
       },
       {
-        hostname: "**.don.apps.digilab.network",
+        hostname: "**.projects.digilab.network",
         protocol: "https",
       },
     ],
