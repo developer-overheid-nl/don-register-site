@@ -1,18 +1,20 @@
-publiccodeYmlVersion: 0.5.0
+publiccodeYmlVersion: "0.5"
 name: developer.overheid.nl Register Sites
 applicationSuite: developer.overheid.nl API- and OSS registers
 url: https://github.com/developer-overheid-nl/don-register-site
-softwareVersion: 1.0.0
+
 platforms:
   - web
+
 categories:
   - data-collection
   - data-visualization
   - it-development
   - project-management
-developmentStatus: beta
-releaseDate: "1970-01-01"
+
+developmentStatus: stable
 softwareType: standalone/web
+
 description:
   nl:
     localisedName: Websites voor developer.overheid.nl API- en OSS registers
@@ -30,16 +32,18 @@ description:
   en:
     localisedName: Websites for developer.overheid.nl API- and OSS registers
     shortDescription: The websites and packages belonging to the OSS- and API-register from developer.overheid.nl and the register-site-template
+
 legal:
   license: EUPL-1.2
-  mainCopyrightOwner: Stichting Geonovum
-  repoOwner: Stichting Geonovum
+  mainCopyrightOwner: Geonovum
+
 maintenance:
   type: internal
   contacts:
     - name: Jaap-Hein Wester
-      email: j.h.wester\x64geonovum.nl
+      email: "j.h.wester\x40geonovum.nl"
       affiliation: Geonovum
+
 localisation:
   localisationReady: true
   availableLanguages:
