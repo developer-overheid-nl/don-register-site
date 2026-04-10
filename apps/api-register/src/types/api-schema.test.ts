@@ -12,14 +12,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * List all APIs
-         * @description List all APIs
+         * List APIs
+         * @description Returns a list of APIs included in the register.
          */
         get: operations["listApis"];
         put?: never;
         /**
-         * Register a new API
-         * @description Register a new API
+         * Register API
+         * @description Registers a new API in the register from its OpenAPI document.
          */
         post: operations["createApi"];
         delete?: never;
@@ -36,8 +36,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Search apis
-         * @description Returns a list of repositories matching the search query.
+         * Search APIs
+         * @description Returns a list of APIs matching the search query.
          */
         get: operations["searchApis"];
         put?: never;
@@ -57,7 +57,7 @@ export interface paths {
         };
         /**
          * List all lint results
-         * @description Returns all lint results.
+         * @description Returns all stored lint results for registered APIs.
          */
         get: operations["listLintResults"];
         put?: never;
@@ -79,13 +79,13 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Retrieve a specific API
-         * @description Retrieve a specific API
+         * Get API by id
+         * @description Returns a single API by id.
          */
         get: operations["retreiveApi"];
         /**
-         * Update a specific API
-         * @description Update a specific API
+         * Update API
+         * @description Updates an existing API by id.
          */
         put: operations["updateApi"];
         post?: never;
@@ -171,8 +171,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * List all organisations
-         * @description List all organisations
+         * List organisations
+         * @description Returns a list of organisations included in the register.
          */
         get: operations["listOrganisations"];
         put?: never;
@@ -190,100 +190,241 @@ export interface paths {
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: never;
+    schemas: {
+        /**
+         * Contact
+         * @description Contact details
+         */
+        Contact: {
+            /**
+             * Format: email
+             * @description The email address of the contact
+             * @example developer.overheid@geonovum.nl
+             */
+            email: string;
+            /**
+             * @description The name of the contact
+             * @example Developer Overheid
+             */
+            name: string;
+            /**
+             * Format: uri
+             * @description The URL of the contact
+             * @example https://developer.overheid.nl
+             */
+            url: string;
+        };
+        /**
+         * Organisation summary
+         * @description An organisation from the catalog
+         */
+        OrganisationSummary: {
+            /**
+             * Organisation URI
+             * Format: uri
+             * @description The unique identifier for an organisation
+             * @example https://developer.overheid.nl
+             */
+            uri: string;
+            /**
+             * @description The label of the organisation
+             * @example developer.overheid.nl
+             */
+            label: string;
+        };
+        /**
+         * Lifecycle
+         * @description The lifecycle status of the API
+         */
+        Lifecycle: {
+            /**
+             * @description The lifecycle status
+             * @example deprecated
+             * @example sunset
+             * @example retired
+             * @enum {string}
+             */
+            status: "active" | "deprecated" | "sunset" | "retired";
+            /**
+             * @description The version of the API
+             * @example 1.0.0
+             */
+            version: string;
+            /**
+             * Format: date
+             * @description The date from which the lifecycle status is/has been deprecated, sunset or retired.
+             * @example 2025-01-15
+             */
+            from?: string | null;
+        };
+        Server: {
+            /**
+             * Format: uri
+             * @description The URL of the server
+             * @example https://api.developer.overheid.nl/api-register/v1
+             */
+            url: string;
+            /**
+             * @description A description of the server
+             * @example Production server
+             */
+            description: string;
+        };
+        /**
+         * API
+         * @description An API from the catalog
+         */
+        ApiSummary: {
+            /**
+             * @description The unique identifier for an API
+             * @example dicF0B3HR
+             */
+            readonly id: string;
+            contact: components["schemas"]["Contact"];
+            /**
+             * @description The title of the API
+             * @example API register API v1
+             */
+            title: string;
+            /**
+             * @description The description of the API
+             * @example This is version 1 of the API register. This description can also contain Markdown.
+             */
+            description: string;
+            organisation: components["schemas"]["OrganisationSummary"];
+            /**
+             * @description The ADR score of the API
+             * @example 85
+             */
+            adrScore: number | null;
+            lifecycle: components["schemas"]["Lifecycle"];
+        };
+        /**
+         * API
+         * @description An API from the catalog
+         */
+        ApiDetail: components["schemas"]["ApiSummary"] & {
+            /**
+             * Format: uri
+             * @description The URL of the OAS document
+             * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
+             */
+            oasUrl: string | null;
+            /** @description The authentication methods supported by the API */
+            auth: string[];
+            /**
+             * Format: uri
+             * @description The URL to the documentation of the API
+             * @example https://developer.overheid.nl/kennisbank/
+             */
+            docsUrl: string | null;
+            servers: components["schemas"]["Server"][];
+        };
+        /**
+         * API Input
+         * @description Input for registering or updating an API from its OpenAPI document
+         */
+        ApiInput: {
+            /**
+             * OAS Url
+             * Format: uri
+             * @description The URL of the OAS document
+             * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
+             */
+            oasUrl: string;
+            /**
+             * Organisation URI
+             * Format: uri
+             * @description The unique identifier for an organisation
+             * @example https://developer.overheid.nl
+             */
+            organisationUri: string;
+            contact?: components["schemas"]["Contact"];
+        };
+        /**
+         * Problem JSON
+         * @description Problem JSON schema representing errors and status code
+         */
+        ProblemJson: {
+            /**
+             * @description The HTTP status code generated by the origin server for this occurrence of the problem
+             * @example 400
+             */
+            status: number;
+            /**
+             * @description A short, human-readable summary of the problem type
+             * @example Request validation failed
+             */
+            title: string;
+            errors?: {
+                /**
+                 * @description Location of the error (e.g., body, query, header)
+                 * @enum {string}
+                 */
+                in: "body" | "query";
+                /**
+                 * @description Location in the document where the error occurred (JSON Pointer)
+                 * @example #/foo[0]/bar
+                 */
+                location: string;
+                /**
+                 * @description A code representing the type of error
+                 * @example date.format
+                 */
+                code: string;
+                /**
+                 * @description A detailed message describing the error
+                 * @example must be ISO 8601
+                 */
+                detail: string;
+            }[];
+        };
+    };
     responses: {
         /** @description Bad request */
         400: {
             headers: {
-                /** @description Semver of this API */
-                "API-Version"?: string;
+                "API-Version": components["headers"]["ApiVersion"];
                 [name: string]: unknown;
             };
             content: {
-                "application/problem+json": {
-                    /**
-                     * @description The HTTP status code generated by the origin server for this occurrence of the problem
-                     * @example 400
-                     */
-                    status: number;
-                    /**
-                     * @description A short, human-readable summary of the problem type
-                     * @example Request validation failed
-                     */
-                    title: string;
-                    errors?: {
-                        /**
-                         * @description Location of the error (e.g., body, query, header)
-                         * @enum {string}
-                         */
-                        in: "body" | "query";
-                        /**
-                         * @description Location in the document where the error occurred (JSON Pointer)
-                         * @example #/foo[0]/bar
-                         */
-                        location: string;
-                        /**
-                         * @description A code representing the type of error
-                         * @example date.format
-                         */
-                        code: string;
-                        /**
-                         * @description A detailed message describing the error
-                         * @example must be ISO 8601
-                         */
-                        detail: string;
-                    }[];
-                };
+                "application/problem+json": components["schemas"]["ProblemJson"];
             };
         };
         /** @description Resource does not exist */
         404: {
             headers: {
-                /** @description Semver of this API */
-                "API-Version"?: string;
+                "API-Version": components["headers"]["ApiVersion"];
                 [name: string]: unknown;
             };
             content: {
-                "application/problem+json": {
-                    /**
-                     * @description The HTTP status code generated by the origin server for this occurrence of the problem
-                     * @example 400
-                     */
-                    status: number;
-                    /**
-                     * @description A short, human-readable summary of the problem type
-                     * @example Request validation failed
-                     */
-                    title: string;
-                    errors?: {
-                        /**
-                         * @description Location of the error (e.g., body, query, header)
-                         * @enum {string}
-                         */
-                        in: "body" | "query";
-                        /**
-                         * @description Location in the document where the error occurred (JSON Pointer)
-                         * @example #/foo[0]/bar
-                         */
-                        location: string;
-                        /**
-                         * @description A code representing the type of error
-                         * @example date.format
-                         */
-                        code: string;
-                        /**
-                         * @description A detailed message describing the error
-                         * @example must be ISO 8601
-                         */
-                        detail: string;
-                    }[];
-                };
+                "application/problem+json": components["schemas"]["ProblemJson"];
             };
         };
     };
-    parameters: never;
+    parameters: {
+        /** @description Page number (1-based). */
+        Page: number;
+        /** @description Number of results per page. */
+        PerPage: number;
+        /** @description Filter on organisation URI. */
+        Organisation: string;
+    };
     requestBodies: never;
-    headers: never;
+    headers: {
+        /** @description Semver of this API */
+        ApiVersion: string;
+        /** @description Links to the previous, next, last or first pages */
+        Link: string;
+        /** @description Total number of items available */
+        TotalCount: number;
+        /** @description Current page number */
+        CurrentPage: number;
+        /** @description Number of items per page */
+        PerPage: number;
+        /** @description Total number of pages available */
+        TotalPages: number;
+    };
     pathItems: never;
 }
 export type $defs = Record<string, never>;
@@ -292,11 +433,11 @@ export interface operations {
         parameters: {
             query?: {
                 /** @description Page number (1-based). */
-                page?: number;
+                page?: components["parameters"]["Page"];
                 /** @description Number of results per page. */
-                perPage?: number;
+                perPage?: components["parameters"]["PerPage"];
                 /** @description Filter on organisation URI. */
-                organisation?: string;
+                organisation?: components["parameters"]["Organisation"];
                 /** @description Comma-separated list of API IDs. */
                 ids?: string;
             };
@@ -309,155 +450,19 @@ export interface operations {
             /** @description OK */
             200: {
                 headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
-                    /** @description Links to the previous, next, last or first pages */
-                    Link?: string;
-                    /** @description Total number of items available */
-                    "Total-Count"?: number;
-                    /** @description Current page number */
-                    "Current-Page"?: number;
-                    /** @description Number of items per page */
-                    "Per-Page"?: number;
-                    /** @description Total number of pages available */
-                    "Total-Pages"?: number;
+                    "API-Version": components["headers"]["ApiVersion"];
+                    Link: components["headers"]["Link"];
+                    "Total-Count": components["headers"]["TotalCount"];
+                    "Current-Page": components["headers"]["CurrentPage"];
+                    "Per-Page": components["headers"]["PerPage"];
+                    "Total-Pages": components["headers"]["TotalPages"];
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        /**
-                         * @description The unique identifier for an API
-                         * @example dicF0B3HR
-                         */
-                        readonly id: string;
-                        /**
-                         * Contact
-                         * @description Contact details
-                         */
-                        contact: {
-                            /**
-                             * Format: email
-                             * @description The email address of the contact
-                             * @example developer.overheid@geonovum.nl
-                             */
-                            email: string;
-                            /**
-                             * @description The name of the contact
-                             * @example Developer Overheid
-                             */
-                            name: string;
-                            /**
-                             * Format: uri
-                             * @description The URL of the contact
-                             * @example https://developer.overheid.nl
-                             */
-                            url: string;
-                        };
-                        /**
-                         * @description The title of the API
-                         * @example API register API v1
-                         */
-                        title: string;
-                        /**
-                         * @description The description of the API
-                         * @example This is version 1 of the API register. This description can also contain Markdown.
-                         */
-                        description: string;
-                        /**
-                         * Organisation summary
-                         * @description An organisation from the catalog
-                         */
-                        organisation: {
-                            /**
-                             * Organisation URI
-                             * Format: uri
-                             * @description The unique identifier for an organisation
-                             * @example https://developer.overheid.nl
-                             */
-                            uri: string;
-                            /**
-                             * @description The label of the organisation
-                             * @example developer.overheid.nl
-                             */
-                            label: string;
-                        };
-                        /**
-                         * @description The ADR score of the API
-                         * @example 85
-                         */
-                        adrScore: number | null;
-                        /**
-                         * Lifecycle
-                         * @description The lifecycle status of the API
-                         */
-                        lifecycle: {
-                            /**
-                             * @description The lifecycle status
-                             * @example deprecated
-                             * @example sunset
-                             * @example retired
-                             * @enum {string}
-                             */
-                            status: "active" | "deprecated" | "sunset" | "retired";
-                            /**
-                             * @description The version of the API
-                             * @example 1.0.0
-                             */
-                            version: string;
-                            /**
-                             * Format: date
-                             * @description The date from which the lifecycle status is/has been deprecated, sunset or retired.
-                             * @example 2025-01-15
-                             */
-                            from?: string | null;
-                        };
-                    }[];
+                    "application/json": components["schemas"]["ApiSummary"][];
                 };
             };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": {
-                        /**
-                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
-                         * @example 400
-                         */
-                        status: number;
-                        /**
-                         * @description A short, human-readable summary of the problem type
-                         * @example Request validation failed
-                         */
-                        title: string;
-                        errors?: {
-                            /**
-                             * @description Location of the error (e.g., body, query, header)
-                             * @enum {string}
-                             */
-                            in: "body" | "query";
-                            /**
-                             * @description Location in the document where the error occurred (JSON Pointer)
-                             * @example #/foo[0]/bar
-                             */
-                            location: string;
-                            /**
-                             * @description A code representing the type of error
-                             * @example date.format
-                             */
-                            code: string;
-                            /**
-                             * @description A detailed message describing the error
-                             * @example must be ISO 8601
-                             */
-                            detail: string;
-                        }[];
-                    };
-                };
-            };
+            400: components["responses"]["400"];
         };
     };
     createApi: {
@@ -469,217 +474,32 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": {
-                    /**
-                     * OAS Url
-                     * Format: uri
-                     * @description The URL of the OAS document
-                     * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
-                     */
-                    oasUrl: string;
-                    /**
-                     * Organisation URI
-                     * Format: uri
-                     * @description The unique identifier for an organisation
-                     * @example https://developer.overheid.nl
-                     */
-                    organisationUri: string;
-                    /**
-                     * Contact
-                     * @description Contact details
-                     */
-                    contact?: {
-                        /**
-                         * Format: email
-                         * @description The email address of the contact
-                         * @example developer.overheid@geonovum.nl
-                         */
-                        email: string;
-                        /**
-                         * @description The name of the contact
-                         * @example Developer Overheid
-                         */
-                        name: string;
-                        /**
-                         * Format: uri
-                         * @description The URL of the contact
-                         * @example https://developer.overheid.nl
-                         */
-                        url: string;
-                    };
-                };
+                "application/json": components["schemas"]["ApiInput"];
             };
         };
         responses: {
             /** @description Created */
             201: {
                 headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
+                    "API-Version": components["headers"]["ApiVersion"];
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        /**
-                         * @description The unique identifier for an API
-                         * @example dicF0B3HR
-                         */
-                        readonly id: string;
-                        /**
-                         * Contact
-                         * @description Contact details
-                         */
-                        contact: {
-                            /**
-                             * Format: email
-                             * @description The email address of the contact
-                             * @example developer.overheid@geonovum.nl
-                             */
-                            email: string;
-                            /**
-                             * @description The name of the contact
-                             * @example Developer Overheid
-                             */
-                            name: string;
-                            /**
-                             * Format: uri
-                             * @description The URL of the contact
-                             * @example https://developer.overheid.nl
-                             */
-                            url: string;
-                        };
-                        /**
-                         * @description The title of the API
-                         * @example API register API v1
-                         */
-                        title: string;
-                        /**
-                         * @description The description of the API
-                         * @example This is version 1 of the API register. This description can also contain Markdown.
-                         */
-                        description: string;
-                        /**
-                         * Organisation summary
-                         * @description An organisation from the catalog
-                         */
-                        organisation: {
-                            /**
-                             * Organisation URI
-                             * Format: uri
-                             * @description The unique identifier for an organisation
-                             * @example https://developer.overheid.nl
-                             */
-                            uri: string;
-                            /**
-                             * @description The label of the organisation
-                             * @example developer.overheid.nl
-                             */
-                            label: string;
-                        };
-                        /**
-                         * @description The ADR score of the API
-                         * @example 85
-                         */
-                        adrScore: number | null;
-                        /**
-                         * Lifecycle
-                         * @description The lifecycle status of the API
-                         */
-                        lifecycle: {
-                            /**
-                             * @description The lifecycle status
-                             * @example deprecated
-                             * @example sunset
-                             * @example retired
-                             * @enum {string}
-                             */
-                            status: "active" | "deprecated" | "sunset" | "retired";
-                            /**
-                             * @description The version of the API
-                             * @example 1.0.0
-                             */
-                            version: string;
-                            /**
-                             * Format: date
-                             * @description The date from which the lifecycle status is/has been deprecated, sunset or retired.
-                             * @example 2025-01-15
-                             */
-                            from?: string | null;
-                        };
-                    } & {
-                        /**
-                         * Format: uri
-                         * @description The URL of the OAS document
-                         * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
-                         */
-                        oasUrl: string | null;
-                        /** @description The authentication methods supported by the API */
-                        auth: string[];
-                        /**
-                         * Format: uri
-                         * @description The URL to the documentation of the API
-                         * @example https://developer.overheid.nl/kennisbank/
-                         */
-                        docsUrl: string | null;
-                        servers: unknown;
-                    };
+                    "application/json": components["schemas"]["ApiDetail"];
                 };
             };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": {
-                        /**
-                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
-                         * @example 400
-                         */
-                        status: number;
-                        /**
-                         * @description A short, human-readable summary of the problem type
-                         * @example Request validation failed
-                         */
-                        title: string;
-                        errors?: {
-                            /**
-                             * @description Location of the error (e.g., body, query, header)
-                             * @enum {string}
-                             */
-                            in: "body" | "query";
-                            /**
-                             * @description Location in the document where the error occurred (JSON Pointer)
-                             * @example #/foo[0]/bar
-                             */
-                            location: string;
-                            /**
-                             * @description A code representing the type of error
-                             * @example date.format
-                             */
-                            code: string;
-                            /**
-                             * @description A detailed message describing the error
-                             * @example must be ISO 8601
-                             */
-                            detail: string;
-                        }[];
-                    };
-                };
-            };
+            400: components["responses"]["400"];
         };
     };
     searchApis: {
         parameters: {
             query: {
                 /** @description Page number (1-based). */
-                page?: number;
+                page?: components["parameters"]["Page"];
                 /** @description Number of results per page. */
-                perPage?: number;
+                perPage?: components["parameters"]["PerPage"];
                 /** @description Filter on organisation URI. */
-                organisation?: string;
+                organisation?: components["parameters"]["Organisation"];
                 /** @description Search term. */
                 q: string;
             };
@@ -692,155 +512,19 @@ export interface operations {
             /** @description OK */
             200: {
                 headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
-                    /** @description Links to the previous, next, last or first pages */
-                    Link?: string;
-                    /** @description Total number of items available */
-                    "Total-Count"?: number;
-                    /** @description Current page number */
-                    "Current-Page"?: number;
-                    /** @description Number of items per page */
-                    "Per-Page"?: number;
-                    /** @description Total number of pages available */
-                    "Total-Pages"?: number;
+                    "API-Version": components["headers"]["ApiVersion"];
+                    Link: components["headers"]["Link"];
+                    "Total-Count": components["headers"]["TotalCount"];
+                    "Current-Page": components["headers"]["CurrentPage"];
+                    "Per-Page": components["headers"]["PerPage"];
+                    "Total-Pages": components["headers"]["TotalPages"];
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        /**
-                         * @description The unique identifier for an API
-                         * @example dicF0B3HR
-                         */
-                        readonly id: string;
-                        /**
-                         * Contact
-                         * @description Contact details
-                         */
-                        contact: {
-                            /**
-                             * Format: email
-                             * @description The email address of the contact
-                             * @example developer.overheid@geonovum.nl
-                             */
-                            email: string;
-                            /**
-                             * @description The name of the contact
-                             * @example Developer Overheid
-                             */
-                            name: string;
-                            /**
-                             * Format: uri
-                             * @description The URL of the contact
-                             * @example https://developer.overheid.nl
-                             */
-                            url: string;
-                        };
-                        /**
-                         * @description The title of the API
-                         * @example API register API v1
-                         */
-                        title: string;
-                        /**
-                         * @description The description of the API
-                         * @example This is version 1 of the API register. This description can also contain Markdown.
-                         */
-                        description: string;
-                        /**
-                         * Organisation summary
-                         * @description An organisation from the catalog
-                         */
-                        organisation: {
-                            /**
-                             * Organisation URI
-                             * Format: uri
-                             * @description The unique identifier for an organisation
-                             * @example https://developer.overheid.nl
-                             */
-                            uri: string;
-                            /**
-                             * @description The label of the organisation
-                             * @example developer.overheid.nl
-                             */
-                            label: string;
-                        };
-                        /**
-                         * @description The ADR score of the API
-                         * @example 85
-                         */
-                        adrScore: number | null;
-                        /**
-                         * Lifecycle
-                         * @description The lifecycle status of the API
-                         */
-                        lifecycle: {
-                            /**
-                             * @description The lifecycle status
-                             * @example deprecated
-                             * @example sunset
-                             * @example retired
-                             * @enum {string}
-                             */
-                            status: "active" | "deprecated" | "sunset" | "retired";
-                            /**
-                             * @description The version of the API
-                             * @example 1.0.0
-                             */
-                            version: string;
-                            /**
-                             * Format: date
-                             * @description The date from which the lifecycle status is/has been deprecated, sunset or retired.
-                             * @example 2025-01-15
-                             */
-                            from?: string | null;
-                        };
-                    }[];
+                    "application/json": components["schemas"]["ApiSummary"][];
                 };
             };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": {
-                        /**
-                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
-                         * @example 400
-                         */
-                        status: number;
-                        /**
-                         * @description A short, human-readable summary of the problem type
-                         * @example Request validation failed
-                         */
-                        title: string;
-                        errors?: {
-                            /**
-                             * @description Location of the error (e.g., body, query, header)
-                             * @enum {string}
-                             */
-                            in: "body" | "query";
-                            /**
-                             * @description Location in the document where the error occurred (JSON Pointer)
-                             * @example #/foo[0]/bar
-                             */
-                            location: string;
-                            /**
-                             * @description A code representing the type of error
-                             * @example date.format
-                             */
-                            code: string;
-                            /**
-                             * @description A detailed message describing the error
-                             * @example must be ISO 8601
-                             */
-                            detail: string;
-                        }[];
-                    };
-                };
-            };
+            400: components["responses"]["400"];
         };
     };
     listLintResults: {
@@ -855,19 +539,18 @@ export interface operations {
             /** @description OK */
             200: {
                 headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
+                    "API-Version": components["headers"]["ApiVersion"];
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": {
-                        ID: string;
-                        ApiID: string;
+                        id: string;
+                        apiId: string;
                         successes: boolean;
                         failures: number;
                         warnings: number;
                         /** Format: date-time */
-                        CreatedAt: string;
+                        createdAt: string;
                         messages?: {
                             id: string;
                             lintResultId: string;
@@ -876,7 +559,7 @@ export interface operations {
                             severity: string;
                             code: string;
                             /** Format: date-time */
-                            CreatedAt: string;
+                            createdAt: string;
                             infos?: {
                                 id: string;
                                 lintMessageId: string;
@@ -888,50 +571,7 @@ export interface operations {
                     }[];
                 };
             };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": {
-                        /**
-                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
-                         * @example 400
-                         */
-                        status: number;
-                        /**
-                         * @description A short, human-readable summary of the problem type
-                         * @example Request validation failed
-                         */
-                        title: string;
-                        errors?: {
-                            /**
-                             * @description Location of the error (e.g., body, query, header)
-                             * @enum {string}
-                             */
-                            in: "body" | "query";
-                            /**
-                             * @description Location in the document where the error occurred (JSON Pointer)
-                             * @example #/foo[0]/bar
-                             */
-                            location: string;
-                            /**
-                             * @description A code representing the type of error
-                             * @example date.format
-                             */
-                            code: string;
-                            /**
-                             * @description A detailed message describing the error
-                             * @example must be ISO 8601
-                             */
-                            detail: string;
-                        }[];
-                    };
-                };
-            };
+            400: components["responses"]["400"];
         };
     };
     retreiveApi: {
@@ -949,161 +589,14 @@ export interface operations {
             /** @description OK */
             200: {
                 headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
+                    "API-Version": components["headers"]["ApiVersion"];
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        /**
-                         * @description The unique identifier for an API
-                         * @example dicF0B3HR
-                         */
-                        readonly id: string;
-                        /**
-                         * Contact
-                         * @description Contact details
-                         */
-                        contact: {
-                            /**
-                             * Format: email
-                             * @description The email address of the contact
-                             * @example developer.overheid@geonovum.nl
-                             */
-                            email: string;
-                            /**
-                             * @description The name of the contact
-                             * @example Developer Overheid
-                             */
-                            name: string;
-                            /**
-                             * Format: uri
-                             * @description The URL of the contact
-                             * @example https://developer.overheid.nl
-                             */
-                            url: string;
-                        };
-                        /**
-                         * @description The title of the API
-                         * @example API register API v1
-                         */
-                        title: string;
-                        /**
-                         * @description The description of the API
-                         * @example This is version 1 of the API register. This description can also contain Markdown.
-                         */
-                        description: string;
-                        /**
-                         * Organisation summary
-                         * @description An organisation from the catalog
-                         */
-                        organisation: {
-                            /**
-                             * Organisation URI
-                             * Format: uri
-                             * @description The unique identifier for an organisation
-                             * @example https://developer.overheid.nl
-                             */
-                            uri: string;
-                            /**
-                             * @description The label of the organisation
-                             * @example developer.overheid.nl
-                             */
-                            label: string;
-                        };
-                        /**
-                         * @description The ADR score of the API
-                         * @example 85
-                         */
-                        adrScore: number | null;
-                        /**
-                         * Lifecycle
-                         * @description The lifecycle status of the API
-                         */
-                        lifecycle: {
-                            /**
-                             * @description The lifecycle status
-                             * @example deprecated
-                             * @example sunset
-                             * @example retired
-                             * @enum {string}
-                             */
-                            status: "active" | "deprecated" | "sunset" | "retired";
-                            /**
-                             * @description The version of the API
-                             * @example 1.0.0
-                             */
-                            version: string;
-                            /**
-                             * Format: date
-                             * @description The date from which the lifecycle status is/has been deprecated, sunset or retired.
-                             * @example 2025-01-15
-                             */
-                            from?: string | null;
-                        };
-                    } & {
-                        /**
-                         * Format: uri
-                         * @description The URL of the OAS document
-                         * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
-                         */
-                        oasUrl: string | null;
-                        /** @description The authentication methods supported by the API */
-                        auth: string[];
-                        /**
-                         * Format: uri
-                         * @description The URL to the documentation of the API
-                         * @example https://developer.overheid.nl/kennisbank/
-                         */
-                        docsUrl: string | null;
-                        servers: unknown;
-                    };
+                    "application/json": components["schemas"]["ApiDetail"];
                 };
             };
-            /** @description Resource does not exist */
-            404: {
-                headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": {
-                        /**
-                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
-                         * @example 400
-                         */
-                        status: number;
-                        /**
-                         * @description A short, human-readable summary of the problem type
-                         * @example Request validation failed
-                         */
-                        title: string;
-                        errors?: {
-                            /**
-                             * @description Location of the error (e.g., body, query, header)
-                             * @enum {string}
-                             */
-                            in: "body" | "query";
-                            /**
-                             * @description Location in the document where the error occurred (JSON Pointer)
-                             * @example #/foo[0]/bar
-                             */
-                            location: string;
-                            /**
-                             * @description A code representing the type of error
-                             * @example date.format
-                             */
-                            code: string;
-                            /**
-                             * @description A detailed message describing the error
-                             * @example must be ISO 8601
-                             */
-                            detail: string;
-                        }[];
-                    };
-                };
-            };
+            404: components["responses"]["404"];
         };
     };
     updateApi: {
@@ -1118,250 +611,22 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": {
-                    /**
-                     * OAS Url
-                     * Format: uri
-                     * @description The URL of the OAS document
-                     * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
-                     */
-                    oasUrl: string;
-                    /**
-                     * Organisation URI
-                     * Format: uri
-                     * @description The unique identifier for an organisation
-                     * @example https://developer.overheid.nl
-                     */
-                    organisationUri: string;
-                    /**
-                     * Contact
-                     * @description Contact details
-                     */
-                    contact?: {
-                        /**
-                         * Format: email
-                         * @description The email address of the contact
-                         * @example developer.overheid@geonovum.nl
-                         */
-                        email: string;
-                        /**
-                         * @description The name of the contact
-                         * @example Developer Overheid
-                         */
-                        name: string;
-                        /**
-                         * Format: uri
-                         * @description The URL of the contact
-                         * @example https://developer.overheid.nl
-                         */
-                        url: string;
-                    };
-                };
+                "application/json": components["schemas"]["ApiInput"];
             };
         };
         responses: {
             /** @description OK */
             200: {
                 headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
+                    "API-Version": components["headers"]["ApiVersion"];
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        /**
-                         * @description The unique identifier for an API
-                         * @example dicF0B3HR
-                         */
-                        readonly id: string;
-                        /**
-                         * Contact
-                         * @description Contact details
-                         */
-                        contact: {
-                            /**
-                             * Format: email
-                             * @description The email address of the contact
-                             * @example developer.overheid@geonovum.nl
-                             */
-                            email: string;
-                            /**
-                             * @description The name of the contact
-                             * @example Developer Overheid
-                             */
-                            name: string;
-                            /**
-                             * Format: uri
-                             * @description The URL of the contact
-                             * @example https://developer.overheid.nl
-                             */
-                            url: string;
-                        };
-                        /**
-                         * @description The title of the API
-                         * @example API register API v1
-                         */
-                        title: string;
-                        /**
-                         * @description The description of the API
-                         * @example This is version 1 of the API register. This description can also contain Markdown.
-                         */
-                        description: string;
-                        /**
-                         * Organisation summary
-                         * @description An organisation from the catalog
-                         */
-                        organisation: {
-                            /**
-                             * Organisation URI
-                             * Format: uri
-                             * @description The unique identifier for an organisation
-                             * @example https://developer.overheid.nl
-                             */
-                            uri: string;
-                            /**
-                             * @description The label of the organisation
-                             * @example developer.overheid.nl
-                             */
-                            label: string;
-                        };
-                        /**
-                         * @description The ADR score of the API
-                         * @example 85
-                         */
-                        adrScore: number | null;
-                        /**
-                         * Lifecycle
-                         * @description The lifecycle status of the API
-                         */
-                        lifecycle: {
-                            /**
-                             * @description The lifecycle status
-                             * @example deprecated
-                             * @example sunset
-                             * @example retired
-                             * @enum {string}
-                             */
-                            status: "active" | "deprecated" | "sunset" | "retired";
-                            /**
-                             * @description The version of the API
-                             * @example 1.0.0
-                             */
-                            version: string;
-                            /**
-                             * Format: date
-                             * @description The date from which the lifecycle status is/has been deprecated, sunset or retired.
-                             * @example 2025-01-15
-                             */
-                            from?: string | null;
-                        };
-                    } & {
-                        /**
-                         * Format: uri
-                         * @description The URL of the OAS document
-                         * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
-                         */
-                        oasUrl: string | null;
-                        /** @description The authentication methods supported by the API */
-                        auth: string[];
-                        /**
-                         * Format: uri
-                         * @description The URL to the documentation of the API
-                         * @example https://developer.overheid.nl/kennisbank/
-                         */
-                        docsUrl: string | null;
-                        servers: unknown;
-                    };
+                    "application/json": components["schemas"]["ApiDetail"];
                 };
             };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": {
-                        /**
-                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
-                         * @example 400
-                         */
-                        status: number;
-                        /**
-                         * @description A short, human-readable summary of the problem type
-                         * @example Request validation failed
-                         */
-                        title: string;
-                        errors?: {
-                            /**
-                             * @description Location of the error (e.g., body, query, header)
-                             * @enum {string}
-                             */
-                            in: "body" | "query";
-                            /**
-                             * @description Location in the document where the error occurred (JSON Pointer)
-                             * @example #/foo[0]/bar
-                             */
-                            location: string;
-                            /**
-                             * @description A code representing the type of error
-                             * @example date.format
-                             */
-                            code: string;
-                            /**
-                             * @description A detailed message describing the error
-                             * @example must be ISO 8601
-                             */
-                            detail: string;
-                        }[];
-                    };
-                };
-            };
-            /** @description Resource does not exist */
-            404: {
-                headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": {
-                        /**
-                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
-                         * @example 400
-                         */
-                        status: number;
-                        /**
-                         * @description A short, human-readable summary of the problem type
-                         * @example Request validation failed
-                         */
-                        title: string;
-                        errors?: {
-                            /**
-                             * @description Location of the error (e.g., body, query, header)
-                             * @enum {string}
-                             */
-                            in: "body" | "query";
-                            /**
-                             * @description Location in the document where the error occurred (JSON Pointer)
-                             * @example #/foo[0]/bar
-                             */
-                            location: string;
-                            /**
-                             * @description A code representing the type of error
-                             * @example date.format
-                             */
-                            code: string;
-                            /**
-                             * @description A detailed message describing the error
-                             * @example must be ISO 8601
-                             */
-                            detail: string;
-                        }[];
-                    };
-                };
-            };
+            400: components["responses"]["400"];
+            404: components["responses"]["404"];
         };
     };
     getPostman: {
@@ -1379,8 +644,7 @@ export interface operations {
             /** @description OK */
             200: {
                 headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
+                    "API-Version": components["headers"]["ApiVersion"];
                     [name: string]: unknown;
                 };
                 content: {
@@ -1407,8 +671,7 @@ export interface operations {
             /** @description OK */
             200: {
                 headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
+                    "API-Version": components["headers"]["ApiVersion"];
                     /** @description Returned OAS version (e.g. 3.0 or 3.1). */
                     "OAS-Version"?: string;
                     /** @description Source of the OAS document. */
@@ -1436,8 +699,7 @@ export interface operations {
             /** @description OK */
             200: {
                 headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
+                    "API-Version": components["headers"]["ApiVersion"];
                     [name: string]: unknown;
                 };
                 content: {
@@ -1458,25 +720,11 @@ export interface operations {
             /** @description OK */
             200: {
                 headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
+                    "API-Version": components["headers"]["ApiVersion"];
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        /**
-                         * Organisation URI
-                         * Format: uri
-                         * @description The unique identifier for an organisation
-                         * @example https://developer.overheid.nl
-                         */
-                        uri: string;
-                        /**
-                         * @description The label of the organisation
-                         * @example developer.overheid.nl
-                         */
-                        label: string;
-                    }[];
+                    "application/json": components["schemas"]["OrganisationSummary"][];
                 };
             };
         };
@@ -1490,91 +738,21 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": {
-                    /**
-                     * Organisation URI
-                     * Format: uri
-                     * @description The unique identifier for an organisation
-                     * @example https://developer.overheid.nl
-                     */
-                    uri: string;
-                    /**
-                     * @description The label of the organisation
-                     * @example developer.overheid.nl
-                     */
-                    label: string;
-                };
+                "application/json": components["schemas"]["OrganisationSummary"];
             };
         };
         responses: {
             /** @description Created */
             201: {
                 headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
+                    "API-Version": components["headers"]["ApiVersion"];
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        /**
-                         * Organisation URI
-                         * Format: uri
-                         * @description The unique identifier for an organisation
-                         * @example https://developer.overheid.nl
-                         */
-                        uri: string;
-                        /**
-                         * @description The label of the organisation
-                         * @example developer.overheid.nl
-                         */
-                        label: string;
-                    };
+                    "application/json": components["schemas"]["OrganisationSummary"];
                 };
             };
-            /** @description Bad request */
-            400: {
-                headers: {
-                    /** @description Semver of this API */
-                    "API-Version"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": {
-                        /**
-                         * @description The HTTP status code generated by the origin server for this occurrence of the problem
-                         * @example 400
-                         */
-                        status: number;
-                        /**
-                         * @description A short, human-readable summary of the problem type
-                         * @example Request validation failed
-                         */
-                        title: string;
-                        errors?: {
-                            /**
-                             * @description Location of the error (e.g., body, query, header)
-                             * @enum {string}
-                             */
-                            in: "body" | "query";
-                            /**
-                             * @description Location in the document where the error occurred (JSON Pointer)
-                             * @example #/foo[0]/bar
-                             */
-                            location: string;
-                            /**
-                             * @description A code representing the type of error
-                             * @example date.format
-                             */
-                            code: string;
-                            /**
-                             * @description A detailed message describing the error
-                             * @example must be ISO 8601
-                             */
-                            detail: string;
-                        }[];
-                    };
-                };
-            };
+            400: components["responses"]["400"];
         };
     };
 }

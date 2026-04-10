@@ -21,6 +21,7 @@ export interface FormFieldRadioOptionProps
   statusId?: CustomFormFieldProps["statusId"];
   errorMessageId?: CustomFormFieldProps["errorMessageId"];
   descriptionId?: CustomFormFieldProps["descriptionId"];
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const FormFieldRadioOption = (props: FormFieldRadioOptionProps) => {
@@ -38,6 +39,7 @@ const FormFieldRadioOption = (props: FormFieldRadioOptionProps) => {
     label,
     className,
     children,
+    onChange,
     ...restProps
   } = props;
 
@@ -57,6 +59,7 @@ const FormFieldRadioOption = (props: FormFieldRadioOptionProps) => {
             checked={checked}
             defaultChecked={defaultChecked}
             className="utrecht-checkbox--custom utrecht-form-field__input"
+            onChange={onChange}
           />
           <AmountLabel label={label} amount={amount} />
         </Fragment>

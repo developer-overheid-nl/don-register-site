@@ -73,6 +73,7 @@ export {
   type HeadingLevels,
   type MarkdownProps,
 } from "./markdown/Markdown";
+export { default as Overlay } from "./overlay/Overlay";
 export {
   default as Pagination,
   type PaginationProps,
