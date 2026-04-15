@@ -2,6 +2,10 @@
 export { type AlertProps, default as Alert } from "./alert/Alert";
 export { type AlignBoxProps, default as AlignBox } from "./alignBox/AlignBox";
 export { default as Article } from "./article/Article";
+export {
+  type BadgeListProps,
+  default as BadgeList,
+} from "./badgeList/BadgeList";
 export { type BlockProps, default as Block } from "./block/Block";
 export { default as Button } from "./button/Button";
 export {
@@ -32,6 +36,7 @@ export {
   default as FacetFilters,
   type FacetFiltersProps,
   type FilterData,
+  getSelectedFilters,
 } from "./facetFilters/FacetFilters";
 export { default as Fieldset } from "./fieldset/FieldSet";
 export { default as Filters } from "./filters/Filters";
@@ -45,6 +50,7 @@ export { default as FormFieldCheckboxOption } from "./formFieldCheckboxOption/Fo
 export { default as FormFieldLabel } from "./formFieldLabel/FormFieldLabel";
 export { default as FormFieldRadioGroup } from "./formFieldRadioGroup/FormFieldRadioGroup";
 export { default as FormFieldRadioOption } from "./formFieldRadioOption/FormFieldRadioOption";
+export { default as FormFieldSwitch } from "./formFieldSwitch/FormFieldSwitch";
 export { default as FormFieldTextInput } from "./formFieldTextInput/FormFieldTextInput";
 export { default as Header, type HeaderProps } from "./header/Header";
 export {
@@ -90,6 +96,7 @@ export {
 } from "./scoreBadge/ScoreBadge";
 export { default as Search, type SearchProps } from "./search/Search";
 export { default as SiteLogo } from "./siteLogo/SiteLogo";
+export { default as Switch, type SwitchProps } from "./switch/Switch";
 export { default as ToolTip } from "./toolTip/ToolTip";
 export {
   default as TopNavigation,

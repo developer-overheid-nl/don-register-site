@@ -1,13 +1,11 @@
-import { ActionError, defineAction, type SafeResult } from "astro:actions";
+import { ActionError, defineAction } from "astro:actions";
 import {
   API_ENDPOINT,
   API_URL,
   API_VERSION,
   API_X_API_KEY,
 } from "astro:env/server";
-import { getActionState } from "@astrojs/react/actions";
 import { z } from "astro/zod";
-import { t } from "i18next";
 import createClient from "openapi-fetch";
 import { ApiPaths, type paths } from "../types/api-schema";
 

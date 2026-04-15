@@ -3,6 +3,7 @@ import { withState } from "@astrojs/react/actions";
 import {
   Button,
   FacetFilters,
+  type FilterData,
   Icon,
   Overlay,
 } from "@developer-overheid-nl/don-register-components";
@@ -10,9 +11,19 @@ import clsx from "clsx";
 import { startTransition, useActionState, useRef, useState } from "react";
 import styles from "./FacetFiltersForm.module.css";
 
-const FacetFiltersForm = (props) => {
+interface FacetFiltersFormProps {
+  filters: FilterData[];
+  action: string;
+  method: string;
+  labels: {
+    filtersTitle: string;
+    filterButtonLabel: string;
+  };
+}
+
+const FacetFiltersForm = (props: FacetFiltersFormProps) => {
   const formRef = useRef<HTMLFormElement>(null);
-  const { filters, action: formAction, method: formMethod } = props;
+  const { filters, action: formAction, method: formMethod, labels } = props;
   const [{ data, error }, action, pending] = useActionState(
     withState(actions.getFilters),
     {
@@ -26,7 +37,7 @@ const FacetFiltersForm = (props) => {
     setTouched(true);
   }
 
-  const inputErrors = isInputError(error) ? error.fields : {};
+  const _inputErrors = isInputError(error) ? error.fields : {};
 
   const handleChange = () => {
     console.log(
@@ -40,17 +51,8 @@ const FacetFiltersForm = (props) => {
     });
   };
 
-  console.log("FacetFiltersForm state:", {
-    data,
-    filters,
-    error,
-    pending,
-    inputErrors,
-  });
-
   return (
     <div className="facet-filters-wrapper">
-      {/* TODO: i18next */}
       <form
         id="get-filters"
         className={styles.facetFiltersForm}
@@ -60,8 +62,8 @@ const FacetFiltersForm = (props) => {
       >
         <Overlay active={pending} />
         <FacetFilters
-          id="Xfacetfilters"
-          title="Filters"
+          id="facetfilters"
+          title={labels.filtersTitle}
           filters={data}
           onFilterChange={handleChange}
         />
@@ -70,8 +72,9 @@ const FacetFiltersForm = (props) => {
           type="submit"
           className={clsx(styles.filterButton, touched && styles.touched)}
           disabled={pending}
+          title="Enter ↵"
         >
-          Filter
+          {labels?.filterButtonLabel}
           <Icon name="trechter" slot="icon" width="1.5rem" height="1.5rem" />
         </Button>
       </form>

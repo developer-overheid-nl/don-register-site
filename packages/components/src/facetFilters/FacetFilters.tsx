@@ -3,14 +3,17 @@
 import clsx from "clsx";
 import type { ChangeEvent } from "react";
 import { type HTMLProps, type PropsWithChildren, useRef } from "react";
+import { I18nextProvider, useTranslation } from "react-i18next";
 import FormFieldCheckboxGroup from "../formFieldCheckboxGroup/FormFieldCheckboxGroup";
 import FormFieldCheckboxOption from "../formFieldCheckboxOption/FormFieldCheckboxOption";
 import FormFieldRadioGroup from "../formFieldRadioGroup/FormFieldRadioGroup";
 import FormFieldRadioOption from "../formFieldRadioOption/FormFieldRadioOption";
+import FormFieldSwitch from "../formFieldSwitch/FormFieldSwitch";
 import Heading, {
   clampHeadingLevel,
   type HeadingProps,
 } from "../heading/Heading";
+import i18n from "../i18n";
 import Paragraph from "../paragraph/Paragraph";
 import ToolTip from "../toolTip/ToolTip";
 import styles from "./styles.module.css";
@@ -68,7 +71,7 @@ export type FilterData =
   | MultiSelectFilterData
   | SingleSelectFilterData;
 
-type SelectedFilters = Record<string, Array<string>>;
+type SelectedFilters = Record<string, Array<string | [string, string]>>;
 
 export interface FacetFiltersProps extends HTMLProps<HTMLDivElement> {
   title?: string;
@@ -92,24 +95,31 @@ export interface FacetFiltersProps extends HTMLProps<HTMLDivElement> {
 
 export const getSelectedFilters = (
   filters: FilterData[] | null | undefined,
+  withLabels = false,
 ): SelectedFilters => {
   return (
     filters?.reduce((acc, filter) => {
       if (filter.type === FilterType.Multi) {
-        const keys = filter.options
+        const keys: (string | [string, string])[] = filter.options
           ?.filter((option) => option.selected)
-          .map((option) => option.value);
+          .map((option) =>
+            withLabels ? [option.value, option.label] : option.value,
+          );
         if (keys?.length > 0) {
           acc[filter.key] = keys;
         }
       } else if (filter.type === FilterType.Toggle && filter.value) {
-        acc[filter.key] = ["true"];
+        acc[filter.key] = withLabels ? [["true", filter.label]] : ["true"];
       } else if (filter.type === FilterType.Date && filter.value) {
-        acc[filter.key] = [filter.value];
+        acc[filter.key] = withLabels
+          ? [[filter.value, filter.label]]
+          : [filter.value];
       } else if (filter.type === FilterType.Single) {
         const selectedOption = filter.options.find((option) => option.selected);
         if (selectedOption) {
-          acc[filter.key] = [selectedOption.value];
+          acc[filter.key] = withLabels
+            ? [[selectedOption.value, selectedOption.label]]
+            : [selectedOption.value];
         }
       }
       return acc;
@@ -150,6 +160,7 @@ const debounce = <T extends unknown[]>(
 };
 
 const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
+  const { t } = useTranslation();
   const thisRef = useRef<HTMLDivElement>(null);
   const {
     title,
@@ -220,14 +231,21 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
             >
               {facet.label}
             </Heading>
-            <Paragraph purpose="short">{facet.description}</Paragraph>
+            <Paragraph id={`${facet.key}-label`} purpose="short">
+              {facet.description}
+            </Paragraph>
             {facet.type === "toggle" ? (
-              <FormFieldCheckboxOption
-                label="*JA*"
+              <FormFieldSwitch
+                label=""
+                labelledById={`${facet.key}-label`}
                 name={facet.key}
                 defaultChecked={facet.value}
                 value="true"
                 amount={facet.count || 0}
+                labels={{
+                  on: t("components.filter-on"),
+                  off: t("components.filter-off"),
+                }}
                 onChange={(event) => handleChange(event, facet.type)}
               />
             ) : null}
@@ -247,7 +265,12 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
                     onChange={(event) => handleChange(event, facet.type)}
                   >
                     {option.description ? (
-                      <ToolTip text={option.description} />
+                      <ToolTip
+                        text={option.description}
+                        aria-label={t("components.info-about", {
+                          subject: option.label,
+                        })}
+                      />
                     ) : null}
                   </FormFieldCheckboxOption>
                 ))}
@@ -257,7 +280,7 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
               <FormFieldRadioGroup>
                 <FormFieldRadioOption
                   key="none"
-                  label="*Alle organisaties*"
+                  label={t("components.filter-all")}
                   name={facet.key}
                   value=""
                   onChange={(event) => handleChange(event, facet.type)}
@@ -281,4 +304,12 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
   );
 };
 
-export default FacetFilters;
+const TranslatedFacetFilters = (props: FacetFiltersProps) => {
+  return (
+    <I18nextProvider i18n={i18n}>
+      <FacetFilters {...props} />
+    </I18nextProvider>
+  );
+};
+
+export default TranslatedFacetFilters;

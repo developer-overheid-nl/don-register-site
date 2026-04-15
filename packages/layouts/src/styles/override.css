@@ -169,6 +169,47 @@
   /* --utrecht-pagination-relative-link-hover-color: <color>; */
   /* --utrecht-pagination-relative-link-disabled-background-color: <color>; */
   /* --utrecht-pagination-relative-link-disabled-color: <color>; */
+
+  --utrecht-form-toggle-accent-color: var(--rhc-color-cool-grey-400);
+  /* --utrecht-form-toggle-background-color: var(--rhc-color-cool-grey-50); */
+  --utrecht-form-toggle-border-color: transparent;
+  --utrecht-form-toggle-border-style: solid;
+  --utrecht-form-toggle-border-radius: 10em;
+  --utrecht-form-toggle-border-width: 1px;
+  --utrecht-form-toggle-color: var(--rhc-color-wit);
+  --utrecht-form-toggle-height: 24px;
+  /* --utrecht-form-toggle-padding-inline-end: <length>; */
+  /* --utrecht-form-toggle-padding-inline-start: <length>; */
+  /* --utrecht-form-toggle-padding-block-end: <length>; */
+  /* --utrecht-form-toggle-padding-block-start: <length>; */
+  --utrecht-form-toggle-width: 48px;
+  /* --utrecht-form-toggle-track-border-color: <color>; */
+  --utrecht-form-toggle-track-border-radius: 10em;
+  --utrecht-form-toggle-track-disabled-background-color: var(
+    --rhc-color-cool-grey-50
+  );
+  /* --utrecht-form-toggle-track-disabled-border-color: <color>; */
+  --utrecht-form-toggle-thumb-background-color: var(
+    --utrecht-form-toggle-color
+  );
+  --utrecht-form-toggle-thumb-border-radius: 50%;
+  /* --utrecht-form-toggle-thumb-box-shadow: *; */
+  --utrecht-form-toggle-thumb-margin-inline-start: 2px;
+  --utrecht-form-toggle-thumb-margin-inline-end: 2px;
+  --utrecht-form-toggle-thumb-min-inline-size: 18px;
+  /* --utrecht-form-toggle-thumb-disabled-box-shadow: *; */
+  /* --utrecht-form-toggle-thumb-disabled-background-color: <color>; */
+  --utrecht-form-toggle-checked-accent-color: var(--rhc-color-lintblauw-500);
+  /* --utrecht-form-toggle-disabled-border-color: <color>; */
+  /* --utrecht-form-toggle-disabled-border-style: *; */
+  /* --utrecht-form-toggle-disabled-border-width: <length>; */
+  --utrecht-form-toggle-disabled-color: var(--rhc-color-cool-grey-200);
+  /* --utrecht-form-toggle-focus-border-color: <color>; */
+  /* --utrecht-form-toggle-focus-border-style: *; */
+  /* --utrecht-form-toggle-focus-border-width: <length>; */
+  --utrecht-form-toggle-hover-background-color: var(--rhc-color-cool-grey-300);
+  /* --utrecht-form-toggle-hover-color: <color>; */
+
   --utrecht-code-background-color: var(--rhc-color-cool-grey-50);
   --utrecht-code-color: var(--rhc-color-cool-grey-800);
   /* --utrecht-code-font-family: *; */
