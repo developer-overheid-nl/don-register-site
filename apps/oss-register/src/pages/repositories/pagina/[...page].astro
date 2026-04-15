@@ -26,6 +26,7 @@ import {
   Paragraph,
   PillBadge,
   Search,
+  ToolTip,
 } from "@developer-overheid-nl/don-register-components";
 import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
@@ -222,6 +223,11 @@ const labels = {
                   </Paragraph>
                   <div class="header-meta">
                     <RepoIcon url={item.url || ''} name={item.name} className="moveAbove"></RepoIcon>
+                    { item.isFork && (
+                      <ToolTip id={`fork-${item.id}`} text={t("components.is-fork")}>
+                        <button class="forked-button" command="toggle-popover" commandfor={`fork-${item.id}`} aria-label={t("components.is-fork")}><Icon name="git-fork-inline" className="forked moveAbove" /></button>
+                      </ToolTip>
+                    )}
                   </div>
               </div>
               </HeadingGroup>
@@ -265,6 +271,26 @@ const labels = {
     a:hover {
       text-decoration-line: none;
     }
+  }
+
+  .forked-button {
+    display: grid;
+    place-content: center;
+    padding: 0;
+    margin: 0;
+    appearance: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+
+    &:hover {
+      .forked {
+        color: var(--rhc-color-cool-grey-900);
+      }
+    }
+  }
+  .forked {
+    color: var(--rhc-color-cool-grey-700);
   }
 
   .version {

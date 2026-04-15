@@ -255,6 +255,8 @@ export interface components {
         RepositorySummary: {
             id?: components["schemas"]["ResourceUuid"];
             url?: components["schemas"]["RepositoryUrl"];
+            /** @description Fork status supplied by the crawler based on the code hosting provider. */
+            readonly isFork?: boolean;
             organisation?: components["schemas"]["OrganisationSummary"];
             publicCodeUrl?: components["schemas"]["PublicCodeUrl"];
             shortDescription?: components["schemas"]["RepositoryShortDescription"];
@@ -271,6 +273,8 @@ export interface components {
             url?: components["schemas"]["RepositoryUrl"];
             organisationUri?: components["schemas"]["OrganisationUri"];
             publicCodeUrl?: components["schemas"]["PublicCodeUrl"];
+            /** @description Fork status supplied by the crawler based on the code hosting provider. */
+            isFork?: boolean;
             shortDescription?: components["schemas"]["RepositoryShortDescription"];
             name?: components["schemas"]["RepositoryName"];
             createdAt?: components["schemas"]["CreatedAt"];

@@ -85,7 +85,7 @@ export interface paths {
         get: operations["retreiveApi"];
         /**
          * Update API
-         * @description Updates an existing API by id.
+         * @description Updates an existing API by id. When no OAS document is supplied, only lifecycle fields can be changed.
          */
         put: operations["updateApi"];
         post?: never;
@@ -252,10 +252,16 @@ export interface components {
             version: string;
             /**
              * Format: date
-             * @description The date from which the lifecycle status is/has been deprecated, sunset or retired.
-             * @example 2025-01-15
+             * @description The date from which the API is or will be deprecated.
+             * @example 2025-10-10
              */
-            from?: string | null;
+            deprecated?: string;
+            /**
+             * Format: date
+             * @description The date on which the API will be taken offline.
+             * @example 2027-11-11
+             */
+            sunset?: string;
         };
         Server: {
             /**
@@ -322,7 +328,7 @@ export interface components {
         };
         /**
          * API Input
-         * @description Input for registering or updating an API from its OpenAPI document
+         * @description Input for registering an API from its OpenAPI or Arazzo document
          */
         ApiInput: {
             /**
@@ -331,7 +337,23 @@ export interface components {
              * @description The URL of the OAS document
              * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
              */
-            oasUrl: string;
+            oasUrl?: string;
+            /**
+             * OAS Body
+             * @description The inline OAS document in JSON or YAML format
+             */
+            oasBody?: string;
+            /**
+             * Arazzo Url
+             * Format: uri
+             * @description The URL of the Arazzo document
+             */
+            arazzoUrl?: string;
+            /**
+             * Arazzo Body
+             * @description The inline Arazzo document in JSON or YAML format
+             */
+            arazzoBody?: string;
             /**
              * Organisation URI
              * Format: uri
@@ -340,7 +362,56 @@ export interface components {
              */
             organisationUri: string;
             contact?: components["schemas"]["Contact"];
-        };
+        } | unknown | unknown;
+        /**
+         * API Update Input
+         * @description Input for updating an API from its OpenAPI document or by overriding lifecycle dates
+         */
+        ApiUpdateInput: {
+            /**
+             * OAS Url
+             * Format: uri
+             * @description The URL of the OAS document
+             * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
+             */
+            oasUrl?: string;
+            /**
+             * OAS Body
+             * @description The inline OAS document in JSON or YAML format
+             */
+            oasBody?: string;
+            /**
+             * Arazzo Url
+             * Format: uri
+             * @description The URL of the Arazzo document
+             */
+            arazzoUrl?: string;
+            /**
+             * Arazzo Body
+             * @description The inline Arazzo document in JSON or YAML format
+             */
+            arazzoBody?: string;
+            /**
+             * Organisation URI
+             * Format: uri
+             * @description The unique identifier for an organisation
+             * @example https://developer.overheid.nl
+             */
+            organisationUri: string;
+            contact?: components["schemas"]["Contact"];
+            /**
+             * @description Manual override for the sunset date (YYYY-MM-DD). Send an empty string to clear the value.
+             * @example 2027-11-11
+             * @example
+             */
+            sunset?: string;
+            /**
+             * @description Manual override for the deprecated date (YYYY-MM-DD). Send an empty string to clear the value.
+             * @example 2025-10-10
+             * @example
+             */
+            deprecated?: string;
+        } | unknown | unknown | unknown | unknown;
         /**
          * Problem JSON
          * @description Problem JSON schema representing errors and status code
@@ -485,7 +556,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ApiDetail"];
+                    "application/json": components["schemas"]["ApiSummary"];
                 };
             };
             400: components["responses"]["400"];
@@ -611,7 +682,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["ApiInput"];
+                "application/json": components["schemas"]["ApiUpdateInput"];
             };
         };
         responses: {
@@ -622,7 +693,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ApiDetail"];
+                    "application/json": components["schemas"]["ApiSummary"];
                 };
             };
             400: components["responses"]["400"];

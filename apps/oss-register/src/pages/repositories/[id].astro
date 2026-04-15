@@ -140,10 +140,9 @@ const getLang = (langKeys: Array<string>) =>
       </Block>
       <Heading level={4}>{t(`pages.details`)}</Heading>
       <Block appearance="outlined">
-        {/* <pre style="white-space: pre-wrap;">{JSON.stringify(details.publicCode, undefined, 2)}</pre> */}
         <Heading level={5}>{t(`pages.links`)}</Heading>
         <DataSummary appearance="column" contained>
-          <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={``} href={details.url}>{details.url}</DataSummaryItem>
+          <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={details.isFork ? t(`pages.fork-warning`) : ""} href={details.url}>{details.url}</DataSummaryItem>
           { 
             details.publicCode ? (
               <DataSummaryItem itemKey={t(`pages.public-code-url`)} itemValue={possiblefork ? t(`pages.possible-fork-warning`) : ""} href={details.publicCode?.url}>{details.publicCode?.url}</DataSummaryItem>
