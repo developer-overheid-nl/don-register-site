@@ -13,7 +13,7 @@ export interface paths {
         };
         /**
          * List APIs
-         * @description Returns a list of APIs included in the register.
+         * @description Returns a list of APIs included in the register. Supports the same filter query parameters as the filters endpoint.
          */
         get: operations["listApis"];
         put?: never;
@@ -22,6 +22,26 @@ export interface paths {
          * @description Registers a new API in the register from its OpenAPI document.
          */
         post: operations["createApi"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/apis/filters": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List API filters
+         * @description Returns all available API filter options with counts. Counts are calculated using the active filters from the request.
+         */
+        get: operations["listApiFilters"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -85,7 +105,7 @@ export interface paths {
         get: operations["retreiveApi"];
         /**
          * Update API
-         * @description Updates an existing API by id. When no OAS document is supplied, only lifecycle fields can be changed.
+         * @description Updates an existing API by id.
          */
         put: operations["updateApi"];
         post?: never;
@@ -252,16 +272,10 @@ export interface components {
             version: string;
             /**
              * Format: date
-             * @description The date from which the API is or will be deprecated.
-             * @example 2025-10-10
+             * @description The date from which the lifecycle status is/has been deprecated, sunset or retired.
+             * @example 2025-01-15
              */
-            deprecated?: string;
-            /**
-             * Format: date
-             * @description The date on which the API will be taken offline.
-             * @example 2027-11-11
-             */
-            sunset?: string;
+            from?: string | null;
         };
         Server: {
             /**
@@ -326,9 +340,47 @@ export interface components {
             docsUrl: string | null;
             servers: components["schemas"]["Server"][];
         };
+        /** @description Single selectable filter option with the count for the current filter context. */
+        FilterOption: {
+            /** @description The query parameter value for this option. */
+            value: string;
+            /** @description Human-readable label for this option. */
+            label: string;
+            /** @description Optional explanation of this option. */
+            description?: string | null;
+            /** @description Number of APIs matching this option, given the other active filters. */
+            count: number;
+            /** @description Whether this option is currently selected in the request. */
+            selected: boolean;
+        };
+        /** @description Filter metadata group for API list facets. */
+        FilterGroup: {
+            /**
+             * @description Query parameter key for this filter.
+             * @example status
+             * @example oasVersion
+             * @example adrScore
+             * @example auth
+             */
+            key: string;
+            /** @description Human-readable filter label. */
+            label: string;
+            /** @description Description of what this filter controls. */
+            description: string;
+            /**
+             * @description UI control type for the filter.
+             * @enum {string}
+             */
+            type: "multi-select" | "single-select" | "toggle" | "date";
+            /** @description Current value for non-option filters. */
+            value?: unknown;
+            /** @description Count for toggle or date filters. */
+            count?: number;
+            options?: components["schemas"]["FilterOption"][];
+        };
         /**
          * API Input
-         * @description Input for registering an API from its OpenAPI or Arazzo document
+         * @description Input for registering or updating an API from its OpenAPI document
          */
         ApiInput: {
             /**
@@ -337,23 +389,7 @@ export interface components {
              * @description The URL of the OAS document
              * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
              */
-            oasUrl?: string;
-            /**
-             * OAS Body
-             * @description The inline OAS document in JSON or YAML format
-             */
-            oasBody?: string;
-            /**
-             * Arazzo Url
-             * Format: uri
-             * @description The URL of the Arazzo document
-             */
-            arazzoUrl?: string;
-            /**
-             * Arazzo Body
-             * @description The inline Arazzo document in JSON or YAML format
-             */
-            arazzoBody?: string;
+            oasUrl: string;
             /**
              * Organisation URI
              * Format: uri
@@ -362,56 +398,7 @@ export interface components {
              */
             organisationUri: string;
             contact?: components["schemas"]["Contact"];
-        } | unknown | unknown;
-        /**
-         * API Update Input
-         * @description Input for updating an API from its OpenAPI document or by overriding lifecycle dates
-         */
-        ApiUpdateInput: {
-            /**
-             * OAS Url
-             * Format: uri
-             * @description The URL of the OAS document
-             * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
-             */
-            oasUrl?: string;
-            /**
-             * OAS Body
-             * @description The inline OAS document in JSON or YAML format
-             */
-            oasBody?: string;
-            /**
-             * Arazzo Url
-             * Format: uri
-             * @description The URL of the Arazzo document
-             */
-            arazzoUrl?: string;
-            /**
-             * Arazzo Body
-             * @description The inline Arazzo document in JSON or YAML format
-             */
-            arazzoBody?: string;
-            /**
-             * Organisation URI
-             * Format: uri
-             * @description The unique identifier for an organisation
-             * @example https://developer.overheid.nl
-             */
-            organisationUri: string;
-            contact?: components["schemas"]["Contact"];
-            /**
-             * @description Manual override for the sunset date (YYYY-MM-DD). Send an empty string to clear the value.
-             * @example 2027-11-11
-             * @example
-             */
-            sunset?: string;
-            /**
-             * @description Manual override for the deprecated date (YYYY-MM-DD). Send an empty string to clear the value.
-             * @example 2025-10-10
-             * @example
-             */
-            deprecated?: string;
-        } | unknown | unknown | unknown | unknown;
+        };
         /**
          * Problem JSON
          * @description Problem JSON schema representing errors and status code
@@ -480,6 +467,16 @@ export interface components {
         PerPage: number;
         /** @description Filter on organisation URI. */
         Organisation: string;
+        /** @description Comma-separated list of API IDs. */
+        Ids: string;
+        /** @description Filter on lifecycle status. Repeat the parameter or use comma-separated values. */
+        Status: ("active" | "deprecated" | "sunset" | "retired")[];
+        /** @description Filter on the API version from the OAS info.version field. Repeat the parameter or use comma-separated values. */
+        OasVersion: string[];
+        /** @description Filter on stored ADR score. Use exact scores or 'unknown' for APIs without a stored score. */
+        AdrScore: string[];
+        /** @description Filter on the authentication/security type derived from the OAS security definition. */
+        Auth: ("none" | "api_key" | "oauth2" | "openid" | "bearer" | "basic" | "http" | "unknown")[];
     };
     requestBodies: never;
     headers: {
@@ -510,7 +507,15 @@ export interface operations {
                 /** @description Filter on organisation URI. */
                 organisation?: components["parameters"]["Organisation"];
                 /** @description Comma-separated list of API IDs. */
-                ids?: string;
+                ids?: components["parameters"]["Ids"];
+                /** @description Filter on lifecycle status. Repeat the parameter or use comma-separated values. */
+                status?: components["parameters"]["Status"];
+                /** @description Filter on the API version from the OAS info.version field. Repeat the parameter or use comma-separated values. */
+                oasVersion?: components["parameters"]["OasVersion"];
+                /** @description Filter on stored ADR score. Use exact scores or 'unknown' for APIs without a stored score. */
+                adrScore?: components["parameters"]["AdrScore"];
+                /** @description Filter on the authentication/security type derived from the OAS security definition. */
+                auth?: components["parameters"]["Auth"];
             };
             header?: never;
             path?: never;
@@ -556,7 +561,42 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ApiSummary"];
+                    "application/json": components["schemas"]["ApiDetail"];
+                };
+            };
+            400: components["responses"]["400"];
+        };
+    };
+    listApiFilters: {
+        parameters: {
+            query?: {
+                /** @description Filter on organisation URI. */
+                organisation?: components["parameters"]["Organisation"];
+                /** @description Comma-separated list of API IDs. */
+                ids?: components["parameters"]["Ids"];
+                /** @description Filter on lifecycle status. Repeat the parameter or use comma-separated values. */
+                status?: components["parameters"]["Status"];
+                /** @description Filter on the API version from the OAS info.version field. Repeat the parameter or use comma-separated values. */
+                oasVersion?: components["parameters"]["OasVersion"];
+                /** @description Filter on stored ADR score. Use exact scores or 'unknown' for APIs without a stored score. */
+                adrScore?: components["parameters"]["AdrScore"];
+                /** @description Filter on the authentication/security type derived from the OAS security definition. */
+                auth?: components["parameters"]["Auth"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    "API-Version": components["headers"]["ApiVersion"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FilterGroup"][];
                 };
             };
             400: components["responses"]["400"];
@@ -682,7 +722,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["ApiUpdateInput"];
+                "application/json": components["schemas"]["ApiInput"];
             };
         };
         responses: {
@@ -693,7 +733,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ApiSummary"];
+                    "application/json": components["schemas"]["ApiDetail"];
                 };
             };
             400: components["responses"]["400"];
@@ -830,6 +870,7 @@ export interface operations {
 export enum ApiPaths {
     listApis = "/apis",
     createApi = "/apis",
+    listApiFilters = "/apis/filters",
     searchApis = "/apis/_search",
     listLintResults = "/lint-results",
     retreiveApi = "/apis/{id}",

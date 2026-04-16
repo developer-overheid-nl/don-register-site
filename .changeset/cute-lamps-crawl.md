@@ -3,4 +3,4 @@
 "@developer-overheid-nl/proprietary-don": minor
 ---
 
-Nieuw icoon toegevoegd: Git-fork-inline
+Nieuw iconen toegevoegd: git-fork-inline, variant-fork-inline

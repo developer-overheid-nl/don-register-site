@@ -79,8 +79,6 @@ i18n.addResources(i18n.language, "translation", i18nPage);
 
 const details = error ? null : data;
 
-const possiblefork =
-  details?.publicCode?.url && !details?.url?.includes(details.publicCode?.url);
 const getLang = (langKeys: Array<string>) =>
   langKeys.includes("nl") ? "nl" : langKeys[0] || "";
 ---
@@ -142,10 +140,10 @@ const getLang = (langKeys: Array<string>) =>
       <Block appearance="outlined">
         <Heading level={5}>{t(`pages.links`)}</Heading>
         <DataSummary appearance="column" contained>
-          <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={details.isFork ? t(`pages.fork-warning`) : ""} href={details.url}>{details.url}</DataSummaryItem>
+          <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={["TECHNICAL_FORK" , "VARIANT_FORK" , "GIT_FORK"].includes(details.forkType) ? t(`pages.fork-warning`, {context: details.forkType}) : ""} href={details.url}>{details.url}</DataSummaryItem>
           { 
             details.publicCode ? (
-              <DataSummaryItem itemKey={t(`pages.public-code-url`)} itemValue={possiblefork ? t(`pages.possible-fork-warning`) : ""} href={details.publicCode?.url}>{details.publicCode?.url}</DataSummaryItem>
+              <DataSummaryItem itemKey={t(`pages.public-code-url`)} itemValue={["URL_MISTAKE"].includes(details.forkType) ? t(`pages.possible-fork-warning`) : ""} href={details.publicCode?.url}>{details.publicCode?.url}</DataSummaryItem>
             ) : null
           }
         </DataSummary>

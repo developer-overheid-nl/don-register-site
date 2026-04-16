@@ -223,9 +223,11 @@ const labels = {
                   </Paragraph>
                   <div class="header-meta">
                     <RepoIcon url={item.url || ''} name={item.name} className="moveAbove"></RepoIcon>
-                    { item.isFork && (
-                      <ToolTip id={`fork-${item.id}`} text={t("components.is-fork")}>
-                        <button class="forked-button" command="toggle-popover" commandfor={`fork-${item.id}`} aria-label={t("components.is-fork")}><Icon name="git-fork-inline" className="forked moveAbove" /></button>
+                    { ["TECHNICAL_FORK", "GIT_FORK", "VARIANT_FORK"].includes(item.forkType) && (
+                      <ToolTip id={`fork-${item.id}`} text={t("components.is-fork", {context: item.forkType})}>
+                        <button class="forked-button" command="toggle-popover" commandfor={`fork-${item.id}`} aria-label={t("components.is-fork")}>
+                          <Icon name={item.forkType === "VARIANT_FORK" ? 'variant-fork-inline' : 'git-fork-inline'} className="forked moveAbove" />
+                        </button>
                       </ToolTip>
                     )}
                   </div>
