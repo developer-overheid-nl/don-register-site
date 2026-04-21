@@ -18,9 +18,6 @@ const client = createClient<paths>({
 export const server = {
   getFilters: defineAction({
     accept: "form", // "json"
-    // input: z.object({
-    //   filters: z.any(), // z.record(z.string(), z.array(z.string())),
-    // }),
     input: z.any(),
     handler: async (input, _ctx) => {
       const queryObject: Record<string, string | string[]> = {};

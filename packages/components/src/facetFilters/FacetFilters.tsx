@@ -18,10 +18,6 @@ import Paragraph from "../paragraph/Paragraph";
 import ToolTip from "../toolTip/ToolTip";
 import styles from "./styles.module.css";
 
-// type StringOrBooleanStringType<T extends string | boolean> = T extends string
-//   ? string
-//   : "true" | "false";
-
 enum FilterType {
   Toggle = "toggle",
   Date = "date",
@@ -34,7 +30,7 @@ export interface SelectOption {
   label: string;
   description?: string | null;
   count: number;
-  selected: boolean; // StringOrBooleanStringType<boolean>;
+  selected: boolean;
 }
 
 interface BaseFilterItems {
@@ -45,13 +41,13 @@ interface BaseFilterItems {
 
 interface ToggleFilterData extends BaseFilterItems {
   type: FilterType.Toggle;
-  value?: boolean; //StringOrBooleanStringType<boolean>;
+  value?: boolean;
   count?: number;
 }
 
 interface DateFilterData extends BaseFilterItems {
   type: FilterType.Date;
-  value?: string; //StringOrBooleanStringType<string>;
+  value?: string;
   count?: number;
 }
 
