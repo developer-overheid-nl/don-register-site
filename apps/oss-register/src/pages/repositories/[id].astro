@@ -11,14 +11,17 @@ import {
 } from "astro:env/server";
 import {
   Alert,
+  AlignBox,
   Block,
   DataSummary,
   DataSummaryItem,
   Heading,
   HeadingGroup,
+  Icon,
   Link,
   Markdown,
   Paragraph,
+  PillBadge,
 } from "@developer-overheid-nl/don-register-components";
 import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
@@ -29,10 +32,20 @@ import {
 import { t } from "i18next";
 import createClient from "openapi-fetch";
 import appConfig from "../../../app.config";
+import RepoIcon from "../../components/RepoIcon.astro";
 import { ApiPaths, type paths } from "../../types/api-schema";
 
 const { id = "" } = Astro.params;
 const API_RESOURCE = ApiPaths.getRepositoryById;
+
+const devStatusColors = {
+  concept: "lichtblauw",
+  development: "donkerblauw",
+  beta: "donkergeel",
+  stable: "groen",
+  obsolete: "rood",
+  unknown: "coolgrey",
+};
 
 const client = createClient<paths>({
   baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
@@ -65,6 +78,9 @@ i18n.addResourceBundle(
 i18n.addResources(i18n.language, "translation", i18nPage);
 
 const details = error ? null : data;
+
+const getLang = (langKeys: Array<string>) =>
+  langKeys.includes("nl") ? "nl" : langKeys[0] || "";
 ---
 
 { error && (
@@ -87,15 +103,25 @@ const details = error ? null : data;
       data-track-content
       data-content-name="Detail Page Header"
     >
-      <Paragraph data-content-piece="Organisation Name" itemScope={true} itemType="https://schema.org/Organization" itemID={details?.organisation?.uri} className={`styles.aboveLink styles.publisher`}>
+      <div class="subtitle" slot="subTitle">
+        <Paragraph data-content-piece="Organisation Name" itemScope={true} itemType="https://schema.org/Organization" itemID={details?.organisation?.uri} className={`styles.aboveLink styles.publisher`}>
           <span itemprop="name"><Link data-content-target="Organisation Link" className={`styles.orgLink`} href={new URL(`./?organisation=${details?.organisation?.uri}`, Astro.url).toString()}>
               {details?.organisation?.label}
           </Link></span>
-      </Paragraph>
+        </Paragraph>
+        <div class="header-meta">
+          <RepoIcon url={details.url || ''} name={details.name} className="moveAbove"></RepoIcon>
+        </div>
+      </div>
     </HeadingGroup>
     <Fragment slot="description">
       <Heading level={3} className="sr-only">{t(`pages.description`)}</Heading>
       <div class="utrecht-html"><Markdown text={details.longDescription} minHeadingDepth={4} /></div>
+      <AlignBox align="top-left" wrap gap="small" className="features">{
+        details.publicCode?.description ? details.publicCode?.description[getLang(Object.keys(details.publicCode?.description))]?.features?.map((feature) => (
+          <span class="feature-pill">{feature}</span>
+        )) : null
+      }</AlignBox>
     </Fragment>
     <Fragment slot="aside">
       <DataSummary appearance="row">
@@ -105,12 +131,39 @@ const details = error ? null : data;
       </DataSummary>
     </Fragment>
     <Fragment slot="meta">
-      <Heading level={4}>{t(`pages.tbd-metadata`)}</Heading>
+      <Block layout="flex-row">
+        <Link href={details?.publicCodeUrl || 'https://yml.publiccode.tools/index.html'}><PillBadge startValue={`publiccode.yml`} endValue={details.publicCodeUrl ? details.publicCode?.publiccodeYmlVersion : "NA"} type="color" color={details.publicCodeUrl ? "mintgroen" : "grijs"} /></Link>
+        <div>{t(`components.license`, {license: details.publicCode?.legal?.license || 'Onbekend'})}</div>
+        <PillBadge startValue={`Status`} endValue={details.publicCode?.developmentStatus || "Onbekend"} type="color" color={devStatusColors[details.publicCode?.developmentStatus || "unknown"]} />
+      </Block>
+      <Heading level={4}>{t(`pages.details`)}</Heading>
       <Block appearance="outlined">
         <Heading level={5}>{t(`pages.links`)}</Heading>
         <DataSummary appearance="column" contained>
-          <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={``} href={details.url}>{details.url}</DataSummaryItem>
-          <DataSummaryItem itemKey={t(`pages.public-code-url`)} itemValue={details?.publicCodeUrl || '-'} />
+          <DataSummaryItem itemKey={t(`pages.repository-url`)} itemValue={["TECHNICAL_FORK" , "VARIANT_FORK" , "GIT_FORK"].includes(details.forkType) ? t(`pages.fork-warning`, {context: details.forkType}) : ""} href={details.url}>{details.url}</DataSummaryItem>
+          { 
+            details.publicCode ? (
+              <DataSummaryItem itemKey={t(`pages.public-code-url`)} itemValue={["URL_MISTAKE"].includes(details.forkType) ? t(`pages.possible-fork-warning`) : ""} href={details.publicCode?.url}>{details.publicCode?.url}</DataSummaryItem>
+            ) : null
+          }
+        </DataSummary>
+        <Heading level={5}>{t(`pages.platform-software`)}</Heading>
+          { 
+            details.publicCode ? (
+        <DataSummary appearance="row" contained>
+          <DataSummaryItem itemKey={t(`pages.platforms`)} itemValue={details.publicCode?.platforms?.join(" – ")} href={`https://yml.publiccode.tools/schema.core.html#key-platforms`}><Icon name="info" width="1.5rem" height="1.5rem" /></DataSummaryItem>
+          <DataSummaryItem itemKey={t(`pages.software-type`)} itemValue={details.publicCode?.softwareType} href={`https://yml.publiccode.tools/schema.core.html#key-softwaretype`}><Icon name="info" width="1.5rem" height="1.5rem" /></DataSummaryItem>
+          <DataSummaryItem itemKey={t(`pages.localisation`)} itemValue={`${details.publicCode?.localisation?.localisationReady ? "✔" : "✘"} — ${details.publicCode?.localisation?.availableLanguages?.join(" – ") || ""}`} href={`https://yml.publiccode.tools/schema.core.html#section-localisation`}><Icon name="info" width="1.5rem" height="1.5rem" /></DataSummaryItem>
+          <DataSummaryItem itemKey={t(`pages.maintenance-type`)} itemValue={details.publicCode?.maintenance?.type} href={`https://yml.publiccode.tools/schema.core.html#key-maintenance-type`}><Icon name="info" width="1.5rem" height="1.5rem" /></DataSummaryItem>
+        </DataSummary>
+            ) : (
+              <Alert type="info" className="publiccode-info utrecht-html"><Markdown text={t(`pages.create-a-public-code`)} /></Alert>
+            )
+          }
+      </Block>
+      <Heading level={4}>{t(`pages.tbd-metadata`)}</Heading>
+      <Block appearance="outlined">
+        <DataSummary appearance="column" contained>
           <DataSummaryItem itemKey={t(`components.created-at`)} itemValue={new Date(details.createdAt as string | number).toLocaleDateString('nl-NL')} />
           <DataSummaryItem itemKey={t(`components.last-activity-at`)} itemValue={new Date(details.lastActivityAt as string | number).toLocaleDateString('nl-NL')} />
           <DataSummaryItem itemKey={t(`components.last-crawled-at`)} itemValue={new Date(details.lastCrawledAt as string | number).toLocaleDateString('nl-NL')} />
@@ -120,3 +173,38 @@ const details = error ? null : data;
   </DonDetail>
   )
 }
+
+<style>
+  .subtitle {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .header-meta {
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+  }
+
+  .features {
+    font-size: smaller;
+    margin-top: 0.5rem;
+  }
+  
+  .feature-pill {
+    display: inline-block;
+    padding-block: 2px;
+    padding-inline: 6px;
+    background-color: var(--rhc-color-cool-grey-200);
+    border-radius: 2px;
+  }
+
+  .publiccode-info {
+    --utrecht-code-background-color: rgb(from var(--rhc-color-cool-grey-50) r g b / 0.5);
+    code {
+      padding-inline: 2px;
+    }
+  }
+
+</style>

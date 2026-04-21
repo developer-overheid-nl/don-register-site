@@ -1,0 +1,5 @@
+.formFieldRadioGroup {
+  :global(& > .utrecht-form-field__label) {
+    display: none;
+  }
+}

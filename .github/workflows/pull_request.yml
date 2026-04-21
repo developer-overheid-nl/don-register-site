@@ -17,4 +17,8 @@ jobs:
       - name: Setup Biome
         uses: biomejs/setup-biome@4c91541eaada48f67d7dbd7833600ce162b68f51 # v2
       - name: Run Biome
+        if: ${{github.event_name == 'push'}}
         run: biome ci . --reporter=github
+      - name: Run Biome (strict)
+        if: ${{github.event_name == 'pull_request'}}
+        run: biome ci . --error-on-warnings --reporter=github

@@ -1,0 +1,22 @@
+.checkbox.checkbox {
+  --utrecht-form-field-label-margin-block-end: 0;
+
+  grid-template-areas:
+    'input label info'
+    'input description description'
+    'input error-message error-message'
+    'input status status';
+
+  :global(.utrecht-form-label) {
+    display: flex;
+  }
+
+  :global(.utrecht-checkbox) {
+    order: initial;
+    margin-block-start: 0;
+  }
+}
+
+.info {
+  grid-area: info;
+}

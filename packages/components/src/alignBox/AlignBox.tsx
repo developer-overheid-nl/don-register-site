@@ -25,6 +25,7 @@ export interface AlignBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   align?: Align;
   gap?: Gap;
   direction?: "row" | "column";
+  wrap?: boolean;
   display?: "block" | "inline";
   children: ReactNode;
 }
@@ -83,6 +84,7 @@ const AlignBox: React.FC<AlignBoxProps> = ({
   align = "center",
   gap = "none",
   direction = "row",
+  wrap = false,
   display = "block",
   className,
   children,
@@ -96,6 +98,7 @@ const AlignBox: React.FC<AlignBoxProps> = ({
       className={clsx(
         styles.alignBox,
         styles[direction],
+        wrap && styles.wrap,
         styles[display],
         alignmentClass,
         gapClass,

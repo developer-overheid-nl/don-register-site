@@ -24,6 +24,7 @@ const DataBadgeLink = (props: DataBadgeLinkProps) => {
     children,
     className,
     role,
+    tabIndex = undefined,
     appearance = "primary",
     ...restProps
   } = props;
@@ -33,6 +34,8 @@ const DataBadgeLink = (props: DataBadgeLinkProps) => {
       /* biome-ignore lint/a11y/useValidAriaValues: {null} is needed to remove it */
       aria-pressed={undefined}
       role={role}
+      /* RHC DataBadgeButton had a tabindex=0 on the span, and a focus ring, but no interaction */
+      tabIndex={tabIndex}
       {...restProps}
     >
       <a

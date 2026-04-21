@@ -1,0 +1,48 @@
+:root {
+  --don-tooltip-border-color: var(--rhc-color-cool-grey-300);
+  --don-tooltip-background-color: var(--rhc-color-cool-grey-50);
+  --don-tooltip-border-radius: var(--rhc-border-radius-md);
+  --don-tooltip-font-size: 0.875rem;
+  --don-tooltip-font-weigth: normal;
+}
+
+.triggerButton {
+  appearance: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.toolTip {
+  position-area: block-end span-all;
+  border: var(--don-tooltip-border-width, 1px) solid
+    var(--don-tooltip-border-color, #cbd5e1);
+  border-radius: var(--don-tooltip-border-radius, 5px);
+  background-color: var(--don-tooltip-background-color, #f8fafc);
+  box-shadow: 0 0 1px 2px rgb(127, 127, 127, 0.05);
+  font-size: var(--don-tooltip-font-size, inherit);
+  font-weight: var(--don-tooltip-font-weigth, normal);
+  padding-block: var(--don-tooltip-padding-block, 0.5rem);
+  padding-inline: var(
+    --don-tooltip-padding-inline,
+    var(--don-tooltip-padding-block, 0.5rem)
+  );
+
+  /* needed for triangle */
+  margin: 5px;
+  overflow: visible;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    position-area: top;
+    top: -5px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    border-bottom: 5px solid var(--don-tooltip-border-color, #cbd5e1);
+  }
+}

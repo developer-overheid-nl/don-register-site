@@ -2,6 +2,10 @@
 export { type AlertProps, default as Alert } from "./alert/Alert";
 export { type AlignBoxProps, default as AlignBox } from "./alignBox/AlignBox";
 export { default as Article } from "./article/Article";
+export {
+  type BadgeListProps,
+  default as BadgeList,
+} from "./badgeList/BadgeList";
 export { type BlockProps, default as Block } from "./block/Block";
 export { default as Button } from "./button/Button";
 export {
@@ -28,6 +32,12 @@ export {
   type DataSummaryItemProps,
   default as DataSummaryItem,
 } from "./dataSummary/DataSummaryItem";
+export {
+  default as FacetFilters,
+  type FacetFiltersProps,
+  type FilterData,
+  getSelectedFilters,
+} from "./facetFilters/FacetFilters";
 export { default as Fieldset } from "./fieldset/FieldSet";
 export { default as Filters } from "./filters/Filters";
 export {
@@ -35,10 +45,19 @@ export {
   default as Footer,
   type FooterProps,
 } from "./footer/Footer";
+export { default as FormFieldCheckboxGroup } from "./formFieldCheckboxGroup/FormFieldCheckboxGroup";
+export { default as FormFieldCheckboxOption } from "./formFieldCheckboxOption/FormFieldCheckboxOption";
 export { default as FormFieldLabel } from "./formFieldLabel/FormFieldLabel";
+export { default as FormFieldRadioGroup } from "./formFieldRadioGroup/FormFieldRadioGroup";
+export { default as FormFieldRadioOption } from "./formFieldRadioOption/FormFieldRadioOption";
+export { default as FormFieldSwitch } from "./formFieldSwitch/FormFieldSwitch";
 export { default as FormFieldTextInput } from "./formFieldTextInput/FormFieldTextInput";
 export { default as Header, type HeaderProps } from "./header/Header";
-export { default as Heading } from "./heading/Heading";
+export {
+  clampHeadingLevel,
+  default as Heading,
+  type HeadingProps,
+} from "./heading/Heading";
 export {
   default as HeadingGroup,
   type HeadingGroupProps,
@@ -50,12 +69,17 @@ export {
 } from "./iconBadge/IconBadge";
 export { default as Icon } from "./iconsSprite/Icon";
 export { default as IconsSprite } from "./iconsSprite/IconsSprite";
+export {
+  default as InfoButton,
+  type InfoButtonProps,
+} from "./infoButton/InfoButton";
 export { default as Link } from "./link/Link";
 export {
   default as Markdown,
   type HeadingLevels,
   type MarkdownProps,
 } from "./markdown/Markdown";
+export { default as Overlay } from "./overlay/Overlay";
 export {
   default as Pagination,
   type PaginationProps,
@@ -72,6 +96,8 @@ export {
 } from "./scoreBadge/ScoreBadge";
 export { default as Search, type SearchProps } from "./search/Search";
 export { default as SiteLogo } from "./siteLogo/SiteLogo";
+export { default as Switch, type SwitchProps } from "./switch/Switch";
+export { default as ToolTip } from "./toolTip/ToolTip";
 export {
   default as TopNavigation,
   type NavBarItem,

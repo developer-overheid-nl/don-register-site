@@ -1,0 +1,49 @@
+.radio.radio {
+  --utrecht-form-field-label-margin-block-end: 0;
+
+  grid-template-areas:
+    'input label info'
+    'input description description'
+    'input error-message error-message'
+    'input status status';
+
+  :global(.utrecht-form-field--radio .utrecht-form-field__label) {
+    display: block;
+  }
+
+  :global(.utrecht-form-label) {
+    /* like checkbox */
+    display: flex;
+    font-weight: var(
+      --utrecht-form-label-checkbox-font-weight,
+      var(--utrecht-form-label-font-weight)
+    );
+    color: var(
+      --utrecht-form-label-checkbox-color,
+      var(--utrecht-form-label-color)
+    );
+    cursor: var(--utrecht-action-activate-cursor, revert);
+  }
+
+  :global(.utrecht-radio-button) {
+    order: initial;
+    margin-block-start: 0;
+  }
+
+  :global(
+      .utrecht-form-field--radio
+      .utrecht-form-field__label:has(.utrecht-form-field__input)
+    ) {
+    margin-inline-start: calc(
+      -1 *
+      (
+        var(--utrecht-radio-button-size) +
+        var(--utrecht-checkbox-margin-inline-end, 12px)
+      )
+    );
+  }
+}
+
+.info {
+  grid-area: info;
+}

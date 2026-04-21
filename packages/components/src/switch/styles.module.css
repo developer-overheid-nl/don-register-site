@@ -1,0 +1,7 @@
+.switch {
+  &:hover {
+    :global(.utrecht-form-toggle__track) {
+      background-color: var(--utrecht-form-toggle-hover-background-color);
+    }
+  }
+}
