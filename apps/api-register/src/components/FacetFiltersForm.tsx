@@ -24,7 +24,7 @@ interface FacetFiltersFormProps {
 const FacetFiltersForm = (props: FacetFiltersFormProps) => {
   const formRef = useRef<HTMLFormElement>(null);
   const { filters, action: formAction, method: formMethod, labels } = props;
-  const [{ data, error }, action, pending] = useActionState(
+  const [{ data }, action, pending] = useActionState(
     withState(actions.getFilters),
     {
       data: filters,
