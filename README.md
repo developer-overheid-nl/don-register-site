@@ -6,7 +6,6 @@
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/developer-overheid-nl/don-register-site/pull_request.yml?branch=main&label=quality)
 [![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
 ![GitHub License](https://img.shields.io/github/license/developer-overheid-nl/don-register-site)
-![GitHub package.json version](https://img.shields.io/github/package-json/v/developer-overheid-nl/don-register-site)
 
 Deze monorepo bevat de *nieuwe* websites van het [API-register](https://apis.developer.overheid.nl) en het [OSS-register](https://oss.developer.overheid.nl).
 De codebase bestaat uit een aantal packages die de gezamelijke codebase (components, layouts, etc) vormen en een `apps`-package waarin de verschillende websites staan. Deze packages worden ook gebruikt in het [register-site-template].
@@ -39,7 +38,7 @@ Deze package wordt gepubliceerd op [NPM]: <https://www.npmjs.com/package/@develo
 
 De [Astro] site van het API-register.
 
-Zie ook de [README](/apps/api-register/README.md) van deze package.
+Zie ook de [README](https://github.com/developer-overheid-nl/don-register-site/blob/main/apps/api-register/README.md) van deze package.
 
 ### OSS-register
 
@@ -47,8 +46,6 @@ Zie ook de [README](/apps/api-register/README.md) van deze package.
 > [oss.developer.overheid.nl](https://oss.developer.overheid.nl)
 
 De [Astro] site van het OSS-register.
-
-Zie ook de [README](/apps/oss-register/README.md) van deze package.
 
 ### Je eigen register
 
@@ -93,6 +90,8 @@ Typescript declarations.
 Het bestand `redocly.yaml` bevat de OpenApiSpecification-configuratie van de API's van de apps. Als er een nieuwe app wordt toegevoegd kan hier de OAS toegevoegd worden. Met `pnpm ts:oas` wordt een typescript declaration aangemaakt op basis van de OAS.  
 Hiervoor wordt [OpenAPI TypeScript](https://openapi-ts.dev/) gebruikt en de apps maken gebruik van [openapi-fetch](https://openapi-ts.dev/openapi-fetch/) waardoor de inhoud van de API direct de correcte types heeft.
 
+Er worden schema's gemaakt voor zowel de productie- als test-API's, in het bestand `api-schema.ts` kan je aangeven welke schema gebruikt wordt. Standaard staat deze op de productie-API, wil je tegen de test-API ontwikkelen, pas dit bestand dan aan. Ook bij deployen naar test is het aan te raden deze aan te passen. Een check in de CI-pipeline zorgt ervoor dat alleen de productie-API schema's gemerged kunnen worden naar `main`.
+
 ## Structuur
 
 ```mermaid
@@ -136,7 +135,7 @@ Voor Astro-bestanden zijn een aantal features uitgezet om false positives te voo
 
 Voor de publieke packages wordt gebruik gemaakt van [Changesets](https://changesets-docs.vercel.app/) voor het bijhouden van versies en changelogs.  
 Versienummering volgt [SemVer](https://semver.org/), waarbij ook bij mogelijke (visuele) brekende wijzigingen een major-versie wordt uitgebracht.  
-Zie ook de [README](/.changeset/README.md) in de `.changeset`-map hoe het werkt en de [CHANGELOG](CHANGELOG.md) van de packages.
+Zie ook de [README](https://github.com/developer-overheid-nl/don-register-site/blob/main/.changeset/README.md) in de `.changeset`-map hoe het werkt en de [CHANGELOG](https://github.com/developer-overheid-nl/don-register-site/blob/main/CHANGELOG.md) van de packages.
 
 ## Contact
 
@@ -153,24 +152,21 @@ Zie ook de [README](/.changeset/README.md) in de `.changeset`-map hoe het werkt 
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `pnpm install`         | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+| Command                  | Action                                                                 |
+| :----------------------- | :--------------------------------------------------------------------- |
+| `pnpm install`           | Installs dependencies                                                  |
+| `pnpm dev`               | Starts both local dev servers at `localhost:4321` and `localhost:4322` |
+| `pnpm build`             | Build both production sites to their `./dist/` folders                 |
+| `pnpm preview`           | Preview both builds locally, before deploying                          |
+| `pnpm dev:api`/`oss`     | Starts the `api` or `oss` local dev server at `localhost:4321`         |
+| `pnpm build:api`/`oss`   | Build the `api` or `oss` production sites to the `./dist/` folder      |
+| `pnpm preview:api`/`oss` | Preview the `api` or `oss` build locally, before deploying             |
+| `pnpm astro ...`         | Run CLI commands like `astro add`, `astro check`                       |
+| `pnpm astro -- --help`   | Get help using the Astro CLI                                           |
 
-[Astro]: https://astro.build/
-[Biome]: https://biomejs.dev/
-[NPM]: https://www.npmjs.com/
-[register-site-template]: https://github.com/developer-overheid-nl/register-site-template
+## Deployen
 
-# Deployen
-
-De deployment van deze site verloopt via GitHub Actions en een aparte infra
-repository.
+De deployment van deze site verloopt via GitHub Actions en een aparte *infra-repository*.
 
 ### Benodigde variabelen en secrets
 
@@ -182,6 +178,8 @@ repository.
   aanpassen van de infra repository.
 
 ### Deploy naar test
+
+Note: gebruik je het juiste schema? Zie [`api-schema.ts`](#redoclyyaml) voor meer informatie.
 
 De testdeploy draait via
 `.github/workflows/deploy-test.yml`.
@@ -215,3 +213,8 @@ De productiedeploy draait via
   bijgewerkt naar de commit SHA van deze repository.
 - Daarna wordt automatisch een pull request in de infra repository geopend.
 - De productie-uitrol gebeurt door die pull request te mergen.
+
+[Astro]: https://astro.build/
+[Biome]: https://biomejs.dev/
+[NPM]: https://www.npmjs.com/
+[register-site-template]: https://github.com/developer-overheid-nl/register-site-template
