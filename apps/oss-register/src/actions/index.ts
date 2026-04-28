@@ -6,6 +6,7 @@ import {
   API_X_API_KEY,
 } from "astro:env/server";
 import { z } from "astro/zod";
+import { t } from "i18next";
 import createClient from "openapi-fetch";
 import { ApiPaths, type paths } from "../types/api-schema";
 
@@ -45,6 +46,9 @@ export const server = {
       if (error) {
         throw new ActionError({
           code: "INTERNAL_SERVER_ERROR",
+          // biome-ignore lint/suspicious/noExplicitAny: oas needs update
+          message: `${t("actions.error-server")} — ${(error as any).detail || (error as any).error_msg || t("actions.error-unknown")}`,
+          stack: JSON.stringify(error),
         });
       }
 

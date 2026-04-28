@@ -13,7 +13,7 @@ export interface paths {
         };
         /**
          * List APIs
-         * @description Returns a list of APIs included in the register.
+         * @description Returns a list of APIs included in the register. Supports the same filter query parameters as the filters endpoint.
          */
         get: operations["listApis"];
         put?: never;
@@ -22,6 +22,26 @@ export interface paths {
          * @description Registers a new API in the register from its OpenAPI document.
          */
         post: operations["createApi"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/apis/filters": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List API filters
+         * @description Returns all available API filter options with counts. Counts are calculated using the active filters from the request.
+         */
+        get: operations["listApiFilters"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -439,7 +459,15 @@ export interface operations {
                 /** @description Filter on organisation URI. */
                 organisation?: components["parameters"]["Organisation"];
                 /** @description Comma-separated list of API IDs. */
-                ids?: string;
+                ids?: components["parameters"]["Ids"];
+                /** @description Filter on lifecycle status. Repeat the parameter or use comma-separated values. */
+                status?: components["parameters"]["Status"];
+                /** @description Filter on the API version from the OAS info.version field. Repeat the parameter or use comma-separated values. */
+                oasVersion?: components["parameters"]["OasVersion"];
+                /** @description Filter on stored ADR score. Use exact scores or 'unknown' for APIs without a stored score. */
+                adrScore?: components["parameters"]["AdrScore"];
+                /** @description Filter on the authentication/security type derived from the OAS security definition. */
+                auth?: components["parameters"]["Auth"];
             };
             header?: never;
             path?: never;
@@ -486,6 +514,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ApiDetail"];
+                };
+            };
+            400: components["responses"]["400"];
+        };
+    };
+    listApiFilters: {
+        parameters: {
+            query?: {
+                /** @description Filter on organisation URI. */
+                organisation?: components["parameters"]["Organisation"];
+                /** @description Comma-separated list of API IDs. */
+                ids?: components["parameters"]["Ids"];
+                /** @description Filter on lifecycle status. Repeat the parameter or use comma-separated values. */
+                status?: components["parameters"]["Status"];
+                /** @description Filter on the API version from the OAS info.version field. Repeat the parameter or use comma-separated values. */
+                oasVersion?: components["parameters"]["OasVersion"];
+                /** @description Filter on stored ADR score. Use exact scores or 'unknown' for APIs without a stored score. */
+                adrScore?: components["parameters"]["AdrScore"];
+                /** @description Filter on the authentication/security type derived from the OAS security definition. */
+                auth?: components["parameters"]["Auth"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    "API-Version": components["headers"]["ApiVersion"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FilterGroup"][];
                 };
             };
             400: components["responses"]["400"];
@@ -759,6 +822,7 @@ export interface operations {
 export enum ApiPaths {
     listApis = "/apis",
     createApi = "/apis",
+    listApiFilters = "/apis/filters",
     searchApis = "/apis/_search",
     listLintResults = "/lint-results",
     retreiveApi = "/apis/{id}",

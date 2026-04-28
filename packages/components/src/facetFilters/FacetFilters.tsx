@@ -111,7 +111,9 @@ export const getSelectedFilters = (
           ? [[filter.value, filter.label]]
           : [filter.value];
       } else if (filter.type === FilterType.Single) {
-        const selectedOption = filter.options.find((option) => option.selected);
+        const selectedOption = filter.options?.find(
+          (option) => option.selected,
+        );
         if (selectedOption) {
           acc[filter.key] = withLabels
             ? [[selectedOption.value, selectedOption.label]]
