@@ -207,11 +207,11 @@ export interface components {
          * @example https://github.com/developer-overheid-nl/don-site
          */
         RepositoryUrl: string;
-        /** @description URL of publiccode.yaml in the repository. */
+        /** @description URL of publiccode.yml in the repository. */
         PublicCodeUrl: string;
-        /** @description Description of the repository from the git hosting (e.g. the repository description). Used as a fallback when no publiccode.yaml is available. */
+        /** @description Description of the repository from the git hosting (e.g. the repository description). Used as a fallback when no publiccode.yml is available. */
         RepositoryShortDescription: string;
-        /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yaml is available. */
+        /** @description Name of the repository from the git hosting. Used as a fallback when no publiccode.yml is available. */
         RepositoryName: string;
         /** Format: date-time */
         CreatedAt: string;
@@ -255,6 +255,7 @@ export interface components {
         RepositorySummary: {
             id?: components["schemas"]["ResourceUuid"];
             url?: components["schemas"]["RepositoryUrl"];
+            forkType?: components["schemas"]["RepositoryForkType"];
             organisation?: components["schemas"]["OrganisationSummary"];
             publicCodeUrl?: components["schemas"]["PublicCodeUrl"];
             shortDescription?: components["schemas"]["RepositoryShortDescription"];
@@ -264,6 +265,11 @@ export interface components {
             readonly lastActivityAt?: components["schemas"]["LastActivityAt"];
         };
         /**
+         * @description Derived fork classification based on the git fork flag, publiccode.yml url, and isBasedOn metadata.
+         * @enum {string}
+         */
+        RepositoryForkType: "TECHNICAL_FORK" | "VARIANT_FORK" | "GIT_FORK" | "URL_MISTAKE";
+        /**
          * Repository input
          * @description A repository input for creating or updating a repository in the catalog
          */
@@ -271,6 +277,8 @@ export interface components {
             url?: components["schemas"]["RepositoryUrl"];
             organisationUri?: components["schemas"]["OrganisationUri"];
             publicCodeUrl?: components["schemas"]["PublicCodeUrl"];
+            /** @description Fork status supplied by the crawler based on the code hosting provider. */
+            isFork?: boolean;
             shortDescription?: components["schemas"]["RepositoryShortDescription"];
             name?: components["schemas"]["RepositoryName"];
             createdAt?: components["schemas"]["CreatedAt"];
@@ -283,7 +291,7 @@ export interface components {
          */
         RepositoryDetail: components["schemas"]["RepositorySummary"] & {
             publicCode?: components["schemas"]["PublicCode"];
-            /** @description Long description of the repository, typically from publiccode.yaml. */
+            /** @description Long description of the repository, typically from publiccode.yml. */
             longDescription?: string;
         };
         /** @description A single option within a multi-select filter group. */
@@ -425,7 +433,7 @@ export interface components {
         PerPage: number;
         /** @description Filter by organisation URI. */
         OrganisationFilter: string;
-        /** @description Filter on publiccode.yaml presence. true: only repositories with a publiccode.yaml URL. Omit or set false for all repositories. */
+        /** @description Filter on publiccode.yml presence. true: only repositories with a publiccode.yml URL. Omit or set false for all repositories. */
         PublicCodeFilter: boolean;
         /** @description Filter by last activity date. Format: ISO 8601 (yyyy-MM-dd). */
         LastActivityAfterFilter: string;
@@ -530,7 +538,7 @@ export interface operations {
             query?: {
                 /** @description Filter by organisation URI. */
                 organisation?: components["parameters"]["OrganisationFilter"];
-                /** @description Filter on publiccode.yaml presence. true: only repositories with a publiccode.yaml URL. Omit or set false for all repositories. */
+                /** @description Filter on publiccode.yml presence. true: only repositories with a publiccode.yml URL. Omit or set false for all repositories. */
                 publiccode?: components["parameters"]["PublicCodeFilter"];
                 /** @description Filter by last activity date. Format: ISO 8601 (yyyy-MM-dd). */
                 lastActivityAfter?: components["parameters"]["LastActivityAfterFilter"];
@@ -575,7 +583,7 @@ export interface operations {
                 perPage?: components["parameters"]["PerPage"];
                 /** @description Filter by organisation URI. */
                 organisation?: components["parameters"]["OrganisationFilter"];
-                /** @description Filter on publiccode.yaml presence. true: only repositories with a publiccode.yaml URL. Omit or set false for all repositories. */
+                /** @description Filter on publiccode.yml presence. true: only repositories with a publiccode.yml URL. Omit or set false for all repositories. */
                 publiccode?: components["parameters"]["PublicCodeFilter"];
                 /** @description Filter by last activity date. Format: ISO 8601 (yyyy-MM-dd). */
                 lastActivityAfter?: components["parameters"]["LastActivityAfterFilter"];
