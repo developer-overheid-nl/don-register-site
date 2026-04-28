@@ -1,5 +1,25 @@
 # @developer-overheid-nl/api-register
 
+## 1.2.0
+
+### Minor Changes
+
+- 0d9f083: Add filters to the API register overview, including live filter updates.
+- 4bc38b3: Removed deprecated pageTitle from PiwikPro component, added customEvent for (filtered) Overview pages
+
+### Patch Changes
+
+- b404400: Updated Typescript schema's
+- 3aca994: Upgraded Astro to version 6
+- a7a1405: Small bugfixes, server error details in action, future test file setup
+- 55e64bb: Bump the astro packages with 2 updates
+- Updated dependencies [b404400]
+- Updated dependencies [b404400]
+- Updated dependencies [4bc38b3]
+- Updated dependencies [a7a1405]
+  - @developer-overheid-nl/don-register-layouts@1.1.0
+  - @developer-overheid-nl/don-register-components@1.2.0
+
 ## 1.1.0
 
 ### Minor Changes

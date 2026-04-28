@@ -1,5 +1,20 @@
 # @developer-overheid-nl/don-register-layouts
 
+## 1.1.0
+
+### Minor Changes
+
+- b404400: In `getRouting` return object `queryObject` toegevoegd en `query` deprecated.
+
+### Patch Changes
+
+- Updated dependencies [b404400]
+- Updated dependencies [b404400]
+- Updated dependencies [4bc38b3]
+- Updated dependencies [a7a1405]
+  - @developer-overheid-nl/don-register-locales@1.1.0
+  - @developer-overheid-nl/don-register-components@1.2.0
+
 ## 1.0.2
 
 ### Patch Changes
