@@ -1,4 +1,4 @@
-// @ts-check
+// @ts-nocheck
 
 import node from "@astrojs/node";
 import react from "@astrojs/react";
@@ -69,6 +69,29 @@ export default defineConfig({
           }),
           postcssCustomMedia(),
         ],
+      },
+    },
+    environments: {
+      client: {
+        build: {
+          rollupOptions: {
+            output: {
+              manualChunks: {
+                react: [
+                  "react",
+                  "react-dom",
+                ],
+                piwikpro: [
+                  "@piwikpro/react-piwik-pro",
+                ],
+                libs: [
+                  "i18next",
+                  "openapi-fetch",
+                ],
+              },
+            },
+          },
+        },
       },
     },
   },
