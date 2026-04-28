@@ -4,7 +4,8 @@
     "error-request-key": "Er is een fout opgetreden bij het aanvragen van de API-sleutel.",
     "error-invalid-email": "Voer een geldig e-mailadres in.",
     "error-captcha-missing": "Bevestig dat je geen robot bent.",
-    "error-captcha-invalid": "Captcha verificatie mislukt."
+    "error-captcha-invalid": "Captcha verificatie mislukt.",
+    "error-server": "Serverfout. Probeer het later opnieuw."
   },
   "components": {
     "back-to-homepage": "Terug naar de homepage",

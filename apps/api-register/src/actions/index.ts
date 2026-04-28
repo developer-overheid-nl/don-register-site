@@ -1,6 +1,7 @@
 import { ActionError, defineAction } from "astro:actions";
 import {
   ALTCHA_HMAC_KEY,
+  API_ENDPOINT,
   API_URL,
   API_VERSION,
   API_X_API_KEY,
@@ -21,7 +22,7 @@ const toolsClient = createClient<toolPaths>({
 });
 
 const apiClient = createClient<apiPaths>({
-  baseUrl: `${API_URL}/${API_VERSION}`,
+  baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
 });
 
 export const server = {
@@ -54,6 +55,9 @@ export const server = {
       if (error) {
         throw new ActionError({
           code: "INTERNAL_SERVER_ERROR",
+          // biome-ignore lint/suspicious/noExplicitAny: oas needs update
+          message: `${t("actions.error-server")} — ${(error as any).detail || (error as any).error_msg || t("actions.error-unknown")}`,
+          stack: JSON.stringify(error),
         });
       }
 
