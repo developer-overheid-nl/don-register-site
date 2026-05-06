@@ -1,5 +1,11 @@
 # @developer-overheid-nl/api-register
 
+## 1.2.1
+
+### Patch Changes
+
+- 373f1f5: Changed the oas checker url
+
 ## 1.2.0
 
 ### Minor Changes
