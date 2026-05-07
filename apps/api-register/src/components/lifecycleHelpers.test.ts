@@ -1,3 +1,5 @@
+import { expect, test } from "vitest";
+
 /* TODO: make unit test when https://github.com/developer-overheid-nl/don-register-site/issues/257 is picked up */
 
 // const testLifeCycles = [
@@ -61,3 +63,7 @@
 //     from: new Date().toLocaleDateString("en-CA"),
 //   },
 // ];
+
+test.skip("testLifeCycles placeholder test", () => {
+  expect(true).toBe(true);
+});
