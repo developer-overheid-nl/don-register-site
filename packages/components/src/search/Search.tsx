@@ -14,12 +14,19 @@ export interface SearchProps {
   searchUrl: string;
   searchKey?: string;
   searchTerm?: string;
+  hiddenFields?: [string, string][];
   className?: string;
 }
 
 const Search = (props: SearchProps) => {
   const { t } = useTranslation();
-  const { searchUrl, searchKey = "q", searchTerm, className } = props;
+  const {
+    searchUrl,
+    searchKey = "q",
+    searchTerm,
+    hiddenFields = [],
+    className,
+  } = props;
 
   return (
     <search
@@ -30,6 +37,15 @@ const Search = (props: SearchProps) => {
         {t("components.search")}
       </Heading>
       <form action={searchUrl} method="GET" className={styles.form}>
+        {hiddenFields.map(([name, value], index) => (
+          <input
+            // biome-ignore lint/suspicious/noArrayIndexKey: duplicate query params can share name and value
+            key={`${name}-${value}-${index}`}
+            type="hidden"
+            name={name}
+            value={value}
+          />
+        ))}
         <FormFieldTextInput
           className={styles.input}
           aria-describedby="search-help"

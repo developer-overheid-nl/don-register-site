@@ -19,11 +19,18 @@ interface FacetFiltersFormProps {
     filtersTitle: string;
     filterButtonLabel: string;
   };
+  hiddenFields?: [string, string][];
 }
 
 const FacetFiltersForm = (props: FacetFiltersFormProps) => {
   const formRef = useRef<HTMLFormElement>(null);
-  const { filters, action: formAction, method: formMethod, labels } = props;
+  const {
+    filters,
+    action: formAction,
+    method: formMethod,
+    labels,
+    hiddenFields = [],
+  } = props;
   const [{ data, error }, action, pending] = useActionState(
     withState(actions.getFilters),
     {
@@ -60,6 +67,14 @@ const FacetFiltersForm = (props: FacetFiltersFormProps) => {
         action={formAction}
         method={formMethod}
       >
+        {hiddenFields.map(([name, value], index) => (
+          <input
+            key={`${name}-${value}-${index}`}
+            type="hidden"
+            name={name}
+            value={value}
+          />
+        ))}
         <Overlay active={pending} />
         <FacetFilters
           id="facetfilters"

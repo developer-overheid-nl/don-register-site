@@ -48,26 +48,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/apis/_search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Search APIs
-         * @description Returns a list of APIs matching the search query.
-         */
-        get: operations["searchApis"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/lint-results": {
         parameters: {
             query?: never;
@@ -427,6 +407,8 @@ export interface components {
         Page: number;
         /** @description Number of results per page. */
         PerPage: number;
+        /** @description Search term to combine with API filters. Matches API title. */
+        Search: string;
         /** @description Filter on organisation URI. */
         Organisation: string;
     };
@@ -456,6 +438,8 @@ export interface operations {
                 page?: components["parameters"]["Page"];
                 /** @description Number of results per page. */
                 perPage?: components["parameters"]["PerPage"];
+                /** @description Search term to combine with API filters. Matches API title. */
+                q?: components["parameters"]["Search"];
                 /** @description Filter on organisation URI. */
                 organisation?: components["parameters"]["Organisation"];
                 /** @description Comma-separated list of API IDs. */
@@ -522,6 +506,8 @@ export interface operations {
     listApiFilters: {
         parameters: {
             query?: {
+                /** @description Search term to combine with API filters. Matches API title. */
+                q?: components["parameters"]["Search"];
                 /** @description Filter on organisation URI. */
                 organisation?: components["parameters"]["Organisation"];
                 /** @description Comma-separated list of API IDs. */
@@ -549,42 +535,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["FilterGroup"][];
-                };
-            };
-            400: components["responses"]["400"];
-        };
-    };
-    searchApis: {
-        parameters: {
-            query: {
-                /** @description Page number (1-based). */
-                page?: components["parameters"]["Page"];
-                /** @description Number of results per page. */
-                perPage?: components["parameters"]["PerPage"];
-                /** @description Filter on organisation URI. */
-                organisation?: components["parameters"]["Organisation"];
-                /** @description Search term. */
-                q: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    "API-Version": components["headers"]["ApiVersion"];
-                    Link: components["headers"]["Link"];
-                    "Total-Count": components["headers"]["TotalCount"];
-                    "Current-Page": components["headers"]["CurrentPage"];
-                    "Per-Page": components["headers"]["PerPage"];
-                    "Total-Pages": components["headers"]["TotalPages"];
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ApiSummary"][];
                 };
             };
             400: components["responses"]["400"];
@@ -823,7 +773,6 @@ export enum ApiPaths {
     listApis = "/apis",
     createApi = "/apis",
     listApiFilters = "/apis/filters",
-    searchApis = "/apis/_search",
     listLintResults = "/lint-results",
     retreiveApi = "/apis/{id}",
     updateApi = "/apis/{id}",

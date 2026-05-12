@@ -52,7 +52,6 @@ const { page = 1 } = Astro.params;
 
 const APIS_RESOURCE = ApiPaths.listApis;
 const FILTERS_RESOURCE = ApiPaths.listApiFilters;
-const SEARCH_RESOURCE = ApiPaths.searchApis;
 const SEARCH_QUERY_KEY = "q";
 
 const routingObj = getRouting(
@@ -71,7 +70,7 @@ const {
   error,
   response: { status, statusText, headers },
 } = await client
-  .GET(routingObj.query[SEARCH_QUERY_KEY] ? SEARCH_RESOURCE : APIS_RESOURCE, {
+  .GET(APIS_RESOURCE, {
     params: {
       query: {
         page: Number(page),
@@ -145,6 +144,15 @@ const labels = {
   filtersTitle: t("components.filters-title"),
   filterButtonLabel: t("components.filter-button-label"),
 };
+
+const searchHiddenFields = Array.from(routingObj.url.searchParams).filter(
+  ([key]) => key !== SEARCH_QUERY_KEY,
+);
+const filterHiddenFields: [string, string][] = routingObj.query[
+  SEARCH_QUERY_KEY
+]
+  ? [[SEARCH_QUERY_KEY, routingObj.query[SEARCH_QUERY_KEY] as string]]
+  : [];
 ---
 
 <DonOverview appConfig={appConfig} titlePage={t("pages.overview")}>
@@ -162,9 +170,10 @@ const labels = {
   >
   <Search
     slot="search"
-    searchUrl={new URL(`/apis/zoeken`, routingObj?.url).toString()}
+    searchUrl={new URL(`/apis`, routingObj?.url).toString()}
     searchKey={SEARCH_QUERY_KEY}
     searchTerm={routingObj.query[SEARCH_QUERY_KEY]}
+    hiddenFields={searchHiddenFields}
   />
 
   <FacetFiltersForm
@@ -174,6 +183,7 @@ const labels = {
     action={new URL(`/apis`, routingObj?.url).toString()}
     method="GET"
     labels={labels}
+    hiddenFields={filterHiddenFields}
   />
   {
     facetfiltersError && (
