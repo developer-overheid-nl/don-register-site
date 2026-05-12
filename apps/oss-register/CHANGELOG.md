@@ -1,5 +1,11 @@
 # @developer-overheid-nl/oss-register
 
+## 2.0.1
+
+### Patch Changes
+
+- dc92fd1: Improve docs on adding repositories to the register
+
 ## 2.0.0
 
 ### Major Changes

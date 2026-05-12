@@ -128,7 +128,7 @@ const details = error ? null : data;
         />
         <AlignBox gap="small" display="inline">
           <PillBadge data-content-piece="ADR Score" className="adr-score-figure" startValue={`ADR Score`} endValue={details.adrScore} type="percentage">
-            <span class="adr-score-info"><Link data-content-target="OAS Checker Link" href={`https://developer-overheid-nl.github.io/oas-checker/?url=https://apis.developer.overheid.nl/apis/download/${id}/oas3.0.json`} target="_blank" rel="noopener noreferrer">Uitleg <Icon name="externe-link-inline" /></Link></span>
+            <span class="adr-score-info"><Link data-content-target="DON Checker Link" href={`https://developer-overheid-nl.github.io/don-checker/#/adr-21?url=${encodeURIComponent(`https://apis.developer.overheid.nl/apis/download/${id}/oas3.0.json`)}`} target="_blank" rel="noopener noreferrer">Uitleg <Icon name="externe-link-inline" /></Link></span>
           </PillBadge>
         </AlignBox>
       </Block>
