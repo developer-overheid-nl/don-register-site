@@ -314,7 +314,10 @@ test("getPagination() should return correct pagination links and range, page 2",
       href: "https://api.example.com/1",
       label: 1,
     },
-    prev: false,
+    prev: {
+      href: "https://api.example.com/1",
+      label: 1,
+    },
     ellipsisBefore: false,
     current: 2,
     ellipsisAfter: true,
@@ -415,6 +418,11 @@ test("getPagination() should return correct pagination links and range, last pag
       rel: "first",
       url: "https://api.example.com/items?page=1",
     },
+    next: {
+      page: "42",
+      rel: "next",
+      url: "https://api.example.com/items?page=42",
+    },
     last: {
       page: "42",
       rel: "last",
@@ -443,7 +451,10 @@ test("getPagination() should return correct pagination links and range, last pag
     ellipsisBefore: true,
     current: 41,
     ellipsisAfter: false,
-    next: false,
+    next: {
+      href: "https://api.example.com/42",
+      label: 42,
+    },
     last: {
       href: "https://api.example.com/42",
       label: 42,

@@ -116,7 +116,7 @@ export const getPagination = (
   }
 
   const prev =
-    pagination.prev !== undefined && pagination.currentPage > 2 // >2 because if we're on the second page, there shouldn't be a prev link
+    pagination.prev !== undefined && pagination.currentPage > 1
       ? {
           href: new URL(
             `./${
@@ -131,7 +131,7 @@ export const getPagination = (
       : false;
   const next =
     pagination.next !== undefined &&
-    pagination.currentPage <= pagination.totalPages - 2 // <= totalPages - 2 because if we're on the penultimate page, there shouldn't be a next link
+    pagination.currentPage <= pagination.totalPages - 1
       ? {
           href: new URL(
             `./${pagination.next.page}${decodeURIComponent(url.search)}`,
