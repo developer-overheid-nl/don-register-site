@@ -38,8 +38,6 @@ export const parseHeaders = (
 ) => {
   const links = parseLinkHeader(headers.get("link"));
 
-  console.log("Parsed Link header:", links);
-
   if (links?.first) {
     links.first.page = links.first[page];
     links.first.perPage = links.first[perPage];
@@ -90,8 +88,6 @@ export const parseHeaders = (
       ) || 0,
     ...links,
   };
-
-  console.log("Parsed pagination headers:", pagination);
 
   return pagination;
 };
