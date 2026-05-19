@@ -4,6 +4,8 @@ import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "../i18n";
 import styles from "./styles.module.css";
 
+/** @deprecated use only boolean */
+type currentNumber = number;
 interface PageLinkProps
   extends Omit<
     HTMLAttributes<HTMLAnchorElement> & HTMLAttributes<HTMLSpanElement>,
@@ -13,7 +15,7 @@ interface PageLinkProps
   label: number | string;
   range?: [number, number];
   index: number;
-  current: boolean | number;
+  current: boolean | currentNumber;
 }
 
 interface RelativeLinkProps extends HTMLAttributes<HTMLAnchorElement> {
@@ -28,7 +30,6 @@ interface AbsoluteLinkProps extends HTMLAttributes<HTMLAnchorElement> {
   position: "first" | "last";
 }
 
-//type
 export interface PaginationProps extends HTMLAttributes<HTMLElement> {
   links: Array<{
     href: PageLinkProps["href"];
@@ -108,7 +109,6 @@ const RelativeLink = (props: RelativeLinkProps) => {
       href={href}
       className={clsx(
         "utrecht-pagination__relative-link",
-        // "utrecht-pagination__relative-link--disabled",
         `utrecht-pagination__relative-link--${position}`,
       )}
       rel={position}
@@ -142,7 +142,6 @@ const AbsoluteLink = (props: AbsoluteLinkProps) => {
       href={href}
       className={clsx(
         "utrecht-pagination__page-link",
-        // "utrecht-pagination__relative-link--disabled",
         `utrecht-pagination__relative-link--${cssPositions[position]}`,
       )}
       rel={position}
@@ -176,7 +175,6 @@ const Pagination = (props: PropsWithChildren<PaginationProps>) => {
   const { t } = useTranslation();
   const {
     links,
-    // current = 0,
     first,
     prev,
     ellipsisBefore,
