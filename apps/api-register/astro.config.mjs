@@ -59,6 +59,12 @@ export default defineConfig({
         "@astrojs/react",
       ],
     },
+    // FIXME: workaround for https://github.com/withastro/astro/issues/16387
+    optimizeDeps: {
+      include: [
+        "astro/actions/runtime/entrypoints/route.js",
+      ],
+    },
     css: {
       postcss: {
         plugins: [

@@ -107,7 +107,7 @@ const {
   });
 
 const paginationObj = parseHeaders(headers);
-const pagination = getPagination(paginationObj, routingObj.url);
+const pagination = getPagination(paginationObj, routingObj.url, 2);
 
 const outOfBounds = Boolean(
   paginationObj.totalPages && Number(page) > paginationObj.totalPages,

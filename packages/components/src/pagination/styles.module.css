@@ -2,6 +2,21 @@
   text-align: center;
 }
 
+.pagination__ellipsis {
+  display: inline-block;
+  padding-block-start: var(
+    --utrecht-pagination-relative-link-padding-block-start
+  );
+  padding-block-end: var(--utrecht-pagination-relative-link-padding-block-end);
+  padding-inline-start: var(
+    --utrecht-pagination-relative-link-padding-inline-start
+  );
+  padding-inline-end: var(
+    --utrecht-pagination-relative-link-padding-inline-end
+  );
+  color: var(--utrecht-pagination-relative-link-color);
+}
+
 :global(
     .utrecht-pagination__page-link.utrecht-pagination__page-link--current:hover
   ) {
