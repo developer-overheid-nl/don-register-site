@@ -30,6 +30,7 @@
     "build:oss": "pnpm --filter @developer-overheid-nl/oss-register build",
     "preview:oss": "pnpm --filter @developer-overheid-nl/oss-register preview",
     "astro": "astro",
+    "test": "vitest",
     "ts:oas": "pnpx openapi-typescript --make-paths-enum",
     "ts:test": "tsc --noEmit",
     "biome:check": "biome check --write",
@@ -62,7 +63,8 @@
     "@changesets/cli": "2.29.8",
     "lefthook": "^2.1.1",
     "openapi-typescript": "catalog:",
-    "vite": "catalog:"
+    "vite": "catalog:",
+    "vitest": "catalog:"
   },
   "pnpm": {
     "ignoredBuiltDependencies": [
