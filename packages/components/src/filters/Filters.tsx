@@ -33,8 +33,9 @@ const ListLinkIcon = ({ isActive }: { isActive: boolean }) => {
   );
 };
 
-// TODO: make more generic for other filter types
-
+/**
+ * @deprecated Use FacetFilters component. This component will be removed in a later version.
+ */
 const Filters = (props: PropsWithChildren<FiltersProps>) => {
   const { t } = useTranslation();
   const { data, error, status, statusText, className, routing } = props;
@@ -51,7 +52,7 @@ const Filters = (props: PropsWithChildren<FiltersProps>) => {
           role="list"
         >
           <Heading level={2} appearanceLevel={3}>
-            {t("components.current-filter")}
+            {t("components.current-filters")}
           </Heading>
           <DataBadgeLink
             role="listitem"

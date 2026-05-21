@@ -13,7 +13,7 @@ export interface DataBadgeLinkProps
   rel?: string;
   className?: string;
   role?: string;
-  appearance?: "primary" | "outlined" | "subtle";
+  appearance?: "primary" | "outlined" | "subtle" | "link";
 }
 
 const DataBadgeLink = (props: DataBadgeLinkProps) => {
