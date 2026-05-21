@@ -49,7 +49,6 @@ const { page = 1 } = Astro.params;
 
 const APIS_RESOURCE = ApiPaths.listRepositories;
 const FILTERS_RESOURCE = ApiPaths.listRepositoryFilters;
-const SEARCH_RESOURCE = ApiPaths.searchRepositories;
 const SEARCH_QUERY_KEY = "q";
 
 const routingObj = getRouting(
@@ -68,7 +67,7 @@ const {
   error,
   response: { status, statusText, headers },
 } = await client
-  .GET(routingObj.query[SEARCH_QUERY_KEY] ? SEARCH_RESOURCE : APIS_RESOURCE, {
+  .GET(APIS_RESOURCE, {
     params: {
       query: {
         page: Number(page),
@@ -148,6 +147,15 @@ const labels = {
   filtersTitle: t("components.filters-title"),
   filterButtonLabel: t("components.filter-button-label"),
 };
+
+const searchHiddenFields = Array.from(routingObj.url.searchParams).filter(
+  ([key]) => key !== SEARCH_QUERY_KEY,
+);
+const filterHiddenFields: [string, string][] = routingObj.query[
+  SEARCH_QUERY_KEY
+]
+  ? [[SEARCH_QUERY_KEY, routingObj.query[SEARCH_QUERY_KEY] as string]]
+  : [];
 ---
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
@@ -159,9 +167,23 @@ const labels = {
     searchObject={searchObject}
   />
   <Article className="markdown-content utrecht-html" slot="header"><Intro /></Article>
-  <Search slot="search" searchUrl={new URL(`/repositories/zoeken`, routingObj?.url).toString()} searchKey={SEARCH_QUERY_KEY} searchTerm={routingObj.query[SEARCH_QUERY_KEY]}></Search>
+  <Search
+    slot="search"
+    searchUrl={new URL(`/repositories`, routingObj?.url).toString()}
+    searchKey={SEARCH_QUERY_KEY}
+    searchTerm={routingObj.query[SEARCH_QUERY_KEY]}
+    hiddenFields={searchHiddenFields}
+  ></Search>
   
-  <FacetFiltersForm client:load slot="filters" filters={facetfilters as FilterData[]} action={new URL(`/repositories`, routingObj?.url).toString()} method="GET" labels={labels} />
+  <FacetFiltersForm
+    client:load
+    slot="filters"
+    filters={facetfilters as FilterData[]}
+    action={new URL(`/repositories`, routingObj?.url).toString()}
+    method="GET"
+    labels={labels}
+    hiddenFields={filterHiddenFields}
+  />
   {
     facetfiltersError && (
       <Alert slot="filters" type="error">{(facetfiltersError as unknown as any).message || (facetfiltersError as unknown as any).error_msg || `${facetfiltersStatus}: ${facetfiltersStatusText}` || t('components.fuzz-error')}</Alert>

@@ -123,26 +123,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/repositories/_search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Search repositories
-         * @description Returns a list of OSS repositories included in the register.
-         */
-        get: operations["searchRepositories"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -451,8 +431,8 @@ export interface components {
         LicenseFilter: string[];
         /** @description Unique identifier of the resource. */
         ResourceId: string;
-        /** @description Search term. */
-        SearchQuery: string;
+        /** @description Search term to combine with repository filters. Matches repository name, short description, long description, publiccode.yml url and publiccode.yml landingURL. */
+        SearchFilter: string;
     };
     requestBodies: never;
     headers: {
@@ -536,6 +516,8 @@ export interface operations {
     listRepositoryFilters: {
         parameters: {
             query?: {
+                /** @description Search term to combine with repository filters. Matches repository name, short description, long description, publiccode.yml url and publiccode.yml landingURL. */
+                q?: components["parameters"]["SearchFilter"];
                 /** @description Filter by organisation URI. */
                 organisation?: components["parameters"]["OrganisationFilter"];
                 /** @description Filter on publiccode.yml presence. true: only repositories with a publiccode.yml URL. Omit or set false for all repositories. */
@@ -581,6 +563,8 @@ export interface operations {
                 page?: components["parameters"]["Page"];
                 /** @description Number of results per page. */
                 perPage?: components["parameters"]["PerPage"];
+                /** @description Search term to combine with repository filters. Matches repository name, short description, long description, publiccode.yml url and publiccode.yml landingURL. */
+                q?: components["parameters"]["SearchFilter"];
                 /** @description Filter by organisation URI. */
                 organisation?: components["parameters"]["OrganisationFilter"];
                 /** @description Filter on publiccode.yml presence. true: only repositories with a publiccode.yml URL. Omit or set false for all repositories. */
@@ -763,42 +747,6 @@ export interface operations {
             400: components["responses"]["BadRequest"];
         };
     };
-    searchRepositories: {
-        parameters: {
-            query: {
-                /** @description Page number (1-based). */
-                page?: components["parameters"]["Page"];
-                /** @description Number of results per page. */
-                perPage?: components["parameters"]["PerPage"];
-                /** @description Filter by organisation URI. */
-                organisation?: components["parameters"]["OrganisationFilter"];
-                /** @description Search term. */
-                q: components["parameters"]["SearchQuery"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    "API-Version": components["headers"]["APIVersion"];
-                    Link: components["headers"]["Link"];
-                    "Total-Count": components["headers"]["TotalCount"];
-                    "Current-Page": components["headers"]["CurrentPage"];
-                    "Per-Page": components["headers"]["PerPage"];
-                    "Total-Pages": components["headers"]["TotalPages"];
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["RepositorySummary"][];
-                };
-            };
-            400: components["responses"]["BadRequest"];
-        };
-    };
 }
 export enum ApiPaths {
     listGitOrganisations = "/git-organisations",
@@ -810,5 +758,4 @@ export enum ApiPaths {
     updateRepository = "/repositories/{id}",
     listOrganisations = "/organisations",
     createOrganisation = "/organisations",
-    searchRepositories = "/repositories/_search"
 }
