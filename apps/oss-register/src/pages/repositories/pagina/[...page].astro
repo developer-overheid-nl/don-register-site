@@ -17,7 +17,7 @@ import {
   CardsListItem,
   DataBadgeLink,
   type FilterData,
-  getSelectedFilters,
+  getSelectedFiltersMap,
   Heading,
   HeadingGroup,
   Icon,
@@ -138,7 +138,7 @@ const i18nContext =
 
 const items = error ? null : data;
 
-const selectedFilters = getSelectedFilters(
+const selectedFiltersMap = getSelectedFiltersMap(
   facetfilters as unknown as FilterData[],
   true,
 );
@@ -191,9 +191,10 @@ const filterHiddenFields: [string, string][] = routingObj.query[
   }
 
   <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2}>
-    <BadgeList>
-      {Object.entries(selectedFilters).map(([key, filter]) => (
+    <BadgeList table role="menu" aria-label={t('components.current-filters')}>
+      {[...selectedFiltersMap].map(([[key, keyLabel], filter]) => (
         <li data-key={key}>
+          <small class="label" id={key}>{keyLabel}:</small>
           {
             filter.map(([filterValue, filterLabel]) => (
               <DataBadgeLink
@@ -205,11 +206,53 @@ const filterHiddenFields: [string, string][] = routingObj.query[
                   }))}`,
                   routingObj.url,
                 ).toString()} 
-              >{filterLabel}<Icon slot="icon" name="kruis-inline" /></DataBadgeLink>
+                role="menuitem"
+              >
+                {filterLabel}
+                <Icon slot="icon" name="kruis-inline" />
+              </DataBadgeLink>
             ))
           }
         </li>
       ))}
+      {
+        routingObj.queryObject['q'] !== undefined && (
+          <li role="group" aria-labelledby="search-term">
+            <small class="label" id="search-term">{t('components.search-term')}:</small>
+            <DataBadgeLink
+              appearance="subtle"
+              href={new URL(
+                `?${new URLSearchParams(
+                  [...Array.from(routingObj.url.searchParams)].filter(
+                    ([k, v]) => {
+                      return !(k === SEARCH_QUERY_KEY && v === routingObj.queryObject['q']);
+                    },
+                  ),
+                )}`,
+                routingObj.url,
+              ).toString()}
+              role="menuitem"
+            >
+              {routingObj.queryObject['q']}
+              <Icon slot="icon" name="kruis-inline" />
+            </DataBadgeLink>
+          </li>
+        )
+      }
+      {
+        selectedFiltersMap.size > 1 && (
+          <li class="deselect-all">
+            <DataBadgeLink
+              appearance="link"
+              href={new URL('/repositories', routingObj.url).toString()}
+              role="menuitem"
+              >
+                {t('components.remove-all-filters')}
+                <Icon slot="icon" name="kruis-inline" />
+            </DataBadgeLink>
+          </li>
+        )
+      }
     </BadgeList>
     <Paragraph role="status">{t('components.search-results-amount', {context: i18nContext, amount: paginationObj.totalCount})}</Paragraph>
   </HeadingGroup>
@@ -275,6 +318,10 @@ const filterHiddenFields: [string, string][] = routingObj.query[
 <style>  
   .heading-results {
     padding-inline-start: calc(var(--rhc-card-as-link-border-width, 1px) + var(--rhc-card-as-link-padding-inline-start, 16px));
+  }
+
+  .deselect-all {
+    align-self: flex-end;
   }
 
   .subtitle {

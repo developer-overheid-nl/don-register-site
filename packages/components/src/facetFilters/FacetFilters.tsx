@@ -69,6 +69,11 @@ export type FilterData =
 
 type SelectedFilters = Record<string, Array<string | [string, string]>>;
 
+type SelectedFiltersMap = Map<
+  string | [string, string],
+  Array<string | [string, string]>
+>;
+
 export interface FacetFiltersProps extends HTMLProps<HTMLDivElement> {
   title?: string;
   startHeadingLevel?: HeadingProps["level"];
@@ -89,6 +94,12 @@ export interface FacetFiltersProps extends HTMLProps<HTMLDivElement> {
   debounceDelay?: number;
 }
 
+/**
+ * @deprecated Use getSelectedFiltersMap, that will return a map with keys as a tuple with key and label
+ * @param filters
+ * @param withLabels Note: keys have no labels, use the map version
+ * @returns object
+ */
 export const getSelectedFilters = (
   filters: FilterData[] | null | undefined,
   withLabels = false,
@@ -122,6 +133,49 @@ export const getSelectedFilters = (
       }
       return acc;
     }, {} as SelectedFilters) ?? {}
+  );
+};
+
+export const getSelectedFiltersMap = (
+  filters: FilterData[] | null | undefined,
+  withLabels = false,
+): SelectedFiltersMap => {
+  return (
+    filters?.reduce((acc, filter) => {
+      if (filter.type === FilterType.Multi) {
+        const keys: (string | [string, string])[] = filter.options
+          ?.filter((option) => option.selected)
+          .map((option) =>
+            withLabels ? [option.value, option.label] : option.value,
+          );
+        if (keys?.length > 0) {
+          withLabels
+            ? acc.set([filter.key, filter.label], keys)
+            : acc.set(filter.key, keys);
+        }
+      } else if (filter.type === FilterType.Toggle && filter.value) {
+        withLabels
+          ? acc.set([filter.key, filter.label], [["true", filter.label]])
+          : acc.set(filter.key, ["true"]);
+      } else if (filter.type === FilterType.Date && filter.value) {
+        withLabels
+          ? acc.set([filter.key, filter.label], [[filter.value, filter.label]])
+          : acc.set(filter.key, [filter.value]);
+      } else if (filter.type === FilterType.Single) {
+        const selectedOption = filter.options?.find(
+          (option) => option.selected,
+        );
+        if (selectedOption) {
+          withLabels
+            ? acc.set(
+                [filter.key, filter.label],
+                [[selectedOption.value, selectedOption.label]],
+              )
+            : acc.set(filter.key, [selectedOption.value]);
+        }
+      }
+      return acc;
+    }, new Map() as SelectedFiltersMap) ?? new Map()
   );
 };
 

@@ -37,6 +37,7 @@ export {
   type FacetFiltersProps,
   type FilterData,
   getSelectedFilters,
+  getSelectedFiltersMap,
 } from "./facetFilters/FacetFilters";
 export { default as Fieldset } from "./fieldset/FieldSet";
 export { default as Filters } from "./filters/Filters";
