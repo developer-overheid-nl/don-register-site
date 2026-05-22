@@ -1,0 +1,8 @@
+.dropdownButton {
+}
+
+.spacer {
+  display: inline-block;
+  height: 100%;
+  border: 1px solid rgb(from var(--rhc-color-wit) r g b / 0.25);
+}
