@@ -1,5 +1,24 @@
 # @developer-overheid-nl/oss-register
 
+## 2.1.0
+
+### Minor Changes
+
+- 4d320fc: Eerste- en laatste pagina-knoppen en twee paginaknoppen voor en na huidige toegevoegd bij paginering.
+- 817ee0f: Nieuwe filter mogelijkheden:
+  - Link om alle filters te verwijderen
+  - Link om zoekterm te verwijderen
+  - Labels van de categorieen toegevoegd
+
+### Patch Changes
+
+- a3c5408: Zoeken maakt nu gebruik van de list/filter-endpoints zodat filter- en zoektermen gecombineerd gebruikt kunnen worden.
+- Updated dependencies [4d320fc]
+- Updated dependencies [4521021]
+- Updated dependencies [817ee0f]
+  - @developer-overheid-nl/don-register-components@1.3.0
+  - @developer-overheid-nl/don-register-layouts@1.2.0
+
 ## 2.0.1
 
 ### Patch Changes
