@@ -141,6 +141,7 @@ const items = error ? null : data;
 const selectedFiltersMap = getSelectedFiltersMap(
   facetfilters as unknown as FilterData[],
   true,
+  routingObj.queryObject,
 );
 
 const labels = {
@@ -156,6 +157,33 @@ const filterHiddenFields: [string, string][] = routingObj.query[
 ]
   ? [[SEARCH_QUERY_KEY, routingObj.query[SEARCH_QUERY_KEY] as string]]
   : [];
+
+const getFilterBadgeHref = (key: string, filterValue: string) => {
+  const currentValue = routingObj.url.searchParams.get(key);
+
+  if (currentValue === "true" || currentValue === "false") {
+    const searchParams = new URLSearchParams(routingObj.url.searchParams);
+    searchParams.set(key, currentValue === "true" ? "false" : "true");
+
+    return new URL(`?${searchParams}`, routingObj.url).toString();
+  }
+
+  if (filterValue === "true" || filterValue === "false") {
+    const searchParams = new URLSearchParams(routingObj.url.searchParams);
+    searchParams.set(key, filterValue === "true" ? "false" : "true");
+
+    return new URL(`?${searchParams}`, routingObj.url).toString();
+  }
+
+  return new URL(
+    `?${new URLSearchParams(
+      [...Array.from(routingObj.url.searchParams)].filter(([k, v]) => {
+        return !(k === key && v === filterValue);
+      }),
+    )}`,
+    routingObj.url,
+  ).toString();
+};
 ---
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
@@ -200,12 +228,7 @@ const filterHiddenFields: [string, string][] = routingObj.query[
               <DataBadgeLink
                 appearance="subtle"
                 helperText={t("components.remove-filter")}
-                href={new URL(
-                  `?${new URLSearchParams([...Array.from(routingObj.url.searchParams)].filter(([k, v]) => {
-                    return !(k === key && v === filterValue);
-                  }))}`,
-                  routingObj.url,
-                ).toString()} 
+                href={getFilterBadgeHref(key, filterValue)} 
                 role="menuitem"
               >
                 {filterLabel}

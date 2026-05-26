@@ -14,7 +14,7 @@ export interface FormFieldSwitchProps
       "label" | "statusId" | "errorMessageId" | "descriptionId" | "input"
     >,
     AmountLabelProps {
-  name: string;
+  name?: string;
   value: string;
   checked?: boolean;
   defaultChecked?: boolean;
