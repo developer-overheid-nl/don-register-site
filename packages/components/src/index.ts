@@ -74,7 +74,6 @@ export {
   type InfoButtonProps,
 } from "./infoButton/InfoButton";
 export { default as Link } from "./link/Link";
-export { default as Listbox } from "./listbox/Listbox";
 export {
   default as Markdown,
   type HeadingLevels,
