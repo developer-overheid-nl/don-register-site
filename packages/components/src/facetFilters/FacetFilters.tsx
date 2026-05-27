@@ -74,6 +74,8 @@ type SelectedFiltersMap = Map<
   Array<string | [string, string]>
 >;
 
+type ActiveFilters = Record<string, string | string[] | undefined>;
+
 export interface FacetFiltersProps extends HTMLProps<HTMLDivElement> {
   title?: string;
   startHeadingLevel?: HeadingProps["level"];
@@ -139,6 +141,7 @@ export const getSelectedFilters = (
 export const getSelectedFiltersMap = (
   filters: FilterData[] | null | undefined,
   withLabels = false,
+  activeFilters: ActiveFilters = {},
 ): SelectedFiltersMap => {
   return (
     filters?.reduce((acc, filter) => {
@@ -153,10 +156,22 @@ export const getSelectedFiltersMap = (
             ? acc.set([filter.key, filter.label], keys)
             : acc.set(filter.key, keys);
         }
-      } else if (filter.type === FilterType.Toggle && filter.value) {
-        withLabels
-          ? acc.set([filter.key, filter.label], [["true", filter.label]])
-          : acc.set(filter.key, ["true"]);
+      } else if (filter.type === FilterType.Toggle) {
+        const activeValue = activeFilters[filter.key];
+        const values = Array.isArray(activeValue) ? activeValue : [activeValue];
+        const isExplicitFalse = values.includes("false");
+
+        if (filter.value || isExplicitFalse) {
+          const value = filter.value ? "true" : "false";
+          const label =
+            value === "true"
+              ? filter.label
+              : filter.label.replace(/^Heeft\s+/i, "Heeft geen ");
+
+          withLabels
+            ? acc.set([filter.key, filter.label], [[value, label]])
+            : acc.set(filter.key, [value]);
+        }
       } else if (filter.type === FilterType.Date && filter.value) {
         withLabels
           ? acc.set([filter.key, filter.label], [[filter.value, filter.label]])
@@ -184,8 +199,16 @@ const updateFilters = (
   filterKey: string,
   filterValue: string,
   checked: boolean,
+  type: FilterType,
 ) => {
-  const newSelectedFilters = {
+  if (type === FilterType.Toggle) {
+    return {
+      ...selectedFilters,
+      [filterKey]: [checked ? filterValue : "false"],
+    };
+  }
+
+  return {
     ...selectedFilters,
     [filterKey]: checked
       ? [...(selectedFilters[filterKey] || []), filterValue]
@@ -193,7 +216,6 @@ const updateFilters = (
           (value) => value !== filterValue,
         ),
   };
-  return newSelectedFilters;
 };
 
 const debounce = <T extends unknown[]>(
@@ -242,12 +264,14 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
   const handleChange = (
     event: ChangeEvent<HTMLInputElement>,
     type: FilterType,
+    filterKey = event.target.name,
   ) => {
     const newSelectedFilters = updateFilters(
       selectedFilters,
-      event.target.name,
+      filterKey,
       event.target.value,
       event.target.checked,
+      type,
     );
 
     if (debounceTypes.includes(type)) {
@@ -255,6 +279,19 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
     } else {
       emitChange(newSelectedFilters);
     }
+  };
+
+  const handleToggleChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    filterKey: string,
+  ) => {
+    const hiddenInput = event.target.form?.elements.namedItem(filterKey);
+
+    if (hiddenInput instanceof HTMLInputElement) {
+      hiddenInput.value = event.target.checked ? "true" : "false";
+    }
+
+    handleChange(event, FilterType.Toggle, filterKey);
   };
 
   return (
@@ -287,19 +324,25 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
               {facet.description}
             </Paragraph>
             {facet.type === "toggle" ? (
-              <FormFieldSwitch
-                label=""
-                labelledById={`${facet.key}-label`}
-                name={facet.key}
-                defaultChecked={facet.value}
-                value="true"
-                amount={facet.count || 0}
-                labels={{
-                  on: t("components.filter-on"),
-                  off: t("components.filter-off"),
-                }}
-                onChange={(event) => handleChange(event, facet.type)}
-              />
+              <>
+                <input
+                  type="hidden"
+                  name={facet.key}
+                  defaultValue={facet.value ? "true" : "false"}
+                />
+                <FormFieldSwitch
+                  label=""
+                  labelledById={`${facet.key}-label`}
+                  defaultChecked={facet.value}
+                  value="true"
+                  amount={facet.count || 0}
+                  labels={{
+                    on: t("components.filter-on"),
+                    off: t("components.filter-off"),
+                  }}
+                  onChange={(event) => handleToggleChange(event, facet.key)}
+                />
+              </>
             ) : null}
             {/* TODO: Date selector
           {facet.type === "date" ? <div>TODO</div> : null}
