@@ -99,6 +99,7 @@
     "description": "Beschrijving",
     "details": "Details",
     "tools": "Aan de slag",
+    "oas-retired-warning": "Deze OAS is niet meer beschikbaar.",
     "documentation": "Documentatie",
     "servers-and-auth": "Servers en authenticatie",
     "authentication": "Authenticatie",
