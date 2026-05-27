@@ -136,16 +136,7 @@ const details = error ? null : data;
           </PillBadge>
         </AlignBox>
       </Block>
-      { details.lifecycle.status === 'retired' ? (
-        <Heading level={3}>{t(`pages.tools`)}</Heading>
-          <Block appearance="outlined" layout="flex-col" data-track-content data-content-name="Detail Page Tools">
-            <p>TODO: deze API is retired en niet meer beschikbaar. De laatste OpenAPI Specificatie is nog door ons gecached en beschikbaar voor download.</p>
-            <DropdownButton>
-              Download OAS
-              <span slot="dropdown">drop it down</span>
-            </DropdownButton>
-          </Block>
-      ) : (
+      { details.lifecycle.status !== 'retired' && (
         <Fragment>
           <Heading level={3}>{t(`pages.tools`)}</Heading>
           <Block appearance="outlined" layout="flex-col" data-track-content data-content-name="Detail Page Tools">
