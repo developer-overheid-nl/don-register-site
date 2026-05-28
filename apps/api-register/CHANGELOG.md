@@ -1,5 +1,17 @@
 # @developer-overheid-nl/api-register
 
+## 1.4.0
+
+### Minor Changes
+
+- 2541ddc: Added a new RSS feed section on the api detail page
+
+### Patch Changes
+
+- de238a8: Show a warning banner on API detail pages when an API has the `retired` lifecycle status.
+  - @developer-overheid-nl/don-register-components@1.3.1
+  - @developer-overheid-nl/don-register-layouts@1.2.1
+
 ## 1.3.0
 
 ### Minor Changes

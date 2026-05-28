@@ -1,5 +1,12 @@
 # @developer-overheid-nl/oss-register
 
+## 2.1.1
+
+### Patch Changes
+
+- @developer-overheid-nl/don-register-components@1.3.1
+- @developer-overheid-nl/don-register-layouts@1.2.1
+
 ## 2.1.0
 
 ### Minor Changes
