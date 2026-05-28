@@ -34,6 +34,26 @@
     }
   }
 
+  &.link {
+    --_utrecht-data-badge-color: var(--nl-link-color);
+    --_utrecht-data-badge-background-color: var(--rhc-color-wit);
+    --utrecht-data-badge-font-weight: normal;
+    color: var(--_utrecht-data-badge-color);
+    background-color: var(--_utrecht-data-badge-background-color);
+
+    &:hover {
+      background-color: var(--rhc-color-cool-grey-100);
+
+      .badgeLink {
+        text-decoration: none;
+      }
+    }
+
+    .badgeLink {
+      text-decoration: underline;
+    }
+  }
+
   &:focus-within {
     outline-width: var(--utrecht-focus-outline-width, revert);
     outline-style: var(--utrecht-focus-outline-style, revert);

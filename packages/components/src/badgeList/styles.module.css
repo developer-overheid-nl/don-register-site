@@ -16,9 +16,22 @@
 
 .badgelist--row > * {
   display: inline-flex;
+  flex-wrap: wrap;
   gap: 0.25rem;
 }
 
 .badgelist--column {
   flex-direction: column;
+}
+
+.badgelist--table > * {
+  display: inline-table;
+
+  :global(.label) {
+    display: table-caption;
+  }
+
+  :global(:not(.label)) {
+    margin-inline-end: 0.25rem;
+  }
 }
