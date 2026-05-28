@@ -117,6 +117,7 @@
     "platforms": "Platforms",
     "software-type": "Software type",
     "localisation": "Localisatie mogelijk",
-    "maintenance-type": "Onderhoud"
+    "maintenance-type": "Onderhoud",
+    "stay-up-to-date-about-api": "Blijf op de hoogte over deze API"
   }
 }

@@ -77,6 +77,8 @@ i18n.addResourceBundle(
 i18n.addResources(i18n.language, "translation", i18nPage);
 
 const details = error ? null : data;
+const rssFeedUrl = `https://api.developer.overheid.nl/api-register/v1/apis/${encodeURIComponent(id)}/feed.rss`;
+const slackFeedSubscribeCommand = `/feed subscribe ${rssFeedUrl}`;
 ---
 
 { error && (
@@ -190,8 +192,32 @@ const details = error ? null : data;
               <!--TODO: Add authentication details here --><pre hidden>{JSON.stringify(details.auth, null, 2)}</pre>
             </>) : null}
           </Block>
-        </Fragment>       
+        </Fragment>
       )}
+      <Heading level={4}>{t("pages.stay-up-to-date-about-api")}</Heading>
+      <Block appearance="outlined" layout="flex-col" data-track-content data-content-name="Detail Page Subscribe">
+        <AlignBox data-content-piece="RSS Feed" align="space-between" gap="small">
+          <label for="rssFeedUrl" class="no-shrink">RSS</label>
+          <ReadOnlyTextInput
+            id="rssFeedUrl"
+            type="url"
+            aria-label="RSS feed URL"
+            defaultValue={rssFeedUrl}
+            name="rssFeedUrl"
+          />
+          <CopyButton client:load text={rssFeedUrl} data-content-target="RSS Feed Copy Button" />
+        </AlignBox>
+        <AlignBox data-content-piece="Slack Feed Subscribe Command" align="space-between" gap="small">
+          <label for="slackFeedSubscribeCommand" class="no-shrink">Slack</label>
+          <ReadOnlyTextInput
+            id="slackFeedSubscribeCommand"
+            aria-label="Slack feed subscribe commando"
+            defaultValue={slackFeedSubscribeCommand}
+            name="slackFeedSubscribeCommand"
+          />
+          <CopyButton client:load text={slackFeedSubscribeCommand} data-content-target="Slack Feed Subscribe Copy Button" />
+        </AlignBox>
+      </Block>
     </Fragment>
 </DonDetail>)
 }
