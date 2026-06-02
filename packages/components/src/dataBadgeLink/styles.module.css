@@ -1,4 +1,30 @@
 .donDataBadge.donDataBadge {
+  .badgeLink {
+    display: inline-block;
+    padding-block: 0.25rem;
+    color: inherit;
+    text-decoration: inherit;
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    /* fix for non-clickable icons bug */
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      content: '';
+      border-radius: var(
+        --utrecht-data-badge-border-radius,
+        var(--utrecht-badge-border-radius, 0.5ch)
+      );
+    }
+  }
+
   &.primary {
     --_utrecht-data-badge-color: oklch(
       from var(--utrecht-data-badge-color) calc(l - 0.1) c h
@@ -41,16 +67,16 @@
     color: var(--_utrecht-data-badge-color);
     background-color: var(--_utrecht-data-badge-background-color);
 
+    .badgeLink {
+      text-decoration: underline;
+    }
+
     &:hover {
       background-color: var(--rhc-color-cool-grey-100);
 
       .badgeLink {
         text-decoration: none;
       }
-    }
-
-    .badgeLink {
-      text-decoration: underline;
     }
   }
 
@@ -59,31 +85,5 @@
     outline-style: var(--utrecht-focus-outline-style, revert);
     outline-color: var(--utrecht-focus-outline-color, revert);
     outline-offset: var(--utrecht-focus-outline-offset, revert);
-  }
-}
-
-.badgeLink {
-  display: inline-block;
-  padding-block: 0.25rem;
-  color: inherit;
-  text-decoration: inherit;
-
-  &:focus-visible {
-    outline: none;
-  }
-
-  /* fix for non-clickable icons bug */
-  &::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    content: '';
-    border-radius: var(
-      --utrecht-data-badge-border-radius,
-      var(--utrecht-badge-border-radius, 0.5ch)
-    );
   }
 }

@@ -18,8 +18,8 @@
 }
 
 :global(
-    .utrecht-pagination__page-link.utrecht-pagination__page-link--current:hover
-  ) {
+  .utrecht-pagination__page-link.utrecht-pagination__page-link--current:hover
+) {
   color: var(--utrecht-pagination-page-link-current-color);
   background-color: var(
     --utrecht-pagination-page-link-current-background-color
