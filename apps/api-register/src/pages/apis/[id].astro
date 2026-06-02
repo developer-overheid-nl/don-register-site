@@ -193,8 +193,7 @@ const slackFeedSubscribeCommand = `/feed subscribe ${rssFeedUrl}`;
             </>) : null}
           </Block>
         </Fragment>
-      )}
-      <Heading level={4}>{t("pages.stay-up-to-date-about-api")}</Heading>
+        <Heading level={4}>{t("pages.stay-up-to-date-about-api")}</Heading>
       <Block appearance="outlined" layout="flex-col" data-track-content data-content-name="Detail Page Subscribe">
         <AlignBox data-content-piece="RSS Feed" align="space-between" gap="small">
           <label for="rssFeedUrl" class="no-shrink">RSS</label>
@@ -218,6 +217,7 @@ const slackFeedSubscribeCommand = `/feed subscribe ${rssFeedUrl}`;
           <CopyButton client:load text={slackFeedSubscribeCommand} data-content-target="Slack Feed Subscribe Copy Button" />
         </AlignBox>
       </Block>
+      )}
     </Fragment>
 </DonDetail>)
 }
