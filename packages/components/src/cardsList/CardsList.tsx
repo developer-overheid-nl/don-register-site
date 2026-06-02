@@ -23,6 +23,7 @@ const CardsList = (props: PropsWithChildren<CardsListProps>) => {
     <ol className={clsx(styles.cardsList, className)} id={id}>
       {items && items.length > 0
         ? items.map((item, index, array) => (
+            // biome-ignore-start lint/suspicious/noArrayIndexKey: no stable ID's https://legacy.reactjs.org/docs/lists-and-keys.html#keys
             <CardsListItem
               key={`${id || "don-cards"}_${index}`}
               index={index}
@@ -30,6 +31,7 @@ const CardsList = (props: PropsWithChildren<CardsListProps>) => {
             >
               {item as unknown as ReactNode}
             </CardsListItem>
+            // biome-ignore-end lint/suspicious/noArrayIndexKey: no stable ID's https://legacy.reactjs.org/docs/lists-and-keys.html#keys
           ))
         : children}
     </ol>
