@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.16",
-    "@changesets/cli": "2.30.0",
+    "@changesets/cli": "2.31.0",
     "lefthook": "2.1.9",
     "openapi-typescript": "catalog:",
     "vite": "catalog:",
