@@ -61,26 +61,30 @@ const { appConfig, titlePage } = Astro.props;
 
   .detail-content {
     display: grid;
-    grid-template-columns: 
-      [header-start description-start meta-start] var(--first-column, 9fr) [description-end meta-end
-      aside-start] var(--second-column, 3fr) [header-end aside-end];
+    /* biome-ignore format: better readable */
     grid-template-rows: 
-      [header-start]auto[header-end 
-      description-start aside-start]auto[description-end
-      meta-start]auto[aside-end meta-end];
+                            [header-start]auto[header-end 
+                            description-start aside-start]auto[description-end
+                            meta-start]auto[aside-end meta-end];
+    /* biome-ignore format: better readable */
+    grid-template-columns: 
+                            [header-start description-start meta-start] var(--first-column, 9fr) [description-end meta-end
+                            aside-start] var(--second-column, 3fr) [header-end aside-end];
     gap: 1rem;
   }
 
   @media (--sm-and-below-viewport) {
     /* 1 column */
     .detail-content {
+      /* biome-ignore format: better readable */
+      grid-template-rows: 
+                            [header-start] auto [header-end 
+                            description-start] auto [description-end 
+                            meta-start] auto [meta-end
+                            aside-start] auto [aside-end];
+      /* biome-ignore format: better readable */
       grid-template-columns: 
-        [header-start description-start meta-start aside-start] 1fr [description-end meta-end header-end aside-end];
-    grid-template-rows: 
-      [header-start] auto [header-end 
-      description-start] auto [description-end 
-      meta-start] auto [meta-end
-      aside-start] auto [aside-end];
+                              [header-start description-start meta-start aside-start] 1fr [description-end meta-end header-end aside-end];
     }
   }
 
@@ -93,8 +97,8 @@ const { appConfig, titlePage } = Astro.props;
   }
 
   .meta {
-    grid-area: meta;
     display: grid;
+    grid-area: meta;
     gap: 1rem;
   }
 

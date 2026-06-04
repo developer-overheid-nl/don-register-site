@@ -18,12 +18,14 @@ const titlePage =
   frontmatter.title ||
   headings.filter((mdHeading) => mdHeading.depth === 1).shift()?.text ||
   frontmatter.url?.replace("/", " ").trim();
---- 
+---
 
 <DonBasic appConfig={appConfig} titlePage={titlePage}>
-  <PiwikPro slot="head" client:only="react" 
-    accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS} 
-    siteId={PIWIK_PRO_SITE_ID} 
+  <PiwikPro
+    slot="head"
+    client:only="react"
+    accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS}
+    siteId={PIWIK_PRO_SITE_ID}
   />
 
   <div class="markdown-content utrecht-html">

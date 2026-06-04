@@ -189,10 +189,8 @@ const filterHiddenFields: [string, string][] = routingObj.query[
   {
     facetfiltersError && (
       <Alert slot="filters" type="error">
-        {(facetfiltersError as unknown as any).message ||
-          (facetfiltersError as unknown as any).error_msg ||
-          `${facetfiltersStatus}: ${facetfiltersStatusText}` ||
-          t("components.fuzz-error")}
+        {/* biome-ignore lint/suspicious/noExplicitAny: error handling needs any at this moment */}
+        {(facetfiltersError as unknown as any).message || (facetfiltersError as unknown as any).error_msg || `${facetfiltersStatus}: ${facetfiltersStatusText}` || t("components.fuzz-error")}
       </Alert>
     )
   }
@@ -205,6 +203,7 @@ const filterHiddenFields: [string, string][] = routingObj.query[
     <BadgeList table role="menu" aria-label={t('components.current-filters')}>
       {
         [...selectedFiltersMap].map(([[key, keyLabel], filter]) => (
+          // biome-ignore lint/a11y/useSemanticElements: fieldset would not be correct
           <li role="group" aria-labelledby={key}>
             <small class="label" id={key}>{keyLabel}:</small>
             {filter.map(([filterValue, filterLabel]) => (
@@ -231,7 +230,8 @@ const filterHiddenFields: [string, string][] = routingObj.query[
         ))
       }
       {
-        routingObj.queryObject['q'] !== undefined && (
+        routingObj.queryObject[SEARCH_QUERY_KEY] !== undefined && (
+          // biome-ignore lint/a11y/useSemanticElements: fieldset would not be correct
           <li role="group" aria-labelledby="search-term">
             <small class="label" id="search-term">{t('components.search-term')}:</small>
             <DataBadgeLink
@@ -240,7 +240,7 @@ const filterHiddenFields: [string, string][] = routingObj.query[
                 `?${new URLSearchParams(
                   [...Array.from(routingObj.url.searchParams)].filter(
                     ([k, v]) => {
-                      return !(k === SEARCH_QUERY_KEY && v === routingObj.queryObject['q']);
+                      return !(k === SEARCH_QUERY_KEY && v === routingObj.queryObject[SEARCH_QUERY_KEY]);
                     },
                   ),
                 )}`,
@@ -248,7 +248,7 @@ const filterHiddenFields: [string, string][] = routingObj.query[
               ).toString()}
               role="menuitem"
             >
-              {routingObj.queryObject['q']}
+              {routingObj.queryObject[SEARCH_QUERY_KEY]}
               <Icon slot="icon" name="kruis-inline" />
             </DataBadgeLink>
           </li>
@@ -282,10 +282,8 @@ const filterHiddenFields: [string, string][] = routingObj.query[
   {
     error && (
       <Alert type="error">
-        {(error as unknown as any).message ||
-          (error as unknown as any).error_msg ||
-          `${status}: ${statusText}` ||
-          t("components.fuzz-error")}
+        {/* biome-ignore lint/suspicious/noExplicitAny: error handling needs any at this moment */}
+        {(error as unknown as any).message || (error as unknown as any).error_msg || `${status}: ${statusText}` || t("components.fuzz-error")}
       </Alert>
     )
   }
@@ -402,8 +400,8 @@ const filterHiddenFields: [string, string][] = routingObj.query[
   }
 
   .header-meta {
-    gap: 0.5rem;
     display: flex;
+    gap: 0.5rem;
     align-items: center;
     font-size: 1rem;
   }

@@ -1,4 +1,5 @@
 ---
+
 import {
   API_ENDPOINT,
   API_URL,
@@ -214,7 +215,10 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
   />
   {
     facetfiltersError && (
-      <Alert slot="filters" type="error">{(facetfiltersError as unknown as any).message || (facetfiltersError as unknown as any).error_msg || `${facetfiltersStatus}: ${facetfiltersStatusText}` || t('components.fuzz-error')}</Alert>
+      <Alert slot="filters" type="error">
+        {/* biome-ignore lint/suspicious/noExplicitAny: error handling needs any at this moment */}
+        {(facetfiltersError as unknown as any).message || (facetfiltersError as unknown as any).error_msg || `${facetfiltersStatus}: ${facetfiltersStatusText}` || t('components.fuzz-error')}
+      </Alert>
     )
   }
 
@@ -239,7 +243,8 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
         </li>
       ))}
       {
-        routingObj.queryObject['q'] !== undefined && (
+        routingObj.queryObject[SEARCH_QUERY_KEY] !== undefined && (
+          // biome-ignore lint/a11y/useSemanticElements: fieldset would not be correct
           <li role="group" aria-labelledby="search-term">
             <small class="label" id="search-term">{t('components.search-term')}:</small>
             <DataBadgeLink
@@ -248,7 +253,7 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
                 `?${new URLSearchParams(
                   [...Array.from(routingObj.url.searchParams)].filter(
                     ([k, v]) => {
-                      return !(k === SEARCH_QUERY_KEY && v === routingObj.queryObject['q']);
+                      return !(k === SEARCH_QUERY_KEY && v === routingObj.queryObject[SEARCH_QUERY_KEY]);
                     },
                   ),
                 )}`,
@@ -256,7 +261,7 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
               ).toString()}
               role="menuitem"
             >
-              {routingObj.queryObject['q']}
+              {routingObj.queryObject[SEARCH_QUERY_KEY]}
               <Icon slot="icon" name="kruis-inline" />
             </DataBadgeLink>
           </li>
@@ -281,7 +286,10 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
   </HeadingGroup>
 
   { error && (
-    <Alert type="error">{(error as unknown as any).message || (error as unknown as any).error_msg || `${status}: ${statusText}` || t('components.fuzz-error')}</Alert>
+    <Alert type="error">
+    {/* biome-ignore lint/suspicious/noExplicitAny: error handling needs any at this moment */}
+    {(error as unknown as any).message || (error as unknown as any).error_msg || `${status}: ${statusText}` || t('components.fuzz-error')}
+    </Alert>
   )}
 
   { outOfBounds && (
@@ -311,9 +319,9 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
                   </Paragraph>
                   <div class="header-meta">
                     <RepoIcon url={item.url || ''} name={item.name} className="moveAbove"></RepoIcon>
-                    { ["TECHNICAL_FORK", "GIT_FORK", "VARIANT_FORK"].includes(item.forkType) && (
+                    { ["TECHNICAL_FORK", "GIT_FORK", "VARIANT_FORK"].includes(item.forkType ?? '') && (
                       <ToolTip id={`fork-${item.id}`} text={t("components.is-fork", {context: item.forkType})}>
-                        <button class="forked-button" command="toggle-popover" commandfor={`fork-${item.id}`} aria-label={t("components.is-fork")}>
+                        <button type="button" class="forked-button" command="toggle-popover" commandfor={`fork-${item.id}`} aria-label={t("components.is-fork")}>
                           <Icon name={item.forkType === "VARIANT_FORK" ? 'variant-fork-inline' : 'git-fork-inline'} className="forked moveAbove" />
                         </button>
                       </ToolTip>
@@ -353,8 +361,8 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
   }
 
   .header-meta {
-    gap: 0.5rem;
     display: flex;
+    gap: 0.5rem;
     align-items: center;
     font-size: 1rem;
   }
@@ -365,6 +373,10 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
     a:hover {
       text-decoration-line: none;
     }
+  }
+
+  .forked {
+    color: var(--rhc-color-cool-grey-700);
   }
 
   .forked-button {
@@ -382,9 +394,6 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
         color: var(--rhc-color-cool-grey-900);
       }
     }
-  }
-  .forked {
-    color: var(--rhc-color-cool-grey-700);
   }
 
   .version {
