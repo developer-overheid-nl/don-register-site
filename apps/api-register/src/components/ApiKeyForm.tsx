@@ -13,6 +13,7 @@ import {
   ReadOnlyTextInput,
 } from "@developer-overheid-nl/don-register-components";
 import { CustomEvent, ErrorTracking } from "@piwikpro/react-piwik-pro";
+// import type { } from 'altcha/types/react'; // Uncomment when altcha provides React types, to get better type checking on the altcha-widget component. For now, we use a custom declaration file to allow using the component without TypeScript errors. See src/types/custom-elements.d.ts for details.
 import { Activity, useActionState, useEffect } from "react";
 import styles from "./ApiKeyForm.module.css";
 
@@ -106,12 +107,14 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
           </AlignBox>
           <altcha-widget
             id="altcha-widget"
-            challengeurl="/api/altcha/challenge"
+            challenge="/api/altcha/challenge"
             name="altcha"
             auto="onsubmit"
             language="nl"
-            hidefooter
-            floating
+            display="floating"
+            configuration='{
+              "hideFooter": true
+            }'
           ></altcha-widget>
           {error && error?.type !== "AstroActionInputError" ? (
             <Alert type="error">{error?.message}</Alert>
