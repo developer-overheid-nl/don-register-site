@@ -2,4 +2,5 @@
 "@developer-overheid-nl/api-register": patch
 ---
 
-Upgraded Altcha widget to the latest versions.
+Altcha widget geüpgraded naar de laatste versie en het gebruikt nu de nieuwe v2 proof-of-work methode.
+Meerdere dependencies geüpgraded naar de laatste versies.
