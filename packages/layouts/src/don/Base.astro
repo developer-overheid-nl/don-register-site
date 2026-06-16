@@ -48,11 +48,14 @@ i18next.init({
 
 <html lang="nl">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={meta.description || i18next.t('layouts.meta-description')} />
+    <meta charset="utf-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width">
+    <meta name="generator" content={Astro.generator}>
+    <meta
+      name="description"
+      content={meta.description || i18next.t('layouts.meta-description')}
+    >
     <title>{titlePage} | {titleSite}</title>
     <slot name="head" />
   </head>
@@ -62,10 +65,20 @@ i18next.init({
       <IconsSprite />
     </div>
     <div class="don-document-header">
-    <Container>
-      <Header titleSite={titleSite} titlePage={titlePage} mainSite={mainSite} urlCurrent={routePattern} urlHomepage={urlHomepage} logoLinkBehaviour='main-site-on-home' />
-    </Container>
-    <TopNavigation items={topNavigation.items} endItems={topNavigation.endItems} />
+      <Container>
+        <Header
+          titleSite={titleSite}
+          titlePage={titlePage}
+          mainSite={mainSite}
+          urlCurrent={routePattern}
+          urlHomepage={urlHomepage}
+          logoLinkBehaviour="main-site-on-home"
+        />
+      </Container>
+      <TopNavigation
+        items={topNavigation.items}
+        endItems={topNavigation.endItems}
+      />
     </div>
     <main class="don-document-main">
       <slot />
@@ -81,15 +94,17 @@ i18next.init({
 
 <style>
   .don-document {
-    height: 100dvh;
     display: grid;
+    /* biome-ignore format: better readable */
     grid-template-rows: [start-start] 0 [start-end 
-                        header-start] auto [header-end 
-                        main-start] 1fr [main-end 
-                        footer-start] auto [footer-end 
-                        end-start] 0 [end-end];
+                                                header-start] auto [header-end 
+                                                main-start] 1fr [main-end 
+                                                footer-start] auto [footer-end 
+                                                end-start] 0 [end-end];
+    /* biome-ignore format: better readable */
     grid-template-columns: [start-start header-start main-start footer-start end-start] auto [end-end footer-end main-end header-end start-end];
     grid-auto-rows: 0;
+    height: 100dvh;
   }
 
   .don-document-start {

@@ -52,24 +52,28 @@ const { appConfig, titlePage, asideLandmark } = Astro.props;
 
   .basic-content {
     display: grid;
-    grid-template-columns: 
-      [header-start main-start] var(--first-column, 9fr) [main-end
-      aside-start] var(--second-column, 3fr) [header-end aside-end];
+    /* biome-ignore format: better readable */
     grid-template-rows: 
-      [header-start]auto[header-end 
-      main-start aside-start]auto[main-end aside-end];
+                            [header-start]auto[header-end 
+                            main-start aside-start]auto[main-end aside-end];
+    /* biome-ignore format: better readable */
+    grid-template-columns: 
+                            [header-start main-start] var(--first-column, 9fr) [main-end
+                            aside-start] var(--second-column, 3fr) [header-end aside-end];
     gap: 1rem;
   }
 
   @media (--sm-and-below-viewport) {
     /* 1 column */
     .basic-content {
+      /* biome-ignore format: better readable */
+      grid-template-rows: 
+                            [header-start] auto [header-end 
+                            main-start] auto [main-end 
+                            aside-start] auto [aside-end];
+      /* biome-ignore format: better readable */
       grid-template-columns: 
-        [header-start main-start aside-start] 1fr [main-end header-end aside-end];
-    grid-template-rows: 
-      [header-start] auto [header-end 
-      main-start] auto [main-end 
-      aside-start] auto [aside-end];
+                              [header-start main-start aside-start] 1fr [main-end header-end aside-end];
     }
   }
 
