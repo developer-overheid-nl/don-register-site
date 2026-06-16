@@ -8,6 +8,7 @@ import {
   TOOLS_ENDPOINT,
 } from "astro:env/server";
 import { verifySolution } from "altcha-lib";
+import { deriveKey } from "altcha-lib/algorithms/pbkdf2";
 import { z } from "astro/zod";
 import { t } from "i18next";
 import createClient from "openapi-fetch";
@@ -67,13 +68,21 @@ export const server = {
   keyRequest: defineAction({
     accept: "form",
     input: z.object({
-      email: z.string().email(t("actions.error-invalid-email")),
+      email: z.email(t("actions.error-invalid-email")),
       altcha: z.string().min(1, t("actions.error-captcha-missing")),
     }),
     handler: async (input) => {
+      console.log(input, JSON.parse(atob(input.altcha)));
+      // Decode the altcha challenge and solution from the input
+      const { challenge, solution } = JSON.parse(atob(input.altcha));
       // Verify the altcha captcha solution
-      const altchaValid = await verifySolution(input.altcha, ALTCHA_HMAC_KEY);
-      if (!altchaValid) {
+      const altchaValid = await verifySolution({
+        challenge,
+        solution,
+        deriveKey,
+        hmacSignatureSecret: ALTCHA_HMAC_KEY,
+      });
+      if (!altchaValid.verified) {
         throw new ActionError({
           code: "BAD_REQUEST",
           message: t("actions.error-captcha-invalid"),
