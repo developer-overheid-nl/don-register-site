@@ -72,6 +72,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/repositories/_search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search repositories
+         * @deprecated
+         * @description Deprecated. Use GET /repositories with the q query parameter and filters instead.
+         */
+        get: operations["searchRepositories"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/repositories/{id}": {
         parameters: {
             query?: never;
@@ -305,7 +326,7 @@ export interface components {
             type: "toggle" | "date" | "multi-select" | "single-select";
             /** @description Current filter value. For toggle: boolean true or false. For date: ISO 8601 date (yyyy-MM-dd). Not present for multi-select. */
             value?: boolean | string;
-            /** @description For toggle filters, the number of repositories that would match when the toggle is enabled (value true), regardless of the current value. For date filters, the number of repositories matching the current date value; only present when a date is set. Not present for multi-select. */
+            /** @description For toggle filters, the number of repositories with the toggle condition available. For date filters, the number of repositories matching the current date value; only present when a date is set. Not present for multi-select. */
             count?: number | null;
             /** @description Available options with counts. Only present for multi-select type. */
             options?: components["schemas"]["FilterOption"][];
@@ -324,6 +345,11 @@ export interface components {
              * @description Repository or project URL from publiccode.yml.
              */
             url: string;
+            /**
+             * Format: uri
+             * @description Landing page URL from publiccode.yml.
+             */
+            landingURL?: string;
             /** @description Supported platforms. */
             platforms: string[];
             /**
@@ -413,7 +439,7 @@ export interface components {
         PerPage: number;
         /** @description Filter by organisation URI. */
         OrganisationFilter: string;
-        /** @description Filter on publiccode.yml presence. true: only repositories with a publiccode.yml URL. Omit or set false for all repositories. */
+        /** @description Filter on publiccode.yml presence. Omit or set true for repositories with a publiccode.yml URL. Set false for repositories without a publiccode.yml URL. */
         PublicCodeFilter: boolean;
         /** @description Filter by last activity date. Format: ISO 8601 (yyyy-MM-dd). */
         LastActivityAfterFilter: string;
@@ -520,7 +546,7 @@ export interface operations {
                 q?: components["parameters"]["SearchFilter"];
                 /** @description Filter by organisation URI. */
                 organisation?: components["parameters"]["OrganisationFilter"];
-                /** @description Filter on publiccode.yml presence. true: only repositories with a publiccode.yml URL. Omit or set false for all repositories. */
+                /** @description Filter on publiccode.yml presence. Omit or set true for repositories with a publiccode.yml URL. Set false for repositories without a publiccode.yml URL. */
                 publiccode?: components["parameters"]["PublicCodeFilter"];
                 /** @description Filter by last activity date. Format: ISO 8601 (yyyy-MM-dd). */
                 lastActivityAfter?: components["parameters"]["LastActivityAfterFilter"];
@@ -567,7 +593,7 @@ export interface operations {
                 q?: components["parameters"]["SearchFilter"];
                 /** @description Filter by organisation URI. */
                 organisation?: components["parameters"]["OrganisationFilter"];
-                /** @description Filter on publiccode.yml presence. true: only repositories with a publiccode.yml URL. Omit or set false for all repositories. */
+                /** @description Filter on publiccode.yml presence. Omit or set true for repositories with a publiccode.yml URL. Set false for repositories without a publiccode.yml URL. */
                 publiccode?: components["parameters"]["PublicCodeFilter"];
                 /** @description Filter by last activity date. Format: ISO 8601 (yyyy-MM-dd). */
                 lastActivityAfter?: components["parameters"]["LastActivityAfterFilter"];
@@ -629,6 +655,42 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RepositoryDetail"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+        };
+    };
+    searchRepositories: {
+        parameters: {
+            query: {
+                /** @description Page number (1-based). */
+                page?: components["parameters"]["Page"];
+                /** @description Number of results per page. */
+                perPage?: components["parameters"]["PerPage"];
+                /** @description Filter by organisation URI. */
+                organisation?: components["parameters"]["OrganisationFilter"];
+                /** @description Search term. */
+                q: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    "API-Version": components["headers"]["APIVersion"];
+                    Link: components["headers"]["Link"];
+                    "Total-Count": components["headers"]["TotalCount"];
+                    "Current-Page": components["headers"]["CurrentPage"];
+                    "Per-Page": components["headers"]["PerPage"];
+                    "Total-Pages": components["headers"]["TotalPages"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RepositorySummary"][];
                 };
             };
             400: components["responses"]["BadRequest"];
@@ -754,8 +816,9 @@ export enum ApiPaths {
     listRepositoryFilters = "/repositories/filters",
     listRepositories = "/repositories",
     createRepository = "/repositories",
+    searchRepositories = "/repositories/_search",
     getRepositoryById = "/repositories/{id}",
     updateRepository = "/repositories/{id}",
     listOrganisations = "/organisations",
-    createOrganisation = "/organisations",
+    createOrganisation = "/organisations"
 }
