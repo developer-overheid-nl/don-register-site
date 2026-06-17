@@ -13,7 +13,7 @@ catalog:
   "@rijkshuisstijl-community/design-tokens": 11.0.0
   "@types/react": 19.1.17
   "@types/react-dom": 19.1.11
-  "@utrecht/component-library-css": 9.0.0
+  "@utrecht/component-library-css": 9.0.12
   altcha: 3.0.11
   altcha-lib: 2.2.0
   astro: 6.4.2
