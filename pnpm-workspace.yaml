@@ -14,7 +14,7 @@ catalog:
   "@types/react": 19.1.17
   "@types/react-dom": 19.1.11
   "@utrecht/component-library-css": 9.0.0
-  altcha: 3.0.11
+  altcha: 3.1.0
   altcha-lib: 2.2.0
   astro: 6.4.2
   clsx: 2.1.1
