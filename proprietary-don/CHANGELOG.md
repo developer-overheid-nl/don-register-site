@@ -1,5 +1,11 @@
 # @developer-overheid-nl/proprietary-don
 
+## 1.1.1
+
+### Patch Changes
+
+- 0f983ad: Upgraded Astro to 6.4.2
+
 ## 1.1.0
 
 ### Minor Changes
