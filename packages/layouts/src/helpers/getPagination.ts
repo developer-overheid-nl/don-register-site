@@ -36,7 +36,7 @@ export const parseHeaders = (
     perPage?: string;
   } = { page: "page", perPage: "perPage" },
 ) => {
-  const links = parseLinkHeader(headers.get("link"));
+  let links = parseLinkHeader(headers.get("link"));
 
   if (links?.first) {
     links.first.page = links.first[page];
@@ -63,6 +63,17 @@ export const parseHeaders = (
     links.last.perPage = links.last[perPage];
   }
 
+  if (links === null) {
+    links = {
+      self: {
+        page:
+          headers.get("current-page") || headers.get("x-current-page") || "1",
+        url: "",
+        rel: "self",
+      },
+    };
+  }
+
   const pagination = <paginationHeaders>{
     currentPage:
       Number(
@@ -76,7 +87,9 @@ export const parseHeaders = (
       Number(
         headers.get("per-page") ||
           headers.get("x-per-page") ||
-          links?.first?.perPage,
+          links?.first?.perPage ||
+          headers.get("total-count") ||
+          headers.get("x-total-count"),
       ) || 0,
     totalCount:
       Number(headers.get("total-count") || headers.get("x-total-count")) || 0,
@@ -84,6 +97,7 @@ export const parseHeaders = (
       Number(
         headers.get("total-pages") ||
           headers.get("x-total-pages") ||
+          links?.self?.page ||
           links?.last?.page,
       ) || 0,
     ...links,
@@ -119,7 +133,7 @@ export const getPagination = (
               Number(pagination.prev.page) < pagination.totalPages
                 ? pagination.prev.page
                 : pagination.last?.page
-            }${decodeURIComponent(url.search)}`,
+            }${url.search}`,
             url,
           ).toString(),
           label: Number(pagination.prev.page),
@@ -130,7 +144,7 @@ export const getPagination = (
     pagination.currentPage <= pagination.totalPages - 1
       ? {
           href: new URL(
-            `./${pagination.next.page}${decodeURIComponent(url.search)}`,
+            `./${pagination.next.page}${url.search}`,
             url,
           ).toString(),
           label: Number(pagination.next.page),
@@ -141,7 +155,7 @@ export const getPagination = (
     pagination.first !== undefined && pagination.currentPage !== 1
       ? {
           href: new URL(
-            `./${pagination.first.page}${decodeURIComponent(url.search)}`,
+            `./${pagination.first.page}${url.search}`,
             url,
           ).toString(),
           label: 1,
@@ -152,7 +166,7 @@ export const getPagination = (
     pagination.currentPage !== pagination.totalPages
       ? {
           href: new URL(
-            `./${pagination.last.page}${decodeURIComponent(url.search)}`,
+            `./${pagination.last.page}${url.search}`,
             url,
           ).toString(),
           label: pagination.totalPages,
@@ -175,17 +189,14 @@ export const getPagination = (
   ) {
     if (i !== pagination.currentPage && i > 1 && i < pagination.totalPages) {
       links.push({
-        href: new URL(
-          `./${i}${decodeURIComponent(url.search)}`,
-          url,
-        ).toString(),
+        href: new URL(`./${i}${url.search}`, url).toString(),
         label: i,
         current: false,
       });
     } else if (i === pagination.currentPage) {
       links.push({
         href: new URL(
-          `./${pagination.currentPage}${decodeURIComponent(url.search)}`,
+          `./${pagination.currentPage}${url.search}`,
           url,
         ).toString(),
         label: pagination.currentPage || 0,
