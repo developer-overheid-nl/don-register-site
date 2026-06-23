@@ -389,7 +389,16 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
                     defaultChecked={option.selected}
                     amount={option.count}
                     onChange={(event) => handleChange(event, facet.type)}
-                  />
+                  >
+                    {option.description ? (
+                      <ToolTip
+                        text={option.description}
+                        aria-label={t("components.info-about", {
+                          subject: option.label,
+                        })}
+                      />
+                    ) : null}
+                  </FormFieldRadioOption>
                 ))}
               </FormFieldRadioGroup>
             ) : null}
