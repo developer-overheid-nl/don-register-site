@@ -1,5 +1,17 @@
 # @developer-overheid-nl/don-register-components
 
+## 1.3.1
+
+### Patch Changes
+
+- d8a39db: Bugfixes pagination parsers en facetfilters, description toegevoegd aan single-select.
+- e5f0a52: Keep the publiccode filter state explicit in the OSS register.
+  Toggle filters now preserve both `true` and `false` values in the query string, and selected filter badges correctly toggle the publiccode filter instead of removing it.
+- 0f983ad: Upgraded Astro to 6.4.2
+- Updated dependencies [de238a8]
+- Updated dependencies [0f983ad]
+  - @developer-overheid-nl/don-register-locales@1.2.1
+
 ## 1.3.0
 
 ### Minor Changes
