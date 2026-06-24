@@ -166,7 +166,7 @@ export const getSelectedFiltersMap = (
           const label =
             value === "true"
               ? filter.label
-              : filter.label.replace(/^Heeft\s+/i, "Heeft geen ");
+              : filter.label.replace(/^Heeft\s+/i, "Heeft geen "); // FIXME: @pasibun This is a temporary solution to handle the "Heeft" prefix in Dutch. Needs more robust solution. #301
 
           withLabels
             ? acc.set([filter.key, filter.label], [[value, label]])
