@@ -138,18 +138,7 @@ const getLang = (langKeys: Array<string>) =>
       <Block layout="flex-row">
         <Link href={details?.publicCodeUrl || 'https://yml.publiccode.tools/index.html'}><PillBadge startValue={`publiccode.yml`} endValue={details.publicCodeUrl ? details.publicCode?.publiccodeYmlVersion : "NA"} type="color" color={details.publicCodeUrl ? "mintgroen" : "grijs"} /></Link>
         <div>{t(`components.license`, {license: details.publicCode?.legal?.license || 'Onbekend'})}</div>
-        <PillBadge
-          startValue={t("components.repository-status")}
-          endValue={t(`components.repository-status-${details.archived ? "archived" : "active"}`)}
-          type="color"
-          color={details.archived ? "donkergeel" : "mintgroen"}
-        />
-        <PillBadge
-          startValue={t("components.publiccode-status")}
-          endValue={details.publicCode?.developmentStatus || "Onbekend"}
-          type="color"
-          color={devStatusColors[details.publicCode?.developmentStatus || "unknown"]}
-        />
+        <PillBadge startValue={`Status`} endValue={details.publicCode?.developmentStatus || "Onbekend"} type="color" color={devStatusColors[details.publicCode?.developmentStatus || "unknown"]} />
       </Block>
       {details.archived ? <Alert type="warning">{t("pages.repository-archived-warning")}</Alert> : null}
       <Heading level={4}>{t(`pages.details`)}</Heading>
