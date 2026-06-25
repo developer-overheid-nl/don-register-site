@@ -1,5 +1,18 @@
 # @developer-overheid-nl/oss-register
 
+## 2.1.1
+
+### Patch Changes
+
+- e5f0a52: Keep the publiccode filter state explicit in the OSS register.
+  Toggle filters now preserve both `true` and `false` values in the query string, and selected filter badges correctly toggle the publiccode filter instead of removing it.
+- 0f983ad: Upgraded Astro to 6.4.2
+- Updated dependencies [d8a39db]
+- Updated dependencies [e5f0a52]
+- Updated dependencies [0f983ad]
+  - @developer-overheid-nl/don-register-components@1.3.1
+  - @developer-overheid-nl/don-register-layouts@1.2.1
+
 ## 2.1.0
 
 ### Minor Changes
