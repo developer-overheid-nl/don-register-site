@@ -42,6 +42,10 @@ import createClient from "openapi-fetch";
 import appConfig from "../../../../app.config";
 import FacetFiltersForm from "../../../components/FacetFiltersForm";
 import RepoIcon from "../../../components/RepoIcon.astro";
+import {
+  getArchivedFilterValue,
+  withArchivedRepositoryFilter,
+} from "../../../components/repositoryFilters";
 import { Content as Intro } from "../../../partials/intro.md";
 import { ApiPaths, type paths } from "../../../types/api-schema";
 
@@ -138,9 +142,13 @@ const i18nContext =
     : "all";
 
 const items = error ? null : data;
+const filters = withArchivedRepositoryFilter(
+  facetfilters as unknown as FilterData[] | null,
+  getArchivedFilterValue(routingObj.queryObject.archived),
+);
 
 const selectedFiltersMap = getSelectedFiltersMap(
-  facetfilters as unknown as FilterData[],
+  filters,
   true,
   routingObj.queryObject,
 );
@@ -160,6 +168,13 @@ const filterHiddenFields: [string, string][] = routingObj.query[
   : [];
 
 const getFilterBadgeHref = (key: string, filterValue: string) => {
+  if (key === "archived") {
+    const searchParams = new URLSearchParams(routingObj.url.searchParams);
+    searchParams.delete(key);
+
+    return new URL(`?${searchParams}`, routingObj.url).toString();
+  }
+
   const currentValue = routingObj.url.searchParams.get(key);
 
   if (currentValue === "true" || currentValue === "false") {
@@ -207,7 +222,7 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
   <FacetFiltersForm
     client:load
     slot="filters"
-    filters={facetfilters as FilterData[]}
+    filters={filters}
     action={new URL(`/repositories`, routingObj?.url).toString()}
     method="GET"
     labels={labels}
@@ -331,7 +346,15 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
               </HeadingGroup>
               <div slot="description" class="description utrecht-html"><Markdown text={item.shortDescription} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
               <AlignBox align="space-between" slot="metadata" className="meta">
-                <PillBadge startValue={`publiccode.yml`} endValue={item.publicCodeUrl ? "✔" : "NA"} type="color" color={item.publicCodeUrl ? "mintgroen" : "grijs"} />
+                <div class="status-badges">
+                  <PillBadge startValue={`publiccode.yml`} endValue={item.publicCodeUrl ? "✔" : "NA"} type="color" color={item.publicCodeUrl ? "mintgroen" : "grijs"} />
+                  <PillBadge
+                    startValue={t("components.repository-status")}
+                    endValue={t(`components.repository-status-${item.archived ? "archived" : "active"}`)}
+                    type="color"
+                    color={item.archived ? "donkergeel" : "mintgroen"}
+                  />
+                </div>
                 <span class="last-updated">{t(`components.last-activity-at`)}: {new Date(item.lastActivityAt || '').toLocaleDateString('nl-NL')}</span>
               </AlignBox>
             </CardAsLink>
@@ -398,6 +421,12 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
 
   .version {
     text-decoration: none;
+  }
+
+  .status-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
   .orgLink {

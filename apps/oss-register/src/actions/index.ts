@@ -8,6 +8,10 @@ import {
 import { z } from "astro/zod";
 import { t } from "i18next";
 import createClient from "openapi-fetch";
+import {
+  getArchivedFilterValue,
+  withArchivedRepositoryFilter,
+} from "../components/repositoryFilters";
 import { ApiPaths, type paths } from "../types/api-schema";
 
 const FILTERS_RESOURCE = ApiPaths.listRepositoryFilters;
@@ -52,7 +56,10 @@ export const server = {
         });
       }
 
-      return data;
+      return withArchivedRepositoryFilter(
+        data,
+        getArchivedFilterValue(queryObject.archived),
+      );
     },
   }),
 };

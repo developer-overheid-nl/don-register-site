@@ -264,6 +264,8 @@ export interface components {
             createdAt?: components["schemas"]["CreatedAt"];
             lastCrawledAt?: components["schemas"]["LastCrawledAt"];
             readonly lastActivityAt?: components["schemas"]["LastActivityAt"];
+            /** @description Whether the repository is archived and hidden from default repository listings. */
+            readonly archived?: boolean;
         };
         /**
          * @description Derived fork classification based on the git fork flag, publiccode.yml url, and isBasedOn metadata.
@@ -441,6 +443,8 @@ export interface components {
         OrganisationFilter: string;
         /** @description Filter on publiccode.yml presence. Omit or set true for repositories with a publiccode.yml URL. Set false for repositories without a publiccode.yml URL. */
         PublicCodeFilter: boolean;
+        /** @description Include archived repositories. Defaults to false, hiding repositories marked as archived. */
+        ArchivedFilter: boolean;
         /** @description Filter by last activity date. Format: ISO 8601 (yyyy-MM-dd). */
         LastActivityAfterFilter: string;
         /** @description Filter by software type. Repeatable for multiple values. */
@@ -548,6 +552,8 @@ export interface operations {
                 organisation?: components["parameters"]["OrganisationFilter"];
                 /** @description Filter on publiccode.yml presence. Omit or set true for repositories with a publiccode.yml URL. Set false for repositories without a publiccode.yml URL. */
                 publiccode?: components["parameters"]["PublicCodeFilter"];
+                /** @description Include archived repositories. Defaults to false, hiding repositories marked as archived. */
+                archived?: components["parameters"]["ArchivedFilter"];
                 /** @description Filter by last activity date. Format: ISO 8601 (yyyy-MM-dd). */
                 lastActivityAfter?: components["parameters"]["LastActivityAfterFilter"];
                 /** @description Filter by software type. Repeatable for multiple values. */
@@ -595,6 +601,8 @@ export interface operations {
                 organisation?: components["parameters"]["OrganisationFilter"];
                 /** @description Filter on publiccode.yml presence. Omit or set true for repositories with a publiccode.yml URL. Set false for repositories without a publiccode.yml URL. */
                 publiccode?: components["parameters"]["PublicCodeFilter"];
+                /** @description Include archived repositories. Defaults to false, hiding repositories marked as archived. */
+                archived?: components["parameters"]["ArchivedFilter"];
                 /** @description Filter by last activity date. Format: ISO 8601 (yyyy-MM-dd). */
                 lastActivityAfter?: components["parameters"]["LastActivityAfterFilter"];
                 /** @description Filter by software type. Repeatable for multiple values. */
