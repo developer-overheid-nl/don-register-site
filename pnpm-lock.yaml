@@ -159,7 +159,7 @@ importers:
     dependencies:
       '@astrojs/react':
         specifier: 'catalog:'
-        version: 5.0.6(@types/node@24.0.8)(@types/react-dom@19.1.11(@types/react@19.1.17))(@types/react@19.1.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 5.0.6(@types/node@24.0.8)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@developer-overheid-nl/don-register-components':
         specifier: workspace:*
         version: link:../../packages/components
@@ -208,7 +208,7 @@ importers:
     dependencies:
       '@astrojs/react':
         specifier: 'catalog:'
-        version: 5.0.6(@types/node@24.0.8)(@types/react-dom@19.1.11(@types/react@19.1.17))(@types/react@19.1.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 5.0.6(@types/node@24.0.8)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@developer-overheid-nl/don-register-components':
         specifier: workspace:*
         version: link:../../packages/components
@@ -299,7 +299,7 @@ importers:
         version: 3.1.0
     devDependencies:
       rimraf:
-        specifier: ^6.1.3
+        specifier: 6.1.3
         version: 6.1.3
       typescript:
         specifier: 'catalog:'
@@ -4532,6 +4532,31 @@ snapshots:
       '@astrojs/internal-helpers': 0.10.0
       '@types/react': 19.1.17
       '@types/react-dom': 19.1.11(@types/react@19.1.17)
+      '@vitejs/plugin-react': 5.2.0(vite@7.3.5(@types/node@24.0.8))
+      devalue: 5.8.1
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      ultrahtml: 1.6.0
+      vite: 7.3.5(@types/node@24.0.8)
+    transitivePeerDependencies:
+      - '@types/node'
+      - jiti
+      - less
+      - lightningcss
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - yaml
+
+  '@astrojs/react@5.0.6(@types/node@24.0.8)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@astrojs/internal-helpers': 0.10.0
+      '@types/react': 19.2.9
+      '@types/react-dom': 19.2.3(@types/react@19.2.9)
       '@vitejs/plugin-react': 5.2.0(vite@7.3.5(@types/node@24.0.8))
       devalue: 5.8.1
       react: 19.2.3
