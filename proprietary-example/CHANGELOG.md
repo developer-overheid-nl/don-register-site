@@ -1,5 +1,11 @@
 # @developer-overheid-nl/proprietary-example
 
+## 1.2.0
+
+### Minor Changes
+
+- b010b99: Added icons: info and trechter (filter)
+
 ## 1.1.1
 
 ### Patch Changes
