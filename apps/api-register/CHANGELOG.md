@@ -1,5 +1,23 @@
 # @developer-overheid-nl/api-register
 
+## 1.4.0
+
+### Minor Changes
+
+- 2541ddc: Added a new RSS feed section on the api detail page
+
+### Patch Changes
+
+- de238a8: Show a warning banner on API detail pages when an API has the `retired` lifecycle status.
+- 0f983ad: Upgraded Astro to 6.4.2
+- 2d5c790: Altcha widget geüpgraded naar de laatste versie en het gebruikt nu de nieuwe v2 proof-of-work methode.
+  Meerdere dependencies geüpgraded naar de laatste versies.
+- Updated dependencies [d8a39db]
+- Updated dependencies [e5f0a52]
+- Updated dependencies [0f983ad]
+  - @developer-overheid-nl/don-register-components@1.3.1
+  - @developer-overheid-nl/don-register-layouts@1.2.1
+
 ## 1.3.0
 
 ### Minor Changes
