@@ -13,7 +13,8 @@ import {
   ReadOnlyTextInput,
 } from "@developer-overheid-nl/don-register-components";
 import { CustomEvent, ErrorTracking } from "@piwikpro/react-piwik-pro";
-// import type { } from 'altcha/types/react'; // Uncomment when altcha provides React types, to get better type checking on the altcha-widget component. For now, we use a custom declaration file to allow using the component without TypeScript errors. See src/types/custom-elements.d.ts for details.
+import type {} from "altcha/types/react";
+// @ts-expect-error somehow Activity is not recognized yet
 import { Activity, useActionState, useEffect } from "react";
 import styles from "./ApiKeyForm.module.css";
 
