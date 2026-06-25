@@ -2,4 +2,4 @@
 "@developer-overheid-nl/oss-register": patch
 ---
 
-Show a warning banner on archived repository detail pages.
+Show archived repository indicators and a warning banner on archived repository detail pages.

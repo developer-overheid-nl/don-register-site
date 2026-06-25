@@ -139,6 +139,14 @@ const getLang = (langKeys: Array<string>) =>
         <Link href={details?.publicCodeUrl || 'https://yml.publiccode.tools/index.html'}><PillBadge startValue={`publiccode.yml`} endValue={details.publicCodeUrl ? details.publicCode?.publiccodeYmlVersion : "NA"} type="color" color={details.publicCodeUrl ? "mintgroen" : "grijs"} /></Link>
         <div>{t(`components.license`, {license: details.publicCode?.legal?.license || 'Onbekend'})}</div>
         <PillBadge startValue={`Status`} endValue={details.publicCode?.developmentStatus || "Onbekend"} type="color" color={devStatusColors[details.publicCode?.developmentStatus || "unknown"]} />
+        {details.archived ? (
+          <PillBadge
+            startValue={t("components.repository-status")}
+            endValue={t("components.repository-status-archived")}
+            type="color"
+            color="donkergeel"
+          />
+        ) : null}
       </Block>
       {details.archived ? <Alert type="warning">{t("pages.repository-archived-warning")}</Alert> : null}
       <Heading level={4}>{t(`pages.details`)}</Heading>
