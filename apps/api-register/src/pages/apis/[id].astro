@@ -42,6 +42,20 @@ import {
 } from "../../components/lifecycleHelpers";
 import { ApiPaths, type paths } from "../../types/api-schema";
 
+type ProcessingEventStatus = "failed" | "fallback_succeeded" | string;
+
+type ProcessingEvent = {
+  tool: string;
+  status: ProcessingEventStatus;
+  message: string;
+  detail?: string;
+  createdAt: string;
+};
+
+type ApiDetailWithProcessingEvents = NonNullable<typeof data> & {
+  processingEvents?: ProcessingEvent[];
+};
+
 Astro.response.headers.set("Cache-Control", "public, max-age=7200");
 const { id = "" } = Astro.params;
 const API_RESOURCE = ApiPaths.retreiveApi;
@@ -77,8 +91,42 @@ i18n.addResourceBundle(
 i18n.addResources(i18n.language, "translation", i18nPage);
 
 const details = error ? null : data;
+const processingEvents = (
+  (details as ApiDetailWithProcessingEvents | null)?.processingEvents ?? []
+).slice(0, 5);
+const hasFailedProcessingEvent = processingEvents.some(
+  (event) => event.status === "failed",
+);
+const processingEventAlertType = hasFailedProcessingEvent ? "error" : "warning";
 const rssFeedUrl = `https://api.developer.overheid.nl/api-register/v1/apis/${encodeURIComponent(id)}/feed.rss`;
 const slackFeedSubscribeCommand = `/feed subscribe ${rssFeedUrl}`;
+
+const processingToolLabels: Record<string, string> = {
+  oas_bundle: "OAS bundelen",
+  oas_fetch: "OAS ophalen",
+  oas_artifacts: "OAS-bestanden opslaan",
+  lint: "Linten",
+  postman: "Postman collectie",
+  arazzo_markdown: "Arazzo markdown",
+  arazzo_mermaid: "Arazzo Mermaid",
+  typesense: "Zoekindex",
+};
+
+const processingStatusLabels: Record<string, string> = {
+  failed: "Mislukt",
+  fallback_succeeded: "Fallback gebruikt",
+};
+
+const formatProcessingEventDate = (value: string) => {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+  return new Intl.DateTimeFormat("nl-NL", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
+};
 ---
 
 { error && (
@@ -138,6 +186,32 @@ const slackFeedSubscribeCommand = `/feed subscribe ${rssFeedUrl}`;
           </PillBadge>
         </AlignBox>
       </Block>
+      { processingEvents.length > 0 ? (
+        <Alert type={processingEventAlertType} className="processing-events-alert">
+          <strong>Verwerking van deze API is niet volledig gelukt</strong>
+          <Paragraph>
+            {hasFailedProcessingEvent
+              ? "Een of meer verwerkingsstappen zijn mislukt. Sommige afgeleide bestanden, scores of zoekresultaten kunnen ontbreken."
+              : "Een hulpmiddel faalde, maar de API is alsnog verwerkt met een fallback."}
+          </Paragraph>
+          <ul class="processing-events-list">
+            {processingEvents.map((event) => (
+              <li class="processing-events-list__item">
+                <span class="processing-events-list__message">{event.message}</span>
+                <span class="processing-events-list__meta">
+                  {[formatProcessingEventDate(event.createdAt), processingToolLabels[event.tool] ?? event.tool, processingStatusLabels[event.status] ?? event.status].filter(Boolean).join(" · ")}
+                </span>
+                {event.detail ? (
+                  <details class="processing-events-list__details">
+                    <summary>Technische details</summary>
+                    <pre>{event.detail}</pre>
+                  </details>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </Alert>
+      ) : null}
       { details.lifecycle.status === 'retired' ? (
         <Alert type="warning">{t("pages.oas-retired-warning")}</Alert>
       ) : (
@@ -230,3 +304,48 @@ const slackFeedSubscribeCommand = `/feed subscribe ${rssFeedUrl}`;
     </Fragment>
 </DonDetail>)
 }
+
+<style>
+  .processing-events-alert {
+    margin-block-start: var(--utrecht-space-block-md);
+  }
+
+  .processing-events-alert :global(.utrecht-paragraph) {
+    margin-block-end: var(--utrecht-space-block-sm);
+  }
+
+  .processing-events-list {
+    display: grid;
+    gap: var(--utrecht-space-block-xs);
+    margin-block: 0;
+    padding-inline-start: 1.25rem;
+  }
+
+  .processing-events-list__item {
+    padding-inline-start: var(--utrecht-space-inline-xs);
+  }
+
+  .processing-events-list__message,
+  .processing-events-list__meta {
+    display: block;
+  }
+
+  .processing-events-list__meta {
+    font-size: 0.875rem;
+  }
+
+  .processing-events-list__details {
+    margin-block-start: var(--utrecht-space-block-xs);
+  }
+
+  .processing-events-list__details summary {
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .processing-events-list__details pre {
+    max-inline-size: 100%;
+    overflow: auto;
+    white-space: pre-wrap;
+  }
+</style>
