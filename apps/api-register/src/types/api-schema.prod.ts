@@ -341,6 +341,8 @@ export interface components {
              * @example This is version 1 of the API register. This description can also contain Markdown.
              */
             description: string;
+            /** @description The summary of the API */
+            summary: string | null;
             organisation: components["schemas"]["OrganisationSummary"];
             /**
              * @description The ADR score of the API

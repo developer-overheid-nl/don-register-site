@@ -347,7 +347,7 @@ const filterHiddenFields: [string, string][] = routingObj.query[
               </HeadingGroup>
               <div slot="description" class="description utrecht-html">
                 <Markdown
-                  text={item.description}
+                  text={item.summary ?? ""}
                   openLinksInNewTab
                   allowedElements={["p", "a", "ul", "ol", "li"]}
                 />
