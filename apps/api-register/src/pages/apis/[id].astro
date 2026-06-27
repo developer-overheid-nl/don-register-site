@@ -93,11 +93,12 @@ i18n.addResources(i18n.language, "translation", i18nPage);
 const details = error ? null : data;
 const processingEvents = (
   (details as ApiDetailWithProcessingEvents | null)?.processingEvents ?? []
-).slice(0, 5);
-const hasFailedProcessingEvent = processingEvents.some(
-  (event) => event.status === "failed",
-);
-const processingEventAlertType = hasFailedProcessingEvent ? "error" : "warning";
+).filter((event) => event.status === "failed");
+const latestProcessingError = processingEvents.sort((a, b) => {
+  const aTime = new Date(a.createdAt).getTime();
+  const bTime = new Date(b.createdAt).getTime();
+  return (Number.isNaN(bTime) ? 0 : bTime) - (Number.isNaN(aTime) ? 0 : aTime);
+})[0];
 const rssFeedUrl = `https://api.developer.overheid.nl/api-register/v1/apis/${encodeURIComponent(id)}/feed.rss`;
 const slackFeedSubscribeCommand = `/feed subscribe ${rssFeedUrl}`;
 
@@ -186,29 +187,25 @@ const formatProcessingEventDate = (value: string) => {
           </PillBadge>
         </AlignBox>
       </Block>
-      { processingEvents.length > 0 ? (
-        <Alert type={processingEventAlertType} className="processing-events-alert">
+      { latestProcessingError ? (
+        <Alert type="error" className="processing-events-alert">
           <strong>Verwerking van deze API is niet volledig gelukt</strong>
           <Paragraph>
-            {hasFailedProcessingEvent
-              ? "Een of meer verwerkingsstappen zijn mislukt. Sommige afgeleide bestanden, scores of zoekresultaten kunnen ontbreken."
-              : "Een hulpmiddel faalde, maar de API is alsnog verwerkt met een fallback."}
+            Een verwerkingsstap is mislukt. Sommige afgeleide bestanden, scores of zoekresultaten kunnen ontbreken.
           </Paragraph>
           <ul class="processing-events-list">
-            {processingEvents.map((event) => (
-              <li class="processing-events-list__item">
-                <span class="processing-events-list__message">{event.message}</span>
-                <span class="processing-events-list__meta">
-                  {[formatProcessingEventDate(event.createdAt), processingToolLabels[event.tool] ?? event.tool, processingStatusLabels[event.status] ?? event.status].filter(Boolean).join(" · ")}
-                </span>
-                {event.detail ? (
-                  <details class="processing-events-list__details">
-                    <summary>Technische details</summary>
-                    <pre>{event.detail}</pre>
-                  </details>
-                ) : null}
-              </li>
-            ))}
+            <li class="processing-events-list__item">
+              <span class="processing-events-list__message">{latestProcessingError.message}</span>
+              <span class="processing-events-list__meta">
+                {[formatProcessingEventDate(latestProcessingError.createdAt), processingToolLabels[latestProcessingError.tool] ?? latestProcessingError.tool, processingStatusLabels[latestProcessingError.status] ?? latestProcessingError.status].filter(Boolean).join(" · ")}
+              </span>
+              {latestProcessingError.detail ? (
+                <details class="processing-events-list__details">
+                  <summary>Technische details</summary>
+                  <pre>{latestProcessingError.detail}</pre>
+                </details>
+              ) : null}
+            </li>
           </ul>
         </Alert>
       ) : null}
