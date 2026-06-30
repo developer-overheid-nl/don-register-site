@@ -3,9 +3,9 @@ layout: "../../layouts/Markdown.astro"
 title: Repositories toevoegen
 ---
 
-## Repositories toevoegen aan het OSS-register
+## Repositories toevoegen aan het Open Source Register
 
-Het OSS-register maakt open source repositories van overheidsorganisaties vindbaar. Repositories toevoegen kan op twee manieren: via de **API van het register** of door ons een **mail** te sturen, dan voegen wij ze voor je toe.
+Het Open Source Register maakt open source repositories van overheidsorganisaties vindbaar. Repositories toevoegen kan op twee manieren: via de **API van het register** of door ons een **mail** te sturen, dan voegen wij ze voor je toe.
 
 In beide gevallen geldt: het moet gaan om een overheidsorganisatie die te vinden is in [organisaties.overheid.nl](https://organisaties.overheid.nl). Is de repository in opdracht van een overheidsorganisatie gemaakt? Dan mag je ook de URL van de opdrachtgever gebruiken.
 
@@ -26,13 +26,13 @@ Wij voegen de repositories dan voor je toe aan het register.
 
 ### Optie 2: Voeg ze zelf toe via de API
 
-Wil je het zelf via de API doen? Dan heb je schrijfrechten nodig. Die verstrekken we alleen aan zogenaamde *trusted clients*: bekende (semi-)overheidsorganisaties. Met deze credentials heb je ook toegang tot de API van het [API-register](https://apis.developer.overheid.nl/apis/toevoegen).
+Wil je het zelf via de API doen? Dan heb je schrijfrechten nodig. Die verstrekken we alleen aan zogenaamde _trusted clients_: bekende (semi-)overheidsorganisaties. Met deze credentials heb je ook toegang tot de API van het [API-register](https://apis.developer.overheid.nl/apis/toevoegen).
 
 #### Schrijfrechten aanvragen
 
 Stuur een mail naar [developer.overheid@geonovum.nl](mailto:developer.overheid@geonovum.nl) om schrijfrechten te krijgen. Vermeld hierbij je contactgegevens en bij welke (semi-)overheidsorganisatie je hoort. Na goedkeuring ontvang je de benodigde credentials.
 
-Wil je alleen leesrechten op het OSS-register? Kijk dan op de pagina [API-sleutel aanvragen](https://apis.developer.overheid.nl/apis/key-aanvragen) van het API-register.
+Wil je alleen leesrechten op het Open Source Register? Kijk dan op de pagina [API-sleutel aanvragen](https://apis.developer.overheid.nl/apis/key-aanvragen) van het API-register.
 
 #### Repositories toevoegen
 
