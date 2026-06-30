@@ -326,12 +326,21 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
                         </button>
                       </ToolTip>
                     )}
+                    { item.archived && (
+                      <ToolTip id={`archived-${item.id}`} text={t("components.is-archived")}>
+                        <button type="button" class="archived-button" command="toggle-popover" commandfor={`archived-${item.id}`} aria-label={t("components.is-archived")}>
+                          <Icon name="lade-archiefkast" className="archived moveAbove" />
+                        </button>
+                      </ToolTip>
+                    )}
                   </div>
               </div>
               </HeadingGroup>
               <div slot="description" class="description utrecht-html"><Markdown text={item.shortDescription} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
               <AlignBox align="space-between" slot="metadata" className="meta">
-                <PillBadge startValue={`publiccode.yml`} endValue={item.publicCodeUrl ? "✔" : "NA"} type="color" color={item.publicCodeUrl ? "mintgroen" : "grijs"} />
+                <div class="status-badges">
+                  <PillBadge startValue={`publiccode.yml`} endValue={item.publicCodeUrl ? "✔" : "NA"} type="color" color={item.publicCodeUrl ? "mintgroen" : "grijs"} />
+                </div>
                 <span class="last-updated">{t(`components.last-activity-at`)}: {new Date(item.lastActivityAt || '').toLocaleDateString('nl-NL')}</span>
               </AlignBox>
             </CardAsLink>
@@ -375,11 +384,13 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
     }
   }
 
-  .forked {
+  .forked,
+  .archived {
     color: var(--rhc-color-cool-grey-700);
   }
 
-  .forked-button {
+  .forked-button,
+  .archived-button {
     display: grid;
     place-content: center;
     padding: 0;
@@ -390,7 +401,8 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
     border: none;
 
     &:hover {
-      .forked {
+      .forked,
+      .archived {
         color: var(--rhc-color-cool-grey-900);
       }
     }
@@ -398,6 +410,12 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
 
   .version {
     text-decoration: none;
+  }
+
+  .status-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
   .orgLink {
