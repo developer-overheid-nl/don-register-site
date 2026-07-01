@@ -1,5 +1,11 @@
 # @developer-overheid-nl/api-register
 
+## 1.4.1
+
+### Patch Changes
+
+- 0c1e1a4: Use the API summary field for overview cards and handle null summaries defensively.
+
 ## 1.4.0
 
 ### Minor Changes
