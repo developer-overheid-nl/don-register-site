@@ -1,5 +1,11 @@
 # @developer-overheid-nl/oss-register
 
+## 2.1.2
+
+### Patch Changes
+
+- 50bae33: Hernoem "OSS-register" naar "Open Source Register" zodat het makkelijker herkenbaar is
+
 ## 2.1.1
 
 ### Patch Changes
