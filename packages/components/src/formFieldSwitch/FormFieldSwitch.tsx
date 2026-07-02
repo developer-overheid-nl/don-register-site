@@ -15,7 +15,8 @@ export interface FormFieldSwitchProps
     >,
     AmountLabelProps {
   name?: string;
-  value: string;
+  value: string | string[];
+  explicit?: boolean;
   checked?: boolean;
   defaultChecked?: boolean;
   statusId?: CustomFormFieldProps["statusId"];
@@ -36,6 +37,7 @@ const FormFieldSwitch = (props: FormFieldSwitchProps) => {
     labelledById,
     name,
     value,
+    explicit,
     defaultChecked,
     checked,
     amount,
@@ -61,6 +63,7 @@ const FormFieldSwitch = (props: FormFieldSwitchProps) => {
           id={id}
           name={name}
           value={value}
+          explicit={explicit}
           checked={checked}
           defaultChecked={defaultChecked}
           className="utrecht-form-field__input"
