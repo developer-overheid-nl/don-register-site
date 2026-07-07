@@ -264,6 +264,8 @@ export interface components {
             createdAt?: components["schemas"]["CreatedAt"];
             lastCrawledAt?: components["schemas"]["LastCrawledAt"];
             readonly lastActivityAt?: components["schemas"]["LastActivityAt"];
+            /** @description Whether the repository is archived and hidden from default repository listings. */
+            readonly archived?: boolean;
         };
         /**
          * @description Derived fork classification based on the git fork flag, publiccode.yml url, and isBasedOn metadata.

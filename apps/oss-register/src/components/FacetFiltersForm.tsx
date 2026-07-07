@@ -19,6 +19,7 @@ interface FacetFiltersFormProps {
     filtersTitle: string;
     filterButtonLabel: string;
   };
+  explicitFalseFilters?: string[];
   hiddenFields?: [string, string][];
 }
 
@@ -29,6 +30,7 @@ const FacetFiltersForm = (props: FacetFiltersFormProps) => {
     action: formAction,
     method: formMethod,
     labels,
+    explicitFalseFilters,
     hiddenFields = [],
   } = props;
   const [{ data, error }, action, pending] = useActionState(
@@ -47,9 +49,6 @@ const FacetFiltersForm = (props: FacetFiltersFormProps) => {
   const _inputErrors = isInputError(error) ? error.fields : {};
 
   const handleChange = () => {
-    console.log(
-      "FacetFiltersForm filter changed, triggering getFilters action...",
-    );
     startTransition(() => {
       if (formRef.current) {
         const formData = new FormData(formRef.current);
@@ -80,6 +79,7 @@ const FacetFiltersForm = (props: FacetFiltersFormProps) => {
           id="facetfilters"
           title={labels.filtersTitle}
           filters={data}
+          explicitFalseFilters={explicitFalseFilters}
           onFilterChange={handleChange}
         />
         <Button

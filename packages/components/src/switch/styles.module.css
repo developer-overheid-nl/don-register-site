@@ -1,7 +1,58 @@
-.switch {
+.switch.switch {
   &:hover {
     :global(.utrecht-form-toggle__track) {
       background-color: var(--utrecht-form-toggle-hover-background-color);
+    }
+  }
+
+  &.explicit {
+    :global(
+        &.utrecht-form-toggle--html-checkbox
+        .utrecht-form-toggle__track
+      ):not([for^='negate']) {
+      position: absolute;
+      z-index: 2;
+      display: flex;
+
+      background-color: var(--utrecht-form-toggle-accent-color);
+      :global(.utrecht-form-toggle__thumb) {
+        margin-inline-start: var(
+          --utrecht-form-toggle-thumb-margin-inline-start,
+          0
+        );
+      }
+    }
+
+    :global(
+        &.utrecht-form-toggle--html-checkbox
+        .utrecht-form-toggle__checkbox
+      ):not([id^='negate']):checked
+      ~ :global(.utrecht-form-toggle__track):not([for^='negate']) {
+      z-index: 1;
+    }
+
+    :global(
+        &.utrecht-form-toggle--html-checkbox
+        .utrecht-form-toggle__track
+      )[for^='negate'] {
+      position: absolute;
+      z-index: 2;
+      display: flex;
+
+      :global(.utrecht-form-toggle__thumb) {
+        margin-inline-end: var(
+          --utrecht-form-toggle-thumb-margin-inline-end,
+          0
+        );
+      }
+    }
+
+    :global(
+        &.utrecht-form-toggle--html-checkbox
+        .utrecht-form-toggle__checkbox
+      )[id^='negate']:checked
+      ~ :global(.utrecht-form-toggle__track)[for^='negate'] {
+      z-index: 1;
     }
   }
 }

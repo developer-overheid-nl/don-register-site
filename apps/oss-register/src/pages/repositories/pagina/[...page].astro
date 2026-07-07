@@ -90,7 +90,7 @@ const {
   response: {
     status: facetfiltersStatus,
     statusText: facetfiltersStatusText,
-    headers: facetfiltersHeaders,
+    headers: _facetfiltersHeaders,
   },
 } = await client
   .GET(FILTERS_RESOURCE, {
@@ -132,19 +132,30 @@ const searchObject = isSearchPage
       searchCount: paginationObj.totalCount,
     }
   : undefined;
-const i18nContext =
-  routingObj.query && Object.keys(routingObj.query).length > 0
-    ? "filtered"
-    : "all";
 
 const items = error ? null : data;
 
-const selectedFiltersMap = getSelectedFiltersMap(
-  facetfilters as unknown as FilterData[],
-  true,
-  routingObj.queryObject,
-);
+/* TODO: this should come from the filters API; see issue: ... */
+const explicitFalseFilters = ["publiccode"];
+const isExplicitFalseNegateLabels = ["Heeft geen publiccode.yml"];
 
+const newFacetFilters = facetfilters?.map((facet) => {
+  return explicitFalseFilters.includes(facet.key)
+    ? {
+        ...facet,
+        isExplicitFalse: true,
+        label: [
+          facet.label,
+          isExplicitFalseNegateLabels[explicitFalseFilters.indexOf(facet.key)],
+        ],
+      }
+    : facet;
+});
+
+const selectedFiltersMap = getSelectedFiltersMap(
+  newFacetFilters as unknown as FilterData[],
+  true,
+);
 const labels = {
   filtersTitle: t("components.filters-title"),
   filterButtonLabel: t("components.filter-button-label"),
@@ -160,19 +171,11 @@ const filterHiddenFields: [string, string][] = routingObj.query[
   : [];
 
 const getFilterBadgeHref = (key: string, filterValue: string) => {
-  const currentValue = routingObj.url.searchParams.get(key);
+  const isExplicitFalse = explicitFalseFilters.includes(key);
 
-  if (currentValue === "true" || currentValue === "false") {
-    const searchParams = new URLSearchParams(routingObj.url.searchParams);
-    searchParams.set(key, currentValue === "true" ? "false" : "true");
-
-    return new URL(`?${searchParams}`, routingObj.url).toString();
-  }
-
-  if (filterValue === "true" || filterValue === "false") {
+  if (isExplicitFalse) {
     const searchParams = new URLSearchParams(routingObj.url.searchParams);
     searchParams.set(key, filterValue === "true" ? "false" : "true");
-
     return new URL(`?${searchParams}`, routingObj.url).toString();
   }
 
@@ -185,6 +188,8 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
     routingObj.url,
   ).toString();
 };
+
+const i18nContext = selectedFiltersMap.size > 0 ? "filtered" : "all";
 ---
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
@@ -211,6 +216,7 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
     action={new URL(`/repositories`, routingObj?.url).toString()}
     method="GET"
     labels={labels}
+    explicitFalseFilters={explicitFalseFilters}
     hiddenFields={filterHiddenFields}
   />
   {
@@ -326,6 +332,13 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
                         </button>
                       </ToolTip>
                     )}
+                    { item.archived && (
+                      <ToolTip id={`archived-${item.id}`} text={t("components.is-archived")}>
+                        <button type="button" class="archived-button" command="toggle-popover" commandfor={`archived-${item.id}`} aria-label={t("components.is-archived")}>
+                          <Icon name="lade-archiefkast" className="archived moveAbove" />
+                        </button>
+                      </ToolTip>
+                    )}
                   </div>
               </div>
               </HeadingGroup>
@@ -375,11 +388,13 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
     }
   }
 
-  .forked {
+  .forked,
+  .archived {
     color: var(--rhc-color-cool-grey-700);
   }
 
-  .forked-button {
+  .forked-button,
+  .archived-button {
     display: grid;
     place-content: center;
     padding: 0;
@@ -390,7 +405,8 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
     border: none;
 
     &:hover {
-      .forked {
+      .forked,
+      .archived {
         color: var(--rhc-color-cool-grey-900);
       }
     }
