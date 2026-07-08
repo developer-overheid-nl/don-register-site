@@ -31,6 +31,10 @@
     "preview:oss": "pnpm --filter @developer-overheid-nl/oss-register preview",
     "astro": "astro",
     "test": "vitest",
+    "test:e2e": "pnpm test:e2e:api && pnpm test:e2e:oss",
+    "test:e2e:api": "cypress run --config baseUrl=http://localhost:4321 --spec \"cypress/e2e/api/**/*.cy.{js,jsx,ts,tsx}\"",
+    "test:e2e:oss": "cypress run --config baseUrl=http://localhost:4322 --spec \"cypress/e2e/oss/**/*.cy.{js,jsx,ts,tsx}\"",
+    "test:e2e:open": "cypress open",
     "ts:oas": "pnpx openapi-typescript --make-paths-enum",
     "ts:test": "tsc --noEmit",
     "biome:check": "biome check --write",
@@ -61,8 +65,10 @@
   "devDependencies": {
     "@biomejs/biome": "2.4.16",
     "@changesets/cli": "2.31.0",
+    "cypress": "^15.18.1",
     "lefthook": "2.1.9",
     "openapi-typescript": "catalog:",
+    "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"
   },
@@ -71,6 +77,7 @@
       "sharp"
     ],
     "onlyBuiltDependencies": [
+      "cypress",
       "esbuild",
       "lefthook"
     ]
