@@ -42,33 +42,25 @@ jobs:
       - name: Run unit tests
         run: pnpm test -- run
 
-      - name: Run Cypress
-        run: |
-          pnpm dev:api -- --host 127.0.0.1 --port 4321 &
-          API_PID=$!
-          pnpm dev:oss -- --host 127.0.0.1 --port 4322 &
-          OSS_PID=$!
+      - name: Run API Cypress tests
+        uses: cypress-io/github-action@fa4a118725a8f001170d49631ea89e5d66fee626 # v7
+        with:
+          install: false
+          start: pnpm --filter @developer-overheid-nl/api-register dev --host 127.0.0.1 --port 4321
+          wait-on: "http://localhost:4321"
+          wait-on-timeout: 120
+          config: baseUrl=http://localhost:4321
+          spec: "cypress/e2e/api/**/*.cy.{js,jsx,ts,tsx}"
 
-          cleanup() {
-            kill "$API_PID" "$OSS_PID" || true
-          }
-          trap cleanup EXIT
-
-          wait_for_url() {
-            local url=$1
-            for _ in {1..60}; do
-              if curl --fail --silent --output /dev/null "$url"; then
-                return 0
-              fi
-              sleep 1
-            done
-            return 1
-          }
-
-          wait_for_url http://localhost:4321
-          wait_for_url http://localhost:4322
-
-          pnpm test:e2e
+      - name: Run OSS Cypress tests
+        uses: cypress-io/github-action@fa4a118725a8f001170d49631ea89e5d66fee626 # v7
+        with:
+          install: false
+          start: pnpm --filter @developer-overheid-nl/oss-register dev --host 127.0.0.1 --port 4322
+          wait-on: "http://localhost:4322"
+          wait-on-timeout: 120
+          config: baseUrl=http://localhost:4322
+          spec: "cypress/e2e/oss/**/*.cy.{js,jsx,ts,tsx}"
 
   build:
     environment: production
