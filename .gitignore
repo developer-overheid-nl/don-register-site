@@ -1,5 +1,6 @@
 # build output
 dist/
+storybook-static/
 # generated types
 .astro/
 
@@ -11,6 +12,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+build-storybook.log
+chromatic.log
 
 
 # environment variables

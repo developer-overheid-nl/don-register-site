@@ -29,6 +29,8 @@
     "dev:oss": "pnpm --filter @developer-overheid-nl/oss-register dev",
     "build:oss": "pnpm --filter @developer-overheid-nl/oss-register build",
     "preview:oss": "pnpm --filter @developer-overheid-nl/oss-register preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
     "astro": "astro",
     "test": "vitest",
     "ts:oas": "pnpx openapi-typescript --make-paths-enum",
@@ -39,7 +41,8 @@
     "changesets:version": "changeset version",
     "changesets:version:canary": "changeset version --snapshot canary",
     "changesets:publish": "changeset publish",
-    "changesets:publish:canary": "changeset publish --tag canary"
+    "changesets:publish:canary": "changeset publish --tag canary",
+    "chromatic": "chromatic --exit-zero-on-changes"
   },
   "dependencies": {
     "@astrojs/node": "catalog:",
@@ -61,8 +64,17 @@
   "devDependencies": {
     "@biomejs/biome": "2.4.16",
     "@changesets/cli": "2.31.0",
+    "@csstools/postcss-global-data": "catalog:",
+    "@rijkshuisstijl-community/components-css": "catalog:",
+    "@rijkshuisstijl-community/design-tokens": "catalog:",
+    "@storybook/addon-docs": "^10.5.0",
+    "@storybook/react-vite": "^10.5.0",
+    "@utrecht/component-library-css": "catalog:",
+    "chromatic": "^18.0.1",
     "lefthook": "2.1.9",
     "openapi-typescript": "catalog:",
+    "postcss-custom-media": "catalog:",
+    "storybook": "^10.5.0",
     "vite": "catalog:",
     "vitest": "catalog:"
   },
