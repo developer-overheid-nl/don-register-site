@@ -17,6 +17,7 @@ COPY pnpm-lock.yaml ./
 COPY package.json ./
 COPY apps/api-register/package.json ./apps/api-register/
 COPY apps/oss-register/package.json ./apps/oss-register/
+COPY apps/schema-register/package.json ./apps/schema-register/
 COPY packages/components/package.json ./packages/components/
 COPY packages/layouts/package.json ./packages/layouts/
 
