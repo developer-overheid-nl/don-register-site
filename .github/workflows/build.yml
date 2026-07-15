@@ -12,6 +12,7 @@ on:
 env:
   API_IMAGE_NAME: ghcr.io/developer-overheid-nl/don-register-site
   OSS_IMAGE_NAME: ghcr.io/developer-overheid-nl/don-register-oss-site
+  SCHEMA_IMAGE_NAME: ghcr.io/developer-overheid-nl/don-register-schema-site
 
 jobs:
   build:
@@ -42,11 +43,27 @@ jobs:
             ${{ env.OSS_IMAGE_NAME }}:${{ github.sha }}
           outputs: type=docker,dest=${{ runner.temp }}/oss-image.tar
 
+      - name: Build schema image
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          target: runtime-schema
+          tags: |
+            ${{ env.SCHEMA_IMAGE_NAME }}:latest
+            ${{ env.SCHEMA_IMAGE_NAME }}:${{ github.sha }}
+          outputs: type=docker,dest=${{ runner.temp }}/schema-image.tar
+
       - name: Upload API image
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: api-image
           path: ${{ runner.temp }}/api-image.tar
+          retention-days: 1
+
+      - name: Upload schema image
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: schema-image
+          path: ${{ runner.temp }}/schema-image.tar
           retention-days: 1
 
       - name: Upload OSS image
@@ -69,6 +86,12 @@ jobs:
           name: api-image
           path: ${{ runner.temp }}/api-image
 
+      - name: Download schema image
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: schema-image
+          path: ${{ runner.temp }}/schema-image
+
       - name: Download OSS image
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
@@ -78,6 +101,7 @@ jobs:
       - name: Load images
         run: |
           docker load --input ${{ runner.temp }}/api-image/api-image.tar
+          docker load --input ${{ runner.temp }}/schema-image/schema-image.tar
           docker load --input ${{ runner.temp }}/oss-image/oss-image.tar
 
       - name: Login to container registry
@@ -90,4 +114,5 @@ jobs:
       - name: Push images
         run: |
           docker push --all-tags ${{ env.API_IMAGE_NAME }}
+          docker push --all-tags ${{ env.SCHEMA_IMAGE_NAME }}
           docker push --all-tags ${{ env.OSS_IMAGE_NAME }}
