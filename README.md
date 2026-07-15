@@ -148,6 +148,41 @@ Zie ook de [README](https://github.com/developer-overheid-nl/don-register-site/b
 
 ---
 
+## Local development
+
+Zorg dat je de juiste Node-versie gebruikt, zoals gespecificeerd in de `volta`/`engines`-velden van de root `package.json` (op dit moment Node `24.12.0`). Met [Volta](https://volta.sh/) geïnstalleerd wordt dit automatisch geregeld.
+
+Installeer dependencies:
+
+```bash
+pnpm install
+```
+
+Vul de benodigde .env.mode bestanden met de juiste variabelen. De inhoud hiervan kan je verkrijgen door het aan één van onze teamleden te vragen.
+
+```bash
+cp apps/api-register/.env.mode.example apps/api-register/.env.local
+cp apps/oss-register/.env.mode.example apps/oss-register/.env.local
+```
+
+> [!NOTE]
+> Beide apps werken out-of-the-box met een TEST of PROD API. De back-end API's bevinden zich dus niet in dit project maar vind je hier:
+>
+> - [Open Source Register API](https://github.com/developer-overheid-nl/don-oss-register)
+> - [API Register API](https://github.com/developer-overheid-nl/don-api-register)
+
+Om het Open Source Register lokaal te starten:
+
+```bash
+pnpm dev:oss
+```
+
+Om het API Register lokaal te starten:
+
+```bash
+pnpm dev:api
+```
+
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
