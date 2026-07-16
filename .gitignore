@@ -14,7 +14,7 @@ yarn-error.log*
 pnpm-debug.log*
 build-storybook.log
 chromatic.log
-
+debug-storybook.log
 
 # environment variables
 .env*.local

@@ -6,10 +6,11 @@ import { mergeConfig } from "vite";
 const config: StorybookConfig = {
   stories: ["../packages/components/src/**/*.stories.@(ts|tsx)"],
   addons: [
-    "@storybook/addon-docs",
-    "@storybook/addon-vitest",
-    "@storybook/addon-a11y",
     "@chromatic-com/storybook",
+    "@storybook/addon-a11y",
+    "@storybook/addon-docs",
+    "storybook-addon-tag-badges",
+    "@storybook/addon-vitest",
   ],
   framework: {
     name: "@storybook/react-vite",

@@ -10,7 +10,7 @@ import CardAsLink from "./CardAsLink";
 const meta = {
   title: "Components/CardAsLink",
   component: CardAsLink,
-  tags: ["autodocs"],
+  tags: ["autodocs", "mixed"],
 } satisfies Meta<typeof CardAsLink>;
 
 export default meta;
