@@ -77,6 +77,15 @@ jobs:
             ${{ env.OSS_IMAGE_NAME }}:test
             ${{ env.OSS_IMAGE_NAME }}:${{ github.sha }}
 
+      - name: Build and push Schema image
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          target: runtime-schema
+          push: true
+          tags: |
+            ${{ env.SCHEMA_IMAGE_NAME }}:test
+            ${{ env.SCHEMA_IMAGE_NAME }}:${{ github.sha }}
+
   update-infra-test:
     needs: build-and-push
     runs-on: ubuntu-latest

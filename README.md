@@ -186,13 +186,15 @@ De testdeploy draait via
 
 - De workflow draait op pushes naar branches behalve `main`.
 - Alleen commits met `[deploy-test]` in de commit message worden echt gedeployed.
-- Er worden twee images gebouwd en gepusht:
-  `ghcr.io/developer-overheid-nl/don-register-site` en
-  `ghcr.io/developer-overheid-nl/don-register-oss-site`, met tags `test`
+- Er worden drie images gebouwd en gepusht:
+  `ghcr.io/developer-overheid-nl/don-register-site`,
+  `ghcr.io/developer-overheid-nl/don-register-oss-site` en
+  `ghcr.io/developer-overheid-nl/don-register-schema-site`, met tags `test`
   en de commit SHA.
 - Daarna worden in `INFRA_REPO` de bestanden
-  `${KUSTOMIZE_PATH_API}test/kustomization.yaml` en
-  `${KUSTOMIZE_PATH_OSS}test/kustomization.yaml` bijgewerkt naar de nieuwe
+  `${KUSTOMIZE_PATH_API}test/kustomization.yaml`,
+  `${KUSTOMIZE_PATH_OSS}test/kustomization.yaml` en
+  `${KUSTOMIZE_PATH_SCHEMA}test/kustomization.yaml` bijgewerkt naar de nieuwe
   image tag en direct gecommit.
 
 Voorbeeld commit message:
