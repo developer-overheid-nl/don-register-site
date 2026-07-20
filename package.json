@@ -63,7 +63,7 @@
     "react-markdown": "catalog:"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.16",
+    "@biomejs/biome": "2.5.4",
     "@changesets/cli": "2.31.0",
     "@chromatic-com/storybook": "5.2.1",
     "@csstools/postcss-global-data": "catalog:",
