@@ -76,8 +76,7 @@ const prettySchema = details?.content
   ? JSON.stringify(details.content, null, 2)
   : null;
 const hasSourceMeta = Boolean(
-  details?.sourceMetaIdentifier ||
-    details?.sourceMetaName ||
+  details?.sourceMetaName ||
     details?.sourceMetaBaseDialect ||
     details?.sourceMetaDialect ||
     details?.sourceMetaBytes !== undefined ||
@@ -85,6 +84,8 @@ const hasSourceMeta = Boolean(
     details?.sourceMetaHealth !== undefined ||
     details?.sourceMetaDependencies !== undefined,
 );
+const sourceMetaDependencyDetails = details?.sourceMetaDependencyDetails ?? [];
+const currentSchemaReferences = [id, details?.schemaUrl].filter(Boolean);
 const formatValue = (value: string | number | null | undefined) =>
   value === null || value === undefined || value === "" ? "-" : String(value);
 const formatDate = (value: string | number | null | undefined) =>
@@ -97,6 +98,26 @@ const formatBytes = (value: number | null | undefined) =>
   value === null || value === undefined ? "-" : `${formatNumber(value)} bytes`;
 const formatPercentage = (value: number | null | undefined) =>
   value === null || value === undefined ? undefined : String(value);
+const getDependencyTargetLabel = (
+  dependency: (typeof sourceMetaDependencyDetails)[number],
+) =>
+  dependency.toSchemaTitle ||
+  dependency.toSchemaUrl ||
+  dependency.toSchemaId ||
+  dependency.to;
+const getDependencySourceLabel = (
+  dependency: (typeof sourceMetaDependencyDetails)[number],
+) =>
+  dependency.fromSchemaTitle ||
+  dependency.fromSchemaUrl ||
+  dependency.fromSchemaId ||
+  dependency.from;
+const shouldShowDependencySource = (
+  dependency: (typeof sourceMetaDependencyDetails)[number],
+) =>
+  ![dependency.fromSchemaId, dependency.fromSchemaUrl, dependency.from]
+    .filter(Boolean)
+    .some((reference) => currentSchemaReferences.includes(reference));
 ---
 
 { error && (
@@ -179,13 +200,8 @@ const formatPercentage = (value: number | null | undefined) =>
       { hasSourceMeta && (
         <Fragment>
           <Heading level={4}>SourceMeta</Heading>
-          <Block appearance="outlined">
+          <Block appearance="outlined" layout="flex-col">
             <DataSummary appearance="column" contained>
-              { details.sourceMetaIdentifier ? (
-                <DataSummaryItem itemKey="SourceMeta identifier" itemValue="" href={details.sourceMetaIdentifier}>{details.sourceMetaIdentifier}</DataSummaryItem>
-              ) : (
-                <DataSummaryItem itemKey="SourceMeta identifier" itemValue="-" />
-              )}
               <DataSummaryItem itemKey="SourceMeta name" itemValue={formatValue(details.sourceMetaName)} />
               <DataSummaryItem itemKey="Base dialect" itemValue={formatValue(details.sourceMetaBaseDialect)} />
               <DataSummaryItem itemKey="SourceMeta dialect" itemValue={formatValue(details.sourceMetaDialect)} />
@@ -194,6 +210,28 @@ const formatPercentage = (value: number | null | undefined) =>
               <DataSummaryItem itemKey="Health" itemValue={details.sourceMetaHealth === undefined ? "-" : `${formatNumber(details.sourceMetaHealth)}%`} />
               <DataSummaryItem itemKey="Dependencies" itemValue={formatNumber(details.sourceMetaDependencies)} />
             </DataSummary>
+            { sourceMetaDependencyDetails.length > 0 && (
+              <Fragment>
+                <Heading level={5}>Dependencies</Heading>
+                { sourceMetaDependencyDetails.map((dependency) => (
+                  <DataSummary appearance="column" contained>
+                    { dependency.toSchemaUrl ? (
+                      <DataSummaryItem itemKey="To" itemValue="" href={dependency.toSchemaUrl}>{getDependencyTargetLabel(dependency)}</DataSummaryItem>
+                    ) : (
+                      <DataSummaryItem itemKey="To" itemValue={getDependencyTargetLabel(dependency)} />
+                    )}
+                    <DataSummaryItem itemKey="At" itemValue={dependency.at} />
+                    { shouldShowDependencySource(dependency) && (
+                      dependency.fromSchemaUrl ? (
+                        <DataSummaryItem itemKey="From" itemValue="" href={dependency.fromSchemaUrl}>{getDependencySourceLabel(dependency)}</DataSummaryItem>
+                      ) : (
+                        <DataSummaryItem itemKey="From" itemValue={getDependencySourceLabel(dependency)} />
+                      )
+                    )}
+                  </DataSummary>
+                ))}
+              </Fragment>
+            )}
           </Block>
         </Fragment>
       )}

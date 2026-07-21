@@ -234,6 +234,33 @@ export interface components {
              */
             url?: string;
         };
+        /** @description A dependency edge reported by SourceMeta for a stored schema. */
+        SourceMetaDependency: {
+            /**
+             * Format: uri
+             * @description The schema identifier that contains the reference
+             */
+            from: string;
+            /**
+             * Format: uri
+             * @description The schema identifier being referenced
+             */
+            to: string;
+            /** @description JSON Pointer location of the dependency */
+            at: string;
+            /** @description Local schema-register id for the dependency source, when available */
+            fromSchemaId?: components["schemas"]["ResourceId"];
+            /** @description Local schema-register artifact URL for the dependency source, when available */
+            fromSchemaUrl?: components["schemas"]["SchemaUrl"];
+            /** @description Local schema-register title for the dependency source, when available */
+            fromSchemaTitle?: components["schemas"]["SchemaTitle"];
+            /** @description Local schema-register id for the dependency target, when available */
+            toSchemaId?: components["schemas"]["ResourceId"];
+            /** @description Local schema-register artifact URL for the dependency target, when available */
+            toSchemaUrl?: components["schemas"]["SchemaUrl"];
+            /** @description Local schema-register title for the dependency target, when available */
+            toSchemaTitle?: components["schemas"]["SchemaTitle"];
+        };
         SchemaSummary: {
             id: components["schemas"]["ResourceId"];
             schemaUrl?: components["schemas"]["SchemaUrl"];
@@ -269,6 +296,8 @@ export interface components {
         SchemaDetail: components["schemas"]["SchemaSummary"] & {
             /** @description The stored JSON Schema document */
             content?: Record<string, never>;
+            /** @description Dependency edges reported by SourceMeta for this schema */
+            sourceMetaDependencyDetails?: components["schemas"]["SourceMetaDependency"][];
         };
         /** @description Register a JSON Schema by URL or by providing the schema body directly. Either schemaUrl or schemaBody is required. */
         SchemaPost: {
