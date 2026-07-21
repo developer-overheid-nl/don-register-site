@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+}
+
+#storybook-root {
+  min-height: 120vh;
+}
+
+.storybook-story {
+  box-sizing: border-box;
+  max-width: 72rem;
+  padding: var(--utrecht-space-around, 1.5rem);
+}
+
+.storybook-story--narrow {
+  max-width: 24rem;
+}

@@ -4,10 +4,19 @@ import styles from "./styles.module.css";
 
 export interface PillBadgeProps {
   className?: string;
+  /** Text on the start-side of the pill */
   startValue: string | number | null | undefined;
+  /** Text on the end-side of the pill */
   endValue: string | number | null | undefined;
+  /** Figure Caption text */
   caption?: string;
+  /** Type of Pill badge
+   * @default color
+   */
   type?: "color" | "percentage";
+  /** Color of the end-side of the pill
+   * @default lichtgroen
+   */
   color?: string; // todo: enum
 }
 

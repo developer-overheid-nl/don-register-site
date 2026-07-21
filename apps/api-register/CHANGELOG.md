@@ -1,5 +1,14 @@
 # @developer-overheid-nl/api-register
 
+## 1.4.1
+
+### Patch Changes
+
+- 0c1e1a4: Use the API summary field for overview cards and handle null summaries defensively.
+- Updated dependencies [9d30474]
+  - @developer-overheid-nl/don-register-components@1.3.2
+  - @developer-overheid-nl/don-register-layouts@1.2.2
+
 ## 1.4.0
 
 ### Minor Changes

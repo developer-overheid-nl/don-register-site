@@ -1,5 +1,15 @@
 # @developer-overheid-nl/oss-register
 
+## 2.1.2
+
+### Patch Changes
+
+- 87011bc: Show archived repository indicators and a warning banner on archived repository detail pages.
+- 50bae33: Hernoem "OSS-register" naar "Open Source Register" zodat het makkelijker herkenbaar is
+- Updated dependencies [9d30474]
+  - @developer-overheid-nl/don-register-components@1.3.2
+  - @developer-overheid-nl/don-register-layouts@1.2.2
+
 ## 2.1.1
 
 ### Patch Changes
