@@ -70,7 +70,8 @@ i18n.addResources(i18n.language, "translation", i18nPage);
 
 const details = error ? null : data;
 
-const rawSchemaUrl = `${API_URL}/${API_ENDPOINT}/${API_VERSION}/schemas/${id}/schema.json`;
+const schemaDownloadPath = `download/${id}/schema.json`;
+const rawSchemaUrl = new URL(schemaDownloadPath, Astro.url).toString();
 const prettySchema = details?.content
   ? JSON.stringify(details.content, null, 2)
   : null;
@@ -166,10 +167,10 @@ const formatPercentage = (value: number | null | undefined) =>
         </AlignBox>
         {/* biome-ignore lint/a11y/useSemanticElements: ol/ul not possible */}
         <div class="utrecht-badge-list" role="list" data-content-piece="Schema links">
-          <DataBadgeLink data-content-target="Open schema.json" href={rawSchemaUrl} target="_blank" rel="noopener" role="listitem">
+          <DataBadgeLink data-content-target="Open schema.json" href={schemaDownloadPath} target="_blank" rel="noopener" role="listitem">
             schema.json
           </DataBadgeLink>
-          <DataBadgeLink data-content-target="Download schema.json" href={rawSchemaUrl} role="listitem">
+          <DataBadgeLink data-content-target="Download schema.json" href={schemaDownloadPath} role="listitem">
             Download schema.json
           </DataBadgeLink>
         </div>
