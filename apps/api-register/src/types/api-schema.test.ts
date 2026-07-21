@@ -13,7 +13,7 @@ export interface paths {
         };
         /**
          * List APIs
-         * @description Returns a list of APIs included in the register. Supports the same filter query parameters as the filters endpoint.
+         * @description Returns a list of APIs included in the register. Supports the same filter query parameters as the filters endpoint and combines them with the optional q search term.
          */
         get: operations["listApis"];
         put?: never;
@@ -22,6 +22,27 @@ export interface paths {
          * @description Registers a new API in the register from its OpenAPI document.
          */
         post: operations["createApi"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/apis/_search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search APIs
+         * @deprecated
+         * @description Deprecated. Use GET /apis with the q query parameter and filters instead.
+         */
+        get: operations["searchApis"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -37,7 +58,7 @@ export interface paths {
         };
         /**
          * List API filters
-         * @description Returns all available API filter options with counts. Counts are calculated using the active filters from the request.
+         * @description Returns all available API filter options with counts. Counts are calculated using the active filters and optional q search term from the request.
          */
         get: operations["listApiFilters"];
         put?: never;
@@ -85,9 +106,32 @@ export interface paths {
         get: operations["retreiveApi"];
         /**
          * Update API
-         * @description Updates an existing API by id.
+         * @description Updates an existing API by id. When no OAS document is supplied, only lifecycle fields can be changed.
          */
         put: operations["updateApi"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/apis/{id}/feed.rss": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Unique identifier of the resource. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        /**
+         * Get API RSS feed
+         * @description Returns an RSS 2.0 feed with content changes for a single API. Feed items are created for ADR-score changes, lifecycle changes, OpenAPI document hash changes, and OpenAPI documents that become unavailable during the daily refresh job.
+         */
+        get: operations["getApiFeed"];
+        put?: never;
         post?: never;
         delete?: never;
         options?: never;
@@ -252,10 +296,16 @@ export interface components {
             version: string;
             /**
              * Format: date
-             * @description The date from which the lifecycle status is/has been deprecated, sunset or retired.
-             * @example 2025-01-15
+             * @description The date from which the API is will be/has been deprecated.
+             * @example 2025-10-10
              */
-            from?: string | null;
+            deprecated?: string;
+            /**
+             * Format: date
+             * @description The date from which the API will be/has been taken offline.
+             * @example 2027-11-11
+             */
+            sunset?: string;
         };
         Server: {
             /**
@@ -291,6 +341,8 @@ export interface components {
              * @example This is version 1 of the API register. This description can also contain Markdown.
              */
             description: string;
+            /** @description The summary of the API */
+            summary: string | null;
             organisation: components["schemas"]["OrganisationSummary"];
             /**
              * @description The ADR score of the API
@@ -359,8 +411,48 @@ export interface components {
             options?: components["schemas"]["FilterOption"][];
         };
         /**
+         * API (JSON-LD)
+         * @description JSON-LD representation of an API as a dcat:DataService. Returned when Accept: application/ld+json is requested on /apis/{id}.
+         */
+        ApiDetailJsonLd: {
+            /** @description Inline JSON-LD context defining the dcat, dct and vcard prefixes plus type-coercions for IRI-valued properties. */
+            "@context": Record<string, never>;
+            /** @enum {string} */
+            "@type": "dcat:DataService";
+            /**
+             * @example [
+             *       "https://spec.openapis.org/oas"
+             *     ]
+             */
+            "dct:conformsTo": string[];
+            /** @example dicF0B3HR */
+            "dct:identifier": string;
+            "dct:title": string;
+            "dct:description"?: string;
+            /**
+             * Format: uri
+             * @description URL of the OpenAPI document describing this DataService.
+             */
+            "dcat:endpointDescription"?: string;
+            "dcat:contactPoint": {
+                "vcard:fn": string;
+                /**
+                 * Format: uri
+                 * @description mailto: IRI.
+                 */
+                "vcard:hasEmail"?: string;
+                /** Format: uri */
+                "vcard:hasURL"?: string;
+            };
+            /**
+             * Format: uri
+             * @description IRI of the publishing organisation.
+             */
+            "dct:publisher"?: string;
+        };
+        /**
          * API Input
-         * @description Input for registering or updating an API from its OpenAPI document
+         * @description Input for registering an API from its OpenAPI or Arazzo document
          */
         ApiInput: {
             /**
@@ -369,7 +461,23 @@ export interface components {
              * @description The URL of the OAS document
              * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
              */
-            oasUrl: string;
+            oasUrl?: string;
+            /**
+             * OAS Body
+             * @description The inline OAS document in JSON or YAML format
+             */
+            oasBody?: string;
+            /**
+             * Arazzo Url
+             * Format: uri
+             * @description The URL of the Arazzo document
+             */
+            arazzoUrl?: string;
+            /**
+             * Arazzo Body
+             * @description The inline Arazzo document in JSON or YAML format
+             */
+            arazzoBody?: string;
             /**
              * Organisation URI
              * Format: uri
@@ -378,7 +486,58 @@ export interface components {
              */
             organisationUri: string;
             contact?: components["schemas"]["Contact"];
-        };
+        } | unknown | unknown;
+        /**
+         * API Update Input
+         * @description Input for updating an API from its OpenAPI document or by overriding lifecycle dates
+         */
+        ApiUpdateInput: {
+            /**
+             * OAS Url
+             * Format: uri
+             * @description The URL of the OAS document
+             * @example https://api.developer.overheid.nl/api-register/v1/openapi.json
+             */
+            oasUrl?: string;
+            /**
+             * OAS Body
+             * @description The inline OAS document in JSON or YAML format
+             */
+            oasBody?: string;
+            /**
+             * Arazzo Url
+             * Format: uri
+             * @description The URL of the Arazzo document
+             */
+            arazzoUrl?: string;
+            /**
+             * Arazzo Body
+             * @description The inline Arazzo document in JSON or YAML format
+             */
+            arazzoBody?: string;
+            /**
+             * Organisation URI
+             * Format: uri
+             * @description The unique identifier for an organisation
+             * @example https://developer.overheid.nl
+             */
+            organisationUri: string;
+            contact?: components["schemas"]["Contact"];
+            /**
+             * Format: date
+             * @description Manual override for the sunset date (YYYY-MM-DD). Send null to clear the value.
+             * @example 2027-11-11
+             * @example null
+             */
+            sunset?: string | null;
+            /**
+             * Format: date
+             * @description Manual override for the deprecated date (YYYY-MM-DD). Send null to clear the value.
+             * @example 2025-10-10
+             * @example null
+             */
+            deprecated?: string | null;
+        } | unknown | unknown | unknown | unknown;
         /**
          * Problem JSON
          * @description Problem JSON schema representing errors and status code
@@ -545,7 +704,43 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ApiDetail"];
+                    "application/json": components["schemas"]["ApiSummary"];
+                };
+            };
+            400: components["responses"]["400"];
+        };
+    };
+    searchApis: {
+        parameters: {
+            query: {
+                /** @description Page number (1-based). */
+                page?: components["parameters"]["Page"];
+                /** @description Number of results per page. */
+                perPage?: components["parameters"]["PerPage"];
+                /** @description Filter on organisation URI. */
+                organisation?: components["parameters"]["Organisation"];
+                /** @description Search term. */
+                q: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    "API-Version": components["headers"]["ApiVersion"];
+                    Link: components["headers"]["Link"];
+                    "Total-Count": components["headers"]["TotalCount"];
+                    "Current-Page": components["headers"]["CurrentPage"];
+                    "Per-Page": components["headers"]["PerPage"];
+                    "Total-Pages": components["headers"]["TotalPages"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiSummary"][];
                 };
             };
             400: components["responses"]["400"];
@@ -619,6 +814,7 @@ export interface operations {
                             column: number;
                             severity: string;
                             code: string;
+                            rulesetVersion?: string;
                             /** Format: date-time */
                             createdAt: string;
                             infos?: {
@@ -628,7 +824,6 @@ export interface operations {
                                 path: string;
                             }[];
                         }[];
-                        rulesetVersion?: string;
                     }[];
                 };
             };
@@ -655,6 +850,7 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ApiDetail"];
+                    "application/ld+json": components["schemas"]["ApiDetailJsonLd"];
                 };
             };
             404: components["responses"]["404"];
@@ -672,7 +868,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["ApiInput"];
+                "application/json": components["schemas"]["ApiUpdateInput"];
             };
         };
         responses: {
@@ -683,10 +879,46 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ApiDetail"];
+                    "application/json": components["schemas"]["ApiSummary"];
                 };
             };
             400: components["responses"]["400"];
+            404: components["responses"]["404"];
+        };
+    };
+    getApiFeed: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Unique identifier of the resource. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    "API-Version": components["headers"]["ApiVersion"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example <?xml version="1.0" encoding="UTF-8"?>
+                     *     <rss version="2.0">
+                     *       <channel>
+                     *         <title>Wijzigingen voor Voorbeeld API</title>
+                     *         <link>https://apis.developer.overheid.nl/apis/api-1</link>
+                     *         <description>RSS feed met inhoudelijke wijzigingen voor Voorbeeld API.</description>
+                     *         <language>nl</language>
+                     *       </channel>
+                     *     </rss>
+                     */
+                    "application/rss+xml": string;
+                };
+            };
             404: components["responses"]["404"];
         };
     };
@@ -820,10 +1052,12 @@ export interface operations {
 export enum ApiPaths {
     listApis = "/apis",
     createApi = "/apis",
+    searchApis = "/apis/_search",
     listApiFilters = "/apis/filters",
     listLintResults = "/lint-results",
     retreiveApi = "/apis/{id}",
     updateApi = "/apis/{id}",
+    getApiFeed = "/apis/{id}/feed.rss",
     getPostman = "/apis/{id}/postman",
     getOasVersion = "/apis/{id}/oas/{version}",
     getOpenApiSpecification = "/openapi.json",

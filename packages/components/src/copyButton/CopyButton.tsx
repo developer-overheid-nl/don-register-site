@@ -30,7 +30,11 @@ const CopyButton = ({ text, className, ...restProps }: CopyButtonProps) => {
         aria-label="Kopieer naar klembord"
         {...restProps}
       >
-        <Icon className={styles.icon} name="kopieer-inline" />
+        <Icon
+          className={styles.icon}
+          name="kopieer-inline"
+          aria-hidden="true"
+        />
       </SecondaryActionButton>
     )
   );

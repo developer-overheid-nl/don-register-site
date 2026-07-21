@@ -1,4 +1,5 @@
 ---
+
 import {
   API_ENDPOINT,
   API_URL,
@@ -89,7 +90,7 @@ const {
   response: {
     status: facetfiltersStatus,
     statusText: facetfiltersStatusText,
-    headers: facetfiltersHeaders,
+    headers: _facetfiltersHeaders,
   },
 } = await client
   .GET(FILTERS_RESOURCE, {
@@ -131,19 +132,30 @@ const searchObject = isSearchPage
       searchCount: paginationObj.totalCount,
     }
   : undefined;
-const i18nContext =
-  routingObj.query && Object.keys(routingObj.query).length > 0
-    ? "filtered"
-    : "all";
 
 const items = error ? null : data;
 
-const selectedFiltersMap = getSelectedFiltersMap(
-  facetfilters as unknown as FilterData[],
-  true,
-  routingObj.queryObject,
-);
+/* TODO: this should come from the filters API; see issue: ... */
+const explicitFalseFilters = ["publiccode"];
+const isExplicitFalseNegateLabels = ["Heeft geen publiccode.yml"];
 
+const newFacetFilters = facetfilters?.map((facet) => {
+  return explicitFalseFilters.includes(facet.key)
+    ? {
+        ...facet,
+        isExplicitFalse: true,
+        label: [
+          facet.label,
+          isExplicitFalseNegateLabels[explicitFalseFilters.indexOf(facet.key)],
+        ],
+      }
+    : facet;
+});
+
+const selectedFiltersMap = getSelectedFiltersMap(
+  newFacetFilters as unknown as FilterData[],
+  true,
+);
 const labels = {
   filtersTitle: t("components.filters-title"),
   filterButtonLabel: t("components.filter-button-label"),
@@ -159,19 +171,11 @@ const filterHiddenFields: [string, string][] = routingObj.query[
   : [];
 
 const getFilterBadgeHref = (key: string, filterValue: string) => {
-  const currentValue = routingObj.url.searchParams.get(key);
+  const isExplicitFalse = explicitFalseFilters.includes(key);
 
-  if (currentValue === "true" || currentValue === "false") {
-    const searchParams = new URLSearchParams(routingObj.url.searchParams);
-    searchParams.set(key, currentValue === "true" ? "false" : "true");
-
-    return new URL(`?${searchParams}`, routingObj.url).toString();
-  }
-
-  if (filterValue === "true" || filterValue === "false") {
+  if (isExplicitFalse) {
     const searchParams = new URLSearchParams(routingObj.url.searchParams);
     searchParams.set(key, filterValue === "true" ? "false" : "true");
-
     return new URL(`?${searchParams}`, routingObj.url).toString();
   }
 
@@ -184,6 +188,8 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
     routingObj.url,
   ).toString();
 };
+
+const i18nContext = selectedFiltersMap.size > 0 ? "filtered" : "all";
 ---
 
 <DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
@@ -210,11 +216,15 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
     action={new URL(`/repositories`, routingObj?.url).toString()}
     method="GET"
     labels={labels}
+    explicitFalseFilters={explicitFalseFilters}
     hiddenFields={filterHiddenFields}
   />
   {
     facetfiltersError && (
-      <Alert slot="filters" type="error">{(facetfiltersError as unknown as any).message || (facetfiltersError as unknown as any).error_msg || `${facetfiltersStatus}: ${facetfiltersStatusText}` || t('components.fuzz-error')}</Alert>
+      <Alert slot="filters" type="error">
+        {/* biome-ignore lint/suspicious/noExplicitAny: error handling needs any at this moment */}
+        {(facetfiltersError as unknown as any).message || (facetfiltersError as unknown as any).error_msg || `${facetfiltersStatus}: ${facetfiltersStatusText}` || t('components.fuzz-error')}
+      </Alert>
     )
   }
 
@@ -239,7 +249,8 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
         </li>
       ))}
       {
-        routingObj.queryObject['q'] !== undefined && (
+        routingObj.queryObject[SEARCH_QUERY_KEY] !== undefined && (
+          // biome-ignore lint/a11y/useSemanticElements: fieldset would not be correct
           <li role="group" aria-labelledby="search-term">
             <small class="label" id="search-term">{t('components.search-term')}:</small>
             <DataBadgeLink
@@ -248,7 +259,7 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
                 `?${new URLSearchParams(
                   [...Array.from(routingObj.url.searchParams)].filter(
                     ([k, v]) => {
-                      return !(k === SEARCH_QUERY_KEY && v === routingObj.queryObject['q']);
+                      return !(k === SEARCH_QUERY_KEY && v === routingObj.queryObject[SEARCH_QUERY_KEY]);
                     },
                   ),
                 )}`,
@@ -256,7 +267,7 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
               ).toString()}
               role="menuitem"
             >
-              {routingObj.queryObject['q']}
+              {routingObj.queryObject[SEARCH_QUERY_KEY]}
               <Icon slot="icon" name="kruis-inline" />
             </DataBadgeLink>
           </li>
@@ -281,7 +292,10 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
   </HeadingGroup>
 
   { error && (
-    <Alert type="error">{(error as unknown as any).message || (error as unknown as any).error_msg || `${status}: ${statusText}` || t('components.fuzz-error')}</Alert>
+    <Alert type="error">
+    {/* biome-ignore lint/suspicious/noExplicitAny: error handling needs any at this moment */}
+    {(error as unknown as any).message || (error as unknown as any).error_msg || `${status}: ${statusText}` || t('components.fuzz-error')}
+    </Alert>
   )}
 
   { outOfBounds && (
@@ -311,10 +325,17 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
                   </Paragraph>
                   <div class="header-meta">
                     <RepoIcon url={item.url || ''} name={item.name} className="moveAbove"></RepoIcon>
-                    { ["TECHNICAL_FORK", "GIT_FORK", "VARIANT_FORK"].includes(item.forkType) && (
+                    { ["TECHNICAL_FORK", "GIT_FORK", "VARIANT_FORK"].includes(item.forkType ?? '') && (
                       <ToolTip id={`fork-${item.id}`} text={t("components.is-fork", {context: item.forkType})}>
-                        <button class="forked-button" command="toggle-popover" commandfor={`fork-${item.id}`} aria-label={t("components.is-fork")}>
+                        <button type="button" class="forked-button" command="toggle-popover" commandfor={`fork-${item.id}`} aria-label={t("components.is-fork")}>
                           <Icon name={item.forkType === "VARIANT_FORK" ? 'variant-fork-inline' : 'git-fork-inline'} className="forked moveAbove" />
+                        </button>
+                      </ToolTip>
+                    )}
+                    { item.archived && (
+                      <ToolTip id={`archived-${item.id}`} text={t("components.is-archived")}>
+                        <button type="button" class="archived-button" command="toggle-popover" commandfor={`archived-${item.id}`} aria-label={t("components.is-archived")}>
+                          <Icon name="lade-archiefkast" className="archived moveAbove" />
                         </button>
                       </ToolTip>
                     )}
@@ -353,8 +374,8 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
   }
 
   .header-meta {
-    gap: 0.5rem;
     display: flex;
+    gap: 0.5rem;
     align-items: center;
     font-size: 1rem;
   }
@@ -367,7 +388,13 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
     }
   }
 
-  .forked-button {
+  .forked,
+  .archived {
+    color: var(--rhc-color-cool-grey-700);
+  }
+
+  .forked-button,
+  .archived-button {
     display: grid;
     place-content: center;
     padding: 0;
@@ -378,13 +405,11 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
     border: none;
 
     &:hover {
-      .forked {
+      .forked,
+      .archived {
         color: var(--rhc-color-cool-grey-900);
       }
     }
-  }
-  .forked {
-    color: var(--rhc-color-cool-grey-700);
   }
 
   .version {

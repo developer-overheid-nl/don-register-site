@@ -1,5 +1,12 @@
 # @developer-overheid-nl/don-register-locales
 
+## 1.2.1
+
+### Patch Changes
+
+- de238a8: Show a warning banner on API detail pages when an API has the `retired` lifecycle status.
+- 0f983ad: Upgraded Astro to 6.4.2
+
 ## 1.2.0
 
 ### Minor Changes

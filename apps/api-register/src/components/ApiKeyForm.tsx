@@ -13,6 +13,8 @@ import {
   ReadOnlyTextInput,
 } from "@developer-overheid-nl/don-register-components";
 import { CustomEvent, ErrorTracking } from "@piwikpro/react-piwik-pro";
+import type {} from "altcha/types/react";
+// @ts-expect-error somehow Activity is not recognized yet
 import { Activity, useActionState, useEffect } from "react";
 import styles from "./ApiKeyForm.module.css";
 
@@ -106,12 +108,14 @@ const ApiKeyForm = ({ labels }: ApiKeyFormProps) => {
           </AlignBox>
           <altcha-widget
             id="altcha-widget"
-            challengeurl="/api/altcha/challenge"
+            challenge="/api/altcha/challenge"
             name="altcha"
             auto="onsubmit"
             language="nl"
-            hidefooter
-            floating
+            display="floating"
+            configuration='{
+              "hideFooter": true
+            }'
           ></altcha-widget>
           {error && error?.type !== "AstroActionInputError" ? (
             <Alert type="error">{error?.message}</Alert>

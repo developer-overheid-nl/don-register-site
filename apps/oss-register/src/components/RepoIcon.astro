@@ -58,8 +58,8 @@ const repoProviders = {
 };
 ---
 
-  {Object.entries(repoProviders).map(([key, { logo, alt, name: provider }]) =>
-    type === key || url && url.match(new RegExp(key, 'i')) ? (
+{Object.entries(repoProviders).map(([key, { logo, alt, name: provider }]) =>
+    type === key || url?.match(new RegExp(key, 'i')) ? (
     <a href={url} target="_blank" rel="noopener noreferrer" class={`repo-link ${className}`} aria-label={t('components.goto-name-on-site', {name: name, site: provider})}>
       <img class={`repo-logo ${key}-logo`} src={logo} alt={alt} width="24" height="24" />
     </a>
@@ -67,20 +67,20 @@ const repoProviders = {
   )}
 
 <style>
-    .repo-link {
-    display: inline-block;
+  .repo-link {
     position: relative;
+    display: inline-block;
     place-content: center;
     &:hover::after {
-      content: '';
       position: absolute;
       top: -0.5rem;
+      right: -0.5rem;
       bottom: -0.5rem;
       left: -0.5rem;
-      right: -0.5rem;
-      border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.1);
       z-index: -1;
+      content: '';
+      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: 50%;
     }
   }
 

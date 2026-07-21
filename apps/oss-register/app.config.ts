@@ -3,10 +3,10 @@ type i18nTranslations = Record<string, string | Record<string, string>>;
 const mainSiteUrl = "https://developer.overheid.nl";
 
 export default {
-  title: "OSS-register",
+  title: "Open Source Register",
   meta: {
     description:
-      "Welkom bij het OSS-Register. Hier vind je informatie over de open source repositories die beschikbaar zijn voor gebruik binnen de overheid.",
+      "Welkom bij het Open Source Register. Hier vind je informatie over de open source repositories die beschikbaar zijn voor gebruik binnen de overheid.",
   },
   mainSite: {
     name: "developer.overheid.nl",

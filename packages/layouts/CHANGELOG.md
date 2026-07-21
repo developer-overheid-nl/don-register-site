@@ -1,5 +1,18 @@
 # @developer-overheid-nl/don-register-layouts
 
+## 1.2.1
+
+### Patch Changes
+
+- d8a39db: Bugfixes pagination parsers en facetfilters, description toegevoegd aan single-select.
+- 0f983ad: Upgraded Astro to 6.4.2
+- Updated dependencies [d8a39db]
+- Updated dependencies [e5f0a52]
+- Updated dependencies [de238a8]
+- Updated dependencies [0f983ad]
+  - @developer-overheid-nl/don-register-components@1.3.1
+  - @developer-overheid-nl/don-register-locales@1.2.1
+
 ## 1.2.0
 
 ### Minor Changes

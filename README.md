@@ -7,7 +7,7 @@
 [![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
 ![GitHub License](https://img.shields.io/github/license/developer-overheid-nl/don-register-site)
 
-Deze monorepo bevat de *nieuwe* websites van het [API-register](https://apis.developer.overheid.nl) en het [OSS-register](https://oss.developer.overheid.nl).
+Deze monorepo bevat de _nieuwe_ websites van het [API-register](https://apis.developer.overheid.nl) en het [Open Source Register](https://oss.developer.overheid.nl).
 De codebase bestaat uit een aantal packages die de gezamelijke codebase (components, layouts, etc) vormen en een `apps`-package waarin de verschillende websites staan. Deze packages worden ook gebruikt in het [register-site-template].
 
 ## Packages
@@ -40,12 +40,12 @@ De [Astro] site van het API-register.
 
 Zie ook de [README](https://github.com/developer-overheid-nl/don-register-site/blob/main/apps/api-register/README.md) van deze package.
 
-### OSS-register
+### Open Source Register
 
-> Dit is het vernieuwde OSS-register van de Nederlandse overheid (bèta): alle open source repositories op één plek.  
+> Dit is het vernieuwde Open Source Register van de Nederlandse overheid (bèta): alle open source repositories op één plek.  
 > [oss.developer.overheid.nl](https://oss.developer.overheid.nl)
 
-De [Astro] site van het OSS-register.
+De [Astro] site van het Open Source Register.
 
 ### Je eigen register
 
@@ -53,10 +53,10 @@ In de repository [register-site-template] staat een template voor het bouwen van
 
 ## Overige mappen en bestanden
 
-### Proprietary-*
+### Proprietary-\*
 
 De map `proprietary-example` bevat voorbeeldbestanden voor bestanden waar meestal een copyright op zit, zoals logo's, fonts en iconen. Dit zijn rechtenvrije bestanden, die in het register-template gebruikt kunnen worden als voorbeeld. Deze package wordt ook gepubliceerd op [NPM]: <https://www.npmjs.com/package/@developer-overheid-nl/proprietary-example>  
-De map `proprietary-don` bevat bestanden voor onze eigen register-sites die niet zomaar gebruikt mogen worden, zoals logo's, fonts en iconen. Dit zal ook niet gepubliceerd worden op NPM.  
+De map `proprietary-don` bevat bestanden voor onze eigen register-sites die niet zomaar gebruikt mogen worden, zoals logo's, fonts en iconen. Dit zal ook niet gepubliceerd worden op NPM.
 
 Om onze eigen `proprietary-don` package te registreren wordt in de `package.json` een alias toegevoegd, bijvoorbeeld:
 
@@ -102,8 +102,8 @@ graph LR
         I(Locales) -.-> C & L & A
     end
     subgraph rijkshuisstijl-community
-        Rcomp[RHC components] ---> C 
-        Rcss[RHC css] ----> L 
+        Rcomp[RHC components] ---> C
+        Rcss[RHC css] ----> L
         Rtokens[RHC tokens] ----> L
     end
     Astro ----> A & L
@@ -139,11 +139,11 @@ Zie ook de [README](https://github.com/developer-overheid-nl/don-register-site/b
 
 ## Contact
 
-[💬 Slack](https://codefornl.slack.com/archives/CFV4B3XE2)  •&nbsp;
-[🐘 Mastodon](https://social.overheid.nl/@developer)  •&nbsp;
-[👔 LinkedIn](https://www.linkedin.com/company/92926607)  •&nbsp;
+[💬 Slack](https://codefornl.slack.com/archives/CFV4B3XE2) •&nbsp;
+[🐘 Mastodon](https://social.overheid.nl/@developer) •&nbsp;
+[👔 LinkedIn](https://www.linkedin.com/company/92926607) •&nbsp;
 [📨 Schiet een issue in](https://github.com/developer-overheid-nl/don-register-site/issues) •&nbsp;
-[🔀 Github Discussions](https://github.com/orgs/developer-overheid-nl/discussions)  •&nbsp;
+[🔀 Github Discussions](https://github.com/orgs/developer-overheid-nl/discussions) •&nbsp;
 [📜 Bijdragen](https://developer.overheid.nl/contributing)
 
 ---
@@ -166,7 +166,7 @@ All commands are run from the root of the project, from a terminal:
 
 ## Deployen
 
-De deployment van deze site verloopt via GitHub Actions en een aparte *infra-repository*.
+De deployment van deze site verloopt via GitHub Actions en een aparte _infra-repository_.
 
 ### Benodigde variabelen en secrets
 
