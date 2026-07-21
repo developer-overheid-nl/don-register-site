@@ -1,5 +1,11 @@
 # @developer-overheid-nl/don-register-components
 
+## 1.3.2
+
+### Patch Changes
+
+- 9d30474: Voeg Storybook toe met basisstories voor gedeelde componenten en Chromatic-ondersteuning voor visuele review.
+
 ## 1.3.1
 
 ### Patch Changes
