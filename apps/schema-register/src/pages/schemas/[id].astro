@@ -112,6 +112,17 @@ const getDependencySourceLabel = (
   dependency.fromSchemaUrl ||
   dependency.fromSchemaId ||
   dependency.from;
+const getAbsoluteSchemaUrl = (schemaUrl: string | undefined) => {
+  if (!schemaUrl) {
+    return undefined;
+  }
+
+  try {
+    return new URL(schemaUrl, Astro.url.origin).toString();
+  } catch {
+    return undefined;
+  }
+};
 const shouldShowDependencySource = (
   dependency: (typeof sourceMetaDependencyDetails)[number],
 ) =>
@@ -215,15 +226,15 @@ const shouldShowDependencySource = (
                 <Heading level={5}>Dependencies</Heading>
                 { sourceMetaDependencyDetails.map((dependency) => (
                   <DataSummary appearance="column" contained>
-                    { dependency.toSchemaUrl ? (
-                      <DataSummaryItem itemKey="To" itemValue="" href={dependency.toSchemaUrl}>{getDependencyTargetLabel(dependency)}</DataSummaryItem>
+                    { getAbsoluteSchemaUrl(dependency.toSchemaUrl) ? (
+                      <DataSummaryItem itemKey="To" itemValue="" href={getAbsoluteSchemaUrl(dependency.toSchemaUrl)}>{getDependencyTargetLabel(dependency)}</DataSummaryItem>
                     ) : (
                       <DataSummaryItem itemKey="To" itemValue={getDependencyTargetLabel(dependency)} />
                     )}
                     <DataSummaryItem itemKey="At" itemValue={dependency.at} />
                     { shouldShowDependencySource(dependency) && (
-                      dependency.fromSchemaUrl ? (
-                        <DataSummaryItem itemKey="From" itemValue="" href={dependency.fromSchemaUrl}>{getDependencySourceLabel(dependency)}</DataSummaryItem>
+                      getAbsoluteSchemaUrl(dependency.fromSchemaUrl) ? (
+                        <DataSummaryItem itemKey="From" itemValue="" href={getAbsoluteSchemaUrl(dependency.fromSchemaUrl)}>{getDependencySourceLabel(dependency)}</DataSummaryItem>
                       ) : (
                         <DataSummaryItem itemKey="From" itemValue={getDependencySourceLabel(dependency)} />
                       )
