@@ -246,6 +246,25 @@ export interface components {
             organisation?: components["schemas"]["OrganisationSummary"];
             createdAt?: components["schemas"]["CreatedAt"];
             lastCrawledAt?: components["schemas"]["LastCrawledAt"];
+            /** @description Name reported by the SourceMeta One API entry */
+            sourceMetaName?: string;
+            /**
+             * Format: uri
+             * @description Identifier reported by the SourceMeta One API entry
+             */
+            sourceMetaIdentifier?: string;
+            /** @description Original schema size in bytes reported by SourceMeta */
+            sourceMetaBytes?: number;
+            /** @description Bundled schema size in bytes reported by SourceMeta */
+            sourceMetaBytesBundled?: number;
+            /** @description Base dialect reported by SourceMeta */
+            sourceMetaBaseDialect?: string;
+            /** @description Dialect reported by SourceMeta */
+            sourceMetaDialect?: string;
+            /** @description Health score reported by SourceMeta */
+            sourceMetaHealth?: number;
+            /** @description Number of dependencies reported by SourceMeta */
+            sourceMetaDependencies?: number;
         };
         SchemaDetail: components["schemas"]["SchemaSummary"] & {
             /** @description The stored JSON Schema document */

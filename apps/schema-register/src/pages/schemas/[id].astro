@@ -11,15 +11,18 @@ import {
 } from "astro:env/server";
 import {
   Alert,
+  AlignBox,
   Block,
+  CopyButton,
+  DataBadgeLink,
   DataSummary,
   DataSummaryItem,
   Heading,
   HeadingGroup,
-  Link,
   Markdown,
   Paragraph,
   PillBadge,
+  ReadOnlyTextInput,
 } from "@developer-overheid-nl/don-register-components";
 import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
@@ -54,7 +57,7 @@ const {
 // Localization
 const { i18n: i18nApp } = appConfig;
 const i18nPage = {
-  "pages.aside-landmark": "Contactinformatie",
+  "pages.aside-landmark": "Schema-informatie",
 };
 i18n.addResourceBundle(
   i18n.language,
@@ -71,6 +74,28 @@ const rawSchemaUrl = `${API_URL}/${API_ENDPOINT}/${API_VERSION}/schemas/${id}/sc
 const prettySchema = details?.content
   ? JSON.stringify(details.content, null, 2)
   : null;
+const hasSourceMeta = Boolean(
+  details?.sourceMetaIdentifier ||
+    details?.sourceMetaName ||
+    details?.sourceMetaBaseDialect ||
+    details?.sourceMetaDialect ||
+    details?.sourceMetaBytes !== undefined ||
+    details?.sourceMetaBytesBundled !== undefined ||
+    details?.sourceMetaHealth !== undefined ||
+    details?.sourceMetaDependencies !== undefined,
+);
+const formatValue = (value: string | number | null | undefined) =>
+  value === null || value === undefined || value === "" ? "-" : String(value);
+const formatDate = (value: string | number | null | undefined) =>
+  value ? new Date(value).toLocaleDateString("nl-NL") : "-";
+const formatNumber = (value: number | null | undefined) =>
+  value === null || value === undefined
+    ? "-"
+    : new Intl.NumberFormat("nl-NL").format(value);
+const formatBytes = (value: number | null | undefined) =>
+  value === null || value === undefined ? "-" : `${formatNumber(value)} bytes`;
+const formatPercentage = (value: number | null | undefined) =>
+  value === null || value === undefined ? undefined : String(value);
 ---
 
 { error && (
@@ -93,13 +118,11 @@ const prettySchema = details?.content
       data-track-content
       data-content-name="Detail Page Header"
     >
-      <div class="subtitle" slot="subTitle">
-        <Paragraph data-content-piece="Organisation Name" itemScope={true} itemType="https://schema.org/Organization" itemID={details?.organisation?.uri} className={`styles.aboveLink styles.publisher`}>
-          <span itemprop="name"><Link data-content-target="Organisation Link" className={`styles.orgLink`} href={new URL(`./?organisation=${details?.organisation?.uri}`, Astro.url).toString()}>
-              {details?.organisation?.label}
-          </Link></span>
-        </Paragraph>
-      </div>
+      { details.sourceMetaName && (
+        <div class="subtitle" slot="subTitle">
+          <Paragraph data-content-piece="SourceMeta Name">{details.sourceMetaName}</Paragraph>
+        </div>
+      )}
     </HeadingGroup>
     <Fragment slot="description">
       <Heading level={3} className="sr-only">{t(`pages.description`)}</Heading>
@@ -107,29 +130,73 @@ const prettySchema = details?.content
     </Fragment>
     <Fragment slot="aside">
       <DataSummary appearance="row">
-        <DataSummaryItem itemKey="Organisatie" itemValue={details?.organisation?.label || '-'} />
-        <DataSummaryItem itemKey="Contactpersoon" itemValue={details?.contact?.name || '-'} />
-        <DataSummaryItem itemKey="Email" itemValue={details?.contact?.email || '-'} />
+        <DataSummaryItem itemKey="Dialect" itemValue={formatValue(details.dialect)} />
+        <DataSummaryItem itemKey="Root type" itemValue={formatValue(details.rootType)} />
+        <DataSummaryItem itemKey="Health" itemValue={details.sourceMetaHealth === undefined ? "-" : `${formatNumber(details.sourceMetaHealth)}%`} />
+        <DataSummaryItem itemKey="Dependencies" itemValue={formatNumber(details.sourceMetaDependencies)} />
+        <DataSummaryItem itemKey="Bytes" itemValue={formatBytes(details.sourceMetaBytes)} />
+        <DataSummaryItem itemKey="Bytes bundled" itemValue={formatBytes(details.sourceMetaBytesBundled)} />
       </DataSummary>
     </Fragment>
     <Fragment slot="meta">
       <Block layout="flex-row">
-        <PillBadge startValue={`dialect`} endValue={details.dialect || 'unknown'} type="color" color={details.dialect && details.dialect !== 'unknown' ? "mintgroen" : "grijs"} />
-        <PillBadge startValue={`type`} endValue={details.rootType || 'unknown'} type="color" color={details.rootType && details.rootType !== 'unknown' ? "lichtblauw" : "grijs"} />
-        { details.collection && (
-          <PillBadge startValue={`collectie`} endValue={details.collection} type="color" color="coolgrey" />
+        <PillBadge startValue="dialect" endValue={details.dialect || "unknown"} type="color" color={details.dialect && details.dialect !== "unknown" ? "mintgroen" : "grijs"} />
+        <PillBadge startValue="type" endValue={details.rootType || "unknown"} type="color" color={details.rootType && details.rootType !== "unknown" ? "lichtblauw" : "grijs"} />
+        { formatPercentage(details.sourceMetaHealth) !== undefined && (
+          <PillBadge startValue="health" endValue={formatPercentage(details.sourceMetaHealth)} type="percentage" />
+        )}
+        { details.sourceMetaDependencies !== undefined && (
+          <PillBadge startValue="dependencies" endValue={formatNumber(details.sourceMetaDependencies)} type="color" color="coolgrey" />
         )}
       </Block>
-      <Heading level={4}>{t(`pages.details`)}</Heading>
-      <Block appearance="outlined">
-        <Heading level={5}>{t(`pages.links`)}</Heading>
-        <DataSummary appearance="column" contained>
-          { details.schemaUrl && (
-            <DataSummaryItem itemKey="Schema URL" itemValue="" href={details.schemaUrl}>{details.schemaUrl}</DataSummaryItem>
-          )}
-          <DataSummaryItem itemKey="Download" itemValue="" href={rawSchemaUrl}>schema.json</DataSummaryItem>
-        </DataSummary>
+
+      <Heading level={3}>Schema gebruiken</Heading>
+      <Block appearance="outlined" layout="flex-col" data-track-content data-content-name="Detail Page Schema Tools">
+        <AlignBox data-content-piece="JSON Schema" align="space-between" gap="small">
+          <label for="schemaUrl" class="no-shrink">JSON Schema</label>
+          <ReadOnlyTextInput
+            id="schemaUrl"
+            type="url"
+            aria-label="JSON Schema URL"
+            defaultValue={rawSchemaUrl}
+            name="schemaUrl"
+            fontVariant="monospace"
+          />
+          <CopyButton client:load text={rawSchemaUrl} data-content-target="Schema Copy Button" />
+        </AlignBox>
+        {/* biome-ignore lint/a11y/useSemanticElements: ol/ul not possible */}
+        <div class="utrecht-badge-list" role="list" data-content-piece="Schema links">
+          <DataBadgeLink data-content-target="Open schema.json" href={rawSchemaUrl} target="_blank" rel="noopener" role="listitem">
+            schema.json
+          </DataBadgeLink>
+          <DataBadgeLink data-content-target="Download schema.json" href={rawSchemaUrl} role="listitem">
+            Download schema.json
+          </DataBadgeLink>
+        </div>
       </Block>
+
+      { hasSourceMeta && (
+        <Fragment>
+          <Heading level={4}>SourceMeta</Heading>
+          <Block appearance="outlined">
+            <DataSummary appearance="column" contained>
+              { details.sourceMetaIdentifier ? (
+                <DataSummaryItem itemKey="SourceMeta identifier" itemValue="" href={details.sourceMetaIdentifier}>{details.sourceMetaIdentifier}</DataSummaryItem>
+              ) : (
+                <DataSummaryItem itemKey="SourceMeta identifier" itemValue="-" />
+              )}
+              <DataSummaryItem itemKey="SourceMeta name" itemValue={formatValue(details.sourceMetaName)} />
+              <DataSummaryItem itemKey="Base dialect" itemValue={formatValue(details.sourceMetaBaseDialect)} />
+              <DataSummaryItem itemKey="SourceMeta dialect" itemValue={formatValue(details.sourceMetaDialect)} />
+              <DataSummaryItem itemKey="Bytes" itemValue={formatBytes(details.sourceMetaBytes)} />
+              <DataSummaryItem itemKey="Bytes bundled" itemValue={formatBytes(details.sourceMetaBytesBundled)} />
+              <DataSummaryItem itemKey="Health" itemValue={details.sourceMetaHealth === undefined ? "-" : `${formatNumber(details.sourceMetaHealth)}%`} />
+              <DataSummaryItem itemKey="Dependencies" itemValue={formatNumber(details.sourceMetaDependencies)} />
+            </DataSummary>
+          </Block>
+        </Fragment>
+      )}
+
       { prettySchema && (
         <Fragment>
           <Heading level={4}>JSON Schema</Heading>
@@ -141,8 +208,14 @@ const prettySchema = details?.content
       <Heading level={4}>{t(`pages.tbd-metadata`)}</Heading>
       <Block appearance="outlined">
         <DataSummary appearance="column" contained>
-          <DataSummaryItem itemKey={t(`components.created-at`)} itemValue={new Date(details.createdAt as string | number).toLocaleDateString('nl-NL')} />
-          <DataSummaryItem itemKey={t(`components.last-crawled-at`)} itemValue={new Date(details.lastCrawledAt as string | number).toLocaleDateString('nl-NL')} />
+          <DataSummaryItem itemKey={t(`components.created-at`)} itemValue={formatDate(details.createdAt)} />
+          <DataSummaryItem itemKey={t(`components.last-crawled-at`)} itemValue={formatDate(details.lastCrawledAt)} />
+          <DataSummaryItem itemKey="ID" itemValue={details.id} />
+          { details.schemaUrl ? (
+            <DataSummaryItem itemKey="Schema URL" itemValue="" href={details.schemaUrl}>{details.schemaUrl}</DataSummaryItem>
+          ) : (
+            <DataSummaryItem itemKey="Schema URL" itemValue="-" />
+          )}
         </DataSummary>
       </Block>
     </Fragment>
