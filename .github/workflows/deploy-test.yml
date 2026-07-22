@@ -9,9 +9,11 @@ on:
 env:
   API_IMAGE_NAME: ghcr.io/developer-overheid-nl/don-register-site
   OSS_IMAGE_NAME: ghcr.io/developer-overheid-nl/don-register-oss-site
+  SCHEMA_IMAGE_NAME: ghcr.io/developer-overheid-nl/don-register-schema-site
   INFRA_REPO: ${{ vars.INFRA_REPO }}
   KUSTOMIZE_PATH_API: ${{ vars.KUSTOMIZE_PATH_API }}
   KUSTOMIZE_PATH_OSS: ${{ vars.KUSTOMIZE_PATH_OSS }}
+  KUSTOMIZE_PATH_SCHEMA: ${{ vars.KUSTOMIZE_PATH_SCHEMA }}
   DEPLOY_ENV: test
 
 jobs:
@@ -75,6 +77,15 @@ jobs:
             ${{ env.OSS_IMAGE_NAME }}:test
             ${{ env.OSS_IMAGE_NAME }}:${{ github.sha }}
 
+      - name: Build and push Schema image
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          target: runtime-schema
+          push: true
+          tags: |
+            ${{ env.SCHEMA_IMAGE_NAME }}:test
+            ${{ env.SCHEMA_IMAGE_NAME }}:${{ github.sha }}
+
   update-infra-test:
     needs: build-and-push
     runs-on: ubuntu-latest
@@ -111,6 +122,7 @@ jobs:
         run: |
           API_KUSTOMIZATION_FILE="${{ env.KUSTOMIZE_PATH_API }}${{ env.DEPLOY_ENV }}/kustomization.yaml"
           OSS_KUSTOMIZATION_FILE="${{ env.KUSTOMIZE_PATH_OSS }}${{ env.DEPLOY_ENV }}/kustomization.yaml"
+          SCHEMA_KUSTOMIZATION_FILE="${{ env.KUSTOMIZE_PATH_SCHEMA }}${{ env.DEPLOY_ENV }}/kustomization.yaml"
 
           yq e '(.images[] | select(.newName == "${{ env.API_IMAGE_NAME }}")).newTag = "${{ github.sha }}"' \
             -i "$API_KUSTOMIZATION_FILE"
@@ -118,14 +130,17 @@ jobs:
           yq e '(.images[] | select(.newName == "${{ env.OSS_IMAGE_NAME }}")).newTag = "${{ github.sha }}"' \
             -i "$OSS_KUSTOMIZATION_FILE"
 
+          yq e '(.images[] | select(.newName == "${{ env.SCHEMA_IMAGE_NAME }}")).newTag = "${{ github.sha }}"' \
+            -i "$SCHEMA_KUSTOMIZATION_FILE"
       - name: Commit en push naar don-infra
         run: |
           API_KUSTOMIZATION_FILE="${{ env.KUSTOMIZE_PATH_API }}${{ env.DEPLOY_ENV }}/kustomization.yaml"
           OSS_KUSTOMIZATION_FILE="${{ env.KUSTOMIZE_PATH_OSS }}${{ env.DEPLOY_ENV }}/kustomization.yaml"
+          SCHEMA_KUSTOMIZATION_FILE="${{ env.KUSTOMIZE_PATH_SCHEMA }}${{ env.DEPLOY_ENV }}/kustomization.yaml"
 
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
-          git add "$API_KUSTOMIZATION_FILE" "$OSS_KUSTOMIZATION_FILE"
+          git add "$API_KUSTOMIZATION_FILE" "$OSS_KUSTOMIZATION_FILE" "$SCHEMA_KUSTOMIZATION_FILE"
           git commit -m "test: don-register-site → ${{ github.sha }}
 
           Branch: ${{ github.ref_name }}

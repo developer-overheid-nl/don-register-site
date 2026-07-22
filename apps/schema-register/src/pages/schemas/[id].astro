@@ -1,0 +1,289 @@
+---
+export const prerender = false; // Not needed in 'server' mode
+
+import {
+  API_ENDPOINT,
+  API_URL,
+  API_VERSION,
+  API_X_API_KEY,
+  PIWIK_PRO_ACCOUNT_ADDRESS,
+  PIWIK_PRO_SITE_ID,
+} from "astro:env/server";
+import {
+  Alert,
+  AlignBox,
+  Block,
+  CopyButton,
+  DataBadgeLink,
+  DataSummary,
+  DataSummaryItem,
+  Heading,
+  HeadingGroup,
+  Markdown,
+  Paragraph,
+  PillBadge,
+  ReadOnlyTextInput,
+} from "@developer-overheid-nl/don-register-components";
+import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
+import i18n from "@developer-overheid-nl/don-register-components/i18n";
+import {
+  DonBasic,
+  DonDetail,
+} from "@developer-overheid-nl/don-register-layouts";
+import { t } from "i18next";
+import createClient from "openapi-fetch";
+import appConfig from "../../../app.config";
+import { ApiPaths, type paths } from "../../types/api-schema";
+
+const { id = "" } = Astro.params;
+const API_RESOURCE = ApiPaths.getSchemaById;
+
+const client = createClient<paths>({
+  baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
+});
+const {
+  data,
+  error,
+  response: { status, statusText, headers },
+} = await client.GET(API_RESOURCE, {
+  params: {
+    path: { id },
+  },
+  headers: {
+    "x-api-key": API_X_API_KEY,
+  },
+});
+
+// Localization
+const { i18n: i18nApp } = appConfig;
+const i18nPage = {
+  "pages.aside-landmark": "Schema-informatie",
+};
+i18n.addResourceBundle(
+  i18n.language,
+  "translation",
+  i18nApp ? i18nApp[i18n.language] : {},
+  true,
+  true,
+);
+i18n.addResources(i18n.language, "translation", i18nPage);
+
+const details = error ? null : data;
+
+const schemaDownloadPath = `download/${id}/schema.json`;
+const rawSchemaUrl = new URL(schemaDownloadPath, Astro.url).toString();
+const prettySchema = details?.content
+  ? JSON.stringify(details.content, null, 2)
+  : null;
+const hasSourceMeta = Boolean(
+  details?.sourceMetaName ||
+    details?.sourceMetaBaseDialect ||
+    details?.sourceMetaDialect ||
+    details?.sourceMetaBytes !== undefined ||
+    details?.sourceMetaBytesBundled !== undefined ||
+    details?.sourceMetaHealth !== undefined ||
+    details?.sourceMetaDependencies !== undefined,
+);
+const sourceMetaDependencyDetails = details?.sourceMetaDependencyDetails ?? [];
+const currentSchemaReferences = [id, details?.schemaUrl].filter(Boolean);
+const formatValue = (value: string | number | null | undefined) =>
+  value === null || value === undefined || value === "" ? "-" : String(value);
+const formatDate = (value: string | number | null | undefined) =>
+  value ? new Date(value).toLocaleDateString("nl-NL") : "-";
+const formatNumber = (value: number | null | undefined) =>
+  value === null || value === undefined
+    ? "-"
+    : new Intl.NumberFormat("nl-NL").format(value);
+const formatBytes = (value: number | null | undefined) =>
+  value === null || value === undefined ? "-" : `${formatNumber(value)} bytes`;
+const formatPercentage = (value: number | null | undefined) =>
+  value === null || value === undefined ? undefined : String(value);
+const getDependencyTargetLabel = (
+  dependency: (typeof sourceMetaDependencyDetails)[number],
+) =>
+  dependency.toSchemaTitle ||
+  dependency.toSchemaUrl ||
+  dependency.toSchemaId ||
+  dependency.to;
+const getDependencySourceLabel = (
+  dependency: (typeof sourceMetaDependencyDetails)[number],
+) =>
+  dependency.fromSchemaTitle ||
+  dependency.fromSchemaUrl ||
+  dependency.fromSchemaId ||
+  dependency.from;
+const getAbsoluteSchemaUrl = (schemaUrl: string | undefined) => {
+  if (!schemaUrl) {
+    return undefined;
+  }
+
+  try {
+    return new URL(schemaUrl, Astro.url.origin).toString();
+  } catch {
+    return undefined;
+  }
+};
+const shouldShowDependencySource = (
+  dependency: (typeof sourceMetaDependencyDetails)[number],
+) =>
+  ![dependency.fromSchemaId, dependency.fromSchemaUrl, dependency.from]
+    .filter(Boolean)
+    .some((reference) => currentSchemaReferences.includes(reference));
+---
+
+{ error && (
+  <DonBasic appConfig={appConfig} titlePage="Schema niet gevonden">
+    <Alert type="error">{(error as unknown as any).message || (error as unknown as any).detail || `${status}: ${statusText}` || t('components.fuzz-error')}</Alert>
+    <Paragraph>{t('components.item-not-found-error')}</Paragraph>
+  </DonBasic>
+)}
+
+{details && (
+  <DonDetail appConfig={appConfig} titlePage={details?.title}>
+    <PiwikPro slot="head" client:only="react"
+      accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS}
+      siteId={PIWIK_PRO_SITE_ID}
+    />
+    <HeadingGroup
+      slot="header"
+      title={`${t(`pages.details-of-item`)}: ${details?.title}`}
+      level={2}
+      data-track-content
+      data-content-name="Detail Page Header"
+    >
+      { details.sourceMetaName && (
+        <div class="subtitle" slot="subTitle">
+          <Paragraph data-content-piece="SourceMeta Name">{details.sourceMetaName}</Paragraph>
+        </div>
+      )}
+    </HeadingGroup>
+    <Fragment slot="description">
+      <Heading level={3} className="sr-only">{t(`pages.description`)}</Heading>
+      <div class="utrecht-html"><Markdown text={details.description} minHeadingDepth={4} /></div>
+    </Fragment>
+    <Fragment slot="aside">
+      <DataSummary appearance="row">
+        <DataSummaryItem itemKey="Dialect" itemValue={formatValue(details.dialect)} />
+        <DataSummaryItem itemKey="Root type" itemValue={formatValue(details.rootType)} />
+        <DataSummaryItem itemKey="Health" itemValue={details.sourceMetaHealth === undefined ? "-" : `${formatNumber(details.sourceMetaHealth)}%`} />
+        <DataSummaryItem itemKey="Dependencies" itemValue={formatNumber(details.sourceMetaDependencies)} />
+        <DataSummaryItem itemKey="Bytes" itemValue={formatBytes(details.sourceMetaBytes)} />
+        <DataSummaryItem itemKey="Bytes bundled" itemValue={formatBytes(details.sourceMetaBytesBundled)} />
+      </DataSummary>
+    </Fragment>
+    <Fragment slot="meta">
+      <Block layout="flex-row">
+        <PillBadge startValue="dialect" endValue={details.dialect || "unknown"} type="color" color={details.dialect && details.dialect !== "unknown" ? "mintgroen" : "grijs"} />
+        <PillBadge startValue="type" endValue={details.rootType || "unknown"} type="color" color={details.rootType && details.rootType !== "unknown" ? "lichtblauw" : "grijs"} />
+        { formatPercentage(details.sourceMetaHealth) !== undefined && (
+          <PillBadge startValue="health" endValue={formatPercentage(details.sourceMetaHealth)} type="percentage" />
+        )}
+        { details.sourceMetaDependencies !== undefined && (
+          <PillBadge startValue="dependencies" endValue={formatNumber(details.sourceMetaDependencies)} type="color" color="coolgrey" />
+        )}
+      </Block>
+
+      <Heading level={3}>Schema gebruiken</Heading>
+      <Block appearance="outlined" layout="flex-col" data-track-content data-content-name="Detail Page Schema Tools">
+        <AlignBox data-content-piece="JSON Schema" align="space-between" gap="small">
+          <label for="schemaUrl" class="no-shrink">JSON Schema</label>
+          <ReadOnlyTextInput
+            id="schemaUrl"
+            type="url"
+            aria-label="JSON Schema URL"
+            defaultValue={rawSchemaUrl}
+            name="schemaUrl"
+            fontVariant="monospace"
+          />
+          <CopyButton client:load text={rawSchemaUrl} data-content-target="Schema Copy Button" />
+        </AlignBox>
+        {/* biome-ignore lint/a11y/useSemanticElements: ol/ul not possible */}
+        <div class="utrecht-badge-list" role="list" data-content-piece="Schema links">
+          <DataBadgeLink data-content-target="Open schema.json" href={schemaDownloadPath} target="_blank" rel="noopener" role="listitem">
+            schema.json
+          </DataBadgeLink>
+          <DataBadgeLink data-content-target="Download schema.json" href={schemaDownloadPath} role="listitem">
+            Download schema.json
+          </DataBadgeLink>
+        </div>
+      </Block>
+
+      { hasSourceMeta && (
+        <Fragment>
+          <Heading level={4}>SourceMeta</Heading>
+          <Block appearance="outlined" layout="flex-col">
+            <DataSummary appearance="column" contained>
+              <DataSummaryItem itemKey="SourceMeta name" itemValue={formatValue(details.sourceMetaName)} />
+              <DataSummaryItem itemKey="Base dialect" itemValue={formatValue(details.sourceMetaBaseDialect)} />
+              <DataSummaryItem itemKey="SourceMeta dialect" itemValue={formatValue(details.sourceMetaDialect)} />
+              <DataSummaryItem itemKey="Bytes" itemValue={formatBytes(details.sourceMetaBytes)} />
+              <DataSummaryItem itemKey="Bytes bundled" itemValue={formatBytes(details.sourceMetaBytesBundled)} />
+              <DataSummaryItem itemKey="Health" itemValue={details.sourceMetaHealth === undefined ? "-" : `${formatNumber(details.sourceMetaHealth)}%`} />
+              <DataSummaryItem itemKey="Dependencies" itemValue={formatNumber(details.sourceMetaDependencies)} />
+            </DataSummary>
+            { sourceMetaDependencyDetails.length > 0 && (
+              <Fragment>
+                <Heading level={5}>Dependencies</Heading>
+                { sourceMetaDependencyDetails.map((dependency) => (
+                  <DataSummary appearance="column" contained>
+                    { getAbsoluteSchemaUrl(dependency.toSchemaUrl) ? (
+                      <DataSummaryItem itemKey="To" itemValue="" href={getAbsoluteSchemaUrl(dependency.toSchemaUrl)}>{getDependencyTargetLabel(dependency)}</DataSummaryItem>
+                    ) : (
+                      <DataSummaryItem itemKey="To" itemValue={getDependencyTargetLabel(dependency)} />
+                    )}
+                    <DataSummaryItem itemKey="At" itemValue={dependency.at} />
+                    { shouldShowDependencySource(dependency) && (
+                      getAbsoluteSchemaUrl(dependency.fromSchemaUrl) ? (
+                        <DataSummaryItem itemKey="From" itemValue="" href={getAbsoluteSchemaUrl(dependency.fromSchemaUrl)}>{getDependencySourceLabel(dependency)}</DataSummaryItem>
+                      ) : (
+                        <DataSummaryItem itemKey="From" itemValue={getDependencySourceLabel(dependency)} />
+                      )
+                    )}
+                  </DataSummary>
+                ))}
+              </Fragment>
+            )}
+          </Block>
+        </Fragment>
+      )}
+
+      { prettySchema && (
+        <Fragment>
+          <Heading level={4}>JSON Schema</Heading>
+          <Block appearance="outlined" className="schema-content">
+            <pre class="schema-pre"><code>{prettySchema}</code></pre>
+          </Block>
+        </Fragment>
+      )}
+      <Heading level={4}>{t(`pages.tbd-metadata`)}</Heading>
+      <Block appearance="outlined">
+        <DataSummary appearance="column" contained>
+          <DataSummaryItem itemKey={t(`components.created-at`)} itemValue={formatDate(details.createdAt)} />
+          <DataSummaryItem itemKey={t(`components.last-crawled-at`)} itemValue={formatDate(details.lastCrawledAt)} />
+          <DataSummaryItem itemKey="ID" itemValue={details.id} />
+        </DataSummary>
+      </Block>
+    </Fragment>
+  </DonDetail>
+  )
+}
+
+<style>
+  .subtitle {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .schema-content {
+    overflow-x: auto;
+  }
+
+  .schema-pre {
+    margin: 0;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    background-color: rgb(from var(--rhc-color-cool-grey-50) r g b / 0.5);
+    overflow-x: auto;
+  }
+</style>
