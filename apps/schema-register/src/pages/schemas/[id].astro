@@ -261,11 +261,6 @@ const shouldShowDependencySource = (
           <DataSummaryItem itemKey={t(`components.created-at`)} itemValue={formatDate(details.createdAt)} />
           <DataSummaryItem itemKey={t(`components.last-crawled-at`)} itemValue={formatDate(details.lastCrawledAt)} />
           <DataSummaryItem itemKey="ID" itemValue={details.id} />
-          { details.schemaUrl ? (
-            <DataSummaryItem itemKey="Schema URL" itemValue="" href={details.schemaUrl}>{details.schemaUrl}</DataSummaryItem>
-          ) : (
-            <DataSummaryItem itemKey="Schema URL" itemValue="-" />
-          )}
         </DataSummary>
       </Block>
     </Fragment>
