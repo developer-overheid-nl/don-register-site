@@ -1,6 +1,10 @@
 # build output
 dist/
 storybook-static/
+
+# test output
+cypress/screenshots/
+
 # generated types
 .astro/
 
@@ -18,7 +22,6 @@ debug-storybook.log
 
 # environment variables
 .env*.local
-.env.production
 
 # macOS-specific files
 .DS_Store
