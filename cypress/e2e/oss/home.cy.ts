@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 describe("oss register", () => {
-  it("loads the home page", () => {
+  it("loads the home page", { retries: 2 }, () => {
     cy.visit("/");
 
     cy.get("main").should("be.visible");

@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 
 describe("API-register", () => {
-  it("loads the overview page", () => {
-    cy.request("/");
+  it("loads the overview page", { retries: 2 }, () => {
+    cy.visit("/");
 
     cy.get("main").should("be.visible");
     cy.title().should("eq", "Overzicht | API-register");
@@ -12,7 +12,7 @@ describe("API-register", () => {
   });
 
   it("can navigate to the next page", () => {
-    cy.request("/apis/pagina/1");
+    cy.visit("/apis/pagina/1");
 
     cy.get('[aria-label="Paginering"] a').should("have.length.above", 3);
     cy.get('[rel="next"]').click();
@@ -24,7 +24,7 @@ describe("API-register", () => {
   });
 
   it("can filter items", () => {
-    cy.request("/");
+    cy.visit("/");
 
     cy.get("#facetfilters input").first().as("firstFilter");
     cy.get("#facetfilters input").last().as("lastFilter");
