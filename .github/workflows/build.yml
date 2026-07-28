@@ -19,7 +19,6 @@ jobs:
     permissions:
       contents: read
     env:
-      PIWIK_PRO_SITE_ID: cypress
       ALTCHA_HMAC_KEY: cypress
     steps:
       - name: Checkout
@@ -47,6 +46,17 @@ jobs:
 
       - name: Run unit tests
         run: pnpm test -- run
+
+      - name: Write CI secrets to local env files
+        env:
+          API_X_API_KEY: ${{ secrets.API_X_API_KEY }}
+          PIWIK_PRO_SITE_ID: ${{ secrets.PIWIK_PRO_SITE_ID }}
+        run: |
+          for app in api-register oss-register; do
+            printf 'API_X_API_KEY=%s\nPIWIK_PRO_SITE_ID=%s\n' \
+              "$API_X_API_KEY" "$PIWIK_PRO_SITE_ID" \
+              >> "apps/$app/.env.development.local"
+          done
 
       - name: Run API Cypress tests
         uses: cypress-io/github-action@fa4a118725a8f001170d49631ea89e5d66fee626 # v7
