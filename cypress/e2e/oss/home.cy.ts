@@ -23,7 +23,7 @@ describe("oss register", () => {
       .and("have.attr", "aria-label", "Pagina 2: Resultaten 21 tot en met 40");
   });
 
-  it.only("can filter items", () => {
+  it("can filter items", () => {
     cy.visit("/");
 
     cy.get("#facetfilters input").first().as("firstFilter");
