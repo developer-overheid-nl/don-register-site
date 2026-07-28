@@ -8,7 +8,7 @@ import {
 import Infobutton, { type InfoButtonProps } from "../infoButton/InfoButton";
 import styles from "./styles.module.css";
 
-interface ToolTipProps extends HTMLProps<HTMLButtonElement> {
+export interface ToolTipProps extends HTMLProps<HTMLButtonElement> {
   id?: string;
   className?: string;
   text: string;

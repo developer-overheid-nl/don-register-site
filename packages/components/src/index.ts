@@ -53,6 +53,7 @@ export { default as FormFieldRadioGroup } from "./formFieldRadioGroup/FormFieldR
 export { default as FormFieldRadioOption } from "./formFieldRadioOption/FormFieldRadioOption";
 export { default as FormFieldSwitch } from "./formFieldSwitch/FormFieldSwitch";
 export { default as FormFieldTextInput } from "./formFieldTextInput/FormFieldTextInput";
+export { default as Grid, type GridProps } from "./grid/Grid";
 export { default as Header, type HeaderProps } from "./header/Header";
 export {
   clampHeadingLevel,

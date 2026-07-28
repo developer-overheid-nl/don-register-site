@@ -1,0 +1,24 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(
+      auto-fill,
+      minmax(var(--grid-min-column-width, 8rem), 1fr)
+    );
+  align-items: start;
+}
+
+.gapNone {
+  gap: 0;
+}
+
+.gapSmall {
+  gap: 0.5rem;
+}
+
+.gapMedium {
+  gap: 1rem;
+}
+
+.gapLarge {
+  gap: 2rem;
+}
