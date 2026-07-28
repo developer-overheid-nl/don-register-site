@@ -70,6 +70,7 @@ jobs:
           wait-on-timeout: 120
           config: baseUrl=http://localhost:4321
           spec: "cypress/e2e/api/**/*.cy.{js,jsx,ts,tsx}"
+          summary-title: "Cypress Results - API Register"
 
       - name: Run OSS Cypress tests
         uses: cypress-io/github-action@fa4a118725a8f001170d49631ea89e5d66fee626 # v7
@@ -80,6 +81,7 @@ jobs:
           wait-on-timeout: 120
           config: baseUrl=http://localhost:4322
           spec: "cypress/e2e/oss/**/*.cy.{js,jsx,ts,tsx}"
+          summary-title: "Cypress Results - OSS Register"
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

@@ -5,7 +5,9 @@ import {
   API_X_API_KEY,
 } from "astro:env/server";
 import type { APIRoute } from "astro";
+import { ApiPaths } from "../../../../types/api-schema";
 
+const APIS_RESOURCE = ApiPaths.listRepositories;
 const AVAILABLE_TYPES = ["text", "html", "json"] as const;
 type StatusType = (typeof AVAILABLE_TYPES)[number];
 
@@ -33,7 +35,7 @@ export const GET: APIRoute = async ({ params }) => {
 
   const checkAuthenticated = async () => {
     try {
-      const response = await fetch(`${endpointUrl}/apis`, {
+      const response = await fetch(`${endpointUrl}/${APIS_RESOURCE}`, {
         headers: API_X_API_KEY ? { "x-api-key": API_X_API_KEY } : {},
       });
       return {
