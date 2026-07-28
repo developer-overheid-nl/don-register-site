@@ -1,5 +1,11 @@
 # @developer-overheid-nl/api-register
 
+## 1.4.2
+
+### Patch Changes
+
+- 13298ee: Add a Cypress e2e setup with separate smoke tests for the API and OSS registers.
+
 ## 1.4.1
 
 ### Patch Changes
