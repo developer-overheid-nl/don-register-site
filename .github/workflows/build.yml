@@ -16,6 +16,9 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment:
+      name: development
+      deployment: false
     permissions:
       contents: read
     env:
