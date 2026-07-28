@@ -5,7 +5,7 @@ import {
 import clsx from "clsx";
 import styles from "./styles.module.css";
 
-interface ParagraphProps extends RHCParagraphProps {
+export interface ParagraphProps extends RHCParagraphProps {
   purpose?: "lead" | "short";
 }
 
