@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect } from "storybook/test";
+import Block from "../block/Block";
 import Search from "./Search";
 
 const meta = {
@@ -10,6 +11,13 @@ const meta = {
     searchUrl: "/apis",
     searchKey: "q",
   },
+  decorators: [
+    (Story) => (
+      <Block style={{ maxWidth: 400 }}>
+        <Story />
+      </Block>
+    ),
+  ],
 } satisfies Meta<typeof Search>;
 
 export default meta;

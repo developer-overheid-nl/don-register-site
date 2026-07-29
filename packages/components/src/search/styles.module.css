@@ -22,6 +22,7 @@
   grid-area: input;
 
   :global(.utrecht-textbox) {
+    max-width: none;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }

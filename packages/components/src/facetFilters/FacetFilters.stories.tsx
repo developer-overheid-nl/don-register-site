@@ -65,7 +65,7 @@ const filters = [
 const meta = {
   title: "Components/FacetFilters",
   component: FacetFilters,
-  tags: ["autodocs"],
+  tags: ["autodocs", "todo"],
   parameters: {
     layout: "narrow",
   },
