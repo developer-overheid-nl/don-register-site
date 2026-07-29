@@ -5,7 +5,7 @@ import PillBadge from "./PillBadge";
 const meta = {
   title: "Components/PillBadge",
   component: PillBadge,
-  tags: ["autodocs"],
+  tags: ["autodocs", "custom"],
   // args: {
   //   type: 'color',
   // },

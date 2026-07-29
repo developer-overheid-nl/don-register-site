@@ -5,7 +5,7 @@ import Search from "./Search";
 const meta = {
   title: "Components/Search",
   component: Search,
-  tags: ["autodocs"],
+  tags: ["autodocs", "custom"],
   args: {
     searchUrl: "/apis",
     searchKey: "q",

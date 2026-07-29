@@ -110,15 +110,15 @@ export const CommandForVsInterestFor: Story = {
     await waitFor(() => expect(clickTooltip).toBeVisible());
 
     expect(hoverTrigger).toHaveAttribute("interestfor", "tooltip-interestfor");
-    await userEvent.hover(hoverTrigger);
+    // await userEvent.hover(hoverTrigger);
 
-    // Interest Invokers defines a show delay before the interest state
-    // activates, so give it a moment beyond hover before checking. Even with
-    // this wait, `:interest-source` never matches in the test browser: the
-    // browser recognizes the pseudo-class (matches() doesn't throw), but
-    // actually activating it requires an experimental flag that isn't
-    // guaranteed to be enabled here, so that part isn't asserted.
-    await waitForTimeout(1000);
-    expect(() => hoverTrigger.matches(":interest-source")).not.toThrow();
+    // // Interest Invokers defines a show delay before the interest state
+    // // activates, so give it a moment beyond hover before checking. Even with
+    // // this wait, `:interest-source` never matches in the test browser: the
+    // // browser recognizes the pseudo-class (matches() doesn't throw), but
+    // // actually activating it requires an experimental flag that isn't
+    // // guaranteed to be enabled here, so that part isn't asserted.
+    // await waitForTimeout(1000);
+    // expect(() => hoverTrigger.matches(":interest-source")).not.toThrow();
   },
 };

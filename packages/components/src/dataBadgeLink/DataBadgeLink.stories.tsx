@@ -37,7 +37,7 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <Block layout="flex-row">
+      <Block layout="flex-row" appearance="clear">
         <Story />
       </Block>
     ),

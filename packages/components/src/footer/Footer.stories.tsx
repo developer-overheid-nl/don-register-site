@@ -86,7 +86,7 @@ const sponsorsColumn = {
 const meta = {
   title: "Components/Footer",
   component: Footer,
-  tags: ["autodocs"],
+  tags: ["autodocs", "remixed"],
   args: {
     columns: [registersColumn, communityColumn, overigColumn],
   },
