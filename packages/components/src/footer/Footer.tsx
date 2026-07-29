@@ -31,7 +31,7 @@ const FooterColumns = (props: ColumnProps) => {
   const processedItems = items && processNavBarItems(items);
 
   return (
-    <nav className={styles.column} aria-describedby={id}>
+    <nav className={styles.column} aria-labelledby={id}>
       <Heading level={2} appearanceLevel={5} id={id}>
         {title}
       </Heading>
