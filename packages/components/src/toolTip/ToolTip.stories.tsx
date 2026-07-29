@@ -5,8 +5,8 @@ import Block from "../block/Block";
 import InfoButton from "../infoButton/InfoButton";
 import ToolTip from "./ToolTip";
 
-const waitForTimeout = (ms: number) =>
-  new Promise<void>((resolve) => setTimeout(resolve, ms));
+// const waitForTimeout = (ms: number) =>
+//   new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 const meta = {
   title: "Components/ToolTip",
