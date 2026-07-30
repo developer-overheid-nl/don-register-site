@@ -1,6 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import Paragraph from "./Paragraph";
 
+/**
+ * Paragraph toont een alinea tekst.
+ *
+ * ## Wijzigingen tov RHC:
+ * - `purpose` is beperkt tot `lead` en `short`.
+ * - `short` heeft een eigen stijl (kleiner lettertype, linker rand),
+ *   bijvoorbeeld voor een korte filterbeschrijving.
+ */
 const meta = {
   title: "Components/Paragraph",
   component: Paragraph,

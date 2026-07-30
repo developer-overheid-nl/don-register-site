@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import FieldSet from "./FieldSet";
 
+/**
+ * FieldSet groepeert gerelateerde formuliervelden onder een gezamenlijke
+ * legenda (`legend`), met ondersteuning voor een sectie-variant en een
+ * disabled- of invalid-status.
+ */
 const meta = {
   title: "Components/Form/FieldSet",
   component: FieldSet,

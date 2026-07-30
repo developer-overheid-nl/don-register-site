@@ -83,6 +83,16 @@ const sponsorsColumn = {
   text: "Ministerie van BZK, VNG en Forum Standaardisatie.",
 };
 
+/**
+ * De Footer toont de voettekst van de website, met optioneel kolommen met
+ * tekst en/of links.
+ *
+ * ## Wijzigingen tov RHC:
+ * - `background` staat altijd op `primary-outlined`
+ * - `preFooter` staat altijd aan
+ * - Een `columns`-prop (titel, tekst en/of links) in plaats van los
+ *   samengestelde secties
+ */
 const meta = {
   title: "Components/Footer",
   component: Footer,

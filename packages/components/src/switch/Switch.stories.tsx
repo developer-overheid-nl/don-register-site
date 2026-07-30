@@ -1,8 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import Switch from "./Switch";
 
+/**
+ * Switch is een aan/uit-schakelaar. In `explicit`-modus wordt de schakelaar
+ * gerenderd als twee losse radio-opties (aan/uit) in plaats van één toggle,
+ * met een aparte `aria-labelledby` in plaats van `aria-label`.
+ */
 const meta = {
-  title: "Components/Switch",
+  title: "Components/Form/FormFieldParts/Switch",
   component: Switch,
   tags: ["autodocs", "custom"],
   args: {

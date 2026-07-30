@@ -5,8 +5,10 @@ import clsx from "clsx";
 import Icon from "../iconsSprite/Icon";
 import styles from "./styles.module.css";
 
+/** A button that copies the given `text` to the clipboard when clicked. */
 interface CopyButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** The text to copy to the clipboard. Renders nothing if not set. */
   text?: string;
 }
 

@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import Button from "./Button";
 
+/**
+ * Een button biedt de mogelijkheid om een actie uit te voeren.
+ */
 const meta = {
   title: "Components/Button",
   component: Button,
@@ -34,6 +37,13 @@ export const Secondary: Story = {
   args: {
     appearance: "secondary-action-button",
     children: "Annuleren",
+  },
+};
+
+export const Subtle: Story = {
+  args: {
+    appearance: "subtle-button",
+    children: "Meer opties",
   },
 };
 

@@ -2,6 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import Block from "../block/Block";
 import PillBadge from "./PillBadge";
 
+/**
+ * PillBadge toont een start- en eindwaarde naast elkaar in een pil-vorm,
+ * bijvoorbeeld een status met kleur of een percentage.
+ */
 const meta = {
   title: "Components/PillBadge",
   component: PillBadge,

@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import SiteLogo from "./SiteLogo";
 
+/**
+ * SiteLogo toont het sitelogo. Op de homepage (`isRoot`) wordt het zonder
+ * link gerenderd; elders als link naar `href`.
+ */
 const meta = {
   title: "Components/SiteLogo",
   component: SiteLogo,

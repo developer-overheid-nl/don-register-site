@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import Block from "./Block";
 
+/**
+ * Block is een generiek containerelement met een optionele achtergrond/rand
+ * (`appearance`) en eenvoudige flex-layout (`layout`), vaak gebruikt om
+ * andere componenten in te groeperen.
+ */
 const meta = {
   title: "Components/Block",
   component: Block,

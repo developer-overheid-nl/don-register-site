@@ -7,6 +7,16 @@ import Paragraph from "../paragraph/Paragraph";
 import PillBadge from "../pillBadge/PillBadge";
 import CardAsLink from "./CardAsLink";
 
+/**
+ * CardAsLink is een kaart die als geheel klikbaar is, bijvoorbeeld naar een
+ * API- of repository-detailpagina. Kop, beschrijving en metadata worden via
+ * named slots (`slot="heading"`, `slot="description"`, `slot="metadata"`)
+ * doorgegeven.
+ *
+ * ## Wijzigingen tov RHC:
+ * - Alleen CSS-aanpassingen (hover-onderstreping van de kop); geen
+ *   wijzigingen in props.
+ */
 const meta = {
   title: "Components/CardAsLink",
   component: CardAsLink,

@@ -5,14 +5,20 @@ import {
 import clsx from "clsx";
 import styles from "./styles.module.css";
 
+/** A data badge that acts as a link instead of a toggle button. */
 export interface DataBadgeLinkProps
   extends Omit<DataBadgeButtonProps, "aria-pressed" | "pressed"> {
+  /** The link target. */
   href: string;
+  /** The badge's content. */
   children: React.ReactNode;
+  /** The anchor's `target` attribute. */
   target?: React.HTMLAttributeAnchorTarget;
+  /** The anchor's `rel` attribute. */
   rel?: string;
   className?: string;
   role?: string;
+  /** Visual style of the badge. */
   appearance?: "primary" | "outlined" | "subtle" | "link";
 }
 

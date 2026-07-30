@@ -12,6 +12,12 @@ const organisations = [
   { uri: "logius", label: "Logius" },
 ];
 
+/**
+ * Filters toont een lijst van organisaties als navigatielinks en markeert de
+ * organisatie uit de `routing`-query als actief filter.
+ *
+ * Verouderd: gebruik `FacetFilters` in plaats van dit component.
+ */
 const meta = {
   title: "Components/Filters",
   component: Filters,
@@ -22,11 +28,6 @@ const meta = {
     error: null,
     routing,
   },
-  // parameters: {
-  //   docs: {
-  //     tags: []
-  //   }
-  // }
 } satisfies Meta<typeof Filters>;
 
 export default meta;

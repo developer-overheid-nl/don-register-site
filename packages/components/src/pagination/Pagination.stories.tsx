@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import Pagination from "./Pagination";
 
+/**
+ * Pagination toont een reeks paginalinks, met optionele eerste/vorige/
+ * volgende/laatste-links en ellipsissen. De props komen doorgaans uit de
+ * `getPagination`-helper in `packages/layouts`.
+ */
 const meta = {
   title: "Components/Pagination",
   component: Pagination,

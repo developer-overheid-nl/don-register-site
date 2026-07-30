@@ -3,6 +3,13 @@ import Heading from "./Heading";
 
 const headingLevels = [1, 2, 3, 4, 5] as const;
 
+/**
+ * Headings worden gebruikt voor titels in de tekstuele hiërarchie van de content.
+ * Het rendert een HTML `<h1>`...`<h6>`-element.
+ *
+ * - **level**: wijzigt de HTML-tag naar het overeenkomende niveau.
+ * - **appearanceLevel** (optioneel): verandert het uiterlijk, niet het `level`.
+ */
 const meta = {
   title: "Components/Heading",
   component: Heading,

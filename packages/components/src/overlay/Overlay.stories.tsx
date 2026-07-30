@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import Overlay from "./Overlay";
 
+/**
+ * Overlay dekt zijn omliggende content af zolang `active` waar is,
+ * bijvoorbeeld tijdens het laden van een formulieractie. Vereist een
+ * `position: relative` ouderelement.
+ */
 const meta = {
   title: "Components/Overlay",
   component: Overlay,

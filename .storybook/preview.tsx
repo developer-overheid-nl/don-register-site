@@ -52,6 +52,11 @@ const preview: Preview = {
       },
     },
     layout: "fullscreen",
+    options: {
+      storySort: {
+        order: ["Introduction", "Components"],
+      },
+    },
   },
 };
 

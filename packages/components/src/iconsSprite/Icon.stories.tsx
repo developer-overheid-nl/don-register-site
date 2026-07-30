@@ -21,6 +21,21 @@ const iconNames = [
   "lade-archiefkast",
 ];
 
+/**
+ * Icon rendert een icoon uit de sprite door middel van `name`, via een
+ * `<svg><use></use></svg>`-referentie naar `#icon-{name}`. Vereist dat
+ * `IconsSprite` ergens in het document is gerenderd, bijvoorbeeld eenmalig
+ * in de layout:
+ *
+ * ```tsx
+ * import { IconsSprite } from "@developer-overheid-nl/don-register-components";
+ *
+ * <IconsSprite />
+ * ```
+ *
+ * In Storybook gebeurt dit al globaal, via een decorator in
+ * `.storybook/preview.tsx`.
+ */
 const meta = {
   title: "Components/Icon",
   component: Icon,

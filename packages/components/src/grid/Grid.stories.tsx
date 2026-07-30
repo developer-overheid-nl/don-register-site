@@ -1,10 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import Grid from "./Grid";
 
+/**
+ * Grid is een hulpcomponent voor een responsieve CSS-grid: kolommen vullen
+ * automatisch aan op basis van `minColumnWidth`, met een gap-schaal
+ * (`none`, `small`, `medium`, `large`).
+ *
+ * Wordt op dit moment alleen gebruikt in Storybook, nog niet in de
+ * registersites zelf.
+ */
 const meta = {
   title: "Components/Grid",
   component: Grid,
-  tags: ["autodocs", "code-only"],
+  tags: ["autodocs", "code-only", "beta"],
   argTypes: {
     gap: {
       control: "select",

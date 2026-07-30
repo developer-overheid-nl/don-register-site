@@ -43,6 +43,12 @@ const endItems = [
   },
 ];
 
+/**
+ * TopNavigation toont de hoofdnavigatie (`items`) en optioneel een tweede
+ * groep aan het einde (`endItems`). Het huidige item wordt vetgedrukt
+ * getoond, en `icon` accepteert een korte sleutel (`_add`, `_external`) die
+ * automatisch naar het juiste icoon wordt omgezet.
+ */
 const meta = {
   title: "Components/TopNavigation",
   component: TopNavigation,

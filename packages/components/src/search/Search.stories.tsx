@@ -3,6 +3,11 @@ import { expect } from "storybook/test";
 import Block from "../block/Block";
 import Search from "./Search";
 
+/**
+ * Search is een zoekformulier (native GET-formulier) met een zoekveld en
+ * verzendknop. Actieve filters kunnen worden meegestuurd als verborgen
+ * velden via `hiddenFields`.
+ */
 const meta = {
   title: "Components/Search",
   component: Search,

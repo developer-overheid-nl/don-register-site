@@ -8,6 +8,13 @@ const organisationOptions = [
   { value: "logius", label: "Logius", count: 5, selected: false },
 ];
 
+/**
+ * FormFieldCheckboxGroup groepeert een set `FormFieldCheckboxOption`-velden
+ * onder een gezamenlijk label, beschrijving en foutmelding.
+ *
+ * ## Wijzigingen tov RHC:
+ * - Alleen een extra CSS-klasse; geen wijzigingen in props.
+ */
 const meta = {
   title: "Components/Form/FormFieldCheckboxGroup",
   component: FormFieldCheckboxGroup,

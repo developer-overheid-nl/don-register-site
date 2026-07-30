@@ -20,6 +20,16 @@ const CrossIcon = () => (
   </svg>
 );
 
+/**
+ * DataBadgeLink toont een badge die als link fungeert, bijvoorbeeld voor een
+ * downloadlink of een actief filter.
+ *
+ * ## Wijzigingen tov RHC:
+ * - Gebruikt RHC's `DataBadgeButton`, maar rendert de inhoud als `<a>` in
+ *   plaats van als knop; de toggle-knop-semantiek (`pressed`/`aria-pressed`)
+ *   is daarom verwijderd.
+ * - Voegt een `appearance`-prop toe (`primary`, `outlined`, `subtle`, `link`).
+ */
 const meta = {
   title: "Components/DataBadgeLink",
   component: DataBadgeLink,

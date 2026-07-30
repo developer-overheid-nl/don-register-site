@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import FormFieldRadioOption from "./FormFieldRadioOption";
 
+/**
+ * FormFieldRadioOption is een enkele radiobutton binnen een
+ * `FormFieldRadioGroup`, bijvoorbeeld voor een enkelvoudige filteroptie. Het
+ * label toont optioneel een aantal tussen haakjes (via `AmountLabel`).
+ */
 const meta = {
   title: "Components/Form/FormFieldRadioOption",
   component: FormFieldRadioOption,

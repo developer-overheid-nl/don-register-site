@@ -11,6 +11,13 @@ Deze API biedt toegang tot **adresgegevens** uit de BAG.
 
 Lees meer op [de documentatie](https://developer.overheid.nl).`;
 
+/**
+ * Markdown rendert `text` (of een string-`children`) via `react-markdown`.
+ * Kopniveaus worden verschoven zodat het hoogste niveau nooit dieper is dan
+ * `minHeadingDepth` (standaard 2), `openLinksInNewTab` opent links in een
+ * nieuw tabblad, en `allowedElements` beperkt welke elementen gerenderd
+ * worden.
+ */
 const meta = {
   title: "Components/Markdown",
   component: Markdown,

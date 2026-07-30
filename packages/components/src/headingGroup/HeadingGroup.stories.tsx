@@ -4,6 +4,16 @@ import HeadingGroup from "./HeadingGroup";
 
 const headingLevels = [1, 2, 3, 4, 5] as const;
 
+/**
+ * HeadingGroup combineert een kop met een optionele subtitel, bijvoorbeeld
+ * de naam van een API met daaronder de beherende organisatie.
+ *
+ * ## Wijzigingen tov RHC:
+ * - Voegt `title`- en `subTitle`-props toe in plaats van losse
+ *   `Heading`/`Paragraph`-children; een string-`subTitle` wordt automatisch
+ *   in een `Paragraph` gezet, andere content (bijv. een badge) direct
+ *   doorgegeven.
+ */
 const meta = {
   title: "Components/HeadingGroup",
   component: HeadingGroup,

@@ -7,6 +7,13 @@ const lifecycleOptions = [
   { value: "deprecated", label: "Verouderd", count: 2, selected: false },
 ];
 
+/**
+ * FormFieldRadioGroup groepeert een set `FormFieldRadioOption`-velden onder
+ * een gezamenlijk label, beschrijving en foutmelding.
+ *
+ * ## Wijzigingen tov RHC:
+ * - Alleen een extra CSS-klasse; geen wijzigingen in props.
+ */
 const meta = {
   title: "Components/Form/FormFieldRadioGroup",
   component: FormFieldRadioGroup,

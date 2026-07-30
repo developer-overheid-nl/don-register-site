@@ -8,6 +8,13 @@ import ToolTip from "./ToolTip";
 // const waitForTimeout = (ms: number) =>
 //   new Promise<void>((resolve) => setTimeout(resolve, ms));
 
+/**
+ * ToolTip toont `text` in een popover, gekoppeld aan een trigger-element.
+ *
+ * Zonder `children` wordt automatisch een `InfoButton` gerenderd met de
+ * juiste `command`/`commandfor`/`interestfor`-koppeling; met een eigen
+ * `children`-trigger moet die koppeling zelf worden meegegeven.
+ */
 const meta = {
   title: "Components/ToolTip",
   component: ToolTip,

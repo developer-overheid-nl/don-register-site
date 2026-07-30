@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import FormFieldSwitch from "./FormFieldSwitch";
 
+/**
+ * FormFieldSwitch is een aan/uit-schakelaar binnen een formulierveld,
+ * bijvoorbeeld voor een boolean filter. Ondersteunt een `explicit`-modus met
+ * twee losse radio-opties (aan/uit) in plaats van één toggle.
+ */
 const meta = {
   title: "Components/Form/FormFieldSwitch",
   component: FormFieldSwitch,

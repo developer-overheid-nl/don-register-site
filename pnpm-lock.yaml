@@ -69,6 +69,9 @@ catalogs:
     react-markdown:
       specifier: 10.1.0
       version: 10.1.0
+    remark-gfm:
+      specifier: 4.0.1
+      version: 4.0.1
     typescript:
       specifier: 5.9.3
       version: 5.9.3
@@ -141,6 +144,9 @@ importers:
       react-markdown:
         specifier: 'catalog:'
         version: 10.1.0(@types/react@19.1.17)(react@19.2.3)
+      remark-gfm:
+        specifier: 'catalog:'
+        version: 4.0.1
     devDependencies:
       '@biomejs/biome':
         specifier: 2.4.16
@@ -185,7 +191,7 @@ importers:
         specifier: 18.0.1
         version: 18.0.1
       cypress:
-        specifier: ^15.18.1
+        specifier: 15.18.1
         version: 15.18.1
       lefthook:
         specifier: 2.1.9

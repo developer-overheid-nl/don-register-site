@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import AlignBox from "./AlignBox";
 
+/**
+ * AlignBox is een hulpcomponent om kindelementen ten opzichte van elkaar uit
+ * te lijnen (bijv. links, gecentreerd, gespreid) met flexbox.
+ */
 const meta = {
   title: "Components/AlignBox",
   component: AlignBox,

@@ -3,6 +3,11 @@ import { expect, fn } from "storybook/test";
 
 import CopyButton from "./CopyButton";
 
+/**
+ * CopyButton kopieert de opgegeven `text` naar het klembord via de browser
+ * Clipboard API wanneer erop geklikt wordt. Rendert niets als er geen tekst
+ * is opgegeven.
+ */
 const meta: Meta<typeof CopyButton> = {
   title: "Components/CopyButton",
   component: CopyButton,

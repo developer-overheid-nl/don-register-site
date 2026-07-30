@@ -1,6 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import FormFieldCheckboxOption from "./FormFieldCheckboxOption";
 
+/**
+ * FormFieldCheckboxOption is een enkele checkbox binnen een
+ * `FormFieldCheckboxGroup`, bijvoorbeeld voor een meerkeuze-filteroptie.
+ *
+ * ## Wijzigingen tov RHC:
+ * - Voegt een `amount`-prop toe, getoond tussen haakjes achter het label
+ *   (via `AmountLabel`).
+ * - `children` worden getoond als extra info naast de optie (bijv. voor een
+ *   ToolTip).
+ */
 const meta = {
   title: "Components/Form/FormFieldCheckboxOption",
   component: FormFieldCheckboxOption,

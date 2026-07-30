@@ -1,6 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import ScoreBadge from "./ScoreBadge";
 
+/**
+ * ScoreBadge toont een score als een cirkelvormige meter, optioneel met het
+ * maximum en/of als percentage.
+ *
+ * Verouderd: niet meer in gebruik.
+ */
 const meta = {
   title: "Components/ScoreBadge",
   component: ScoreBadge,

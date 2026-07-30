@@ -1,0 +1,31 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Introduction" />
+
+# Register Site Components
+
+Dit is de Storybook van `@developer-overheid-nl/don-register-components`: de gedeelde
+React-componenten voor de registersites van developer.overheid.nl (het API-register en
+het OSS-register).
+
+De componenten zijn gebouwd op de [Rijkshuisstijl Community](https://www.rijkshuisstijl-community.nl/)
+(RHC) design-system-componenten, CSS en design tokens, aangevuld met eigen componenten en
+teksten (via `@developer-overheid-nl/don-register-locales`).
+
+## Componenten in de zijbalk
+
+Elke component in de zijbalk heeft een label dat aangeeft hoe de component zich verhoudt
+tot de onderliggende RHC-component:
+
+| Label | Icon | Betekenis |
+| --- | --- | --- |
+| **Re-export** | 🚛 | Rechtstreeks doorgegeven vanuit RHC, zonder eigen aanpassingen. |
+| **Remixed** | ♻️ | Een RHC-component die hier is aangevuld of anders is samengesteld. |
+| **Custom** | ✨ | Een component die volledig eigen is aan deze registry, niet afkomstig uit RHC. |
+| **Deprecated** |  | Verouderd; wordt in een latere versie verwijderd. Gebruik niet in nieuwe code. |
+
+## Meer informatie
+
+- [Broncode van deze package](https://github.com/developer-overheid-nl/don-register-site/tree/main/packages/components)
+- [CHANGELOG](https://github.com/developer-overheid-nl/don-register-site/blob/main/packages/components/CHANGELOG.md)
+- [NPM package](https://www.npmjs.com/package/@developer-overheid-nl/don-register-components)

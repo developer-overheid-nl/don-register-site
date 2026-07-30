@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import InfoButton from "./InfoButton";
 
+/**
+ * InfoButton is een knop met een info-icoon, met instelbare grootte
+ * (`iconSize`) en kleur (`iconColor`). Wordt onder andere gebruikt als
+ * standaard trigger-element van `ToolTip`.
+ */
 const meta = {
   title: "Components/InfoButton",
   component: InfoButton,

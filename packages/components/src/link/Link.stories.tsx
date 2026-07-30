@@ -2,6 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import Icon from "../iconsSprite/Icon";
 import Link from "./Link";
 
+/**
+ * Link is een tekstuele link. `current` markeert de link als de huidige
+ * pagina (`aria-current`), `inline` past de RHC-inline-stijl toe.
+ */
 const meta = {
   title: "Components/Link",
   component: Link,
