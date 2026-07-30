@@ -261,6 +261,17 @@ export interface components {
             /** @description Local schema-register title for the dependency target, when available */
             toSchemaTitle?: components["schemas"]["SchemaTitle"];
         };
+        /** @description A health issue reported by the SourceMeta One API health endpoint. */
+        SourceMetaHealthIssue: {
+            /** @description Identifier name of the health issue */
+            name: string;
+            /** @description Human-readable health issue message */
+            message: string;
+            /** @description Additional health issue description */
+            description?: string;
+            /** @description JSON Pointer locations where the issue occurs */
+            pointers: string[];
+        };
         SchemaSummary: {
             id: components["schemas"]["ResourceId"];
             schemaUrl?: components["schemas"]["SchemaUrl"];
@@ -275,6 +286,11 @@ export interface components {
             lastCrawledAt?: components["schemas"]["LastCrawledAt"];
             /** @description Name reported by the SourceMeta One API entry */
             sourceMetaName?: string;
+            /**
+             * Format: uri
+             * @description Public URL for downloading the bundled schema
+             */
+            sourceMetaBundledUrl?: string;
             /**
              * Format: uri
              * @description Identifier reported by the SourceMeta One API entry
@@ -298,6 +314,8 @@ export interface components {
             content?: Record<string, never>;
             /** @description Dependency edges reported by SourceMeta for this schema */
             sourceMetaDependencyDetails?: components["schemas"]["SourceMetaDependency"][];
+            /** @description Health issues reported by SourceMeta for this schema */
+            sourceMetaHealthIssues?: components["schemas"]["SourceMetaHealthIssue"][];
         };
         /** @description Register a JSON Schema by URL or by providing the schema body directly. Either schemaUrl or schemaBody is required. */
         SchemaPost: {

@@ -70,21 +70,23 @@ i18n.addResources(i18n.language, "translation", i18nPage);
 
 const details = error ? null : data;
 
-const schemaDownloadPath = `download/${id}/schema.json`;
-const rawSchemaUrl = new URL(schemaDownloadPath, Astro.url).toString();
+const rawSchemaUrl = details?.schemaUrl || "";
 const prettySchema = details?.content
   ? JSON.stringify(details.content, null, 2)
   : null;
 const hasSourceMeta = Boolean(
   details?.sourceMetaName ||
+    details?.sourceMetaBundledUrl ||
     details?.sourceMetaBaseDialect ||
     details?.sourceMetaDialect ||
     details?.sourceMetaBytes !== undefined ||
     details?.sourceMetaBytesBundled !== undefined ||
     details?.sourceMetaHealth !== undefined ||
-    details?.sourceMetaDependencies !== undefined,
+    details?.sourceMetaDependencies !== undefined ||
+    details?.sourceMetaHealthIssues?.length,
 );
 const sourceMetaDependencyDetails = details?.sourceMetaDependencyDetails ?? [];
+const sourceMetaHealthIssues = details?.sourceMetaHealthIssues ?? [];
 const currentSchemaReferences = [id, details?.schemaUrl].filter(Boolean);
 const formatValue = (value: string | number | null | undefined) =>
   value === null || value === undefined || value === "" ? "-" : String(value);
@@ -98,6 +100,8 @@ const formatBytes = (value: number | null | undefined) =>
   value === null || value === undefined ? "-" : `${formatNumber(value)} bytes`;
 const formatPercentage = (value: number | null | undefined) =>
   value === null || value === undefined ? undefined : String(value);
+const formatList = (value: string[] | null | undefined) =>
+  value?.length ? value.join(" - ") : "-";
 const getDependencyTargetLabel = (
   dependency: (typeof sourceMetaDependencyDetails)[number],
 ) =>
@@ -199,12 +203,16 @@ const shouldShowDependencySource = (
         </AlignBox>
         {/* biome-ignore lint/a11y/useSemanticElements: ol/ul not possible */}
         <div class="utrecht-badge-list" role="list" data-content-piece="Schema links">
-          <DataBadgeLink data-content-target="Open schema.json" href={schemaDownloadPath} target="_blank" rel="noopener" role="listitem">
-            schema.json
-          </DataBadgeLink>
-          <DataBadgeLink data-content-target="Download schema.json" href={schemaDownloadPath} role="listitem">
-            Download schema.json
-          </DataBadgeLink>
+          { details.schemaUrl && (
+            <DataBadgeLink data-content-target="Open schema.json" href={details.schemaUrl} target="_blank" rel="noopener" role="listitem">
+              schema.json
+            </DataBadgeLink>
+          )}
+          { details.sourceMetaBundledUrl && (
+            <DataBadgeLink data-content-target="Download bundled schema" href={details.sourceMetaBundledUrl} role="listitem">
+              Download bundled
+            </DataBadgeLink>
+          )}
         </div>
       </Block>
 
@@ -239,6 +247,21 @@ const shouldShowDependencySource = (
                         <DataSummaryItem itemKey="From" itemValue={getDependencySourceLabel(dependency)} />
                       )
                     )}
+                  </DataSummary>
+                ))}
+              </Fragment>
+            )}
+            { sourceMetaHealthIssues.length > 0 && (
+              <Fragment>
+                <Heading level={5}>Health issues</Heading>
+                { sourceMetaHealthIssues.map((issue) => (
+                  <DataSummary appearance="column" contained>
+                    <DataSummaryItem itemKey="Name" itemValue={issue.name} />
+                    <DataSummaryItem itemKey="Message" itemValue={issue.message} />
+                    { issue.description && (
+                      <DataSummaryItem itemKey="Description" itemValue={issue.description} />
+                    )}
+                    <DataSummaryItem itemKey="Pointers" itemValue={formatList(issue.pointers)} />
                   </DataSummary>
                 ))}
               </Fragment>
