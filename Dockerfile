@@ -17,6 +17,7 @@ COPY pnpm-lock.yaml ./
 COPY package.json ./
 COPY apps/api-register/package.json ./apps/api-register/
 COPY apps/oss-register/package.json ./apps/oss-register/
+COPY apps/schema-register/package.json ./apps/schema-register/
 COPY packages/components/package.json ./packages/components/
 COPY packages/layouts/package.json ./packages/layouts/
 
@@ -31,11 +32,13 @@ COPY . .
 COPY --from=deps /opt/astro/node_modules ./node_modules
 COPY --from=deps /opt/astro/apps/api-register/node_modules ./apps/api-register/node_modules
 COPY --from=deps /opt/astro/apps/oss-register/node_modules ./apps/oss-register/node_modules
+COPY --from=deps /opt/astro/apps/schema-register/node_modules ./apps/schema-register/node_modules
 COPY --from=deps /opt/astro/packages/components/node_modules ./packages/components/node_modules
 COPY --from=deps /opt/astro/packages/layouts/node_modules ./packages/layouts/node_modules
 
 RUN pnpm --filter @developer-overheid-nl/api-register build && \
-    pnpm --filter @developer-overheid-nl/oss-register build
+    pnpm --filter @developer-overheid-nl/oss-register build && \
+    pnpm --filter @developer-overheid-nl/schema-register build  
 
 # ---- Runtime containers ----
 FROM node:lts-alpine AS runtime-base
@@ -59,3 +62,10 @@ COPY --from=build /opt/astro/apps/oss-register/dist ./apps/oss-register/dist
 COPY --from=deps /opt/astro/apps/oss-register/node_modules ./apps/oss-register/node_modules
 
 CMD ["node", "./apps/oss-register/dist/server/entry.mjs", "--host", "0.0.0.0", "--port", "4321"]
+
+FROM runtime-base AS runtime-schema
+
+COPY --from=build /opt/astro/apps/schema-register/dist ./apps/schema-register/dist
+COPY --from=deps /opt/astro/apps/schema-register/node_modules ./apps/schema-register/node_modules
+
+CMD ["node", "./apps/schema-register/dist/server/entry.mjs", "--host", "0.0.0.0", "--port", "4321"]

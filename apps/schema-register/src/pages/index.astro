@@ -1,0 +1,7 @@
+---
+// `/` will show page one of the overview, filtered views included
+return Astro.rewrite(
+  //new URL(`/schemas/pagina/1?${Astro.url.searchParams.toString()}`, Astro.url),
+  new URL(`/schemas`, Astro.url),
+);
+---

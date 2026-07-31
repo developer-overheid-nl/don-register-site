@@ -307,6 +307,49 @@ importers:
         specifier: 'catalog:'
         version: 7.1.7(@types/node@24.0.8)
 
+  apps/schema-register:
+    dependencies:
+      '@astrojs/react':
+        specifier: 'catalog:'
+        version: 5.0.6(@types/node@24.0.8)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@developer-overheid-nl/don-register-components':
+        specifier: workspace:*
+        version: link:../../packages/components
+      '@developer-overheid-nl/don-register-layouts':
+        specifier: workspace:*
+        version: link:../../packages/layouts
+      '@piwikpro/react-piwik-pro':
+        specifier: 'catalog:'
+        version: 2.5.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@rijkshuisstijl-community/components-react':
+        specifier: 'catalog:'
+        version: 11.0.0(@amsterdam/design-system-css@1.0.1(@amsterdam/design-system-assets@1.0.0)(@amsterdam/design-system-tokens@1.0.1))(@babel/runtime@7.29.7)(date-fns@2.30.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      astro:
+        specifier: 'catalog:'
+        version: 6.4.2(@types/node@24.0.8)(rollup@4.61.0)
+      i18next:
+        specifier: 'catalog:'
+        version: 26.3.1(typescript@5.9.3)
+      openapi-fetch:
+        specifier: 'catalog:'
+        version: 0.17.0
+      react:
+        specifier: 19.2.3
+        version: 19.2.3
+      react-dom:
+        specifier: 19.2.3
+        version: 19.2.3(react@19.2.3)
+    devDependencies:
+      '@csstools/postcss-global-data':
+        specifier: 'catalog:'
+        version: 4.0.0(postcss@8.5.15)
+      postcss-custom-media:
+        specifier: 'catalog:'
+        version: 12.0.1(postcss@8.5.15)
+      vite:
+        specifier: 'catalog:'
+        version: 7.1.7(@types/node@24.0.8)
+
   packages/components:
     dependencies:
       '@developer-overheid-nl/don-register-locales':
