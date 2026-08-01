@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import ReadOnlyTextInput from "./ReadOnlyTextInput";
 
+/**
+ * ReadOnlyTextInput is een altijd-alleen-lezen tekstinvoerveld, bijvoorbeeld
+ * voor het tonen van een ID of code. `fontVariant` kan een monospace of
+ * "slashed zero"-lettertype toepassen om tekens beter te onderscheiden.
+ */
 const meta = {
   title: "Components/Form/ReadOnlyTextInput",
   component: ReadOnlyTextInput,
@@ -32,5 +37,13 @@ export const SlashedZero: Story = {
   args: {
     fontVariant: "slashed-zero",
     value: "0100200300",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Past `font-variant-numeric: slashed-zero` toe, maar het huidige Rijkshuisstijl-lettertype ondersteunt deze OpenType-variant nog niet, dus is er (nog) geen visueel verschil te zien.",
+      },
+    },
   },
 };

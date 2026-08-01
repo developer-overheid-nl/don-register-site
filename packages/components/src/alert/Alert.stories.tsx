@@ -1,6 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import Alert from "./Alert";
 
+/**
+ * Een Alert toont een bericht op de pagina.
+ *
+ * ## Wijzigingen tov RHC:
+ * - Space around aangepast
+ */
 const meta = {
   title: "Components/Alert",
   component: Alert,

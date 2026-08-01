@@ -13,14 +13,19 @@ import {
 } from "../topNavigation/TopNavigation";
 import styles from "./styles.module.css";
 
+/** A column in the footer, with a title and optional text and/or links. */
 export interface ColumnProps {
+  /** Title of the column, shown as a heading. */
   title: string;
+  /** Navigation links, shown as a list below the title. */
   items?: NavBarItem[];
+  /** Markdown text, shown below the title (e.g. for sponsor logos). */
   text?: string;
 }
 
 export interface FooterProps extends React.HTMLAttributes<HTMLElement> {
   className?: string;
+  /** Columns with a title, text and/or links, shown in the footer. */
   columns?: ColumnProps[];
 }
 
@@ -31,7 +36,7 @@ const FooterColumns = (props: ColumnProps) => {
   const processedItems = items && processNavBarItems(items);
 
   return (
-    <nav className={styles.column} aria-describedby={id}>
+    <nav className={styles.column} aria-labelledby={id}>
       <Heading level={2} appearanceLevel={5} id={id}>
         {title}
       </Heading>

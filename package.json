@@ -68,12 +68,12 @@
     "openapi-fetch": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-markdown": "catalog:"
+    "react-markdown": "catalog:",
+    "remark-gfm": "catalog:"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.16",
     "@changesets/cli": "2.31.0",
-    "cypress": "^15.18.1",
     "@chromatic-com/storybook": "5.2.1",
     "@csstools/postcss-global-data": "catalog:",
     "@rijkshuisstijl-community/components-css": "catalog:",
@@ -86,6 +86,7 @@
     "@vitest/browser-playwright": "catalog:",
     "@vitest/coverage-v8": "catalog:",
     "chromatic": "18.0.1",
+    "cypress": "15.18.1",
     "lefthook": "2.1.9",
     "openapi-typescript": "catalog:",
     "playwright": "1.61.1",

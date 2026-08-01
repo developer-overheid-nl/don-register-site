@@ -62,10 +62,15 @@ const filters = [
   },
 ] as unknown as FilterData[];
 
+/**
+ * FacetFilters rendert een set filters (meerkeuze, enkele keuze en/of
+ * schakelaars) op basis van een `filters`-array en meldt wijzigingen via
+ * `onFilterChange`, eventueel gedebounced per filtertype.
+ */
 const meta = {
   title: "Components/FacetFilters",
   component: FacetFilters,
-  tags: ["autodocs"],
+  tags: ["autodocs", "todo"],
   parameters: {
     layout: "narrow",
   },

@@ -6,6 +6,8 @@ import {
 
 addons.setConfig({
   tagBadges: [
+    // The first tag in this list will be shown in the sidebar, deprecations before any other tags.
+    ...defaultConfig.filter(({ tags }) => tags.valueOf() === "deprecated"),
     {
       tags: "re-export",
       badge: ({ context }) => {
@@ -36,7 +38,7 @@ addons.setConfig({
         };
       },
     },
-    // Place the default config after your custom matchers.
+    // Place the default config after your custom matchers, these will be shown in the sidebar first.
     ...defaultConfig,
   ] satisfies TagBadgeParameters,
 });

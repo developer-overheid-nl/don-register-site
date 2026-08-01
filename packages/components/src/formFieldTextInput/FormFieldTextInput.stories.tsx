@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import FormFieldTextInput from "./FormFieldTextInput";
 
+/**
+ * FormFieldTextInput is een tekstinvoerveld met label, beschrijving en
+ * foutmelding.
+ */
 const meta = {
   title: "Components/Form/FormFieldTextInput",
   component: FormFieldTextInput,

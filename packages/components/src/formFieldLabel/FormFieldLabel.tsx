@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import type React from "react";
 
-interface FormFieldLabelProps {
+export interface FormFieldLabelProps {
   htmlFor?: string;
   children: React.ReactNode;
   required?: boolean;

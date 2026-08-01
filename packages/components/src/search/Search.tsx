@@ -64,7 +64,7 @@ const Search = (props: SearchProps) => {
           className={styles.button}
           type="submit"
         >
-          <Icon name="zoek-inline" width="1.5rem" height="1.5rem" />
+          <Icon name="zoek-inline" width="1.5rem" height="1.5rem" aria-hidden />
         </PrimaryActionButton>
       </form>
     </search>

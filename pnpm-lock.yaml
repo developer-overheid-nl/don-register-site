@@ -69,6 +69,9 @@ catalogs:
     react-markdown:
       specifier: 10.1.0
       version: 10.1.0
+    remark-gfm:
+      specifier: 4.0.1
+      version: 4.0.1
     typescript:
       specifier: 5.9.3
       version: 5.9.3
@@ -141,6 +144,9 @@ importers:
       react-markdown:
         specifier: 'catalog:'
         version: 10.1.0(@types/react@19.1.17)(react@19.2.3)
+      remark-gfm:
+        specifier: 'catalog:'
+        version: 4.0.1
     devDependencies:
       '@biomejs/biome':
         specifier: 2.4.16
@@ -185,7 +191,7 @@ importers:
         specifier: 18.0.1
         version: 18.0.1
       cypress:
-        specifier: ^15.18.1
+        specifier: 15.18.1
         version: 15.18.1
       lefthook:
         specifier: 2.1.9
@@ -219,7 +225,7 @@ importers:
     dependencies:
       '@astrojs/react':
         specifier: 'catalog:'
-        version: 5.0.6(@types/node@24.0.8)(@types/react-dom@19.1.11(@types/react@19.1.17))(@types/react@19.1.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 5.0.6(@types/node@24.0.8)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@developer-overheid-nl/don-register-components':
         specifier: workspace:*
         version: link:../../packages/components
@@ -268,7 +274,7 @@ importers:
     dependencies:
       '@astrojs/react':
         specifier: 'catalog:'
-        version: 5.0.6(@types/node@24.0.8)(@types/react-dom@19.1.11(@types/react@19.1.17))(@types/react@19.1.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 5.0.6(@types/node@24.0.8)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@developer-overheid-nl/don-register-components':
         specifier: workspace:*
         version: link:../../packages/components
@@ -5798,6 +5804,31 @@ snapshots:
       '@astrojs/internal-helpers': 0.10.0
       '@types/react': 19.1.17
       '@types/react-dom': 19.1.11(@types/react@19.1.17)
+      '@vitejs/plugin-react': 5.2.0(vite@7.3.5(@types/node@24.0.8))
+      devalue: 5.8.1
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      ultrahtml: 1.6.0
+      vite: 7.3.5(@types/node@24.0.8)
+    transitivePeerDependencies:
+      - '@types/node'
+      - jiti
+      - less
+      - lightningcss
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - yaml
+
+  '@astrojs/react@5.0.6(@types/node@24.0.8)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@astrojs/internal-helpers': 0.10.0
+      '@types/react': 19.2.9
+      '@types/react-dom': 19.2.3(@types/react@19.2.9)
       '@vitejs/plugin-react': 5.2.0(vite@7.3.5(@types/node@24.0.8))
       devalue: 5.8.1
       react: 19.2.3

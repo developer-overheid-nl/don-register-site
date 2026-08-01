@@ -37,7 +37,7 @@ const InfoButton = (props: InfoButtonProps) => {
       type={type}
       {...restProps}
     >
-      <Icon name="info" />
+      <Icon name="info" aria-hidden />
     </button>
   );
 };
