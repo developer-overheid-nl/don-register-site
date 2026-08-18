@@ -2,8 +2,21 @@ import { describe, expect, test } from "vitest";
 import {
   createDependencyPresentation,
   createHealthIssuesTable,
+  createJsonSchemaViewerUrl,
   createSchemaCardPresentation,
 } from "./schemaPresentation";
+
+describe("createJsonSchemaViewerUrl", () => {
+  test("creates a json-schema.app URL that preserves the complete schema URL", () => {
+    expect(
+      createJsonSchemaViewerUrl(
+        "https://static.example.test/schemas/voorbeeld?version=1&format=json",
+      ),
+    ).toBe(
+      "https://json-schema.app/view/%23?url=https%3A%2F%2Fstatic.example.test%2Fschemas%2Fvoorbeeld%3Fversion%3D1%26format%3Djson",
+    );
+  });
+});
 
 describe("createSchemaCardPresentation", () => {
   test("places dependencies with the descriptive badges and health separately", () => {

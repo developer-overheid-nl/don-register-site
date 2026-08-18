@@ -35,6 +35,9 @@ const formatNumber = (value: number | null | undefined) =>
     ? "-"
     : new Intl.NumberFormat("nl-NL").format(value);
 
+export const createJsonSchemaViewerUrl = (schemaUrl: string) =>
+  `https://json-schema.app/view/%23?url=${encodeURIComponent(schemaUrl)}`;
+
 export const createSchemaCardPresentation = (schema: SchemaCardData) => ({
   badges: [
     {
