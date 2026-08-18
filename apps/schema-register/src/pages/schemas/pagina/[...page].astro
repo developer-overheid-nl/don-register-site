@@ -39,6 +39,7 @@ import { t } from "i18next";
 import createClient from "openapi-fetch";
 import appConfig from "../../../../app.config";
 import FacetFiltersForm from "../../../components/FacetFiltersForm";
+import { createSchemaCardPresentation } from "../../../helpers/schemaPresentation";
 import { Content as Intro } from "../../../partials/intro.md";
 import { ApiPaths, type paths } from "../../../types/api-schema";
 
@@ -292,34 +293,31 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
   { items && items.length > 0 ? (
     <CardsList>
       {
-        items.map((item, index, array) => (
-          <CardsListItem index={index} setsize={array.length}>
+        items.map((item, index, array) => {
+          const cardPresentation = createSchemaCardPresentation(item);
+
+          return <CardsListItem index={index} setsize={array.length}>
             <CardAsLink
               href={new URL(`../${item.id}`, routingObj?.url).toString()}
               linkLabel={t('components.view-details')}
               data-track-content
               data-content-name="Overview Page Card"
             >
-              <HeadingGroup slot="heading" title={item.title || item.id} level={2} appearanceLevel={4}>
-                <div class="subtitle" slot="subTitle">
-                  <Paragraph slot="subTitle" data-content-piece="Organisation Name" itemScope={true} itemType="https://schema.org/Organization" itemID={item.organisation?.uri} className="moveAbove">
-                    <span itemprop="name"><DataBadgeLink data-content-target="Organisation Badge" appearance="subtle" className="orgLink" href={new URL(`../?organisation=${item.organisation?.uri}`, routingObj.url).toString()}>
-                      {item.organisation?.label}
-                    </DataBadgeLink></span>
-                  </Paragraph>
-              </div>
-              </HeadingGroup>
+              <HeadingGroup slot="heading" title={item.title || item.id} level={2} appearanceLevel={4} />
               <div slot="description" class="description utrecht-html"><Markdown text={item.description} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li']} /></div>
               <AlignBox align="space-between" slot="metadata" className="meta">
                 <span class="badges">
-                  <PillBadge startValue={`dialect`} endValue={item.dialect || 'unknown'} type="color" color={item.dialect && item.dialect !== 'unknown' ? "mintgroen" : "grijs"} />
-                  <PillBadge startValue={`type`} endValue={item.rootType || 'unknown'} type="color" color={item.rootType && item.rootType !== 'unknown' ? "lichtblauw" : "grijs"} />
+                  { cardPresentation.badges.map((badge) => (
+                    <PillBadge startValue={badge.label} endValue={badge.value} type="color" color={badge.color} />
+                  ))}
                 </span>
-                <span class="last-updated">{t(`components.last-crawled-at`)}: {new Date(item.lastCrawledAt || '').toLocaleDateString('nl-NL')}</span>
+                { cardPresentation.health && (
+                  <PillBadge startValue={cardPresentation.health.label} endValue={cardPresentation.health.value} type="percentage" />
+                )}
               </AlignBox>
             </CardAsLink>
           </CardsListItem>
-        ))
+        })
       }
     </CardsList>
   ) :
@@ -338,11 +336,6 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
     align-self: flex-end;
   }
 
-  .subtitle {
-    display: flex;
-    justify-content: space-between;
-  }
-
   .description {
     word-break: break-word;
 
@@ -354,9 +347,5 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
   .badges {
     display: flex;
     gap: 0.5rem;
-  }
-
-  .orgLink {
-    font-size: 0.875rem;
   }
 </style>

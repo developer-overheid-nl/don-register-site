@@ -19,6 +19,7 @@ import {
   DataSummaryItem,
   Heading,
   HeadingGroup,
+  Link,
   Markdown,
   Paragraph,
   PillBadge,
@@ -30,9 +31,24 @@ import {
   DonBasic,
   DonDetail,
 } from "@developer-overheid-nl/don-register-layouts";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHeader,
+  TableHeaderCell,
+  TableRow,
+} from "@rijkshuisstijl-community/components-react";
 import { t } from "i18next";
 import createClient from "openapi-fetch";
 import appConfig from "../../../app.config";
+import DependenciesAccordion from "../../components/DependenciesAccordion";
+import { createSchemaDocumentation } from "../../helpers/schemaDocumentation";
+import {
+  createDependencyPresentation,
+  createHealthIssuesTable,
+} from "../../helpers/schemaPresentation";
 import { ApiPaths, type paths } from "../../types/api-schema";
 
 const { id = "" } = Astro.params;
@@ -74,20 +90,34 @@ const rawSchemaUrl = details?.schemaUrl || "";
 const prettySchema = details?.content
   ? JSON.stringify(details.content, null, 2)
   : null;
-const hasSourceMeta = Boolean(
-  details?.sourceMetaName ||
-    details?.sourceMetaBundledUrl ||
-    details?.sourceMetaBaseDialect ||
-    details?.sourceMetaDialect ||
-    details?.sourceMetaBytes !== undefined ||
-    details?.sourceMetaBytesBundled !== undefined ||
-    details?.sourceMetaHealth !== undefined ||
-    details?.sourceMetaDependencies !== undefined ||
-    details?.sourceMetaHealthIssues?.length,
-);
+const schemaDocumentation = createSchemaDocumentation(details?.content);
 const sourceMetaDependencyDetails = details?.sourceMetaDependencyDetails ?? [];
 const sourceMetaHealthIssues = details?.sourceMetaHealthIssues ?? [];
-const currentSchemaReferences = [id, details?.schemaUrl].filter(Boolean);
+const healthIssuesTable = createHealthIssuesTable(sourceMetaHealthIssues);
+const canonicalSchemaUrl =
+  details?.content && typeof details.content.$id === "string"
+    ? details.content.$id
+    : undefined;
+const dependencyPresentation = createDependencyPresentation(
+  sourceMetaDependencyDetails,
+  {
+    id,
+    schemaUrl: details?.schemaUrl,
+    canonicalUrl: canonicalSchemaUrl,
+  },
+);
+const dependencyGroups = [
+  {
+    title: "Gebruikt door dit schema",
+    emptyMessage: "Dit schema gebruikt geen andere schema's.",
+    rows: dependencyPresentation.outgoing,
+  },
+  {
+    title: "Dit schema wordt gebruikt door",
+    emptyMessage: "Dit schema wordt niet door andere schema's gebruikt.",
+    rows: dependencyPresentation.incoming,
+  },
+];
 const formatValue = (value: string | number | null | undefined) =>
   value === null || value === undefined || value === "" ? "-" : String(value);
 const formatDate = (value: string | number | null | undefined) =>
@@ -96,26 +126,8 @@ const formatNumber = (value: number | null | undefined) =>
   value === null || value === undefined
     ? "-"
     : new Intl.NumberFormat("nl-NL").format(value);
-const formatBytes = (value: number | null | undefined) =>
-  value === null || value === undefined ? "-" : `${formatNumber(value)} bytes`;
 const formatPercentage = (value: number | null | undefined) =>
   value === null || value === undefined ? undefined : String(value);
-const formatList = (value: string[] | null | undefined) =>
-  value?.length ? value.join(" - ") : "-";
-const getDependencyTargetLabel = (
-  dependency: (typeof sourceMetaDependencyDetails)[number],
-) =>
-  dependency.toSchemaTitle ||
-  dependency.toSchemaUrl ||
-  dependency.toSchemaId ||
-  dependency.to;
-const getDependencySourceLabel = (
-  dependency: (typeof sourceMetaDependencyDetails)[number],
-) =>
-  dependency.fromSchemaTitle ||
-  dependency.fromSchemaUrl ||
-  dependency.fromSchemaId ||
-  dependency.from;
 const getAbsoluteSchemaUrl = (schemaUrl: string | undefined) => {
   if (!schemaUrl) {
     return undefined;
@@ -127,12 +139,6 @@ const getAbsoluteSchemaUrl = (schemaUrl: string | undefined) => {
     return undefined;
   }
 };
-const shouldShowDependencySource = (
-  dependency: (typeof sourceMetaDependencyDetails)[number],
-) =>
-  ![dependency.fromSchemaId, dependency.fromSchemaUrl, dependency.from]
-    .filter(Boolean)
-    .some((reference) => currentSchemaReferences.includes(reference));
 ---
 
 { error && (
@@ -155,11 +161,6 @@ const shouldShowDependencySource = (
       data-track-content
       data-content-name="Detail Page Header"
     >
-      { details.sourceMetaName && (
-        <div class="subtitle" slot="subTitle">
-          <Paragraph data-content-piece="SourceMeta Name">{details.sourceMetaName}</Paragraph>
-        </div>
-      )}
     </HeadingGroup>
     <Fragment slot="description">
       <Heading level={3} className="sr-only">{t(`pages.description`)}</Heading>
@@ -167,25 +168,88 @@ const shouldShowDependencySource = (
     </Fragment>
     <Fragment slot="aside">
       <DataSummary appearance="row">
-        <DataSummaryItem itemKey="Dialect" itemValue={formatValue(details.dialect)} />
-        <DataSummaryItem itemKey="Root type" itemValue={formatValue(details.rootType)} />
+        <DataSummaryItem itemKey={t(`components.created-at`)} itemValue={formatDate(details.createdAt)} />
+        <DataSummaryItem itemKey="Base dialect" itemValue={formatValue(details.sourceMetaBaseDialect)} />
+        <DataSummaryItem itemKey="SourceMeta dialect" itemValue={formatValue(details.sourceMetaDialect)} />
         <DataSummaryItem itemKey="Health" itemValue={details.sourceMetaHealth === undefined ? "-" : `${formatNumber(details.sourceMetaHealth)}%`} />
         <DataSummaryItem itemKey="Dependencies" itemValue={formatNumber(details.sourceMetaDependencies)} />
-        <DataSummaryItem itemKey="Bytes" itemValue={formatBytes(details.sourceMetaBytes)} />
-        <DataSummaryItem itemKey="Bytes bundled" itemValue={formatBytes(details.sourceMetaBytesBundled)} />
       </DataSummary>
     </Fragment>
     <Fragment slot="meta">
       <Block layout="flex-row">
-        <PillBadge startValue="dialect" endValue={details.dialect || "unknown"} type="color" color={details.dialect && details.dialect !== "unknown" ? "mintgroen" : "grijs"} />
-        <PillBadge startValue="type" endValue={details.rootType || "unknown"} type="color" color={details.rootType && details.rootType !== "unknown" ? "lichtblauw" : "grijs"} />
+        <PillBadge startValue="Dialect" endValue={details.dialect || "unknown"} type="color" color={details.dialect && details.dialect !== "unknown" ? "mintgroen" : "grijs"} />
+        <PillBadge startValue="Type" endValue={details.rootType || "unknown"} type="color" color={details.rootType && details.rootType !== "unknown" ? "lichtblauw" : "grijs"} />
         { formatPercentage(details.sourceMetaHealth) !== undefined && (
-          <PillBadge startValue="health" endValue={formatPercentage(details.sourceMetaHealth)} type="percentage" />
+          <PillBadge startValue="Health" endValue={formatPercentage(details.sourceMetaHealth)} type="percentage" />
         )}
         { details.sourceMetaDependencies !== undefined && (
-          <PillBadge startValue="dependencies" endValue={formatNumber(details.sourceMetaDependencies)} type="color" color="coolgrey" />
+          <PillBadge startValue="Dependencies" endValue={formatNumber(details.sourceMetaDependencies)} type="color" color="coolgrey" />
         )}
       </Block>
+
+      { schemaDocumentation && (
+        <Fragment>
+          <Heading level={4}>Schema documentatie</Heading>
+          <Block appearance="outlined" className="schema-documentation-block" data-track-content data-content-name="Schema Documentation">
+            <Table className="schema-documentation-table">
+              <TableCaption className="sr-only">Documentatie van het JSON Schema</TableCaption>
+              <colgroup>
+                <col class="schema-property-column" />
+                <col class="schema-type-column" />
+                <col class="schema-required-column" />
+                <col />
+              </colgroup>
+              <TableHeader>
+                <TableRow>
+                  <TableHeaderCell scope="col">Eigenschap</TableHeaderCell>
+                  <TableHeaderCell scope="col">Type</TableHeaderCell>
+                  <TableHeaderCell scope="col">Verplicht</TableHeaderCell>
+                  <TableHeaderCell scope="col">Beschrijving en details</TableHeaderCell>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                { schemaDocumentation.tableRows.map((row) => (
+                  <TableRow className={row.isRoot ? "schema-documentation-root" : undefined}>
+                    <TableHeaderCell scope="row">
+                      <span class="schema-property" style={`--schema-depth: ${row.depth}`}>
+                        {row.property}
+                      </span>
+                    </TableHeaderCell>
+                    <TableCell><code>{row.type}</code></TableCell>
+                    <TableCell>{row.required}</TableCell>
+                    <TableCell className="schema-description">
+                      <div>{row.description}</div>
+                      { row.details.length > 0 && (
+                        <ul class="schema-details">
+                          { row.details.map((item) => (
+                            <li>
+                              <strong>{item.key}:</strong>{" "}
+                              { item.href ? (
+                                <Link href={item.href}>{item.value}</Link>
+                              ) : (
+                                item.value
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Block>
+        </Fragment>
+      )}
+
+      { prettySchema && (
+        <Fragment>
+          <Heading level={4}>JSON Schema</Heading>
+          <Block appearance="outlined" className="schema-content">
+            <pre class="schema-pre"><code>{prettySchema}</code></pre>
+          </Block>
+        </Fragment>
+      )}
 
       <Heading level={3}>Schema gebruiken</Heading>
       <Block appearance="outlined" layout="flex-col" data-track-content data-content-name="Detail Page Schema Tools">
@@ -216,87 +280,54 @@ const shouldShowDependencySource = (
         </div>
       </Block>
 
-      { hasSourceMeta && (
-        <Fragment>
-          <Heading level={4}>SourceMeta</Heading>
-          <Block appearance="outlined" layout="flex-col">
-            <DataSummary appearance="column" contained>
-              <DataSummaryItem itemKey="SourceMeta name" itemValue={formatValue(details.sourceMetaName)} />
-              <DataSummaryItem itemKey="Base dialect" itemValue={formatValue(details.sourceMetaBaseDialect)} />
-              <DataSummaryItem itemKey="SourceMeta dialect" itemValue={formatValue(details.sourceMetaDialect)} />
-              <DataSummaryItem itemKey="Bytes" itemValue={formatBytes(details.sourceMetaBytes)} />
-              <DataSummaryItem itemKey="Bytes bundled" itemValue={formatBytes(details.sourceMetaBytesBundled)} />
-              <DataSummaryItem itemKey="Health" itemValue={details.sourceMetaHealth === undefined ? "-" : `${formatNumber(details.sourceMetaHealth)}%`} />
-              <DataSummaryItem itemKey="Dependencies" itemValue={formatNumber(details.sourceMetaDependencies)} />
-            </DataSummary>
-            { sourceMetaDependencyDetails.length > 0 && (
-              <Fragment>
-                <Heading level={5}>Dependencies</Heading>
-                { sourceMetaDependencyDetails.map((dependency) => (
-                  <DataSummary appearance="column" contained>
-                    { getAbsoluteSchemaUrl(dependency.toSchemaUrl) ? (
-                      <DataSummaryItem itemKey="To" itemValue="" href={getAbsoluteSchemaUrl(dependency.toSchemaUrl)}>{getDependencyTargetLabel(dependency)}</DataSummaryItem>
-                    ) : (
-                      <DataSummaryItem itemKey="To" itemValue={getDependencyTargetLabel(dependency)} />
-                    )}
-                    <DataSummaryItem itemKey="At" itemValue={dependency.at} />
-                    { shouldShowDependencySource(dependency) && (
-                      getAbsoluteSchemaUrl(dependency.fromSchemaUrl) ? (
-                        <DataSummaryItem itemKey="From" itemValue="" href={getAbsoluteSchemaUrl(dependency.fromSchemaUrl)}>{getDependencySourceLabel(dependency)}</DataSummaryItem>
-                      ) : (
-                        <DataSummaryItem itemKey="From" itemValue={getDependencySourceLabel(dependency)} />
-                      )
-                    )}
-                  </DataSummary>
-                ))}
-              </Fragment>
-            )}
-            { sourceMetaHealthIssues.length > 0 && (
-              <Fragment>
-                <Heading level={5}>Health issues</Heading>
-                { sourceMetaHealthIssues.map((issue) => (
-                  <DataSummary appearance="column" contained>
-                    <DataSummaryItem itemKey="Name" itemValue={issue.name} />
-                    <DataSummaryItem itemKey="Message" itemValue={issue.message} />
-                    { issue.description && (
-                      <DataSummaryItem itemKey="Description" itemValue={issue.description} />
-                    )}
-                    <DataSummaryItem itemKey="Pointers" itemValue={formatList(issue.pointers)} />
-                  </DataSummary>
-                ))}
-              </Fragment>
-            )}
-          </Block>
-        </Fragment>
-      )}
-
-      { prettySchema && (
-        <Fragment>
-          <Heading level={4}>JSON Schema</Heading>
-          <Block appearance="outlined" className="schema-content">
-            <pre class="schema-pre"><code>{prettySchema}</code></pre>
-          </Block>
-        </Fragment>
-      )}
-      <Heading level={4}>{t(`pages.tbd-metadata`)}</Heading>
-      <Block appearance="outlined">
-        <DataSummary appearance="column" contained>
-          <DataSummaryItem itemKey={t(`components.created-at`)} itemValue={formatDate(details.createdAt)} />
-          <DataSummaryItem itemKey={t(`components.last-crawled-at`)} itemValue={formatDate(details.lastCrawledAt)} />
-          <DataSummaryItem itemKey="ID" itemValue={details.id} />
-        </DataSummary>
+      <Heading level={4}>Dependencies</Heading>
+      <Block appearance="outlined" layout="flex-col" className="dependencies-block">
+        <DependenciesAccordion
+          client:load
+          groups={dependencyGroups.map((group) => ({
+            ...group,
+            rows: group.rows.map((dependency) => ({
+              at: dependency.at,
+              href: getAbsoluteSchemaUrl(dependency.schemaUrl),
+              schemaLabel: dependency.schemaLabel,
+            })),
+          }))}
+        />
       </Block>
+
+      <Heading level={4}>Health issues</Heading>
+      <Block appearance="outlined" className="health-issues-block">
+        { healthIssuesTable.rows.length > 0 ? (
+          <Table className="health-issues-table">
+            <TableCaption className="sr-only">Health issues</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHeaderCell scope="col">Message</TableHeaderCell>
+                { healthIssuesTable.showPointerColumn && <TableHeaderCell scope="col">Pointer</TableHeaderCell> }
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              { healthIssuesTable.rows.map((issue) => (
+                <TableRow>
+                  <TableCell>{issue.message}</TableCell>
+                  { healthIssuesTable.showPointerColumn && (
+                    <TableCell>{issue.pointer && <code>{issue.pointer}</code>}</TableCell>
+                  )}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <Paragraph>Geen health issues gevonden.</Paragraph>
+        )}
+      </Block>
+
     </Fragment>
   </DonDetail>
   )
 }
 
 <style>
-  .subtitle {
-    display: flex;
-    justify-content: space-between;
-  }
-
   .schema-content {
     overflow-x: auto;
   }
@@ -308,5 +339,91 @@ const shouldShowDependencySource = (
     line-height: 1.5;
     background-color: rgb(from var(--rhc-color-cool-grey-50) r g b / 0.5);
     overflow-x: auto;
+  }
+
+  .health-issues-block {
+    overflow-x: auto;
+  }
+
+  .schema-documentation-block {
+    overflow-x: auto;
+  }
+
+  .dependencies-block {
+    align-items: stretch;
+  }
+
+  :global(.schema-documentation-table code),
+  :global(.dependency-table code),
+  :global(.health-issues-table code) {
+    overflow-wrap: anywhere;
+  }
+
+  :global(.health-issues-table .utrecht-table__header-cell:first-child) {
+    width: 65%;
+  }
+
+  :global(.schema-documentation-table) {
+    min-width: 48rem;
+  }
+
+  :global(.schema-property-column) {
+    width: 23%;
+  }
+
+  :global(.schema-type-column) {
+    width: 13%;
+  }
+
+  :global(.schema-required-column) {
+    width: 12%;
+  }
+
+  :global(.schema-property) {
+    display: block;
+    padding-inline-start: calc(var(--schema-depth) * 1rem);
+    font-family: monospace;
+    overflow-wrap: anywhere;
+  }
+
+  :global(.schema-documentation-root) {
+    background-color: rgb(from var(--rhc-color-cool-grey-50) r g b / 0.5);
+  }
+
+  :global(.schema-documentation-root .schema-property) {
+    font-family: inherit;
+  }
+
+  :global(.schema-description) {
+    min-width: 18rem;
+  }
+
+  :global(.schema-details) {
+    display: grid;
+    gap: 0.25rem;
+    margin-block: 0.5rem 0;
+    padding-inline-start: 0;
+    font-size: 0.875rem;
+    list-style: none;
+  }
+
+  :global(.dependencies-accordion) {
+    width: 100%;
+  }
+
+  :global(.dependency-table-wrapper) {
+    overflow-x: auto;
+  }
+
+  :global(.dependency-table) {
+    min-width: 36rem;
+  }
+
+  :global(.dependency-table .utrecht-table__header-cell:first-child) {
+    width: 42%;
+  }
+
+  :global(.dependency-table .utrecht-table__body .utrecht-table__header-cell) {
+    overflow-wrap: anywhere;
   }
 </style>
