@@ -1,5 +1,13 @@
 # @developer-overheid-nl/oss-register
 
+## 2.1.4
+
+### Patch Changes
+
+- Updated dependencies [ffd6c71]
+  - @developer-overheid-nl/don-register-components@1.4.0
+  - @developer-overheid-nl/don-register-layouts@1.2.3
+
 ## 2.1.3
 
 ### Patch Changes
