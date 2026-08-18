@@ -83,7 +83,7 @@ test("returns null when schema content is not an object", () => {
   expect(createSchemaDocumentation("schema")).toBeNull();
 });
 
-test("creates documentation table rows with primary columns and secondary details", () => {
+test("creates documentation table rows for properties only", () => {
   const documentation = createSchemaDocumentation({
     title: "Zaak",
     description: "Een zaak in behandeling.",
@@ -100,21 +100,11 @@ test("creates documentation table rows with primary columns and secondary detail
 
   expect(documentation?.tableRows).toEqual([
     {
-      property: "Zaak",
-      type: "object",
-      required: "-",
-      description: "Een zaak in behandeling.",
-      depth: 0,
-      isRoot: true,
-      details: [],
-    },
-    {
       property: "id",
       type: "string",
       required: "Ja",
       description: "Unieke identificatie.",
       depth: 0,
-      isRoot: false,
       details: [{ key: "Format", value: "uuid" }],
     },
   ]);
@@ -142,7 +132,6 @@ test("preserves nested paths and linked references in documentation table rows",
     required: "Nee",
     description: "-",
     depth: 1,
-    isRoot: false,
     details: [
       {
         key: "$ref",

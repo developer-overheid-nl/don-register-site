@@ -29,7 +29,6 @@ export type SchemaDocumentationTableRow = {
   required: string;
   description: string;
   depth: number;
-  isRoot: boolean;
   details: SchemaDocumentationItem[];
 };
 
@@ -177,14 +176,12 @@ const createTableRow = (
   property: string,
   items: SchemaDocumentationItem[],
   depth: number,
-  isRoot: boolean,
 ): SchemaDocumentationTableRow => ({
   property,
   type: getItemValue(items, "Type") || "-",
   required: getItemValue(items, "Required") || "-",
   description: getItemValue(items, "Description") || "-",
   depth,
-  isRoot,
   details: items.filter((item) => !TABLE_COLUMN_KEYS.has(item.key)),
 });
 
@@ -210,7 +207,7 @@ const collectProperties = (
         depth,
         items,
       });
-      tableRows.push(createTableRow(path, items, depth, false));
+      tableRows.push(createTableRow(path, items, depth));
       collectProperties(
         value,
         nodes,
@@ -267,14 +264,7 @@ export const createSchemaDocumentation = (
 
   const overviewItems = getSchemaItems(schema);
   const nodes: SchemaDocumentationNode[] = [];
-  const tableRows = [
-    createTableRow(
-      getItemValue(overviewItems, "Title") || "Schema",
-      overviewItems,
-      0,
-      true,
-    ),
-  ];
+  const tableRows: SchemaDocumentationTableRow[] = [];
   collectProperties(schema, nodes, tableRows, "", 0, getRequiredKeys(schema));
 
   if (overviewItems.length === 0 && nodes.length === 0) {

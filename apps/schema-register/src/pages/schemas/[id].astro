@@ -14,7 +14,6 @@ import {
   AlignBox,
   Block,
   CopyButton,
-  DataBadgeLink,
   DataSummary,
   DataSummaryItem,
   Heading,
@@ -180,19 +179,23 @@ const getAbsoluteSchemaUrl = (schemaUrl: string | undefined) => {
         <PillBadge startValue="Dialect" endValue={details.dialect || "unknown"} type="color" color={details.dialect && details.dialect !== "unknown" ? "mintgroen" : "grijs"} />
         <PillBadge startValue="Type" endValue={details.rootType || "unknown"} type="color" color={details.rootType && details.rootType !== "unknown" ? "lichtblauw" : "grijs"} />
         { formatPercentage(details.sourceMetaHealth) !== undefined && (
-          <PillBadge startValue="Health" endValue={formatPercentage(details.sourceMetaHealth)} type="percentage" />
+          <Link href="#health-issues">
+            <PillBadge startValue="Health" endValue={formatPercentage(details.sourceMetaHealth)} type="percentage" />
+          </Link>
         )}
         { details.sourceMetaDependencies !== undefined && (
-          <PillBadge startValue="Dependencies" endValue={formatNumber(details.sourceMetaDependencies)} type="color" color="coolgrey" />
+          <Link href="#dependencies">
+            <PillBadge startValue="Dependencies" endValue={formatNumber(details.sourceMetaDependencies)} type="color" color="coolgrey" />
+          </Link>
         )}
       </Block>
 
-      { schemaDocumentation && (
+      { schemaDocumentation && schemaDocumentation.tableRows.length > 0 && (
         <Fragment>
-          <Heading level={4}>Schema documentatie</Heading>
+          <Heading level={4}>Eigenschappen</Heading>
           <Block appearance="outlined" className="schema-documentation-block" data-track-content data-content-name="Schema Documentation">
             <Table className="schema-documentation-table">
-              <TableCaption className="sr-only">Documentatie van het JSON Schema</TableCaption>
+              <TableCaption className="sr-only">Eigenschappen van het JSON Schema</TableCaption>
               <colgroup>
                 <col class="schema-property-column" />
                 <col class="schema-type-column" />
@@ -209,7 +212,7 @@ const getAbsoluteSchemaUrl = (schemaUrl: string | undefined) => {
               </TableHeader>
               <TableBody>
                 { schemaDocumentation.tableRows.map((row) => (
-                  <TableRow className={row.isRoot ? "schema-documentation-root" : undefined}>
+                  <TableRow>
                     <TableHeaderCell scope="row">
                       <span class="schema-property" style={`--schema-depth: ${row.depth}`}>
                         {row.property}
@@ -265,22 +268,23 @@ const getAbsoluteSchemaUrl = (schemaUrl: string | undefined) => {
           />
           <CopyButton client:load text={rawSchemaUrl} data-content-target="Schema Copy Button" />
         </AlignBox>
-        {/* biome-ignore lint/a11y/useSemanticElements: ol/ul not possible */}
-        <div class="utrecht-badge-list" role="list" data-content-piece="Schema links">
-          { details.schemaUrl && (
-            <DataBadgeLink data-content-target="Open schema.json" href={details.schemaUrl} target="_blank" rel="noopener" role="listitem">
-              schema.json
-            </DataBadgeLink>
-          )}
-          { details.sourceMetaBundledUrl && (
-            <DataBadgeLink data-content-target="Download bundled schema" href={details.sourceMetaBundledUrl} role="listitem">
-              Download bundled
-            </DataBadgeLink>
-          )}
-        </div>
+        { details.sourceMetaBundledUrl && (
+          <AlignBox data-content-piece="Bundled JSON Schema" align="space-between" gap="small">
+            <label for="bundledSchemaUrl" class="no-shrink">Bundled JSON Schema</label>
+            <ReadOnlyTextInput
+              id="bundledSchemaUrl"
+              type="url"
+              aria-label="Bundled JSON Schema URL"
+              defaultValue={details.sourceMetaBundledUrl}
+              name="bundledSchemaUrl"
+              fontVariant="monospace"
+            />
+            <CopyButton client:load text={details.sourceMetaBundledUrl} data-content-target="Bundled Schema Copy Button" />
+          </AlignBox>
+        )}
       </Block>
 
-      <Heading level={4}>Dependencies</Heading>
+      <Heading level={4} id="dependencies">Dependencies</Heading>
       <Block appearance="outlined" layout="flex-col" className="dependencies-block">
         <DependenciesAccordion
           client:load
@@ -295,7 +299,7 @@ const getAbsoluteSchemaUrl = (schemaUrl: string | undefined) => {
         />
       </Block>
 
-      <Heading level={4}>Health issues</Heading>
+      <Heading level={4} id="health-issues">Health issues</Heading>
       <Block appearance="outlined" className="health-issues-block">
         { healthIssuesTable.rows.length > 0 ? (
           <Table className="health-issues-table">
@@ -384,14 +388,6 @@ const getAbsoluteSchemaUrl = (schemaUrl: string | undefined) => {
     padding-inline-start: calc(var(--schema-depth) * 1rem);
     font-family: monospace;
     overflow-wrap: anywhere;
-  }
-
-  :global(.schema-documentation-root) {
-    background-color: rgb(from var(--rhc-color-cool-grey-50) r g b / 0.5);
-  }
-
-  :global(.schema-documentation-root .schema-property) {
-    font-family: inherit;
   }
 
   :global(.schema-description) {
