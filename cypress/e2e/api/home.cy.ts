@@ -51,6 +51,28 @@ describe("API-register", () => {
     cy.get('[aria-label="Huidige filters"] a').should("have.length", 3);
   });
 
+  it("can sort APIs and preserve the query context", () => {
+    cy.visit("/apis/pagina/2?q=api&sortBy=title&sortOrder=asc");
+
+    cy.get('#sort-form select[name="sortBy"]').select("adrScore");
+    cy.get('#sort-form select[name="sortOrder"]').select("desc");
+    cy.get("#sort-form").submit();
+
+    cy.location("pathname").should("eq", "/apis");
+    cy.location("search").should("include", "q=api");
+    cy.location("search").should("include", "sortBy=adrScore");
+    cy.location("search").should("include", "sortOrder=desc");
+    cy.get('#get-filters input[name="sortBy"]').should(
+      "have.value",
+      "adrScore",
+    );
+    cy.get('#get-filters input[name="sortOrder"]').should("have.value", "desc");
+    cy.get('search input[type="hidden"][name="sortBy"]').should(
+      "have.value",
+      "adrScore",
+    );
+  });
+
   it("loads the toevoegen page", () => {
     cy.visit("/apis/toevoegen");
 
