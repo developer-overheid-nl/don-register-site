@@ -52,6 +52,28 @@ describe("oss register", () => {
     cy.get('[aria-label="Huidige filters"] a').should("have.length", 3);
   });
 
+  it("can sort repositories and preserve the query context", () => {
+    cy.visit("/repositories/pagina/2?q=code&sortBy=title&sortOrder=asc");
+
+    cy.get('#sort-form select[name="sortBy"]').select("lastActivity");
+    cy.get('#sort-form select[name="sortOrder"]').select("desc");
+    cy.get("#sort-form").submit();
+
+    cy.location("pathname").should("eq", "/repositories");
+    cy.location("search").should("include", "q=code");
+    cy.location("search").should("include", "sortBy=lastActivity");
+    cy.location("search").should("include", "sortOrder=desc");
+    cy.get('#get-filters input[name="sortBy"]').should(
+      "have.value",
+      "lastActivity",
+    );
+    cy.get('#get-filters input[name="sortOrder"]').should("have.value", "desc");
+    cy.get('search input[type="hidden"][name="sortBy"]').should(
+      "have.value",
+      "lastActivity",
+    );
+  });
+
   it("loads the toevoegen page", () => {
     cy.visit("/repositories/toevoegen");
 
