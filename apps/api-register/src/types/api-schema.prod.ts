@@ -13,7 +13,7 @@ export interface paths {
         };
         /**
          * List APIs
-         * @description Returns a list of APIs included in the register. Supports the same filter query parameters as the filters endpoint and combines them with the optional q search term.
+         * @description Returns a list of APIs included in the register. Supports the same filter query parameters as the filters endpoint, combines them with the optional q search term, and sorts the filtered result before pagination.
          */
         get: operations["listApis"];
         put?: never;
@@ -259,6 +259,24 @@ export interface components {
             url: string;
         };
         /**
+         * Organisation input
+         * @description An organisation to add to the catalog. The label is resolved from TOOI.
+         */
+        OrganisationInput: {
+            /**
+             * Organisation URI
+             * Format: uri
+             * @description The unique identifier for an organisation
+             * @example https://identifier.overheid.nl/tooi/id/gemeente/gm0142
+             */
+            uri: string;
+            /**
+             * @description Fallback label when TOOI does not provide one
+             * @example gemeente Ambt Delden
+             */
+            label?: string;
+        };
+        /**
          * Organisation summary
          * @description An organisation from the catalog
          */
@@ -337,12 +355,15 @@ export interface components {
              */
             title: string;
             /**
+             * @description Short plain-text summary of the API. Derived from description when no explicit summary is available.
+             * @example Short summary of the API register.
+             */
+            summary: string | null;
+            /**
              * @description The description of the API
              * @example This is version 1 of the API register. This description can also contain Markdown.
              */
             description: string;
-            /** @description The summary of the API */
-            summary: string | null;
             organisation: components["schemas"]["OrganisationSummary"];
             /**
              * @description The ADR score of the API
@@ -527,14 +548,12 @@ export interface components {
              * Format: date
              * @description Manual override for the sunset date (YYYY-MM-DD). Send null to clear the value.
              * @example 2027-11-11
-             * @example null
              */
             sunset?: string | null;
             /**
              * Format: date
              * @description Manual override for the deprecated date (YYYY-MM-DD). Send null to clear the value.
              * @example 2025-10-10
-             * @example null
              */
             deprecated?: string | null;
         } | unknown | unknown | unknown | unknown;
@@ -604,6 +623,10 @@ export interface components {
         Page: number;
         /** @description Number of results per page. */
         PerPage: number;
+        /** @description Property used to sort the filtered API collection. Version values are compared semantically; APIs without a sortable ADR score or version are placed last. */
+        SortBy: "title" | "adrScore" | "version";
+        /** @description Direction used to sort the filtered API collection. */
+        SortOrder: "asc" | "desc";
         /** @description Search term to combine with API filters. Matches API title. */
         Search: string;
         /** @description Filter on organisation URI. */
@@ -645,6 +668,10 @@ export interface operations {
                 page?: components["parameters"]["Page"];
                 /** @description Number of results per page. */
                 perPage?: components["parameters"]["PerPage"];
+                /** @description Property used to sort the filtered API collection. Version values are compared semantically; APIs without a sortable ADR score or version are placed last. */
+                sortBy?: components["parameters"]["SortBy"];
+                /** @description Direction used to sort the filtered API collection. */
+                sortOrder?: components["parameters"]["SortOrder"];
                 /** @description Search term to combine with API filters. Matches API title. */
                 q?: components["parameters"]["Search"];
                 /** @description Filter on organisation URI. */
@@ -1031,7 +1058,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["OrganisationSummary"];
+                "application/json": components["schemas"]["OrganisationInput"];
             };
         };
         responses: {

@@ -57,7 +57,7 @@ export interface paths {
         };
         /**
          * List repositories
-         * @description Returns a list of OSS repositories included in the register. Supports the same filter query parameters as the repository filter endpoint.
+         * @description Returns a list of OSS repositories included in the register. Combines filters with the optional q search term and sorts the filtered result before pagination.
          */
         get: operations["listRepositories"];
         put?: never;
@@ -233,6 +233,18 @@ export interface components {
             label: string;
         };
         /**
+         * Organisation input
+         * @description An organisation to add to the catalog. The label is resolved from TOOI, with an optional fallback label when TOOI does not provide one.
+         */
+        OrganisationInput: {
+            uri: components["schemas"]["OrganisationUri"];
+            /**
+             * @description Fallback label when TOOI does not provide one
+             * @example KOOP
+             */
+            label?: string;
+        };
+        /**
          * Git Organisation Input
          * @description A git organisation input for creating or updating a git organisation in the catalog
          */
@@ -282,6 +294,8 @@ export interface components {
             publicCodeUrl?: components["schemas"]["PublicCodeUrl"];
             /** @description Fork status supplied by the crawler based on the code hosting provider. */
             isFork?: boolean;
+            /** @description Archived status supplied by the crawler based on the code hosting provider. */
+            archived?: boolean;
             shortDescription?: components["schemas"]["RepositoryShortDescription"];
             name?: components["schemas"]["RepositoryName"];
             createdAt?: components["schemas"]["CreatedAt"];
@@ -439,10 +453,16 @@ export interface components {
         Page: number;
         /** @description Number of results per page. */
         PerPage: number;
+        /** @description Property used to sort the filtered repository collection. title maps to the repository name; lastActivity maps to lastActivityAt. Repositories without a last activity timestamp are placed last. */
+        SortBy: "title" | "lastActivity";
+        /** @description Direction used to sort the filtered repository collection. */
+        SortOrder: "asc" | "desc";
         /** @description Filter by organisation URI. */
         OrganisationFilter: string;
         /** @description Filter on publiccode.yml presence. Omit or set true for repositories with a publiccode.yml URL. Set false for repositories without a publiccode.yml URL. */
         PublicCodeFilter: boolean;
+        /** @description Filter archived repositories. Defaults to false, hiding repositories marked as archived. Set true to return only archived repositories. */
+        ArchivedFilter: boolean;
         /** @description Filter by last activity date. Format: ISO 8601 (yyyy-MM-dd). */
         LastActivityAfterFilter: string;
         /** @description Filter by software type. Repeatable for multiple values. */
@@ -550,6 +570,8 @@ export interface operations {
                 organisation?: components["parameters"]["OrganisationFilter"];
                 /** @description Filter on publiccode.yml presence. Omit or set true for repositories with a publiccode.yml URL. Set false for repositories without a publiccode.yml URL. */
                 publiccode?: components["parameters"]["PublicCodeFilter"];
+                /** @description Filter archived repositories. Defaults to false, hiding repositories marked as archived. Set true to return only archived repositories. */
+                archived?: components["parameters"]["ArchivedFilter"];
                 /** @description Filter by last activity date. Format: ISO 8601 (yyyy-MM-dd). */
                 lastActivityAfter?: components["parameters"]["LastActivityAfterFilter"];
                 /** @description Filter by software type. Repeatable for multiple values. */
@@ -591,12 +613,18 @@ export interface operations {
                 page?: components["parameters"]["Page"];
                 /** @description Number of results per page. */
                 perPage?: components["parameters"]["PerPage"];
+                /** @description Property used to sort the filtered repository collection. title maps to the repository name; lastActivity maps to lastActivityAt. Repositories without a last activity timestamp are placed last. */
+                sortBy?: components["parameters"]["SortBy"];
+                /** @description Direction used to sort the filtered repository collection. */
+                sortOrder?: components["parameters"]["SortOrder"];
                 /** @description Search term to combine with repository filters. Matches repository name, short description, long description, publiccode.yml url and publiccode.yml landingURL. */
                 q?: components["parameters"]["SearchFilter"];
                 /** @description Filter by organisation URI. */
                 organisation?: components["parameters"]["OrganisationFilter"];
                 /** @description Filter on publiccode.yml presence. Omit or set true for repositories with a publiccode.yml URL. Set false for repositories without a publiccode.yml URL. */
                 publiccode?: components["parameters"]["PublicCodeFilter"];
+                /** @description Filter archived repositories. Defaults to false, hiding repositories marked as archived. Set true to return only archived repositories. */
+                archived?: components["parameters"]["ArchivedFilter"];
                 /** @description Filter by last activity date. Format: ISO 8601 (yyyy-MM-dd). */
                 lastActivityAfter?: components["parameters"]["LastActivityAfterFilter"];
                 /** @description Filter by software type. Repeatable for multiple values. */
@@ -794,7 +822,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["OrganisationSummary"];
+                "application/json": components["schemas"]["OrganisationInput"];
             };
         };
         responses: {
