@@ -44,11 +44,24 @@ export const WithActiveSortAndFilters: Story = {
   },
   play: async ({ canvas, canvasElement }) => {
     const form = canvasElement.querySelector("form");
+    const sortBySelect = canvas.getByLabelText("Sorteer op");
+    const sortOrderSelect = canvas.getByLabelText("Volgorde");
 
     await expect(form).toHaveAttribute("action", "/apis");
-    await expect(canvas.getByLabelText("Sorteer op")).toHaveValue("adrScore");
-    await expect(canvas.getByLabelText("Volgorde")).toHaveValue("desc");
+    await expect(sortBySelect).toHaveValue("adrScore");
+    await expect(sortOrderSelect).toHaveValue("desc");
     await expect(canvas.getByRole("button", { name: "Sorteer" })).toBeVisible();
+    await expect(canvas.getByRole("heading", { name: "Sorteren" })).toHaveClass(
+      "sr-only",
+    );
+    await expect(getComputedStyle(form as HTMLFormElement).justifyContent).toBe(
+      "flex-end",
+    );
+    for (const select of [sortBySelect, sortOrderSelect]) {
+      await expect(
+        Number.parseFloat(getComputedStyle(select).paddingInlineEnd),
+      ).toBeGreaterThanOrEqual(40);
+    }
     await expect(
       form?.querySelectorAll('input[name="organisation"]'),
     ).toHaveLength(2);

@@ -40,7 +40,7 @@ const SortForm = ({
       className={clsx(styles.sort, className)}
       aria-labelledby={headingId}
     >
-      <Heading id={headingId} level={2} appearanceLevel={3}>
+      <Heading id={headingId} level={2} appearanceLevel={3} className="sr-only">
         {t("components.sort")}
       </Heading>
       <form

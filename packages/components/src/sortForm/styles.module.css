@@ -7,6 +7,12 @@
   flex-wrap: wrap;
   gap: 1rem;
   align-items: end;
+  justify-content: flex-end;
+}
+
+.form select {
+  min-inline-size: 10rem;
+  padding-inline-end: 3rem;
 }
 
 @media (--xxs-and-below-viewport) {
