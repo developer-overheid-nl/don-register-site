@@ -4,4 +4,4 @@
 "@developer-overheid-nl/oss-register": minor
 ---
 
-Voeg een generiek sorteerformulier toe en maak sorteren op de ondersteunde velden beschikbaar in het API-register en het Open Source Register.
+Add a generic sorting form and enable sorting by the supported fields in the API Register and Open Source Register.
