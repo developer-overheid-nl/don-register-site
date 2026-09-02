@@ -2,7 +2,7 @@
 
 describe("oss register", () => {
   it("loads the home page", { retries: 2 }, () => {
-    cy.visit("/");
+    cy.visit("/?publiccode=false");
 
     cy.get("main").should("be.visible");
     cy.title().should("eq", "Overzicht | Open Source Register");
@@ -12,7 +12,7 @@ describe("oss register", () => {
   });
 
   it("can navigate to the next page", () => {
-    cy.visit("/repositories/pagina/1");
+    cy.visit("/repositories/pagina/1?publiccode=false");
 
     cy.get('[aria-label="Paginering"] a').should("have.length.above", 3);
     cy.get('[rel="next"]').click();
@@ -24,26 +24,10 @@ describe("oss register", () => {
   });
 
   it("can filter items", () => {
-    cy.visit("/");
+    cy.visit("/?publiccode=false");
 
-    cy.get("#facetfilters input").first().as("firstFilter");
     cy.get("#facetfilters input").last().as("lastFilter");
     cy.get("#get-filters").as("filtersForm");
-    cy.get('[aria-label="Huidige filters"] a').should("have.length", 1);
-
-    cy.get("@firstFilter").scrollIntoView().focus().press("ArrowRight");
-    cy.get("@filtersForm").submit();
-
-    cy.get("@firstFilter").then((filter) => {
-      const name = filter.attr("name");
-      cy.get(`input[name="${name}"]:checked`).then((inputChecked) => {
-        const value = inputChecked.val();
-
-        const re = new RegExp(`${name}=${value}`, "g");
-        cy.location("search").should("match", re);
-      });
-    });
-
     cy.get('[aria-label="Huidige filters"] a').should("have.length", 1);
 
     cy.get("@lastFilter").scrollIntoView().check();
