@@ -93,6 +93,9 @@ describe("API-register", () => {
 
     cy.visit("/apis/key-aanvragen");
 
+    cy.get("#get-api-key")
+      .parents("astro-island")
+      .should("not.have.attr", "ssr");
     cy.get('input[name="email"]').type("test@example.com");
     cy.get('button[type="submit"]').click();
 
