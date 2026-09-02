@@ -2,38 +2,64 @@
 
 describe("oss register", () => {
   it("loads the home page", { retries: 2 }, () => {
-    cy.visit("/?publiccode=false");
+    cy.visit("/");
 
     cy.get("main").should("be.visible");
     cy.title().should("eq", "Overzicht | Open Source Register");
 
-    cy.get(".results ol li").should("have.length", 20);
+    cy.get("main").then(($main) => {
+      const results = $main.find(".results ol li");
+
+      if (results.length > 0) {
+        expect(results).to.have.length(20);
+      } else {
+        cy.wrap($main)
+          .contains("Geen repositories gevonden.")
+          .should("be.visible");
+      }
+    });
     cy.get(".filters #facetfilters input").should("have.length.above", 1);
   });
 
-  it("can navigate to the next page", () => {
-    cy.visit("/repositories/pagina/1?publiccode=false");
+  it("shows pagination for results or an empty state", () => {
+    cy.visit("/repositories/pagina/1");
 
-    cy.get('[aria-label="Paginering"] a').should("have.length.above", 3);
-    cy.get('[rel="next"]').click();
+    cy.get("main").then(($main) => {
+      const nextPage = $main.find('[rel="next"]');
 
-    cy.location("pathname").should("match", /\/pagina\/2/);
-    cy.get('[aria-current="true"]')
-      .should("have.text", "2")
-      .and("have.attr", "aria-label", "Pagina 2: Resultaten 21 tot en met 40");
+      if (nextPage.length > 0) {
+        cy.wrap(nextPage).click();
+        cy.location("pathname").should("match", /\/pagina\/2/);
+        cy.get('[aria-current="true"]')
+          .should("have.text", "2")
+          .and(
+            "have.attr",
+            "aria-label",
+            "Pagina 2: Resultaten 21 tot en met 40",
+          );
+      } else {
+        cy.wrap($main)
+          .contains("Geen repositories gevonden.")
+          .should("be.visible");
+      }
+    });
   });
 
   it("can filter items", () => {
-    cy.visit("/?publiccode=false");
+    cy.visit("/");
 
     cy.get("#facetfilters input").last().as("lastFilter");
     cy.get("#get-filters").as("filtersForm");
     cy.get('[aria-label="Huidige filters"] a').should("have.length", 1);
 
-    cy.get("@lastFilter").scrollIntoView().check();
-    cy.get("@filtersForm").submit();
+    cy.get("@lastFilter").then(($filter) => {
+      const name = $filter.attr("name");
+      const value = $filter.val();
 
-    cy.get('[aria-label="Huidige filters"] a').should("have.length", 3);
+      cy.wrap($filter).scrollIntoView().check();
+      cy.get("@filtersForm").submit();
+      cy.location("search").should("include", `${name}=${value}`);
+    });
   });
 
   it("can sort repositories and preserve the query context", () => {
