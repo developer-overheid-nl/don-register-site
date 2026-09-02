@@ -1,7 +1,3 @@
-.sort {
-  margin-block-end: 1rem;
-}
-
 .form {
   display: flex;
   flex-wrap: wrap;
@@ -11,13 +7,34 @@
 }
 
 .form select {
+  order: 2;
   min-inline-size: 10rem;
   padding-inline-end: 3rem;
 }
 
-@media (--xxs-and-below-viewport) {
+.form :global(.utrecht-form-field) {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.form :global(.utrecht-form-field__label) {
+  flex: none;
+  margin-block-end: 0;
+  white-space: nowrap;
+}
+
+@media (--xs-and-below-viewport) {
   .form {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .form :global(.utrecht-form-field) {
+    display: block;
+  }
+
+  .form :global(.utrecht-form-field__label) {
+    margin-block-end: var(--utrecht-form-field-label-margin-block-end);
   }
 }

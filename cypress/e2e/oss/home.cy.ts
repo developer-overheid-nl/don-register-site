@@ -53,11 +53,17 @@ describe("oss register", () => {
   });
 
   it("can sort repositories and preserve the query context", () => {
+    cy.viewport(1440, 900);
     cy.visit("/repositories/pagina/2?q=code&sortBy=title&sortOrder=asc");
 
-    cy.get('#sort-form select[name="sortBy"]').select("lastActivity");
-    cy.get('#sort-form select[name="sortOrder"]').select("desc");
-    cy.get("#sort-form").submit();
+    cy.get(".results-toolbar").should(($toolbar) => {
+      const styles = getComputedStyle($toolbar[0] as HTMLElement);
+
+      expect(styles.display).to.equal("grid");
+      expect(styles.gridTemplateColumns.split(" ")).to.have.length(2);
+    });
+    cy.get("#sort-form").parents("astro-island").should("not.have.attr", "ssr");
+    cy.get("#sort-form select").select("lastActivity:desc");
 
     cy.location("pathname").should("eq", "/repositories");
     cy.location("search").should("include", "q=code");

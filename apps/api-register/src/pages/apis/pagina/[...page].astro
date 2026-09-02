@@ -156,9 +156,36 @@ const labels = {
   filterButtonLabel: t("components.filter-button-label"),
 };
 const sortOptions: SortOption[] = [
-  { value: "title", label: t("components.sort-title") },
-  { value: "adrScore", label: t("components.sort-adr-score") },
-  { value: "version", label: t("components.sort-version") },
+  {
+    sortBy: "title",
+    sortOrder: "asc",
+    label: t("components.sort-title-ascending"),
+  },
+  {
+    sortBy: "title",
+    sortOrder: "desc",
+    label: t("components.sort-title-descending"),
+  },
+  {
+    sortBy: "adrScore",
+    sortOrder: "asc",
+    label: t("components.sort-adr-score-ascending"),
+  },
+  {
+    sortBy: "adrScore",
+    sortOrder: "desc",
+    label: t("components.sort-adr-score-descending"),
+  },
+  {
+    sortBy: "version",
+    sortOrder: "asc",
+    label: t("components.sort-version-ascending"),
+  },
+  {
+    sortBy: "version",
+    sortOrder: "desc",
+    label: t("components.sort-version-descending"),
+  },
 ];
 
 const searchHiddenFields = Array.from(routingObj.url.searchParams).filter(
@@ -222,11 +249,12 @@ const filterHiddenFields: [string, string][] = [
     )
   }
 
-  <HeadingGroup
-    className="heading-results"
-    title={t("components.search-results", { context: i18nContext })}
-    level={2}
-  >
+  <div class="results-toolbar">
+    <HeadingGroup
+      className="heading-results"
+      title={t("components.search-results", { context: i18nContext })}
+      level={2}
+    >
     <BadgeList table role="menu" aria-label={t('components.current-filters')}>
       {
         [...selectedFiltersMap].map(([[key, keyLabel], filter]) => (
@@ -304,15 +332,17 @@ const filterHiddenFields: [string, string][] = [
         })
       }</Paragraph
     >
-  </HeadingGroup>
+    </HeadingGroup>
 
-  <SortForm
-    action={new URL("/apis", routingObj.url).toString()}
-    options={sortOptions}
-    sortBy={routingObj.query[SORT_BY_QUERY_KEY]}
-    sortOrder={routingObj.query[SORT_ORDER_QUERY_KEY]}
-    hiddenFields={sortHiddenFields}
-  />
+    <SortForm
+      client:load
+      action={new URL("/apis", routingObj.url).toString()}
+      options={sortOptions}
+      sortBy={routingObj.query[SORT_BY_QUERY_KEY]}
+      sortOrder={routingObj.query[SORT_ORDER_QUERY_KEY]}
+      hiddenFields={sortHiddenFields}
+    />
+  </div>
 
   {
     error && (
@@ -418,6 +448,20 @@ const filterHiddenFields: [string, string][] = [
 </DonOverview>
 
 <style>
+  .results-toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: end;
+    margin-block-end: 1rem;
+  }
+
+  @media (--md-and-below-viewport) {
+    .results-toolbar {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
   .heading-results {
     padding-inline-start: calc(
       var(--rhc-card-as-link-border-width, 1px) +

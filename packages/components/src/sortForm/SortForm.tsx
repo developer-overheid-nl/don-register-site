@@ -2,16 +2,17 @@ import {
   FormFieldSelect,
   SelectOption,
 } from "@rijkshuisstijl-community/components-react";
-import clsx from "clsx";
-import { useId } from "react";
+import { type ChangeEvent, useId, useRef } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
-import Button from "../button/Button";
 import Heading from "../heading/Heading";
 import i18n from "../i18n";
 import styles from "./styles.module.css";
 
+export type SortOrder = "asc" | "desc";
+
 export interface SortOption {
-  value: string;
+  sortBy: string;
+  sortOrder: SortOrder;
   label: string;
 }
 
@@ -34,12 +35,33 @@ const SortForm = ({
 }: SortFormProps) => {
   const { t } = useTranslation();
   const headingId = useId();
+  const sortByInputRef = useRef<HTMLInputElement>(null);
+  const sortOrderInputRef = useRef<HTMLInputElement>(null);
+  const selectedOption =
+    options.find(
+      (option) => option.sortBy === sortBy && option.sortOrder === sortOrder,
+    ) ?? options[0];
+  const selectedValue = selectedOption
+    ? `${selectedOption.sortBy}:${selectedOption.sortOrder}`
+    : undefined;
+
+  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const option = options.find(
+      ({ sortBy, sortOrder }) =>
+        `${sortBy}:${sortOrder}` === event.currentTarget.value,
+    );
+
+    if (!option || !sortByInputRef.current || !sortOrderInputRef.current) {
+      return;
+    }
+
+    sortByInputRef.current.value = option.sortBy;
+    sortOrderInputRef.current.value = option.sortOrder;
+    event.currentTarget.form?.requestSubmit();
+  };
 
   return (
-    <section
-      className={clsx(styles.sort, className)}
-      aria-labelledby={headingId}
-    >
+    <section className={className} aria-labelledby={headingId}>
       <Heading id={headingId} level={2} appearanceLevel={3} className="sr-only">
         {t("components.sort")}
       </Heading>
@@ -59,32 +81,32 @@ const SortForm = ({
             value={value}
           />
         ))}
-        <FormFieldSelect
+        <input
+          ref={sortByInputRef}
+          type="hidden"
           name="sortBy"
+          defaultValue={selectedOption?.sortBy}
+        />
+        <input
+          ref={sortOrderInputRef}
+          type="hidden"
+          name="sortOrder"
+          defaultValue={selectedOption?.sortOrder}
+        />
+        <FormFieldSelect
           label={t("components.sort-by")}
-          defaultValue={sortBy}
+          defaultValue={selectedValue}
+          onChange={handleChange}
         >
-          {options.map(({ value, label }) => (
-            <SelectOption key={value} value={value}>
+          {options.map(({ sortBy, sortOrder, label }) => (
+            <SelectOption
+              key={`${sortBy}:${sortOrder}`}
+              value={`${sortBy}:${sortOrder}`}
+            >
               {label}
             </SelectOption>
           ))}
         </FormFieldSelect>
-        <FormFieldSelect
-          name="sortOrder"
-          label={t("components.sort-order")}
-          defaultValue={sortOrder}
-        >
-          <SelectOption value="asc">
-            {t("components.sort-ascending")}
-          </SelectOption>
-          <SelectOption value="desc">
-            {t("components.sort-descending")}
-          </SelectOption>
-        </FormFieldSelect>
-        <Button type="submit" appearance="primary-action-button">
-          {t("components.sort-button-label")}
-        </Button>
       </form>
     </section>
   );
