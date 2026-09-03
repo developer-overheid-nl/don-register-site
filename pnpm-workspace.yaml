@@ -4,7 +4,7 @@ packages:
   - proprietary*
 
 catalog:
-  "@astrojs/node": 10.1.2
+  "@astrojs/node": 11.1.4
   "@astrojs/react": 5.0.6
   "@csstools/postcss-global-data": 4.0.0
   "@piwikpro/react-piwik-pro": 2.5.0
