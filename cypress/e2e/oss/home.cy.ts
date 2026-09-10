@@ -58,7 +58,10 @@ describe("oss register", () => {
 
       cy.wrap($filter).scrollIntoView().check();
       cy.get("@filtersForm").submit();
-      cy.location("search").should("include", `${name}=${value}`);
+      cy.location("search").should(
+        "include",
+        `${name}=${encodeURIComponent(value)}`,
+      );
     });
   });
 
