@@ -51,6 +51,34 @@ describe("API-register", () => {
     cy.get('[aria-label="Huidige filters"] a').should("have.length", 3);
   });
 
+  it("can sort APIs and preserve the query context", () => {
+    cy.viewport(1440, 900);
+    cy.visit("/apis/pagina/2?q=api&sortBy=title&sortOrder=asc");
+
+    cy.get(".results-toolbar").should(($toolbar) => {
+      const styles = getComputedStyle($toolbar[0] as HTMLElement);
+
+      expect(styles.display).to.equal("grid");
+      expect(styles.gridTemplateColumns.split(" ")).to.have.length(2);
+    });
+    cy.get("#sort-form").parents("astro-island").should("not.have.attr", "ssr");
+    cy.get("#sort-form select").select("adrScore:desc");
+
+    cy.location("pathname").should("eq", "/apis");
+    cy.location("search").should("include", "q=api");
+    cy.location("search").should("include", "sortBy=adrScore");
+    cy.location("search").should("include", "sortOrder=desc");
+    cy.get('#get-filters input[name="sortBy"]').should(
+      "have.value",
+      "adrScore",
+    );
+    cy.get('#get-filters input[name="sortOrder"]').should("have.value", "desc");
+    cy.get('search input[type="hidden"][name="sortBy"]').should(
+      "have.value",
+      "adrScore",
+    );
+  });
+
   it("loads the toevoegen page", () => {
     cy.visit("/apis/toevoegen");
 
@@ -65,6 +93,9 @@ describe("API-register", () => {
 
     cy.visit("/apis/key-aanvragen");
 
+    cy.get("#get-api-key")
+      .parents("astro-island")
+      .should("not.have.attr", "ssr");
     cy.get('input[name="email"]').type("test@example.com");
     cy.get('button[type="submit"]').click();
 

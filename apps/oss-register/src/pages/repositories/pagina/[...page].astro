@@ -1,5 +1,4 @@
 ---
-
 import {
   API_ENDPOINT,
   API_URL,
@@ -27,6 +26,8 @@ import {
   Paragraph,
   PillBadge,
   Search,
+  SortForm,
+  type SortOption,
   ToolTip,
 } from "@developer-overheid-nl/don-register-components";
 import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
@@ -35,6 +36,7 @@ import {
   DonOverview,
   getPagination,
   getRouting,
+  getSearchParams,
   parseHeaders,
 } from "@developer-overheid-nl/don-register-layouts";
 import { t } from "i18next";
@@ -51,6 +53,9 @@ const { page = 1 } = Astro.params;
 const APIS_RESOURCE = ApiPaths.listRepositories;
 const FILTERS_RESOURCE = ApiPaths.listRepositoryFilters;
 const SEARCH_QUERY_KEY = "q";
+const SORT_BY_QUERY_KEY = "sortBy";
+const SORT_ORDER_QUERY_KEY = "sortOrder";
+const SORT_QUERY_KEYS = [SORT_BY_QUERY_KEY, SORT_ORDER_QUERY_KEY];
 
 const routingObj = getRouting(
   Astro.url,
@@ -58,6 +63,10 @@ const routingObj = getRouting(
   Astro.routePattern,
   Astro.params,
 );
+
+const facetFilterQuery = getSearchParams(routingObj.url, {
+  exclude: SORT_QUERY_KEYS,
+});
 
 const client = createClient<paths>({
   baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
@@ -96,7 +105,7 @@ const {
   .GET(FILTERS_RESOURCE, {
     params: {
       query: {
-        ...routingObj.queryObject,
+        ...facetFilterQuery,
       },
     },
     headers: {
@@ -124,10 +133,10 @@ i18n.addResourceBundle(
   true,
 );
 
-const isSearchPage = Boolean(routingObj.query[SEARCH_QUERY_KEY]);
+const isSearchPage = Boolean(routingObj.queryObject[SEARCH_QUERY_KEY]);
 const searchObject = isSearchPage
   ? {
-      keyword: routingObj.query[SEARCH_QUERY_KEY] as string,
+      keyword: routingObj.queryObject[SEARCH_QUERY_KEY]?.toString(),
       category: undefined,
       searchCount: paginationObj.totalCount,
     }
@@ -156,19 +165,57 @@ const selectedFiltersMap = getSelectedFiltersMap(
   newFacetFilters as unknown as FilterData[],
   true,
 );
+
 const labels = {
   filtersTitle: t("components.filters-title"),
   filterButtonLabel: t("components.filter-button-label"),
 };
 
-const searchHiddenFields = Array.from(routingObj.url.searchParams).filter(
-  ([key]) => key !== SEARCH_QUERY_KEY,
+// FIXME: temporary option, sort options should be defined like filters
+const sortOptions: SortOption[] = [
+  {
+    sortBy: "title",
+    sortOrder: "asc",
+    label: t("components.sort-title-ascending"),
+  },
+  {
+    sortBy: "title",
+    sortOrder: "desc",
+    label: t("components.sort-title-descending"),
+  },
+  {
+    sortBy: "lastActivity",
+    sortOrder: "asc",
+    label: t("components.sort-last-activity-ascending"),
+  },
+  {
+    sortBy: "lastActivity",
+    sortOrder: "desc",
+    label: t("components.sort-last-activity-descending"),
+  },
+];
+
+const searchHiddenFields = getSearchParams(
+  routingObj.url,
+  {
+    exclude: [SEARCH_QUERY_KEY],
+  },
+  "array",
 );
-const filterHiddenFields: [string, string][] = routingObj.query[
-  SEARCH_QUERY_KEY
-]
-  ? [[SEARCH_QUERY_KEY, routingObj.query[SEARCH_QUERY_KEY] as string]]
-  : [];
+const sortHiddenFields = getSearchParams(
+  routingObj.url,
+  {
+    exclude: SORT_QUERY_KEYS,
+  },
+  "array",
+);
+const filterHiddenFields = getSearchParams(
+  routingObj.url,
+  {
+    include: [SEARCH_QUERY_KEY, ...SORT_QUERY_KEYS],
+  },
+  "array",
+);
 
 const getFilterBadgeHref = (key: string, filterValue: string) => {
   const isExplicitFalse = explicitFalseFilters.includes(key);
@@ -180,15 +227,20 @@ const getFilterBadgeHref = (key: string, filterValue: string) => {
   }
 
   return new URL(
-    `?${new URLSearchParams(
-      [...Array.from(routingObj.url.searchParams)].filter(([k, v]) => {
-        return !(k === key && v === filterValue);
-      }),
+    `/repositories?${new URLSearchParams(
+      getSearchParams(
+        routingObj.url,
+        {
+          exclude: [[key, filterValue]],
+        },
+        "array",
+      ),
     )}`,
     routingObj.url,
   ).toString();
 };
 
+// Different from api-register because of the explicit filters
 const i18nContext = selectedFiltersMap.size > 0 ? "filtered" : "all";
 ---
 
@@ -207,8 +259,8 @@ const i18nContext = selectedFiltersMap.size > 0 ? "filtered" : "all";
     searchKey={SEARCH_QUERY_KEY}
     searchTerm={routingObj.query[SEARCH_QUERY_KEY]}
     hiddenFields={searchHiddenFields}
-  ></Search>
-  
+  />
+
   <FacetFiltersForm
     client:load
     slot="filters"
@@ -228,7 +280,8 @@ const i18nContext = selectedFiltersMap.size > 0 ? "filtered" : "all";
     )
   }
 
-  <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2}>
+  <div class="results-toolbar">
+    <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2}>
     <BadgeList table role="menu" aria-label={t('components.current-filters')}>
       {[...selectedFiltersMap].map(([[key, keyLabel], filter]) => (
         <li data-key={key}>
@@ -256,12 +309,10 @@ const i18nContext = selectedFiltersMap.size > 0 ? "filtered" : "all";
             <DataBadgeLink
               appearance="subtle"
               href={new URL(
-                `?${new URLSearchParams(
-                  [...Array.from(routingObj.url.searchParams)].filter(
-                    ([k, v]) => {
-                      return !(k === SEARCH_QUERY_KEY && v === routingObj.queryObject[SEARCH_QUERY_KEY]);
-                    },
-                  ),
+                `/repositories?${new URLSearchParams(
+                  getSearchParams(routingObj.url, {
+                    exclude: [[SEARCH_QUERY_KEY, routingObj.queryObject[SEARCH_QUERY_KEY].toString()]]
+                  }, "array"),
                 )}`,
                 routingObj.url,
               ).toString()}
@@ -278,7 +329,11 @@ const i18nContext = selectedFiltersMap.size > 0 ? "filtered" : "all";
           <li class="deselect-all">
             <DataBadgeLink
               appearance="link"
-              href={new URL('/repositories', routingObj.url).toString()}
+              href={new URL(`/repositories?${new URLSearchParams(
+                getSearchParams(routingObj.url, {
+                  include: SORT_QUERY_KEYS
+                }, "array"),
+              )}`, routingObj.url).toString()}
               role="menuitem"
               >
                 {t('components.remove-all-filters')}
@@ -289,7 +344,17 @@ const i18nContext = selectedFiltersMap.size > 0 ? "filtered" : "all";
       }
     </BadgeList>
     <Paragraph role="status">{t('components.search-results-amount', {context: i18nContext, amount: paginationObj.totalCount})}</Paragraph>
-  </HeadingGroup>
+    </HeadingGroup>
+
+    <SortForm
+      client:load
+      action={new URL("/repositories", routingObj.url).toString()}
+      options={sortOptions}
+      sortBy={routingObj.query[SORT_BY_QUERY_KEY]}
+      sortOrder={routingObj.query[SORT_ORDER_QUERY_KEY]}
+      hiddenFields={sortHiddenFields}
+    />
+  </div>
 
   { error && (
     <Alert type="error">
@@ -359,7 +424,21 @@ const i18nContext = selectedFiltersMap.size > 0 ? "filtered" : "all";
   <Pagination slot="pagination" {...pagination} />
 </DonOverview>
 
-<style>  
+<style>
+  .results-toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: end;
+    margin-block-end: 1rem;
+  }
+
+  @media (--md-and-below-viewport) {
+    .results-toolbar {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
   .heading-results {
     padding-inline-start: calc(var(--rhc-card-as-link-border-width, 1px) + var(--rhc-card-as-link-padding-inline-start, 16px));
   }

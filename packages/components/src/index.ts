@@ -98,6 +98,11 @@ export {
 } from "./scoreBadge/ScoreBadge";
 export { default as Search, type SearchProps } from "./search/Search";
 export { default as SiteLogo } from "./siteLogo/SiteLogo";
+export {
+  default as SortForm,
+  type SortFormProps,
+  type SortOption,
+} from "./sortForm/SortForm";
 export { default as Switch, type SwitchProps } from "./switch/Switch";
 export { default as ToolTip } from "./toolTip/ToolTip";
 export {
