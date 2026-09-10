@@ -1,19 +1,5 @@
 import type { APIContext } from "astro";
-
-const searchParamsToObject = (
-  searchParams: APIContext["url"]["searchParams"],
-) => {
-  const queryObject: Record<string, string | string[]> = {};
-
-  for (const [key] of searchParams) {
-    if (!Object.hasOwn(queryObject, key)) {
-      const values: string | string[] = searchParams.getAll(key);
-      queryObject[key] = values.length >= 2 ? values : values.join();
-    }
-  }
-
-  return queryObject;
-};
+import { searchParamsToObject } from "./getSearchParams";
 
 export const getRouting = (
   url: APIContext["url"],

@@ -19,8 +19,8 @@ export interface SortOption {
 export interface SortFormProps {
   action: string;
   options: SortOption[];
-  sortBy?: string;
-  sortOrder?: string;
+  sortBy?: string | null;
+  sortOrder?: string | null;
   hiddenFields?: [string, string][];
   className?: string;
 }

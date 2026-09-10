@@ -35,6 +35,7 @@ import {
   DonOverview,
   getPagination,
   getRouting,
+  getSearchParams,
   parseHeaders,
 } from "@developer-overheid-nl/don-register-layouts";
 import { t } from "i18next";
@@ -47,7 +48,11 @@ import {
   getStatusColor,
 } from "../../../components/lifecycleHelpers";
 import { Content as Intro } from "../../../partials/intro.md";
-import { ApiPaths, type paths } from "../../../types/api-schema";
+import {
+  ApiPaths,
+  type operations,
+  type paths,
+} from "../../../types/api-schema";
 
 Astro.response.headers.set("Cache-Control", "public, max-age=7200");
 const { page = 1 } = Astro.params;
@@ -65,11 +70,10 @@ const routingObj = getRouting(
   Astro.routePattern,
   Astro.params,
 );
-const facetFilterQuery = Object.fromEntries(
-  Object.entries(routingObj.queryObject).filter(
-    ([key]) => !SORT_QUERY_KEYS.includes(key),
-  ),
-);
+
+const facetFilterQuery = getSearchParams(routingObj.url, {
+  exclude: SORT_QUERY_KEYS,
+});
 
 const client = createClient<paths>({
   baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
@@ -105,7 +109,7 @@ const {
     params: {
       query: {
         ...facetFilterQuery,
-      },
+      } as operations["listApiFilters"]["parameters"]["query"],
     },
     headers: {
       "x-api-key": API_X_API_KEY,
@@ -132,16 +136,22 @@ i18n.addResourceBundle(
   true,
 );
 
-const isSearchPage = Boolean(routingObj.query[SEARCH_QUERY_KEY]);
+const isSearchPage = Boolean(routingObj.queryObject[SEARCH_QUERY_KEY]);
 const searchObject = isSearchPage
   ? {
-      keyword: routingObj.query[SEARCH_QUERY_KEY],
+      keyword: routingObj.queryObject[SEARCH_QUERY_KEY]?.toString(),
       category: undefined,
       searchCount: paginationObj.totalCount,
     }
   : undefined;
 const i18nContext =
-  routingObj.query && Object.keys(routingObj.query).length > 0
+  getSearchParams(
+    routingObj.url,
+    {
+      exclude: SORT_QUERY_KEYS,
+    },
+    "array",
+  ).length > 0
     ? "filtered"
     : "all";
 
@@ -155,6 +165,8 @@ const labels = {
   filtersTitle: t("components.filters-title"),
   filterButtonLabel: t("components.filter-button-label"),
 };
+
+// FIXME: temporary option, sort options should be defined like filters
 const sortOptions: SortOption[] = [
   {
     sortBy: "title",
@@ -188,26 +200,27 @@ const sortOptions: SortOption[] = [
   },
 ];
 
-const searchHiddenFields = Array.from(routingObj.url.searchParams).filter(
-  ([key]) => key !== SEARCH_QUERY_KEY,
+const searchHiddenFields = getSearchParams(
+  routingObj.url,
+  {
+    exclude: [SEARCH_QUERY_KEY],
+  },
+  "array",
 );
-const activeSortFields = Array.from(routingObj.url.searchParams).filter(
-  ([key]) => SORT_QUERY_KEYS.includes(key),
+const sortHiddenFields = getSearchParams(
+  routingObj.url,
+  {
+    exclude: SORT_QUERY_KEYS,
+  },
+  "array",
 );
-const sortHiddenFields = Array.from(routingObj.url.searchParams).filter(
-  ([key]) => !SORT_QUERY_KEYS.includes(key),
+const filterHiddenFields = getSearchParams(
+  routingObj.url,
+  {
+    include: [SEARCH_QUERY_KEY, ...SORT_QUERY_KEYS],
+  },
+  "array",
 );
-const filterHiddenFields: [string, string][] = [
-  ...(routingObj.query[SEARCH_QUERY_KEY]
-    ? [
-        [SEARCH_QUERY_KEY, routingObj.query[SEARCH_QUERY_KEY] as string] as [
-          string,
-          string,
-        ],
-      ]
-    : []),
-  ...activeSortFields,
-];
 ---
 
 <DonOverview appConfig={appConfig} titlePage={t("pages.overview")}>
@@ -220,9 +233,11 @@ const filterHiddenFields: [string, string][] = [
     isSearchPage={isSearchPage}
     searchObject={searchObject}
   />
+
   <Article className="markdown-content utrecht-html" slot="header"
     ><Intro /></Article
   >
+
   <Search
     slot="search"
     searchUrl={new URL(`/apis`, routingObj?.url).toString()}
@@ -266,12 +281,10 @@ const filterHiddenFields: [string, string][] = [
                 appearance="subtle"
                 helperText={t("components.remove-filter")}
                 href={new URL(
-                  `?${new URLSearchParams(
-                    [...Array.from(routingObj.url.searchParams)].filter(
-                      ([k, v]) => {
-                        return !(k === key && v === filterValue);
-                      },
-                    ),
+                  `/apis?${new URLSearchParams(
+                    getSearchParams(routingObj.url, {
+                      exclude: [[key, filterValue]]
+                    }, "array"),
                   )}`,
                   routingObj.url,
                 ).toString()}
@@ -292,12 +305,10 @@ const filterHiddenFields: [string, string][] = [
             <DataBadgeLink
               appearance="subtle"
               href={new URL(
-                `?${new URLSearchParams(
-                  [...Array.from(routingObj.url.searchParams)].filter(
-                    ([k, v]) => {
-                      return !(k === SEARCH_QUERY_KEY && v === routingObj.queryObject[SEARCH_QUERY_KEY]);
-                    },
-                  ),
+                `/apis?${new URLSearchParams(
+                  getSearchParams(routingObj.url, {
+                      exclude: [[SEARCH_QUERY_KEY, routingObj.queryObject[SEARCH_QUERY_KEY].toString()]]
+                    }, "array"),
                 )}`,
                 routingObj.url,
               ).toString()}
@@ -314,7 +325,11 @@ const filterHiddenFields: [string, string][] = [
           <li class="deselect-all">
             <DataBadgeLink
               appearance="link"
-              href={new URL('/apis', routingObj.url).toString()}
+              href={new URL(`/apis?${new URLSearchParams(
+                getSearchParams(routingObj.url, {
+                  include: SORT_QUERY_KEYS
+                }, "array"),
+              )}`, routingObj.url).toString()}
               role="menuitem"
               >
                 {t('components.remove-all-filters')}
@@ -324,6 +339,7 @@ const filterHiddenFields: [string, string][] = [
         )
       }
     </BadgeList>
+
     <Paragraph role="status"
       >{
         t("components.search-results-amount", {
@@ -332,14 +348,15 @@ const filterHiddenFields: [string, string][] = [
         })
       }</Paragraph
     >
+
     </HeadingGroup>
 
     <SortForm
       client:load
       action={new URL("/apis", routingObj.url).toString()}
       options={sortOptions}
-      sortBy={routingObj.query[SORT_BY_QUERY_KEY]}
-      sortOrder={routingObj.query[SORT_ORDER_QUERY_KEY]}
+      sortBy={routingObj.url.searchParams.get(SORT_BY_QUERY_KEY)}
+      sortOrder={routingObj.url.searchParams.get(SORT_ORDER_QUERY_KEY)}
       hiddenFields={sortHiddenFields}
     />
   </div>
@@ -444,7 +461,9 @@ const filterHiddenFields: [string, string][] = [
       <Alert type="warning">{t("components.no-items-found")}</Alert>
     )
   }
+
   <Pagination slot="pagination" {...pagination} />
+
 </DonOverview>
 
 <style>
