@@ -1,5 +1,17 @@
 # @developer-overheid-nl/oss-register
 
+## 2.2.0
+
+### Minor Changes
+
+- 2eb8237: Add a generic sorting form and enable sorting by the supported fields in the API Register and Open Source Register.
+
+### Patch Changes
+
+- Updated dependencies [2eb8237]
+  - @developer-overheid-nl/don-register-components@1.5.0
+  - @developer-overheid-nl/don-register-layouts@1.2.4
+
 ## 2.1.4
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @developer-overheid-nl/don-register-components
 
+## 1.5.0
+
+### Minor Changes
+
+- 2eb8237: Add a generic sorting form and enable sorting by the supported fields in the API Register and Open Source Register.
+
 ## 1.4.0
 
 ### Minor Changes
