@@ -62,6 +62,9 @@ jobs:
               >> "apps/$app/.env.development.local"
           done
 
+      - name: Build Astro Apps
+        run: pnpm build
+
       - name: Run API Cypress tests
         uses: cypress-io/github-action@fa4a118725a8f001170d49631ea89e5d66fee626 # v7
         with:
