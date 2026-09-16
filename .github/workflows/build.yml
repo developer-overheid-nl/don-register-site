@@ -18,7 +18,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     environment:
-      name: development
+      name: production
       deployment: false
     permissions:
       contents: read
@@ -59,7 +59,7 @@ jobs:
           for app in api-register oss-register; do
             printf 'API_X_API_KEY=%s\nPIWIK_PRO_SITE_ID=%s\n' \
               "$API_X_API_KEY" "$PIWIK_PRO_SITE_ID" \
-              >> "apps/$app/.env.development.local"
+              >> "apps/$app/.env.production.local"
           done
 
       - name: Build Astro Apps
@@ -69,7 +69,7 @@ jobs:
         uses: cypress-io/github-action@fa4a118725a8f001170d49631ea89e5d66fee626 # v7
         with:
           install: false
-          start: pnpm --filter @developer-overheid-nl/api-register preview --host 127.0.0.1 --port 4321
+          start: pnpm --filter @developer-overheid-nl/api-register preview:prod --host 127.0.0.1 --port 4321
           wait-on: "http://localhost:4321"
           wait-on-timeout: 120
           config: baseUrl=http://localhost:4321
@@ -80,7 +80,7 @@ jobs:
         uses: cypress-io/github-action@fa4a118725a8f001170d49631ea89e5d66fee626 # v7
         with:
           install: false
-          start: pnpm --filter @developer-overheid-nl/oss-register preview --host 127.0.0.1 --port 4322
+          start: pnpm --filter @developer-overheid-nl/oss-register preview:prod --host 127.0.0.1 --port 4322
           wait-on: "http://localhost:4322"
           wait-on-timeout: 120
           config: baseUrl=http://localhost:4322
