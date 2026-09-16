@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "dotenv -c production -- astro preview",
+    "preview": "dotenv -c development -- astro preview",
     "astro": "astro"
   },
   "exports": {
