@@ -59,12 +59,6 @@ export default defineConfig({
         "@astrojs/react",
       ],
     },
-    // FIXME: workaround for https://github.com/withastro/astro/issues/16387
-    optimizeDeps: {
-      include: [
-        "astro/actions/runtime/entrypoints/route.js",
-      ],
-    },
     css: {
       postcss: {
         plugins: [
@@ -80,19 +74,30 @@ export default defineConfig({
     environments: {
       client: {
         build: {
-          rollupOptions: {
+          rolldownOptions: {
             output: {
-              manualChunks: {
-                react: [
-                  "react",
-                  "react-dom",
-                ],
-                piwikpro: [
-                  "@piwikpro/react-piwik-pro",
-                ],
-                libs: [
-                  "i18next",
-                  "openapi-fetch",
+              codeSplitting: {
+                groups: [
+                  {
+                    test: /node_modules\/(astro|@astro)/,
+                    name: "astro",
+                  },
+                  {
+                    test: /node_modules\/(react|react-dom)/,
+                    name: "react",
+                  },
+                  {
+                    test: /node_modules\/@piwikpro\//,
+                    name: "piwikpro",
+                  },
+                  {
+                    test: /node_modules\/@developer-overheid-nl\/don-register-components/,
+                    name: "components",
+                  },
+                  {
+                    test: /node_modules\/@developer-overheid-nl\/don-register-layouts/,
+                    name: "layouts",
+                  },
                 ],
               },
             },
