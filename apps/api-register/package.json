@@ -8,6 +8,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "dotenv -c development -- astro preview",
+    "preview:prod": "dotenv -c production -- astro preview",
     "astro": "astro"
   },
   "exports": {
