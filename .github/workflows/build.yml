@@ -59,7 +59,7 @@ jobs:
           for app in api-register oss-register; do
             printf 'API_X_API_KEY=%s\nPIWIK_PRO_SITE_ID=%s\n' \
               "$API_X_API_KEY" "$PIWIK_PRO_SITE_ID" \
-              >> "apps/$app/.env.development.local"
+              >> "apps/$app/.env.production.local"
           done
 
       - name: Build Astro Apps
