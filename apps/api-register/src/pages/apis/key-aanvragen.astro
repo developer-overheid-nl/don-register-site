@@ -9,6 +9,8 @@ import appConfig from "../../../app.config";
 import ApiKeyForm from "../../components/ApiKeyForm";
 import { Content as Contact } from "../../partials/contact.md";
 
+Astro.cache.set(false);
+
 // Localization
 const { i18n: i18nApp } = appConfig;
 const i18nPage = {

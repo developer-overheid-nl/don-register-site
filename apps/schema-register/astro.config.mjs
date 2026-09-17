@@ -3,7 +3,7 @@
 import node from "@astrojs/node";
 import react from "@astrojs/react";
 import postcssGlobalData from "@csstools/postcss-global-data";
-import { defineConfig, envField } from "astro/config";
+import { defineConfig, envField, memoryCache } from "astro/config";
 import postcssCustomMedia from "postcss-custom-media";
 import { loadEnv } from "vite";
 
@@ -25,6 +25,9 @@ export default defineConfig({
       "schemas.developer.overheid.nl",
       "**.don.projects.digilab.network",
     ],
+  },
+  cache: {
+    provider: memoryCache(),
   },
   security: {
     allowedDomains: [
