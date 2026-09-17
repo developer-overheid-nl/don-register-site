@@ -87,7 +87,7 @@
     "@vitest/coverage-v8": "catalog:",
     "chromatic": "18.0.1",
     "cypress": "15.18.1",
-    "lefthook": "2.1.9",
+    "lefthook": "2.1.14",
     "openapi-typescript": "catalog:",
     "playwright": "1.61.1",
     "postcss-custom-media": "catalog:",
