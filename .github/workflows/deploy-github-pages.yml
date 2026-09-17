@@ -1,0 +1,24 @@
+name: Build and Publish Storybook to GitHub Pages
+on:
+  push:
+    branches:
+      - "main"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.build-publish.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+    - id: build-publish
+      uses: bitovi/github-actions-storybook-to-github-pages@ddd9d35f670cceedd2bfc444be681001b0709730 #v1.0.4
+      with:
+        path: storybook-static # storybook build folder
+        install_command: pnpm install
+        build_command: pnpm build-storybook
