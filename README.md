@@ -2,10 +2,11 @@
 
 > De websites en packages van het OSS- en API-register van developer.overheid.nl en het [register-site-template].
 
+![GitHub License](https://img.shields.io/github/license/developer-overheid-nl/don-register-site)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/developer-overheid-nl/don-register-site/build.yml?branch=main)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/developer-overheid-nl/don-register-site/pull_request.yml?branch=main&label=quality)
 [![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
-![GitHub License](https://img.shields.io/github/license/developer-overheid-nl/don-register-site)
+[![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)](https://developer-overheid-nl.github.io/don-register-site/)
 
 Deze monorepo bevat de _nieuwe_ websites van het [API-register](https://apis.developer.overheid.nl) en het [Open Source Register](https://oss.developer.overheid.nl).
 De codebase bestaat uit een aantal packages die de gezamelijke codebase (components, layouts, etc) vormen en een `apps`-package waarin de verschillende websites staan. Deze packages worden ook gebruikt in het [register-site-template].
@@ -14,7 +15,7 @@ De codebase bestaat uit een aantal packages die de gezamelijke codebase (compone
 
 ### Components
 
-De package `components` bevat de generieke React componenten voor de sites. Deze zijn gebaseerd op de [Rijkshuisstijl Community Componenten](https://github.com/nl-design-system/rijkshuisstijl-community).  
+De package `components` bevat de generieke React componenten voor de sites. Deze zijn gebaseerd op de [Rijkshuisstijl Community Componenten](https://github.com/nl-design-system/rijkshuisstijl-community). Welke componenten er precies in zitten kan je vinden in onze [Storybook](https://developer-overheid-nl.github.io/don-register-site/).  
 Deze package wordt gepubliceerd op [NPM]: <https://www.npmjs.com/package/@developer-overheid-nl/don-register-components>
 
 ### Layouts
