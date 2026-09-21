@@ -29,6 +29,7 @@ const {
     footer,
   },
   titlePage,
+  description,
 } = Astro.props;
 const { routePattern } = Astro;
 
@@ -52,11 +53,11 @@ i18next.init({
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta name="viewport" content="width=device-width">
     <meta name="generator" content={Astro.generator}>
+    <title>{titlePage} | {titleSite} - {mainSite.name}</title>
     <meta
       name="description"
-      content={meta.description || i18next.t('layouts.meta-description')}
+      content={description || meta.description || i18next.t('layouts.meta-description')}
     >
-    <title>{titlePage} | {titleSite}</title>
     <slot name="head" />
   </head>
   <body class="utrecht-document don-document">

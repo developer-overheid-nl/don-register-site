@@ -2,10 +2,10 @@
 import { Container } from "@developer-overheid-nl/don-register-components";
 import Base from "./Base.astro";
 
-const { appConfig, titlePage } = Astro.props;
+const { appConfig, titlePage, description } = Astro.props;
 ---
 
-<Base titlePage={titlePage} appConfig={appConfig}>
+<Base titlePage={titlePage} description={description} appConfig={appConfig}>
   <slot name="head" slot="head" />
   <slot name="body-start" slot="body-start" />
   <Container>
