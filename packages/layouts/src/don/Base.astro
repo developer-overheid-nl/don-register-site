@@ -33,6 +33,11 @@ const {
 } = Astro.props;
 const { routePattern } = Astro;
 
+let ogImage = meta.ogImages["/"];
+if (Object.hasOwn(meta.ogImages, routePattern)) {
+  ogImage = meta.ogImages[routePattern];
+}
+
 i18next.init({
   // Right now we are using the locales directly, but in the future we can use the i18next-fs-backend to load them from files
   // We also have just one language. Refactor this when we have more languages.
@@ -54,10 +59,20 @@ i18next.init({
     <meta name="viewport" content="width=device-width">
     <meta name="generator" content={Astro.generator}>
     <title>{titlePage} | {titleSite} - {mainSite.name}</title>
+    <meta property="og:title" content={`${titlePage}`}>
+    <meta property="og:site_name" content={`${titleSite} - ${mainSite.name}`}>
     <meta
       name="description"
       content={description || meta.description || i18next.t('layouts.meta-description')}
     >
+    <meta property="og:description" content={description || meta.description || i18next.t('layouts.meta-description')}>
+    <slot name="og-image">
+      <meta property="og:image" content={ogImage.url}>
+      <meta property="og:image:alt" content={ogImage.alt || ""} />
+    </slot>
+    <meta property="og:url" content={Astro.url}>
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="nl_NL">
     <slot name="head" />
   </head>
   <body class="utrecht-document don-document">

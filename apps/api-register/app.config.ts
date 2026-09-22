@@ -7,6 +7,16 @@ export default {
   meta: {
     description:
       "Welkom bij het API-Register. Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid.",
+    ogImages: {
+      "/": {
+        url: "/don-api-register-social-card.png",
+        alt: "API-register: Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid.",
+      },
+      "/apis/[id]": {
+        url: "/don-api-register-detail-social-card.png",
+        alt: "Details van deze API: OpenAPI Specificatie, Servers en authenticatie. API Design Rules score. Blijf op de hoogte over deze API.",
+      },
+    },
   },
   mainSite: {
     name: "developer.overheid.nl",
