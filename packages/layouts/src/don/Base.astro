@@ -67,7 +67,7 @@ i18next.init({
     >
     <meta property="og:description" content={description || meta.description || i18next.t('layouts.meta-description')}>
     <slot name="og-image">
-      <meta property="og:image" content={ogImage.url}>
+      <meta property="og:image" content={new URL(ogImage.url, Astro.url)}>
       <meta property="og:image:alt" content={ogImage.alt || ""} />
     </slot>
     <meta property="og:url" content={Astro.url}>
