@@ -29,6 +29,24 @@ export default defineConfig({
   cache: {
     provider: memoryCache(),
   },
+  routeRules: {
+    "/schemas/[id]": {
+      maxAge: 3600,
+      swr: 7200,
+    },
+    "/schemas/pagina/[...page]": {
+      maxAge: 1800,
+      swr: 3600,
+    },
+    "/schemas/toevoegen": {
+      maxAge: 86400,
+      tag: "content",
+    },
+    "[...rest]": {
+      maxAge: 86400,
+      tag: "other",
+    },
+  },
   security: {
     allowedDomains: [
       {

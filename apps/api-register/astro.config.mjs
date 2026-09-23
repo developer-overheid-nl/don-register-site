@@ -43,9 +43,11 @@ export default defineConfig({
     },
     "/apis/toevoegen": {
       maxAge: 86400,
+      tag: "content",
     },
     "[...rest]": {
       maxAge: 86400,
+      tag: "other",
     },
   },
   security: {
