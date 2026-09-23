@@ -41,7 +41,6 @@ import {
   TableHeaderCell,
   TableRow,
 } from "@rijkshuisstijl-community/components-react";
-import { t } from "i18next";
 import createClient from "openapi-fetch";
 import appConfig from "../../../app.config";
 import DependenciesAccordion from "../../components/DependenciesAccordion";
@@ -85,6 +84,7 @@ i18n.addResourceBundle(
   true,
 );
 i18n.addResources(i18n.language, "translation", i18nPage);
+const { t } = i18n;
 
 const details = error ? null : data;
 

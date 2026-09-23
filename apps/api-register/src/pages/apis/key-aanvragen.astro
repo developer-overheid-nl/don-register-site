@@ -4,7 +4,6 @@ import { Heading } from "@developer-overheid-nl/don-register-components";
 import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import { DonBasicWithAside } from "@developer-overheid-nl/don-register-layouts";
-import { t } from "i18next";
 import appConfig from "../../../app.config";
 import ApiKeyForm from "../../components/ApiKeyForm";
 import { Content as Contact } from "../../partials/contact.md";
@@ -34,6 +33,7 @@ i18n.addResourceBundle(
   true,
 );
 i18n.addResources(i18n.language, "translation", i18nPage);
+const { t } = i18n;
 
 const labels = {
   title: t("pages.get-key-form"),

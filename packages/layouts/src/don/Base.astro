@@ -14,10 +14,7 @@ import {
   IconsSprite,
   TopNavigation,
 } from "@developer-overheid-nl/don-register-components";
-import resources from "@developer-overheid-nl/don-register-locales/nl" with {
-  type: "json",
-};
-import i18next from "i18next";
+import i18next from "@developer-overheid-nl/don-register-components/i18n";
 
 const {
   appConfig: {
@@ -31,19 +28,6 @@ const {
   titlePage,
 } = Astro.props;
 const { routePattern } = Astro;
-
-i18next.init({
-  // Right now we are using the locales directly, but in the future we can use the i18next-fs-backend to load them from files
-  // We also have just one language. Refactor this when we have more languages.
-  lng: "nl",
-  fallbackLng: "nl",
-  resources: {
-    nl: {
-      translation: resources,
-    },
-  },
-  showSupportNotice: false,
-});
 ---
 
 <html lang="nl">
