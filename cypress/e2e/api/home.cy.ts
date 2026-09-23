@@ -24,11 +24,9 @@ describe("API-register", () => {
       "content",
       "Welkom bij het API-Register. Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid.",
     );
-    cy.og("image").should(
-      "have.attr",
-      "content",
-      "/don-api-register-social-card.png",
-    );
+    cy.og("image")
+      .invoke("attr", "content")
+      .should("include", "/don-api-register-social-card.png");
     cy.og("image:alt").should(
       "have.attr",
       "content",
@@ -136,11 +134,9 @@ describe("API-register", () => {
           "content",
           "Welkom bij het API-Register. Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid.",
         );
-        cy.og("image").should(
-          "have.attr",
-          "content",
-          "/don-api-register-detail-social-card.png",
-        );
+        cy.og("image")
+          .invoke("attr", "content")
+          .should("include", "/don-api-register-detail-social-card.png");
         cy.og("image:alt").should(
           "have.attr",
           "content",

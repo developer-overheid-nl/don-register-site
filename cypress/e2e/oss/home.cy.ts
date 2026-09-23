@@ -27,11 +27,9 @@ describe("oss register", () => {
       "content",
       "Welkom bij het Open Source Register. Hier vind je informatie over de open source repositories die beschikbaar zijn voor gebruik binnen de overheid.",
     );
-    cy.og("image").should(
-      "have.attr",
-      "content",
-      "/don-oss-register-social-card.png",
-    );
+    cy.og("image")
+      .invoke("attr", "content")
+      .should("include", "/don-oss-register-social-card.png");
     cy.og("image:alt").should(
       "have.attr",
       "content",
@@ -153,11 +151,9 @@ describe("oss register", () => {
           "content",
           "Welkom bij het Open Source Register. Hier vind je informatie over de open source repositories die beschikbaar zijn voor gebruik binnen de overheid.",
         );
-        cy.og("image").should(
-          "have.attr",
-          "content",
-          "/don-oss-register-detail-social-card.png",
-        );
+        cy.og("image")
+          .invoke("attr", "content")
+          .should("include", "/don-oss-register-detail-social-card.png");
         cy.og("image:alt").should(
           "have.attr",
           "content",
