@@ -42,7 +42,6 @@ import {
 } from "../../components/lifecycleHelpers";
 import { ApiPaths, type paths } from "../../types/api-schema";
 
-Astro.response.headers.set("Cache-Control", "public, max-age=7200");
 const { id = "" } = Astro.params;
 const API_RESOURCE = ApiPaths.retreiveApi;
 

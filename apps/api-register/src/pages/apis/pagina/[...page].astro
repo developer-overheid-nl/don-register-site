@@ -54,7 +54,6 @@ import {
   type paths,
 } from "../../../types/api-schema";
 
-Astro.response.headers.set("Cache-Control", "public, max-age=7200");
 const { page = 1 } = Astro.params;
 
 const APIS_RESOURCE = ApiPaths.listApis;
