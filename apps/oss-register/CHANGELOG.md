@@ -1,5 +1,17 @@
 # @developer-overheid-nl/oss-register
 
+## 2.3.0
+
+### Minor Changes
+
+- fe3b5a0: Meta descriptions en social images toegevoegd. Detailpagina's laten nu de summary of short description zien.
+
+### Patch Changes
+
+- Updated dependencies [fe3b5a0]
+  - @developer-overheid-nl/don-register-layouts@2.0.0
+  - @developer-overheid-nl/don-register-components@1.5.1
+
 ## 2.2.0
 
 ### Minor Changes

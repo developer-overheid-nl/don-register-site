@@ -1,5 +1,12 @@
 # @developer-overheid-nl/don-register-components
 
+## 1.5.1
+
+### Patch Changes
+
+- Updated dependencies [fe3b5a0]
+  - @developer-overheid-nl/don-register-locales@1.2.2
+
 ## 1.5.0
 
 ### Minor Changes
