@@ -93,7 +93,7 @@ const getLang = (langKeys: Array<string>) =>
 )}
 
 {details && (
-  <DonDetail appConfig={appConfig} titlePage={details?.name}>
+  <DonDetail appConfig={appConfig} titlePage={details?.name} description={details.shortDescription}>
     <PiwikPro slot="head" client:only="react" 
       accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS} 
       siteId={PIWIK_PRO_SITE_ID} 

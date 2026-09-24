@@ -7,6 +7,16 @@ export default {
   meta: {
     description:
       "Welkom bij het Open Source Register. Hier vind je informatie over de open source repositories die beschikbaar zijn voor gebruik binnen de overheid.",
+    ogImages: {
+      "/": {
+        url: "/don-oss-register-social-card.png",
+        alt: "Open Source Register: Hier vind je informatie over de open source repositories die beschikbaar zijn voor gebruik binnen de overheid.",
+      },
+      "/repositories/[id]": {
+        url: "/don-oss-register-detail-social-card.png",
+        alt: "Details van deze Open Source Repository: Beschrijving van de repository. Publiccode.yml.",
+      },
+    },
   },
   mainSite: {
     name: "developer.overheid.nl",

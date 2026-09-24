@@ -5,8 +5,40 @@ describe("oss register", () => {
     cy.visit("/");
 
     cy.get("main").should("be.visible");
-    cy.title().should("eq", "Overzicht | Open Source Register");
 
+    // head tags
+    cy.title().should(
+      "eq",
+      "Overzicht | Open Source Register - developer.overheid.nl",
+    );
+    cy.og("title").should("have.attr", "content", "Overzicht");
+    cy.og("site_name").should(
+      "have.attr",
+      "content",
+      "Open Source Register - developer.overheid.nl",
+    );
+    cy.metatag("description").should(
+      "have.attr",
+      "content",
+      "Welkom bij het Open Source Register. Hier vind je informatie over de open source repositories die beschikbaar zijn voor gebruik binnen de overheid.",
+    );
+    cy.og("description").should(
+      "have.attr",
+      "content",
+      "Welkom bij het Open Source Register. Hier vind je informatie over de open source repositories die beschikbaar zijn voor gebruik binnen de overheid.",
+    );
+    cy.og("image")
+      .invoke("attr", "content")
+      .should("include", "/don-oss-register-social-card.png");
+    cy.og("image:alt").should(
+      "have.attr",
+      "content",
+      "Open Source Register: Hier vind je informatie over de open source repositories die beschikbaar zijn voor gebruik binnen de overheid.",
+    );
+    cy.og("type").should("have.attr", "content", "website");
+    cy.og("locale").should("have.attr", "content", "nl_NL");
+
+    // content
     cy.get("main").then(($main) => {
       const results = $main.find(".results ol li");
 
@@ -91,6 +123,43 @@ describe("oss register", () => {
       "have.value",
       "lastActivity",
     );
+  });
+
+  it("can navigate to a details page", () => {
+    cy.visit("/");
+
+    cy.get(".results ol li")
+      .first()
+      .find("h2")
+      .invoke("text")
+      .then((title) => {
+        cy.get(".results ol li")
+          .first()
+          .find('[data-testid="rhc-card-as-link__link"] a')
+          .click();
+
+        cy.location("pathname").should("match", /^\/repositories\/.+/);
+        cy.get("main h2").should("contain.text", title.trim());
+        cy.title().should("contain", title.trim());
+        cy.metatag("description").should(
+          "not.have.attr",
+          "content",
+          "Welkom bij het Open Source Register. Hier vind je informatie over de open source repositories die beschikbaar zijn voor gebruik binnen de overheid.",
+        );
+        cy.og("description").should(
+          "not.have.attr",
+          "content",
+          "Welkom bij het Open Source Register. Hier vind je informatie over de open source repositories die beschikbaar zijn voor gebruik binnen de overheid.",
+        );
+        cy.og("image")
+          .invoke("attr", "content")
+          .should("include", "/don-oss-register-detail-social-card.png");
+        cy.og("image:alt").should(
+          "have.attr",
+          "content",
+          "Details van deze Open Source Repository: Beschrijving van de repository. Publiccode.yml.",
+        );
+      });
   });
 
   it("loads the toevoegen page", () => {

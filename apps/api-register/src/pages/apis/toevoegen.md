@@ -1,6 +1,7 @@
 ---
 layout: "../../layouts/Markdown.astro"
 title: API's toevoegen
+description: Vraag schrijfrechten aan om API's toe te voegen of bij te werken in het API-register en lees meer over lifecycle, versiebeheer en gebruik van de API.
 ---
 
 ## API's toevoegen aan het API-register

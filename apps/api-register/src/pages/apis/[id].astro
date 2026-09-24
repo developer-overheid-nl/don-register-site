@@ -90,7 +90,7 @@ const slackFeedSubscribeCommand = `/feed subscribe ${rssFeedUrl}`;
 )}
 
 {details && (
-  <DonDetail appConfig={appConfig} titlePage={details.title}>
+  <DonDetail appConfig={appConfig} titlePage={details.title} description={details.summary}>
     <PiwikPro slot="head" client:only="react" 
       accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS} 
       siteId={PIWIK_PRO_SITE_ID} 

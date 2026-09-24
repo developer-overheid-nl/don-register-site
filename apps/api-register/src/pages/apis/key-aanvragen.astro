@@ -14,6 +14,8 @@ const { i18n: i18nApp } = appConfig;
 const i18nPage = {
   "pages.aside-landmark": "Contactinformatie",
   "pages.key-aanvragen-title": "API-sleutel aanvragen",
+  "pages.key-aanvragen-description":
+    "Aanvraagformulier API-sleutel aanvragen. Vul je e-mailadres in om een API-sleutel aan te vragen.",
   "pages.get-key-form": "Aanvraagformulier",
   "pages.get-key-form-intro":
     "Vul je e-mailadres in om een API-sleutel aan te vragen. We gebruiken je e-mailadres alleen om je op de hoogte te houden bij wijzigen in onze API's.",
@@ -46,7 +48,7 @@ const labels = {
 };
 --- 
 
-<DonBasicWithAside appConfig={appConfig} titlePage={t("pages.key-aanvragen-title")}>
+<DonBasicWithAside appConfig={appConfig} titlePage={t("pages.key-aanvragen-title")} description={t("pages.key-aanvragen-description")}>
   <PiwikPro slot="head" client:only="react" 
     accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS} 
     siteId={PIWIK_PRO_SITE_ID} 
