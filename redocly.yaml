@@ -27,7 +27,7 @@ apis:
     root: https://api.don.projects.digilab.network/schema-register/v1/openapi.json
     x-openapi-ts:
       output: ./apps/schema-register/src/types/api-schema.test.ts
-  schema-register@v1@prod:
-    root: https://api.developer.overheid.nl/schema-register/v1/openapi.json
-    x-openapi-ts:
-      output: ./apps/schema-register/src/types/api-schema.prod.ts
+  # schema-register@v1@prod:
+  #   root: https://api.developer.overheid.nl/schema-register/v1/openapi.json
+  #   x-openapi-ts:
+  #     output: ./apps/schema-register/src/types/api-schema.prod.ts
