@@ -9,8 +9,7 @@
 }
 
 :global(
-  .rhc-card-as-link:hover
-  .rhc-card-as-link__heading.rhc-card-as-link__heading
+  .rhc-card-as-link:hover .rhc-card-as-link__heading.rhc-card-as-link__heading
 ) {
   /* TODO: specifity */
   :global(.nl-heading) {

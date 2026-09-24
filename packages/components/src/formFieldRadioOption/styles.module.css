@@ -32,7 +32,7 @@
 
   :global(
       .utrecht-form-field--radio
-      .utrecht-form-field__label:has(.utrecht-form-field__input)
+        .utrecht-form-field__label:has(.utrecht-form-field__input)
     ) {
     margin-inline-start: calc(
       -1 *

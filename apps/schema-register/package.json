@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "dotenv -c development -- astro preview",
+    "preview:prod": "dotenv -c production -- astro preview",
     "astro": "astro"
   },
   "exports": {
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "catalog:",
+    "dotenv-cli": "catalog:",
     "postcss-custom-media": "catalog:",
     "vite": "catalog:"
   }

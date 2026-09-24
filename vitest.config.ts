@@ -10,7 +10,6 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default getViteConfig(
   {
-    // @ts-expect-error: Vitest 'test' property not recognized in Astro's Vite config type
     test: {
       // Vitest configuration options
       projects: [
