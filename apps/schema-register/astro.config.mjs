@@ -42,6 +42,9 @@ export default defineConfig({
       maxAge: 86400,
       tag: "content",
     },
+    "api/[...any]": {
+      maxAge: 0,
+    },
     "[...rest]": {
       maxAge: 86400,
       tag: "other",
