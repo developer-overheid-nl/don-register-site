@@ -102,7 +102,7 @@
     "fuzz-error": "These aren't the droids you're looking for"
   },
   "layouts": {
-    "meta-description": "Welkom bij dit register. Hier vind je informatie over de {{items}} die beschikbaar zijn."
+    "meta-description": "Welkom bij dit register. Hier vind je informatie over de $t(components.items, {\"count\": 99 }) die beschikbaar zijn."
   },
   "pages": {
     "aside-landmark": "Zijbalk",

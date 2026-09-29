@@ -5,8 +5,37 @@ describe("API-register", () => {
     cy.visit("/");
 
     cy.get("main").should("be.visible");
-    cy.title().should("eq", "Overzicht | API-register");
 
+    // head tags
+    cy.title().should("eq", "Overzicht | API-register - developer.overheid.nl");
+    cy.og("title").should("have.attr", "content", "Overzicht");
+    cy.og("site_name").should(
+      "have.attr",
+      "content",
+      "API-register - developer.overheid.nl",
+    );
+    cy.metatag("description").should(
+      "have.attr",
+      "content",
+      "Welkom bij het API-Register. Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid.",
+    );
+    cy.og("description").should(
+      "have.attr",
+      "content",
+      "Welkom bij het API-Register. Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid.",
+    );
+    cy.og("image")
+      .invoke("attr", "content")
+      .should("include", "/don-api-register-social-card.png");
+    cy.og("image:alt").should(
+      "have.attr",
+      "content",
+      "API-register: Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid.",
+    );
+    cy.og("type").should("have.attr", "content", "website");
+    cy.og("locale").should("have.attr", "content", "nl_NL");
+
+    // content
     cy.get(".results ol li").should("have.length", 10);
     cy.get(".filters #facetfilters input").should("have.length.above", 1);
   });
@@ -77,6 +106,43 @@ describe("API-register", () => {
       "have.value",
       "adrScore",
     );
+  });
+
+  it("can navigate to a details page", () => {
+    cy.visit("/");
+
+    cy.get(".results ol li")
+      .first()
+      .find("h2")
+      .invoke("text")
+      .then((title) => {
+        cy.get(".results ol li")
+          .first()
+          .find('[data-testid="rhc-card-as-link__link"] a')
+          .click();
+
+        cy.location("pathname").should("match", /^\/apis\/.+/);
+        cy.get("main h2").should("contain.text", title.trim());
+        cy.title().should("contain", title.trim());
+        cy.metatag("description").should(
+          "not.have.attr",
+          "content",
+          "Welkom bij het API-Register. Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid.",
+        );
+        cy.og("description").should(
+          "not.have.attr",
+          "content",
+          "Welkom bij het API-Register. Hier vind je informatie over de API's die beschikbaar zijn voor gebruik binnen de overheid.",
+        );
+        cy.og("image")
+          .invoke("attr", "content")
+          .should("include", "/don-api-register-detail-social-card.png");
+        cy.og("image:alt").should(
+          "have.attr",
+          "content",
+          "Details van deze API: OpenAPI Specificatie, Servers en authenticatie. API Design Rules score. Blijf op de hoogte over deze API.",
+        );
+      });
   });
 
   it("loads the toevoegen page", () => {

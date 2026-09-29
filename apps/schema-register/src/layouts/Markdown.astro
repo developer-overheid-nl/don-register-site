@@ -9,6 +9,7 @@ export const prerender = true;
 
 type Props = MarkdownLayoutProps<{
   title: string;
+  description?: string;
 }>;
 
 const { frontmatter, headings } = Astro.props;
@@ -18,12 +19,15 @@ const titlePage =
   frontmatter.title ||
   headings.filter((mdHeading) => mdHeading.depth === 1).shift()?.text ||
   frontmatter.url?.replace("/", " ").trim();
---- 
+const description = frontmatter.description;
+---
 
-<DonBasic appConfig={appConfig} titlePage={titlePage}>
-  <PiwikPro slot="head" client:only="react" 
-    accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS} 
-    siteId={PIWIK_PRO_SITE_ID} 
+<DonBasic appConfig={appConfig} titlePage={titlePage} description={description}>
+  <PiwikPro
+    slot="head"
+    client:only="react"
+    accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS}
+    siteId={PIWIK_PRO_SITE_ID}
   />
 
   <div class="markdown-content utrecht-html">

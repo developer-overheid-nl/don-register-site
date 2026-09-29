@@ -7,6 +7,16 @@ export default {
   meta: {
     description:
       "Welkom bij het Schema-register. Hier vind je JSON Schemas die beschikbaar zijn voor (her)gebruik binnen de overheid.",
+    ogImages: {
+      "/": {
+        url: "/don-schema-register-social-card.png",
+        alt: "Schema-register: Hier vind je JSON Schemas die beschikbaar zijn voor (her)gebruik binnen de overheid.",
+      },
+      "/schemas/[id]": {
+        url: "/don-schema-register-detail-social-card.png",
+        alt: "Details van dit Schema: JSON Schema",
+      },
+    },
   },
   mainSite: {
     name: "developer.overheid.nl",

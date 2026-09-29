@@ -1,4 +1,5 @@
 // Shared Cypress e2e support can be registered here.
+import "./commands";
 
 beforeEach(() => {
   cy.intercept("https://statistiek.rijksoverheid.nl/ppms.*", { log: false }).as(
