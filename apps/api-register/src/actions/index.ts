@@ -7,10 +7,10 @@ import {
   API_X_API_KEY,
   TOOLS_ENDPOINT,
 } from "astro:env/server";
+import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import { verifySolution } from "altcha-lib";
 import { deriveKey } from "altcha-lib/algorithms/pbkdf2";
 import { z } from "astro/zod";
-import { t } from "i18next";
 import createClient from "openapi-fetch";
 import { ApiPaths, type paths as apiPaths } from "../types/api-schema";
 import type { paths as toolPaths } from "../types/tools-schema";
@@ -25,6 +25,8 @@ const toolsClient = createClient<toolPaths>({
 const apiClient = createClient<apiPaths>({
   baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
 });
+
+const { t } = i18n;
 
 export const server = {
   getFilters: defineAction({

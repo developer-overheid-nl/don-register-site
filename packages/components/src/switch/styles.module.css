@@ -7,8 +7,7 @@
 
   &.explicit {
     :global(
-        &.utrecht-form-toggle--html-checkbox
-        .utrecht-form-toggle__track
+        &.utrecht-form-toggle--html-checkbox .utrecht-form-toggle__track
       ):not([for^='negate']) {
       position: absolute;
       z-index: 2;
@@ -24,16 +23,14 @@
     }
 
     :global(
-        &.utrecht-form-toggle--html-checkbox
-        .utrecht-form-toggle__checkbox
+        &.utrecht-form-toggle--html-checkbox .utrecht-form-toggle__checkbox
       ):not([id^='negate']):checked
       ~ :global(.utrecht-form-toggle__track):not([for^='negate']) {
       z-index: 1;
     }
 
     :global(
-        &.utrecht-form-toggle--html-checkbox
-        .utrecht-form-toggle__track
+        &.utrecht-form-toggle--html-checkbox .utrecht-form-toggle__track
       )[for^='negate'] {
       position: absolute;
       z-index: 2;
@@ -48,8 +45,7 @@
     }
 
     :global(
-        &.utrecht-form-toggle--html-checkbox
-        .utrecht-form-toggle__checkbox
+        &.utrecht-form-toggle--html-checkbox .utrecht-form-toggle__checkbox
       )[id^='negate']:checked
       ~ :global(.utrecht-form-toggle__track)[for^='negate'] {
       z-index: 1;

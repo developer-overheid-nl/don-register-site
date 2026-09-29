@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "dotenv -c development -- astro preview",
+    "preview:prod": "dotenv -c production -- astro preview",
     "astro": "astro"
   },
   "exports": {
@@ -18,7 +19,6 @@
     "@developer-overheid-nl/don-register-components": "workspace:*",
     "@developer-overheid-nl/don-register-layouts": "workspace:*",
     "@piwikpro/react-piwik-pro": "catalog:",
-    "@rijkshuisstijl-community/components-react": "catalog:",
     "astro": "catalog:",
     "i18next": "catalog:",
     "openapi-fetch": "catalog:",
@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "catalog:",
+    "dotenv-cli": "catalog:",
     "postcss-custom-media": "catalog:",
     "vite": "catalog:"
   }

@@ -29,7 +29,6 @@ import {
   DonBasic,
   DonDetail,
 } from "@developer-overheid-nl/don-register-layouts";
-import { t } from "i18next";
 import createClient from "openapi-fetch";
 import appConfig from "../../../app.config";
 import RepoIcon from "../../components/RepoIcon.astro";
@@ -77,6 +76,7 @@ i18n.addResourceBundle(
   true,
 );
 i18n.addResources(i18n.language, "translation", i18nPage);
+const { t } = i18n;
 
 const details = error ? null : data;
 

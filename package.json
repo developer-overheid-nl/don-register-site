@@ -23,10 +23,12 @@
     "preview": "pnpm run /^preview:.*/ --parallel",
     "start:api": "node apps/api-register/dist/server/entry.mjs --host 0.0.0.0 --port 4321",
     "dev:api": "pnpm --filter @developer-overheid-nl/api-register dev",
+    "dev:api:prod": "pnpm --filter @developer-overheid-nl/api-register dev --mode production",
     "build:api": "pnpm --filter @developer-overheid-nl/api-register build",
     "preview:api": "pnpm --filter @developer-overheid-nl/api-register preview",
     "start:oss": "node apps/oss-register/dist/server/entry.mjs --host 0.0.0.0 --port 4321",
     "dev:oss": "pnpm --filter @developer-overheid-nl/oss-register dev",
+    "dev:oss:prod": "pnpm --filter @developer-overheid-nl/oss-register dev --mode production",
     "build:oss": "pnpm --filter @developer-overheid-nl/oss-register build",
     "preview:oss": "pnpm --filter @developer-overheid-nl/oss-register preview",
     "start:schema": "node apps/schema-register/dist/server/entry.mjs --host 0.0.0.0 --port 4321",
@@ -72,7 +74,7 @@
     "remark-gfm": "catalog:"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.16",
+    "@biomejs/biome": "2.5.13",
     "@changesets/cli": "2.31.0",
     "@chromatic-com/storybook": "5.2.1",
     "@csstools/postcss-global-data": "catalog:",

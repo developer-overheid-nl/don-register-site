@@ -38,7 +38,6 @@ import {
   getSearchParams,
   parseHeaders,
 } from "@developer-overheid-nl/don-register-layouts";
-import { t } from "i18next";
 import createClient from "openapi-fetch";
 import appConfig from "../../../../app.config";
 import FacetFiltersForm from "../../../components/FacetFiltersForm";
@@ -54,7 +53,6 @@ import {
   type paths,
 } from "../../../types/api-schema";
 
-Astro.response.headers.set("Cache-Control", "public, max-age=7200");
 const { page = 1 } = Astro.params;
 
 const APIS_RESOURCE = ApiPaths.listApis;
@@ -135,6 +133,7 @@ i18n.addResourceBundle(
   true,
   true,
 );
+const { t } = i18n;
 
 const isSearchPage = Boolean(routingObj.queryObject[SEARCH_QUERY_KEY]);
 const searchObject = isSearchPage

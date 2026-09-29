@@ -5,8 +5,8 @@ import {
   API_VERSION,
   API_X_API_KEY,
 } from "astro:env/server";
+import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import { z } from "astro/zod";
-import { t } from "i18next";
 import createClient from "openapi-fetch";
 import { ApiPaths, type paths } from "../types/api-schema";
 
@@ -15,6 +15,8 @@ const FILTERS_RESOURCE = ApiPaths.listRepositoryFilters;
 const client = createClient<paths>({
   baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
 });
+
+const { t } = i18n;
 
 export const server = {
   getFilters: defineAction({

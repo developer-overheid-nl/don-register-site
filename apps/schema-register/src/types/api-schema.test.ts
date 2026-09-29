@@ -234,7 +234,7 @@ export interface components {
              */
             url?: string;
         };
-        /** @description A dependency edge reported by SourceMeta for a stored schema. */
+        /** @description An outgoing dependency or incoming dependent edge reported by SourceMeta for a stored schema. */
         SourceMetaDependency: {
             /**
              * Format: uri
@@ -250,14 +250,14 @@ export interface components {
             at: string;
             /** @description Local schema-register id for the dependency source, when available */
             fromSchemaId?: components["schemas"]["ResourceId"];
-            /** @description Local schema-register artifact URL for the dependency source, when available */
-            fromSchemaUrl?: components["schemas"]["SchemaUrl"];
+            /** @description Frontend path for the dependency source schema, for example schemas/{id}, when available */
+            fromSchemaUrl?: string;
             /** @description Local schema-register title for the dependency source, when available */
             fromSchemaTitle?: components["schemas"]["SchemaTitle"];
             /** @description Local schema-register id for the dependency target, when available */
             toSchemaId?: components["schemas"]["ResourceId"];
-            /** @description Local schema-register artifact URL for the dependency target, when available */
-            toSchemaUrl?: components["schemas"]["SchemaUrl"];
+            /** @description Frontend path for the dependency target schema, for example schemas/{id}, when available */
+            toSchemaUrl?: string;
             /** @description Local schema-register title for the dependency target, when available */
             toSchemaTitle?: components["schemas"]["SchemaTitle"];
         };
@@ -281,11 +281,14 @@ export interface components {
             rootType?: components["schemas"]["SchemaRootType"];
             collection?: components["schemas"]["SchemaCollection"];
             contact?: components["schemas"]["Contact"];
-            organisation?: components["schemas"]["OrganisationSummary"];
             createdAt?: components["schemas"]["CreatedAt"];
             lastCrawledAt?: components["schemas"]["LastCrawledAt"];
             /** @description Name reported by the SourceMeta One API entry */
             sourceMetaName?: string;
+            /** @description Relative SourceMeta schema path without the leading /schemas base */
+            sourceMetaPath?: string;
+            /** @description First path segment of sourceMetaPath */
+            sourceMetaRoot?: string;
             /**
              * Format: uri
              * @description Public URL for downloading the bundled schema
@@ -312,7 +315,7 @@ export interface components {
         SchemaDetail: components["schemas"]["SchemaSummary"] & {
             /** @description The stored JSON Schema document */
             content?: Record<string, never>;
-            /** @description Dependency edges reported by SourceMeta for this schema */
+            /** @description Outgoing dependency and incoming dependent edges reported by SourceMeta for this schema */
             sourceMetaDependencyDetails?: components["schemas"]["SourceMetaDependency"][];
             /** @description Health issues reported by SourceMeta for this schema */
             sourceMetaHealthIssues?: components["schemas"]["SourceMetaHealthIssue"][];
@@ -392,8 +395,6 @@ export interface components {
         PerPage: number;
         /** @description Search term to combine with repository filters. Matches repository name, short description, long description, publiccode.yml url and publiccode.yml landingURL. */
         SearchFilter: string;
-        /** @description Filter by organisation URI. */
-        OrganisationFilter: string;
         /** @description Filter schemas by JSON Schema dialect. Repeat the parameter to filter on multiple dialects. */
         DialectFilter: components["schemas"]["SchemaDialect"][];
         /** @description Filter schemas by root type. Repeat the parameter to filter on multiple root types. */
@@ -429,12 +430,10 @@ export interface operations {
                 perPage?: components["parameters"]["PerPage"];
                 /** @description Search term to combine with repository filters. Matches repository name, short description, long description, publiccode.yml url and publiccode.yml landingURL. */
                 q?: components["parameters"]["SearchFilter"];
-                /** @description Filter by organisation URI. */
-                organisation?: components["parameters"]["OrganisationFilter"];
-                /** @description Filter schemas by JSON Schema dialect. Repeat the parameter to filter on multiple dialects. */
-                dialect?: components["parameters"]["DialectFilter"];
                 /** @description Filter schemas by root type. Repeat the parameter to filter on multiple root types. */
                 rootType?: components["parameters"]["RootTypeFilter"];
+                /** @description Filter schemas by JSON Schema dialect. Repeat the parameter to filter on multiple dialects. */
+                dialect?: components["parameters"]["DialectFilter"];
             };
             header?: never;
             path?: never;
@@ -491,12 +490,10 @@ export interface operations {
             query?: {
                 /** @description Search term to combine with repository filters. Matches repository name, short description, long description, publiccode.yml url and publiccode.yml landingURL. */
                 q?: components["parameters"]["SearchFilter"];
-                /** @description Filter by organisation URI. */
-                organisation?: components["parameters"]["OrganisationFilter"];
-                /** @description Filter schemas by JSON Schema dialect. Repeat the parameter to filter on multiple dialects. */
-                dialect?: components["parameters"]["DialectFilter"];
                 /** @description Filter schemas by root type. Repeat the parameter to filter on multiple root types. */
                 rootType?: components["parameters"]["RootTypeFilter"];
+                /** @description Filter schemas by JSON Schema dialect. Repeat the parameter to filter on multiple dialects. */
+                dialect?: components["parameters"]["DialectFilter"];
             };
             header?: never;
             path?: never;
