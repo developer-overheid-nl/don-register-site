@@ -75,7 +75,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.13",
-    "@changesets/cli": "2.31.0",
+    "@changesets/cli": "3.0.3",
     "@chromatic-com/storybook": "5.2.1",
     "@csstools/postcss-global-data": "catalog:",
     "@rijkshuisstijl-community/components-css": "catalog:",
@@ -98,15 +98,5 @@
     "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"
-  },
-  "pnpm": {
-    "ignoredBuiltDependencies": [
-      "sharp"
-    ],
-    "onlyBuiltDependencies": [
-      "cypress",
-      "esbuild",
-      "lefthook"
-    ]
   }
 }
