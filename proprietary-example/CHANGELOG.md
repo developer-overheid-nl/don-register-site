@@ -1,5 +1,11 @@
 # @developer-overheid-nl/proprietary-example
 
+## 1.2.1
+
+### Patch Changes
+
+- 02e66ef: Added `aria-hidden="true"` to the sprite.svg (Biome linting rule)
+
 ## 1.2.0
 
 ### Minor Changes
