@@ -50,3 +50,11 @@ overrides:
   "@utrecht/button-group-css": 2.0.1
   react: catalog:react19
   react-dom: catalog:react19
+
+ignoredBuiltDependencies:
+  - sharp
+
+onlyBuiltDependencies:
+  - cypress
+  - esbuild
+  - lefthook
