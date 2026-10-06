@@ -6,6 +6,12 @@ settings:
 
 catalogs:
   default:
+    '@astrojs/markdown-satteri':
+      specifier: 0.4.2
+      version: 0.4.2
+    '@astrojs/mdx':
+      specifier: 8.0.2
+      version: 8.0.2
     '@astrojs/node':
       specifier: 11.1.5
       version: 11.1.5
@@ -226,6 +232,12 @@ importers:
 
   apps/api-register:
     dependencies:
+      '@astrojs/markdown-satteri':
+        specifier: 'catalog:'
+        version: 0.4.2
+      '@astrojs/mdx':
+        specifier: 'catalog:'
+        version: 8.0.2(@astrojs/markdown-satteri@0.4.2)(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.0.8)(yaml@2.9.1))
       '@astrojs/react':
         specifier: 'catalog:'
         version: 6.0.5(@types/node@24.0.8)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(esbuild@0.28.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yaml@2.9.1)
@@ -275,6 +287,12 @@ importers:
 
   apps/oss-register:
     dependencies:
+      '@astrojs/markdown-satteri':
+        specifier: 'catalog:'
+        version: 0.4.2
+      '@astrojs/mdx':
+        specifier: 'catalog:'
+        version: 8.0.2(@astrojs/markdown-satteri@0.4.2)(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.0.8)(yaml@2.9.1))
       '@astrojs/react':
         specifier: 'catalog:'
         version: 6.0.5(@types/node@24.0.8)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(esbuild@0.28.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yaml@2.9.1)
@@ -318,6 +336,12 @@ importers:
 
   apps/schema-register:
     dependencies:
+      '@astrojs/markdown-satteri':
+        specifier: 'catalog:'
+        version: 0.4.2
+      '@astrojs/mdx':
+        specifier: 'catalog:'
+        version: 8.0.2(@astrojs/markdown-satteri@0.4.2)(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.0.8)(yaml@2.9.1))
       '@astrojs/react':
         specifier: 'catalog:'
         version: 6.0.5(@types/node@24.0.8)(@types/react-dom@19.2.3(@types/react@19.2.9))(@types/react@19.2.9)(esbuild@0.28.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(yaml@2.9.1)
@@ -611,6 +635,20 @@ packages:
 
   '@astrojs/markdown-satteri@0.4.1':
     resolution: {integrity: sha512-EniHbFNa6SQHDih7JnpPos3NWXO6hdt4raBcOosfGmlfc3gP9CI/sESA3VOf1PgJZ7SFfewlZW9Livn0JugEZg==}
+
+  '@astrojs/markdown-satteri@0.4.2':
+    resolution: {integrity: sha512-g4QehXnB/MzxQWnSf17NciFInMqEJy9948p8cc7zGg/r7995m0Ln5PMr3Xlnj24iey1LchaoZ3SzTOa3D4P/3w==}
+
+  '@astrojs/mdx@8.0.2':
+    resolution: {integrity: sha512-WedIVP2Bu8fXSzxb3ZYZ8xDrWWjf2SRKCneh52Llhoa+O3lcpHPhoZVP3FerlivUaH/0LJz2yVaCNvMdg0u8Bw==}
+    engines: {node: '>=22.12.0'}
+    peerDependencies:
+      '@astrojs/markdown-remark': ^7.3.0
+      '@astrojs/markdown-satteri': ^0.4.0
+      astro: ^7.2.10
+    peerDependenciesMeta:
+      '@astrojs/markdown-remark':
+        optional: true
 
   '@astrojs/node@11.1.5':
     resolution: {integrity: sha512-CgA+LmG4UWqHxg/Vdc5MdxjjJNZSjKYQQx4uEUwnbj+1ZD2CYumJI3OWg2twsVdj2FlYsB5yvmCC54Re+OK+UQ==}
@@ -5908,6 +5946,20 @@ snapshots:
       github-slugger: 2.0.0
       satteri: 0.10.5
 
+  '@astrojs/markdown-satteri@0.4.2':
+    dependencies:
+      '@astrojs/internal-helpers': 0.11.0
+      '@astrojs/prism': 4.0.2
+      github-slugger: 2.0.0
+      satteri: 0.10.5
+
+  '@astrojs/mdx@8.0.2(@astrojs/markdown-satteri@0.4.2)(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.0.8)(yaml@2.9.1))':
+    dependencies:
+      '@astrojs/internal-helpers': 0.11.0
+      '@astrojs/markdown-satteri': 0.4.2
+      astro: 7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.0.8)(yaml@2.9.1)
+      es-module-lexer: 2.3.2
+
   '@astrojs/node@11.1.5(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.0.8)(yaml@2.9.1))':
     dependencies:
       '@astrojs/internal-helpers': 0.11.0
@@ -9414,7 +9466,7 @@ snapshots:
 
   hast-util-to-html@9.0.5:
     dependencies:
-      '@types/hast': 3.0.4
+      '@types/hast': 3.0.5
       '@types/unist': 3.0.3
       ccount: 2.0.1
       comma-separated-tokens: 2.0.3
@@ -9448,7 +9500,7 @@ snapshots:
 
   hast-util-whitespace@3.0.0:
     dependencies:
-      '@types/hast': 3.0.4
+      '@types/hast': 3.0.5
 
   html-escaper@2.0.2: {}
 
@@ -9870,7 +9922,7 @@ snapshots:
   mdast-util-mdx-expression@2.0.1:
     dependencies:
       '@types/estree-jsx': 1.0.5
-      '@types/hast': 3.0.4
+      '@types/hast': 3.0.5
       '@types/mdast': 4.0.4
       devlop: 1.1.0
       mdast-util-from-markdown: 2.0.3
@@ -9881,7 +9933,7 @@ snapshots:
   mdast-util-mdx-jsx@3.2.0:
     dependencies:
       '@types/estree-jsx': 1.0.5
-      '@types/hast': 3.0.4
+      '@types/hast': 3.0.5
       '@types/mdast': 4.0.4
       '@types/unist': 3.0.3
       ccount: 2.0.1
@@ -9898,7 +9950,7 @@ snapshots:
   mdast-util-mdxjs-esm@2.0.1:
     dependencies:
       '@types/estree-jsx': 1.0.5
-      '@types/hast': 3.0.4
+      '@types/hast': 3.0.5
       '@types/mdast': 4.0.4
       devlop: 1.1.0
       mdast-util-from-markdown: 2.0.3

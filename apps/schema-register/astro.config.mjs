@@ -1,5 +1,6 @@
 // @ts-nocheck
 
+import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
 import react from "@astrojs/react";
 import postcssGlobalData from "@csstools/postcss-global-data";
@@ -64,6 +65,7 @@ export default defineConfig({
   },
   integrations: [
     react(),
+    mdx(),
   ],
   build: {
     inlineStylesheets: "never",

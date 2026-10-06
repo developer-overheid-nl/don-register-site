@@ -9,6 +9,10 @@ export {
 export { type BlockProps, default as Block } from "./block/Block";
 export { default as Button } from "./button/Button";
 export {
+  type ButtonActionProps,
+  default as ButtonAction,
+} from "./button/ButtonAction";
+export {
   type CardAsLinksProps,
   default as CardAsLink,
 } from "./cardAsLink/CardAsLink";
