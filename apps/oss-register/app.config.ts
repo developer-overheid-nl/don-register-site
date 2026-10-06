@@ -90,7 +90,7 @@ export default {
       {
         id: "github",
         label: "GitHub",
-        href: "https://github.com/developer-overheid-nl/don-register-site",
+        href: "https://github.com/developer-overheid-nl",
         icon: "_external",
         target: "_blank",
       },
