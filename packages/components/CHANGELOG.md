@@ -1,5 +1,11 @@
 # @developer-overheid-nl/don-register-components
 
+## 1.6.0
+
+### Minor Changes
+
+- 812b070: `ButtonAction` toegevoegd: een link in de vorm van een knop, voor calls to action zoals "API toevoegen".
+
 ## 1.5.1
 
 ### Patch Changes

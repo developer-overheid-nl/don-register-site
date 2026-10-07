@@ -1,5 +1,12 @@
 # @developer-overheid-nl/don-register-layouts
 
+## 2.0.1
+
+### Patch Changes
+
+- Updated dependencies [812b070]
+  - @developer-overheid-nl/don-register-components@1.6.0
+
 ## 2.0.0
 
 ### Major Changes
