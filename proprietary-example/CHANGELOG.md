@@ -1,5 +1,11 @@
 # @developer-overheid-nl/proprietary-example
 
+## 1.2.2
+
+### Patch Changes
+
+- 54d183b: Updated Readme files to point to the correct CHANGELOG links in the GitHub repository instead of local paths.
+
 ## 1.2.1
 
 ### Patch Changes

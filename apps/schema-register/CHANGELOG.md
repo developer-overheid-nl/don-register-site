@@ -1,5 +1,13 @@
 # @developer-overheid-nl/schema-register
 
+## 2.1.1
+
+### Patch Changes
+
+- Updated dependencies [54d183b]
+  - @developer-overheid-nl/don-register-components@1.6.1
+  - @developer-overheid-nl/don-register-layouts@2.0.2
+
 ## 2.1.0
 
 ### Minor Changes
