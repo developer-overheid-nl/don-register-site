@@ -3,6 +3,10 @@
   "author": "developer.overheid.nl",
   "description": "The components for the API- and OSS registers",
   "license": "EUPL-1.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/developer-overheid-nl/don-register-site"
+  },
   "private": false,
   "type": "module",
   "version": "1.6.0",
