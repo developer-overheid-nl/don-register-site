@@ -17,4 +17,4 @@ De package heeft o.a. de volgende dependencies:
 
 ## Changelog
 
-Zie de [CHANGELOG](./CHANGELOG.md) voor een overzicht van de wijzigingen in deze package.
+Zie de [CHANGELOG](https://github.com/developer-overheid-nl/don-register-site/blob/main/packages/components/CHANGELOG.md) voor een overzicht van de wijzigingen in deze package.
