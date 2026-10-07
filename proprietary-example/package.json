@@ -2,6 +2,10 @@
   "name": "@developer-overheid-nl/proprietary-example",
   "version": "1.2.1",
   "description": "Placeholder assets for the proprietary assets for register sites based of the template register site",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/developer-overheid-nl/don-register-site"
+  },
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -16,7 +20,8 @@
     "/logos",
     "/fonts",
     "/icons",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "LICENSE.md"
   ],
   "main": "index.ts",
   "scripts": {
