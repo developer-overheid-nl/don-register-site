@@ -12,6 +12,7 @@ import {
   AlignBox,
   Article,
   BadgeList,
+  ButtonAction,
   CardAsLink,
   CardsList,
   CardsListItem,
@@ -46,7 +47,7 @@ import {
   getStatus,
   getStatusColor,
 } from "../../../components/lifecycleHelpers";
-import { Content as Intro } from "../../../partials/intro.md";
+import { Content as Intro } from "../../../partials/intro.mdx";
 import {
   ApiPaths,
   type operations,
@@ -233,8 +234,8 @@ const filterHiddenFields = getSearchParams(
     searchObject={searchObject}
   />
 
-  <Article className="markdown-content utrecht-html" slot="header"
-    ><Intro /></Article
+  <Article className="markdown-content intro" slot="header"
+    ><Intro components={{ a: ButtonAction }} /></Article
   >
 
   <Search
@@ -466,6 +467,19 @@ const filterHiddenFields = getSearchParams(
 </DonOverview>
 
 <style>
+  .intro {
+    --utrecht-article-max-inline-size: 100%;
+    
+    p {
+      margin-block-start: 0;
+      margin-block-end: 0;
+
+      & + p {
+        margin-block-start: 1rem;
+      }
+    }
+  }
+
   .results-toolbar {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;

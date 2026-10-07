@@ -12,6 +12,7 @@ import {
   AlignBox,
   Article,
   BadgeList,
+  ButtonAction,
   CardAsLink,
   CardsList,
   CardsListItem,
@@ -43,7 +44,7 @@ import createClient from "openapi-fetch";
 import appConfig from "../../../../app.config";
 import FacetFiltersForm from "../../../components/FacetFiltersForm";
 import RepoIcon from "../../../components/RepoIcon.astro";
-import { Content as Intro } from "../../../partials/intro.md";
+import { Content as Intro } from "../../../partials/intro.mdx";
 import { ApiPaths, type paths } from "../../../types/api-schema";
 
 const { page = 1 } = Astro.params;
@@ -251,7 +252,9 @@ const i18nContext = selectedFiltersMap.size > 0 ? "filtered" : "all";
     isSearchPage={isSearchPage}
     searchObject={searchObject}
   />
-  <Article className="markdown-content utrecht-html" slot="header"><Intro /></Article>
+  <Article className="markdown-content intro" slot="header"
+    ><Intro components={{ a: ButtonAction }} /></Article
+  >
   <Search
     slot="search"
     searchUrl={new URL(`/repositories`, routingObj?.url).toString()}
@@ -424,6 +427,19 @@ const i18nContext = selectedFiltersMap.size > 0 ? "filtered" : "all";
 </DonOverview>
 
 <style>
+  .intro {
+    --utrecht-article-max-inline-size: 100%;
+
+    p {
+      margin-block-start: 0;
+      margin-block-end: 0;
+
+      & + p {
+        margin-block-start: 1rem;
+      }
+    }
+  }
+  
   .results-toolbar {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
