@@ -429,8 +429,17 @@ const i18nContext = selectedFiltersMap.size > 0 ? "filtered" : "all";
 <style>
   .intro {
     --utrecht-article-max-inline-size: 100%;
-    justify-items: end;
+
+    p {
+      margin-block-start: 0;
+      margin-block-end: 0;
+
+      & + p {
+        margin-block-start: 1rem;
+      }
+    }
   }
+  
   .results-toolbar {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
