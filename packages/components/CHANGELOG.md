@@ -1,5 +1,19 @@
 # @developer-overheid-nl/don-register-components
 
+## 1.6.1
+
+### Patch Changes
+
+- 54d183b: Updated Readme files to point to the correct CHANGELOG links in the GitHub repository instead of local paths.
+- Updated dependencies [54d183b]
+  - @developer-overheid-nl/don-register-locales@1.2.3
+
+## 1.6.0
+
+### Minor Changes
+
+- 812b070: `ButtonAction` toegevoegd: een link in de vorm van een knop, voor calls to action zoals "API toevoegen".
+
 ## 1.5.1
 
 ### Patch Changes
