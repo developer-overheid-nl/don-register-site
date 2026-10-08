@@ -24,6 +24,27 @@ tot de onderliggende RHC-component:
 | **Custom** | ✨ | Een component die volledig eigen is aan deze registry, niet afkomstig uit RHC. |
 | **Deprecated** |  | Verouderd; wordt in een latere versie verwijderd. Gebruik niet in nieuwe code. |
 
+## Versies
+
+Deze Storybook is gebouwd met de volgende versies:
+
+<table>
+  <thead>
+    <tr>
+      <th>Package</th>
+      <th>Versie</th>
+    </tr>
+  </thead>
+  <tbody>
+    {Object.entries(__PACKAGE_VERSIONS__).map(([name, version]) => (
+      <tr key={name}>
+        <td><code>{name}</code></td>
+        <td>{version}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
 ## Meer informatie
 
 - [Broncode van deze package](https://github.com/developer-overheid-nl/don-register-site/tree/main/packages/components)
