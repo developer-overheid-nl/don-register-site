@@ -62,11 +62,6 @@ export default {
         current: true,
       },
       {
-        id: "communities",
-        label: "Communities",
-        href: `${mainSiteUrl}/communities`,
-      },
-      {
         id: "blog",
         label: "Blog",
         href: `${mainSiteUrl}/blog`,
