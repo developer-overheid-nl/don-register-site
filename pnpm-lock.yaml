@@ -49,8 +49,8 @@ catalogs:
       specifier: 4.1.9
       version: 4.1.9
     altcha:
-      specifier: 3.1.0
-      version: 3.1.0
+      specifier: 3.3.0
+      version: 3.3.0
     altcha-lib:
       specifier: 2.2.0
       version: 2.2.0
@@ -252,7 +252,7 @@ importers:
         version: 2.5.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       altcha:
         specifier: 'catalog:'
-        version: 3.1.0
+        version: 3.3.0
       altcha-lib:
         specifier: 'catalog:'
         version: 2.2.0
@@ -3528,8 +3528,8 @@ packages:
       hono:
         optional: true
 
-  altcha@3.1.0:
-    resolution: {integrity: sha512-rzz+F1xGG55X1LWylHZyabf9V4+5qAZeqd0+mo+8HdFsCqPC4YfUyjQ7lcbW/GVXy1XSnKsPMFkBuhmTymZuWw==}
+  altcha@3.3.0:
+    resolution: {integrity: sha512-olIeb1A5K2wzbFSxV3qgeknygbdJt7qmzCfAZn704PWsE9iGrfc/oTw1FfiESjsvaJf8Uk6elJX8opKq5u7dTw==}
 
   am-i-vibing@0.4.0:
     resolution: {integrity: sha512-MxT4XZL7pzLHpuvhDKdMaQHMGGkJDLluKBLsbstn+8wv9sWcFT6h+0ve9qkml95amVTZtZV83gQe2hY+ojgHLg==}
@@ -8708,7 +8708,7 @@ snapshots:
 
   altcha-lib@2.2.0: {}
 
-  altcha@3.1.0:
+  altcha@3.3.0:
     dependencies:
       hash-wasm: 4.12.0
 
