@@ -1,5 +1,11 @@
 # @developer-overheid-nl/schema-register
 
+## 3.0.0
+
+### Major Changes
+
+- 845eff1: Remove "Communities" section from app.config.ts in api-, oss- and schema-register.
+
 ## 2.1.1
 
 ### Patch Changes
