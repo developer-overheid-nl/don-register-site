@@ -6,11 +6,6 @@ import react from "@astrojs/react";
 import postcssGlobalData from "@csstools/postcss-global-data";
 import { defineConfig, envField, memoryCache } from "astro/config";
 import postcssCustomMedia from "postcss-custom-media";
-import { loadEnv } from "vite";
-
-// Settings for parse-link-header, see .env file
-const { PARSE_LINK_HEADER_MAXLEN, PARSE_LINK_HEADER_THROW_ON_MAXLEN_EXCEEDED } =
-  loadEnv(import.meta.env.MODE, process.cwd(), "");
 
 // https://astro.build/config
 export default defineConfig({
@@ -71,15 +66,6 @@ export default defineConfig({
     inlineStylesheets: "never",
   },
   vite: {
-    // Settings for parse-link-header, see .env file
-    define: {
-      "process.env.PARSE_LINK_HEADER_MAXLEN": JSON.stringify(
-        PARSE_LINK_HEADER_MAXLEN,
-      ),
-      "process.env.PARSE_LINK_HEADER_THROW_ON_MAXLEN_EXCEEDED": JSON.stringify(
-        PARSE_LINK_HEADER_THROW_ON_MAXLEN_EXCEEDED,
-      ),
-    },
     ssr: {
       noExternal: [
         "@astrojs/react",

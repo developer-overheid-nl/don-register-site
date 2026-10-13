@@ -32,11 +32,9 @@
     "@rijkshuisstijl-community/design-tokens": "catalog:",
     "@utrecht/component-library-css": "catalog:",
     "i18next": "catalog:",
-    "parse-link-header": "2.0.0",
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "@types/parse-link-header": "^2.0.3",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
     "react": "catalog:react19",

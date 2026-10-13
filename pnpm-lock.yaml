@@ -406,9 +406,6 @@ importers:
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
         version: 11.0.0
-      '@types/parse-link-header':
-        specifier: ^2.0.3
-        version: 2.0.3
       '@types/react':
         specifier: catalog:react19
         version: 19.2.9
@@ -421,9 +418,6 @@ importers:
       i18next:
         specifier: 'catalog:'
         version: 26.4.2(typescript@5.9.3)
-      parse-link-header:
-        specifier: ^2.0.0
-        version: 2.0.0
       react:
         specifier: 19.2.3
         version: 19.2.3
@@ -467,9 +461,6 @@ importers:
       '@rijkshuisstijl-community/design-tokens':
         specifier: 'catalog:'
         version: 11.0.0
-      '@types/parse-link-header':
-        specifier: ^2.0.3
-        version: 2.0.3
       '@types/react':
         specifier: catalog:react19
         version: 19.2.9
@@ -482,9 +473,6 @@ importers:
       i18next:
         specifier: 'catalog:'
         version: 26.4.2(typescript@5.9.3)
-      parse-link-header:
-        specifier: 2.0.0
-        version: 2.0.0
       react:
         specifier: 19.2.3
         version: 19.2.3
@@ -2277,9 +2265,6 @@ packages:
 
   '@types/node@24.0.8':
     resolution: {integrity: sha512-WytNrFSgWO/esSH9NbpWUfTMGQwCGIKfCmNlmFDNiI5gGhgMmEA+V1AEvKLeBNvvtBnailJtkrEa2OIISwrVAA==}
-
-  '@types/parse-link-header@2.0.3':
-    resolution: {integrity: sha512-ffLAxD6Xqcf2gSbtEJehj8yJ5R/2OZqD4liodQvQQ+hhO4kg1mk9ToEZQPMtNTm/zIQj2GNleQbsjPp9+UQm4Q==}
 
   '@types/react-dom@19.1.11':
     resolution: {integrity: sha512-3BKc/yGdNTYQVVw4idqHtSOcFsgGuBbMveKCOgF8wQ5QtrYOc3jDIlzg3jef04zcXFIHLelyGlj0T+BJ8+KN+w==}
@@ -4927,9 +4912,6 @@ packages:
     resolution: {integrity: sha512-ybiGyvspI+fAoRQbIPRddCcSTV9/LsJbf0e/S85VLowVGzRmokfneg2kwVW/KU5rOXrPSbF1qAKPMgNTqqROQQ==}
     engines: {node: '>=18'}
 
-  parse-link-header@2.0.0:
-    resolution: {integrity: sha512-xjU87V0VyHZybn2RrCX5TIFGxTVZE6zqqZWMPlIKiSKuWh/X5WZdt+w1Ki1nXB+8L/KtL+nZ4iq+sfI6MrhhMw==}
-
   path-key@3.1.1:
     resolution: {integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==}
     engines: {node: '>=8'}
@@ -5805,10 +5787,6 @@ packages:
   wsl-utils@0.1.0:
     resolution: {integrity: sha512-h3Fbisa2nKGPxCpm89Hk33lBLsnaGBvctQopaBSOW/uIs6FTe1ATyAnKFJrzVs9vpGdsTe73WF3V4lIsk4Gacw==}
     engines: {node: '>=18'}
-
-  xtend@4.0.2:
-    resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
-    engines: {node: '>=0.4'}
 
   xxhash-wasm@1.1.0:
     resolution: {integrity: sha512-147y/6YNh+tlp6nd/2pWq38i9h6mz/EuQ6njIrmW8D1BS5nCqs0P6DG+m6zTGnNz5I+uhZ0SHxBs9BsPrwcKDA==}
@@ -7446,8 +7424,6 @@ snapshots:
     dependencies:
       undici-types: 7.8.0
     optional: true
-
-  '@types/parse-link-header@2.0.3': {}
 
   '@types/react-dom@19.1.11(@types/react@19.1.17)':
     dependencies:
@@ -10394,10 +10370,6 @@ snapshots:
       index-to-position: 1.1.0
       type-fest: 4.41.0
 
-  parse-link-header@2.0.0:
-    dependencies:
-      xtend: 4.0.2
-
   path-key@3.1.1: {}
 
   path-parse@1.0.7: {}
@@ -11295,8 +11267,6 @@ snapshots:
   wsl-utils@0.1.0:
     dependencies:
       is-wsl: 3.1.1
-
-  xtend@4.0.2: {}
 
   xxhash-wasm@1.1.0: {}
 

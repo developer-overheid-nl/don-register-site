@@ -37,10 +37,8 @@
     "@rijkshuisstijl-community/components-css": "catalog:",
     "@rijkshuisstijl-community/components-react": "catalog:",
     "@rijkshuisstijl-community/design-tokens": "catalog:",
-    "@types/parse-link-header": "^2.0.3",
     "clsx": "catalog:",
     "i18next": "catalog:",
-    "parse-link-header": "^2.0.0",
     "react-i18next": "17.0.14",
     "react-markdown": "catalog:",
     "remark-behead": "^3.1.0"
