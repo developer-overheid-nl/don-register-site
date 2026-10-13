@@ -37,4 +37,4 @@ jobs:
           path: storybook-static # storybook build folder
           checkout: false
           install_command: pnpm install
-          build_command: pnpm build-storybook
+          build_command: pnpm storybook:build
