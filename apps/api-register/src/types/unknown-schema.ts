@@ -1,6 +1,6 @@
 /**
  * This file is a fallback.
- * Put the oas url of the api in `[root]/redocly.yaml` and run `ts:oas`.
+ * Put the oas url of the api in `[root]/redocly.yaml` and run `pnpm generate:oas:types`.
  */
 
 export type paths = Record<string, unknown>;

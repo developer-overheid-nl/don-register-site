@@ -23,7 +23,7 @@ export default getViteConfig(
               configDir: path.join(dirname, ".storybook"),
               // This should match your package.json script to run Storybook
               // The --no-open flag will skip the automatic opening of a browser
-              storybookScript: "pnpm storybook --no-open",
+              storybookScript: "pnpm storybook:dev --no-open",
             }),
           ],
           test: {

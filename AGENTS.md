@@ -24,6 +24,7 @@ Run from the repo root.
 
 ```
 pnpm install                # install deps
+pnpm start                  # interactive, searchable menu to pick and run any root script
 pnpm dev                    # run all three app dev servers in parallel
 pnpm dev:api / :oss / :schema   # run a single app's dev server (localhost:4321)
 pnpm build                  # build all apps to ./dist
@@ -37,12 +38,12 @@ pnpm test:e2e               # cypress e2e for both api and oss (needs the apps a
 pnpm test:e2e:api / :oss    # cypress against one app only (baseUrl 4321 / 4322)
 pnpm test:e2e:open          # cypress interactive runner
 
-pnpm ts:test                 # tsc --noEmit, repo-wide type check
+pnpm test:ts                 # tsc --noEmit, repo-wide type check
 pnpm biome:check              # biome check --write (format + lint + import sort)
-pnpm storybook                # storybook dev server on :6006
-pnpm build-storybook
+pnpm storybook:dev            # storybook dev server on :6006
+pnpm storybook:build
 
-pnpm ts:oas                   # regenerate OpenAPI-derived TS types from redocly.yaml (openapi-typescript)
+pnpm generate:oas:types      # regenerate OpenAPI-derived TS types from redocly.yaml (openapi-typescript)
 ```
 
 A pre-commit hook (lefthook) runs `biome check` on staged files automatically.
@@ -53,7 +54,7 @@ A pre-commit hook (lefthook) runs `biome check` on staged files automatically.
 
 Each app is `output: "server"` (Node adapter, standalone). Pages fetch data server-side in the Astro frontmatter using [openapi-fetch](https://openapi-ts.dev/openapi-fetch/), typed against generated schemas:
 
-- `redocly.yaml` at the repo root defines every backend API (prod + test variant) and where `pnpm ts:oas` writes the generated types (`src/types/api-schema.prod.ts`, `.test.ts`, plus `tools-schema.*.ts` for api-register).
+- `redocly.yaml` at the repo root defines every backend API (prod + test variant) and where `pnpm generate:oas:types` writes the generated types (`src/types/api-schema.prod.ts`, `.test.ts`, plus `tools-schema.*.ts` for api-register).
 - Each app's `src/types/api-schema.ts` is a thin switcher: it re-exports either `./api-schema.prod` (default, must be what's committed) or `./api-schema.test`. `noTestSchemas.grit` is a Biome/GritQL rule that warns if a `*-schema.test.*` export is checked in — always leave `api-schema.ts` pointing at `.prod` before merging to `main`; only point it at `.test` while actively developing against the test backend or when deploying to the test environment (see README "Deploy naar test").
 - `createClient<paths>({ baseUrl })` from `openapi-fetch` gives fully-typed `GET`/`POST` calls; route paths are referenced via generated `*Paths` enums (e.g. `ApiPaths.listApis`) rather than string literals.
 - Server-only secrets/config (API URLs, keys, Piwik Pro IDs, Altcha HMAC key) are declared in each app's `astro.config.mjs` under `env.schema` (Astro's typed env) and consumed via `astro:env/server`.
