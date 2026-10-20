@@ -1,5 +1,22 @@
 # @developer-overheid-nl/oss-register
 
+## 3.0.0
+
+### Major Changes
+
+- 845eff1: Remove "Communities" section from app.config.ts in api-, oss- and schema-register.
+
+### Minor Changes
+
+- 9fcdd6e: Show the code.overheid.nl icon for repositories hosted on code.overheid.nl, and match repository providers on the hostname instead of the full URL.
+
+### Patch Changes
+
+- 476c880: Replace `parse-link-header` with a TypeScript port (`parseLinkHeader`) that does not need Node's `url.parse`, and remove the `PARSE_LINK_HEADER_*` env workaround from the apps. Query parameters that appear more than once in a link URL are returned as an array; `parseHeaders` uses the first value when `page` or `perPage` is repeated.
+- Updated dependencies [476c880]
+  - @developer-overheid-nl/don-register-layouts@2.1.0
+  - @developer-overheid-nl/don-register-components@1.6.2
+
 ## 2.3.1
 
 ### Patch Changes
