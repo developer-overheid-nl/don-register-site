@@ -1,6 +1,7 @@
 ---
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import appConfig from "../../app.config";
+import { getRepoProvider } from "./repoProviders";
 
 interface Props {
   type?: string;
@@ -20,51 +21,14 @@ i18n.addResourceBundle(
 );
 const { t } = i18n;
 
-/**
- * Repository providers with their logos and alt text
- * key is used in the regex to match from the url
- */
-const repoProviders = {
-  github: {
-    logo: "/logos/github-mark.svg",
-    name: "GitHub",
-    alt: "GitHub logo",
-  },
-  gitlab: {
-    logo: "/logos/gitlab-logo-500-rgb.svg",
-    name: "GitLab",
-    alt: "GitLab logo",
-  },
-  bitbucket: {
-    logo: "/logos/bitbucket-mark-brand-rgb.svg",
-    name: "Bitbucket",
-    alt: "Bitbucket logo",
-  },
-  azure: {
-    logo: "/logos/azure-devops-icon.svg",
-    name: "Azure DevOps",
-    alt: "Azure DevOps logo",
-  },
-  codeberg: {
-    logo: "/logos/codeberg-logo_icon_blue.svg",
-    name: "Codeberg",
-    alt: "Codeberg logo",
-  },
-  forgejo: {
-    logo: "/logos/forgejo.svg",
-    name: "Forgejo",
-    alt: "Forgejo",
-  },
-};
+const provider = getRepoProvider(url, type);
 ---
 
-{Object.entries(repoProviders).map(([key, { logo, alt, name: provider }]) =>
-    type === key || url?.match(new RegExp(key, 'i')) ? (
-    <a href={url} target="_blank" rel="noopener noreferrer" class={`repo-link ${className}`} aria-label={t('components.goto-name-on-site', {name: name, site: provider})}>
-      <img class={`repo-logo ${key}-logo`} src={logo} alt={alt} width="24" height="24" />
-    </a>
-    ) : null
-  )}
+{provider && (
+  <a href={url} target="_blank" rel="noopener noreferrer" class={`repo-link ${className}`} aria-label={t('components.goto-name-on-site', {name: name, site: provider.name})}>
+    <img class={`repo-logo ${provider.key}-logo`} src={provider.logo} alt={provider.alt} width="24" height="24" />
+  </a>
+)}
 
 <style>
   .repo-link {
