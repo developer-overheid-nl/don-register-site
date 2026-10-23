@@ -1,3 +1,60 @@
 .facet {
+  interpolate-size: allow-keywords;
   margin-block-end: 0.5rem;
+
+  .scrollArea {
+    max-height: 380px; /* should fit about 10 */
+    padding-inline-end: 0.25rem;
+    overflow-y: auto;
+  }
+
+  .moreButton {
+    text-align: end;
+
+    :global(.don-icon) {
+      block-size: 0.875rem;
+      margin-inline-start: 0.125rem;
+      transition: transform 500ms;
+
+      &.up {
+        transform: rotate(-90deg);
+      }
+      &.down {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .searchSelect {
+    --rhc-radio-group-padding-block-end: 0;
+
+    /* RHC FormField does not forward the `hidden` attribute, so use a class */
+    .hidden {
+      display: none;
+    }
+
+    :global(.utrecht-form-fieldset__fieldset) {
+      display: grid;
+      gap: 0.5rem;
+    }
+  }
+
+  .searchInput {
+    --utrecht-textbox-padding-inline-start: 2rem;
+    position: relative;
+
+    :global(.utrecht-form-field__label) {
+      position: absolute;
+      place-content: center;
+      inline-size: calc(var(--utrecht-textbox-padding-inline-start) - 0.5rem);
+      block-size: 100%;
+      padding-inline: 0.25rem;
+
+      :global(.don-icon) {
+        inline-size: 1.5rem;
+        block-size: 1.5rem;
+        vertical-align: bottom;
+      }
+    }
+  }
 }

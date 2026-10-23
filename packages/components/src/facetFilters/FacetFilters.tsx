@@ -1,19 +1,28 @@
 "use client";
 
 import clsx from "clsx";
-import type { ChangeEvent } from "react";
-import { type HTMLProps, type PropsWithChildren, useRef } from "react";
+import type { ChangeEvent, MouseEvent } from "react";
+import {
+  type HTMLProps,
+  type PropsWithChildren,
+  useRef,
+  useState,
+} from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
+import Fieldset from "../fieldset/FieldSet";
 import FormFieldCheckboxGroup from "../formFieldCheckboxGroup/FormFieldCheckboxGroup";
 import FormFieldCheckboxOption from "../formFieldCheckboxOption/FormFieldCheckboxOption";
 import FormFieldRadioGroup from "../formFieldRadioGroup/FormFieldRadioGroup";
 import FormFieldRadioOption from "../formFieldRadioOption/FormFieldRadioOption";
 import FormFieldSwitch from "../formFieldSwitch/FormFieldSwitch";
+import FormFieldTextInput from "../formFieldTextInput/FormFieldTextInput";
 import Heading, {
   clampHeadingLevel,
   type HeadingProps,
 } from "../heading/Heading";
 import i18n from "../i18n";
+import Icon from "../iconsSprite/Icon";
+import LinkButton from "../link/LinkButton";
 import Paragraph from "../paragraph/Paragraph";
 import ToolTip from "../toolTip/ToolTip";
 import styles from "./styles.module.css";
@@ -23,6 +32,7 @@ enum FilterType {
   Date = "date",
   Multi = "multi-select",
   Single = "single-select",
+  Search = "search-select",
 }
 
 export interface SelectOption {
@@ -65,11 +75,18 @@ interface SingleSelectFilterData extends BaseFilterItems {
   options: SelectOption[];
 }
 
+interface SearchSelectFilterData extends BaseFilterItems {
+  type: FilterType.Search;
+  options: SelectOption[];
+  showTop?: number;
+}
+
 export type FilterData =
   | ToggleFilterData
   | DateFilterData
   | MultiSelectFilterData
-  | SingleSelectFilterData;
+  | SingleSelectFilterData
+  | SearchSelectFilterData;
 
 type SelectedFilters = Record<string, Array<string | [string, string]>>;
 
@@ -212,6 +229,23 @@ export const getSelectedFiltersMap = (
   );
 };
 
+const filterOptions = (
+  options: SelectOption[] | undefined,
+  search: string | number,
+): SelectOption[] => {
+  if (!options) {
+    return [];
+  }
+  if (typeof search === "number") {
+    return options.slice(0, search);
+  }
+  const query = search.toLowerCase();
+  if (query === "") {
+    return [];
+  }
+  return options.filter((option) => option.label.toLowerCase().includes(query));
+};
+
 const updateFilters = (
   selectedFilters: SelectedFilters,
   filterKey: string,
@@ -254,6 +288,15 @@ const debounce = <T extends unknown[]>(
 const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
   const { t } = useTranslation();
   const thisRef = useRef<HTMLDivElement>(null);
+  // Search results per filter key; `undefined` means no active search
+  const [optionsState, setOptionsState] = useState<
+    Record<string, SelectOption[] | undefined>
+  >({});
+  const [moreState, setMoreState] = useState<Record<string, boolean>>({});
+  // Selected option per search-select filter key, chosen client-side
+  const [selectedState, setSelectedState] = useState<
+    Record<string, string | undefined>
+  >({});
   const {
     title,
     startHeadingLevel = 2,
@@ -300,6 +343,77 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
     }
   };
 
+  const handleInput = (
+    event: ChangeEvent<HTMLInputElement>,
+    filterKey = event.target.name,
+    inputValue: string | number = event.target.value,
+  ) => {
+    console.log(event.target, filterKey, inputValue);
+
+    setOptionsState((current) => {
+      const filter = filters?.find(
+        (item): item is SearchSelectFilterData =>
+          item.key === filterKey && item.type === FilterType.Search,
+      );
+
+      return {
+        ...current,
+        [filterKey]:
+          inputValue === ""
+            ? undefined
+            : filterOptions(filter?.options, inputValue),
+      };
+    });
+  };
+
+  // Show search results while searching, otherwise fall back to all or the top options
+  const getVisibleOptions = (facet: SearchSelectFilterData) => {
+    const searchResults = optionsState[facet.key];
+    if (searchResults) {
+      return searchResults;
+    }
+    return moreState[facet.key]
+      ? facet.options
+      : filterOptions(facet.options, facet.showTop ?? 0);
+  };
+
+  // Visible options plus the selected option, so a selection never disappears
+  const getVisibleValues = (facet: SearchSelectFilterData) => {
+    const values = new Set(
+      getVisibleOptions(facet).map((option) => option.value),
+    );
+    const selectedValue =
+      selectedState[facet.key] ??
+      facet.options.find((option) => option.selected)?.value;
+    if (selectedValue) {
+      values.add(selectedValue);
+    }
+    return values;
+  };
+
+  const visibleValues = new Map(
+    filters
+      ?.filter(
+        (facet): facet is SearchSelectFilterData =>
+          facet.type === FilterType.Search,
+      )
+      .map((facet) => [facet.key, getVisibleValues(facet)]),
+  );
+
+  const toggleMore = (
+    _event: MouseEvent<HTMLButtonElement>,
+    type: FilterType,
+    filterKey: string,
+  ) => {
+    if (type !== FilterType.Search) {
+      return;
+    }
+    setMoreState((current) => ({
+      ...current,
+      [filterKey]: !current[filterKey],
+    }));
+  };
+
   return (
     <div
       ref={thisRef}
@@ -323,6 +437,7 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
                   : startHeadingLevel
               }
               appearanceLevel={5}
+              id={`${facet.key}-title`}
             >
               {facet.label}
             </Heading>
@@ -406,6 +521,89 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
                   </FormFieldRadioOption>
                 ))}
               </FormFieldRadioGroup>
+            ) : null}
+            {facet.type === "search-select" ? (
+              <Fieldset
+                aria-labelledby={`${facet.key}-title`}
+                className={styles.searchSelect}
+              >
+                <FormFieldTextInput
+                  className={styles.searchInput}
+                  type="search"
+                  label={
+                    <Icon name="zoek-inline" aria-label="TODO: Zoek label" />
+                  }
+                  aria-describedby="search-help"
+                  name={`search-${facet.key}`}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    handleInput(event, facet.key)
+                  }
+                >
+                  <div className="sr-only" id="search-options-help">
+                    {t("components.TODO-search-help")}
+                  </div>
+                </FormFieldTextInput>
+                <FormFieldRadioGroup
+                  className={clsx(
+                    styles.scrollArea,
+                    styles[moreState[facet.key] ? "more" : "less"],
+                  )}
+                >
+                  {facet.options.map((option) => (
+                    <FormFieldRadioOption
+                      key={option.value}
+                      label={option.label}
+                      name={facet.key}
+                      value={option.value}
+                      defaultChecked={option.selected}
+                      amount={option.count}
+                      className={clsx(
+                        !visibleValues.get(facet.key)?.has(option.value) &&
+                          styles.hidden,
+                      )}
+                      onChange={(event) => {
+                        setSelectedState((current) => ({
+                          ...current,
+                          [facet.key]: event.target.value,
+                        }));
+                        handleChange(event, facet.type);
+                      }}
+                    >
+                      {option.description ? (
+                        <ToolTip
+                          text={option.description}
+                          aria-label={t("components.info-about", {
+                            subject: option.label,
+                          })}
+                        />
+                      ) : null}
+                    </FormFieldRadioOption>
+                  ))}
+                </FormFieldRadioGroup>
+                {optionsState[facet.key]?.length === 0 ? (
+                  <Paragraph role="status">
+                    {t("components.no-options-found")}
+                  </Paragraph>
+                ) : null}
+                {!optionsState[facet.key] &&
+                facet.options.length > (facet.showTop ?? 0) ? (
+                  <div className={styles.moreButton}>
+                    <LinkButton
+                      appearance="small"
+                      onClick={(event) =>
+                        toggleMore(event, facet.type, facet.key)
+                      }
+                    >
+                      {moreState[facet.key] ? "Toon minder" : "Toon meer"}
+                      <Icon
+                        name="delta-naar-rechts-inline"
+                        className={styles[moreState[facet.key] ? "up" : "down"]}
+                        aria-hidden
+                      />
+                    </LinkButton>
+                  </div>
+                ) : null}
+              </Fieldset>
             ) : null}
           </div>
         ))}

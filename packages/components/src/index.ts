@@ -12,6 +12,7 @@ export {
   type ButtonActionProps,
   default as ButtonAction,
 } from "./button/ButtonAction";
+export { default as ButtonLink } from "./button/ButtonLink";
 export {
   type CardAsLinksProps,
   default as CardAsLink,
@@ -80,6 +81,7 @@ export {
   type InfoButtonProps,
 } from "./infoButton/InfoButton";
 export { default as Link } from "./link/Link";
+export { default as LinkButton } from "./link/LinkButton";
 export {
   default as Markdown,
   type HeadingLevels,
