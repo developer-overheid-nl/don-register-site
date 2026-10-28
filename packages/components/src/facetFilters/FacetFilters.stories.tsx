@@ -55,13 +55,12 @@ const lifecycleFilter = {
 
 const publiccodeFilter = {
   key: "publiccode",
-  label: ["Heeft publiccode.yml", "Heeft geen publiccode.yml"],
+  label: "Heeft publiccode.yml",
   description:
     "Filter repositories op aanwezigheid van een publiccode.yml bestand.",
   type: "toggle",
   value: true,
   count: 9,
-  isExplicitFalse: true,
 } as unknown as FilterData;
 
 const organisationSearchFilter = {
@@ -182,7 +181,7 @@ export const Default: Story = {
     for (const name of [
       "Organisatie",
       "Levensfase",
-      /^Heeft publiccode\.yml/,
+      "Heeft publiccode.yml",
       "Organisatie zoeken",
     ]) {
       await expect(
@@ -205,11 +204,17 @@ export const MultiSelect: Story = {
       canvas.getByRole("button", { name: "Informatie over Geonovum" }),
     ).toBeInTheDocument();
 
-    await userEvent.click(canvas.getByRole("checkbox", { name: /Geonovum/ }));
+    const geonovum = canvas.getByRole<HTMLInputElement>("checkbox", {
+      name: /Geonovum/,
+    });
+    await userEvent.click(geonovum);
 
     await expect(args.onFilterChange).toHaveBeenLastCalledWith({
       organisation: ["kadaster", "geonovum"],
     });
+
+    // Leave the story in its starting state
+    geonovum.checked = false;
   },
 };
 
@@ -219,7 +224,10 @@ export const SingleSelect: Story = {
     filters: [lifecycleFilter],
   },
   play: async ({ args, canvas }) => {
-    await expect(canvas.getByRole("radio", { name: /Actief/ })).toBeChecked();
+    const active = canvas.getByRole<HTMLInputElement>("radio", {
+      name: /Actief/,
+    });
+    await expect(active).toBeChecked();
     await expect(canvas.getByRole("radio", { name: "Alle" })).not.toBeChecked();
 
     await userEvent.click(canvas.getByRole("radio", { name: /Verouderd/ }));
@@ -237,6 +245,9 @@ export const SingleSelect: Story = {
     await waitFor(() =>
       expect(args.onFilterChange).toHaveBeenLastCalledWith({ lifecycle: [] }),
     );
+
+    // Leave the story in its starting state
+    active.checked = true;
   },
 };
 
@@ -246,13 +257,40 @@ export const Toggle: Story = {
     filters: [publiccodeFilter],
     explicitFalseFilters: [],
   },
+  play: async ({ args, canvas }) => {
+    const toggle = canvas.getByRole<HTMLInputElement>("switch", {
+      name: /publiccode\.yml bestand\.\s+\(9\)$/,
+    });
+    await expect(toggle).toBeChecked();
+
+    await userEvent.click(toggle);
+
+    await expect(toggle).not.toBeChecked();
+    await expect(args.onFilterChange).toHaveBeenLastCalledWith({
+      publiccode: ["false"],
+    });
+
+    // Leave the story in its starting state
+    toggle.checked = true;
+  },
 };
 
 export const ToggleExplicitFalse: Story = {
   name: "Schakelaar met expliciet 'uit'",
   args: {
-    filters: [publiccodeFilter],
+    filters: [{ ...publiccodeFilter, value: false } as FilterData],
     explicitFalseFilters: ["publiccode"],
+  },
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByRole("group", { name: /publiccode\.yml bestand\.\s+\(9\)$/ }),
+    ).toBeInTheDocument();
+    const on = canvas.getByRole("radio", { name: "Aan" });
+    const off = canvas.getByRole("radio", { name: "Uit" });
+    await expect(on).toHaveAttribute("value", "true");
+    await expect(off).toHaveAttribute("value", "false");
+    await expect(off).toBeChecked();
+    await expect(on).not.toBeChecked();
   },
 };
 
@@ -288,18 +326,17 @@ export const SearchSelect: Story = {
       ).not.toBeInTheDocument();
     });
 
+    // Logius is in the top 5, so the list looks the same again once it is unchecked
     await step("Gekozen optie blijft zichtbaar", async () => {
-      await userEvent.click(
-        canvas.getByRole("radio", { name: /Rijkswaterstaat/ }),
-      );
+      await userEvent.clear(search);
+      await userEvent.type(search, "logius");
+      await userEvent.click(canvas.getByRole("radio", { name: /Logius/ }));
       await expect(args.onFilterChange).toHaveBeenLastCalledWith({
-        "organisation-search": ["rws"],
+        "organisation-search": ["logius"],
       });
       await userEvent.clear(search);
       await userEvent.type(search, "gemeente");
-      await expect(
-        canvas.getByRole("radio", { name: /Rijkswaterstaat/ }),
-      ).toBeChecked();
+      await expect(canvas.getByRole("radio", { name: /Logius/ })).toBeChecked();
     });
 
     await step("Geen resultaten", async () => {
@@ -308,6 +345,17 @@ export const SearchSelect: Story = {
       await expect(canvas.getByRole("status")).toHaveTextContent(
         "Geen opties gevonden",
       );
+    });
+
+    await step("Terug naar de beginstand", async () => {
+      await userEvent.clear(search);
+      canvas.getByRole<HTMLInputElement>("radio", {
+        name: /Logius/,
+      }).checked = false;
+      await expect(canvas.getAllByRole("radio")).toHaveLength(5);
+      for (const radio of canvas.getAllByRole("radio")) {
+        await expect(radio).not.toBeChecked();
+      }
     });
   },
 };
