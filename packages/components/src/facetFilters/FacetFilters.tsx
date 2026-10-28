@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
+import Alert from "../alert/Alert";
 import Fieldset from "../fieldset/FieldSet";
 import FormFieldCheckboxGroup from "../formFieldCheckboxGroup/FormFieldCheckboxGroup";
 import FormFieldCheckboxOption from "../formFieldCheckboxOption/FormFieldCheckboxOption";
@@ -260,6 +261,14 @@ const updateFilters = (
     };
   }
 
+  // Radio-based filters hold one value; an empty value is the "all" option
+  if (type === FilterType.Single || type === FilterType.Search) {
+    return {
+      ...selectedFilters,
+      [filterKey]: filterValue ? [filterValue] : [],
+    };
+  }
+
   return {
     ...selectedFilters,
     [filterKey]: checked
@@ -465,8 +474,8 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
               />
             ) : null}
             {/* TODO: Date selector
-          {facet.type === "date" ? <div>TODO</div> : null}
-          */}
+            {facet.type === "date" ? <div>TODO</div> : null}
+            */}
             {facet.type === "multi-select" ? (
               <FormFieldCheckboxGroup>
                 {facet.options?.map((option) => (
@@ -531,7 +540,10 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
                   className={styles.searchInput}
                   type="search"
                   label={
-                    <Icon name="zoek-inline" aria-label="TODO: Zoek label" />
+                    <Icon
+                      name="zoek-inline"
+                      aria-label={t("components.search-label")}
+                    />
                   }
                   aria-describedby="search-help"
                   name={`search-${facet.key}`}
@@ -540,7 +552,7 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
                   }
                 >
                   <div className="sr-only" id="search-options-help">
-                    {t("components.TODO-search-help")}
+                    {t("components.filter-search-select-help")}
                   </div>
                 </FormFieldTextInput>
                 <FormFieldRadioGroup
@@ -581,9 +593,9 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
                   ))}
                 </FormFieldRadioGroup>
                 {optionsState[facet.key]?.length === 0 ? (
-                  <Paragraph role="status">
+                  <Alert type="warning" role="status">
                     {t("components.no-options-found")}
-                  </Paragraph>
+                  </Alert>
                 ) : null}
                 {!optionsState[facet.key] &&
                 facet.options.length > (facet.showTop ?? 0) ? (

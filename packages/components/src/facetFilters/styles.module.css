@@ -56,5 +56,11 @@
         vertical-align: bottom;
       }
     }
+
+    :global(.utrecht-textbox)::-webkit-search-cancel-button {
+      /* turn the browser X icon into our color scheme */
+      filter: brightness(0) saturate(100%) invert(7%) sepia(15%) saturate(2813%)
+        hue-rotate(185deg) brightness(96%) contrast(96%);
+    }
   }
 }
