@@ -357,8 +357,6 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
     filterKey = event.target.name,
     inputValue: string | number = event.target.value,
   ) => {
-    console.log(event.target, filterKey, inputValue);
-
     setOptionsState((current) => {
       const filter = filters?.find(
         (item): item is SearchSelectFilterData =>

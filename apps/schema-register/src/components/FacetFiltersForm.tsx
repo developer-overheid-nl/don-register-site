@@ -47,9 +47,6 @@ const FacetFiltersForm = (props: FacetFiltersFormProps) => {
   const _inputErrors = isInputError(error) ? error.fields : {};
 
   const handleChange = () => {
-    console.log(
-      "FacetFiltersForm filter changed, triggering getFilters action...",
-    );
     startTransition(() => {
       if (formRef.current) {
         const formData = new FormData(formRef.current);
