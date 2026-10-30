@@ -1,3 +1,5 @@
 .alert {
   --utrecht-space-around: 1;
+  --utrecht-alert-margin-block-end: 0;
+  --utrecht-alert-margin-block-start: 0;
 }

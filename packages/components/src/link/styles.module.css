@@ -1,0 +1,9 @@
+.linkButton {
+  box-sizing: border-box;
+}
+
+.small {
+  --utrecht-button-padding-block-start: 0;
+  --utrecht-button-padding-block-end: 0;
+  --utrecht-button-font-size: 0.875rem;
+}

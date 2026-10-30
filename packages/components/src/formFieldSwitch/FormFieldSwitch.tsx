@@ -48,6 +48,7 @@ const FormFieldSwitch = (props: FormFieldSwitchProps) => {
     children,
     ...restProps
   } = props;
+  const amountId = `${id}-amount`;
 
   return (
     <FormField
@@ -57,7 +58,7 @@ const FormFieldSwitch = (props: FormFieldSwitchProps) => {
       statusId={statusId}
       errorMessageId={errorMessageId}
       descriptionId={descriptionId}
-      label={<AmountLabel label={label} amount={amount} />}
+      label={<AmountLabel id={amountId} label={label} amount={amount} />}
       input={
         <Switch
           id={id}
@@ -68,7 +69,7 @@ const FormFieldSwitch = (props: FormFieldSwitchProps) => {
           defaultChecked={defaultChecked}
           className="utrecht-form-field__input"
           labels={labels}
-          aria-labelledby={`${labelledById} ${id}`}
+          aria-labelledby={`${labelledById} ${amountId}`}
           onChange={onChange}
         />
       }
