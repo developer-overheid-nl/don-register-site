@@ -70,9 +70,9 @@ jobs:
         with:
           install: false
           start: pnpm --filter @developer-overheid-nl/api-register preview:prod --host 127.0.0.1 --port 4321
-          wait-on: "http://localhost:4321"
+          wait-on: "http://127.0.0.1:4321"
           wait-on-timeout: 120
-          config: baseUrl=http://localhost:4321
+          config: baseUrl=http://127.0.0.1:4321
           spec: "cypress/e2e/api/**/*.cy.{js,jsx,ts,tsx}"
           summary-title: "Cypress Results - API Register"
 
@@ -81,9 +81,9 @@ jobs:
         with:
           install: false
           start: pnpm --filter @developer-overheid-nl/oss-register preview:prod --host 127.0.0.1 --port 4322
-          wait-on: "http://localhost:4322"
+          wait-on: "http://127.0.0.1:4322"
           wait-on-timeout: 120
-          config: baseUrl=http://localhost:4322
+          config: baseUrl=http://127.0.0.1:4322
           spec: "cypress/e2e/oss/**/*.cy.{js,jsx,ts,tsx}"
           summary-title: "Cypress Results - OSS Register"
 
