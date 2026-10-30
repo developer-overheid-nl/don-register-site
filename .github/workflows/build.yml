@@ -66,24 +66,24 @@ jobs:
         run: pnpm build
 
       - name: Run API Cypress tests
-        uses: cypress-io/github-action@fa4a118725a8f001170d49631ea89e5d66fee626 # v7
+        uses: cypress-io/github-action@4ce68f262a3888d22cf3175d62010a145ba737ee # v7.4.8
         with:
           install: false
           start: pnpm --filter @developer-overheid-nl/api-register preview:prod --host 127.0.0.1 --port 4321
-          wait-on: "http://localhost:4321"
+          wait-on: "http://127.0.0.1:4321"
           wait-on-timeout: 120
-          config: baseUrl=http://localhost:4321
+          config: baseUrl=http://127.0.0.1:4321
           spec: "cypress/e2e/api/**/*.cy.{js,jsx,ts,tsx}"
           summary-title: "Cypress Results - API Register"
 
       - name: Run OSS Cypress tests
-        uses: cypress-io/github-action@fa4a118725a8f001170d49631ea89e5d66fee626 # v7
+        uses: cypress-io/github-action@4ce68f262a3888d22cf3175d62010a145ba737ee # v7.4.8
         with:
           install: false
           start: pnpm --filter @developer-overheid-nl/oss-register preview:prod --host 127.0.0.1 --port 4322
-          wait-on: "http://localhost:4322"
+          wait-on: "http://127.0.0.1:4322"
           wait-on-timeout: 120
-          config: baseUrl=http://localhost:4322
+          config: baseUrl=http://127.0.0.1:4322
           spec: "cypress/e2e/oss/**/*.cy.{js,jsx,ts,tsx}"
           summary-title: "Cypress Results - OSS Register"
 
