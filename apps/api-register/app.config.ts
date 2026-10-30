@@ -62,11 +62,6 @@ export default {
         href: "https://oss.developer.overheid.nl",
       },
       {
-        id: "communities",
-        label: "Communities",
-        href: `${mainSiteUrl}/communities`,
-      },
-      {
         id: "blog",
         label: "Blog",
         href: `${mainSiteUrl}/blog`,

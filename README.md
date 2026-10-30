@@ -88,7 +88,7 @@ Typescript declarations.
 
 ### redocly.yaml
 
-Het bestand `redocly.yaml` bevat de OpenApiSpecification-configuratie van de API's van de apps. Als er een nieuwe app wordt toegevoegd kan hier de OAS toegevoegd worden. Met `pnpm ts:oas` wordt een typescript declaration aangemaakt op basis van de OAS.  
+Het bestand `redocly.yaml` bevat de OpenApiSpecification-configuratie van de API's van de apps. Als er een nieuwe app wordt toegevoegd kan hier de OAS toegevoegd worden. Met `pnpm generate:oas:types` wordt een typescript declaration aangemaakt op basis van de OAS.  
 Hiervoor wordt [OpenAPI TypeScript](https://openapi-ts.dev/) gebruikt en de apps maken gebruik van [openapi-fetch](https://openapi-ts.dev/openapi-fetch/) waardoor de inhoud van de API direct de correcte types heeft.
 
 Er worden schema's gemaakt voor zowel de productie- als test-API's, in het bestand `api-schema.ts` kan je aangeven welke schema gebruikt wordt. Standaard staat deze op de productie-API, wil je tegen de test-API ontwikkelen, pas dit bestand dan aan. Ook bij deployen naar test is het aan te raden deze aan te passen. Een check in de CI-pipeline zorgt ervoor dat alleen de productie-API schema's gemerged kunnen worden naar `main`.
@@ -153,17 +153,23 @@ Zie ook de [README](https://github.com/developer-overheid-nl/don-register-site/b
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                  | Action                                                                 |
-| :----------------------- | :--------------------------------------------------------------------- |
-| `pnpm install`           | Installs dependencies                                                  |
-| `pnpm dev`               | Starts both local dev servers at `localhost:4321` and `localhost:4322` |
-| `pnpm build`             | Build both production sites to their `./dist/` folders                 |
-| `pnpm preview`           | Preview both builds locally, before deploying                          |
-| `pnpm dev:api`/`oss`     | Starts the `api` or `oss` local dev server at `localhost:4321`         |
-| `pnpm build:api`/`oss`   | Build the `api` or `oss` production sites to the `./dist/` folder      |
-| `pnpm preview:api`/`oss` | Preview the `api` or `oss` build locally, before deploying             |
-| `pnpm astro ...`         | Run CLI commands like `astro add`, `astro check`                       |
-| `pnpm astro -- --help`   | Get help using the Astro CLI                                           |
+| Command                   | Action                                                                 |
+| :------------------------ | :--------------------------------------------------------------------- |
+| `pnpm install`            | Installs dependencies                                                  |
+| `pnpm start`              | Interactive menu to pick and run one of the scripts below              |
+| `pnpm dev`                | Starts both local dev servers at `localhost:4321` and `localhost:4322` |
+| `pnpm build`              | Build both production sites to their `./dist/` folders                 |
+| `pnpm preview`            | Preview both builds locally, before deploying                          |
+| `pnpm dev:api`/`oss`      | Starts the `api` or `oss` local dev server at `localhost:4321`         |
+| `pnpm build:api`/`oss`    | Build the `api` or `oss` production sites to the `./dist/` folder      |
+| `pnpm preview:api`/`oss`  | Preview the `api` or `oss` build locally, before deploying             |
+| `pnpm test`               | Run the unit tests (vitest)                                            |
+| `pnpm test:ts`            | Type check the whole repo (`tsc --noEmit`)                             |
+| `pnpm storybook:dev`      | Start the Storybook dev server at `localhost:6006`                     |
+| `pnpm storybook:build`    | Build Storybook to `./storybook-static/`                               |
+| `pnpm generate:oas:types` | Generate TypeScript types from the OAS files in `redocly.yaml`         |
+| `pnpm astro ...`          | Run CLI commands like `astro add`, `astro check`                       |
+| `pnpm astro -- --help`    | Get help using the Astro CLI                                           |
 
 ## Deployen
 

@@ -242,6 +242,31 @@ test("parseHeaders() should return correct values when link is missing", () => {
   });
 });
 
+test("parseHeaders() should use the first value when page or perPage is repeated in a link", () => {
+  const headers = new Headers({
+    link: '<https://api.example.com/items?page=2&page=3&perPage=10&perPage=20>; rel="next"',
+  });
+
+  const { next } = parseHeaders(headers);
+
+  expect(next?.page).toBe("2");
+  expect(next?.perPage).toBe("10");
+});
+
+test("getPagination() should build a single page href when page is repeated in a link", () => {
+  const headers = new Headers({
+    "current-page": "1",
+    "total-pages": "3",
+    link: '<https://api.example.com/items?page=2&page=3>; rel="next"',
+  });
+  const url = new URL("https://api.example.com/items/1");
+
+  expect(getPagination(parseHeaders(headers), url).next).toEqual({
+    href: "https://api.example.com/items/2",
+    label: 2,
+  });
+});
+
 test("getPagination() should return correct pagination links and range, first page", () => {
   const pagination = {
     currentPage: 1,

@@ -5,7 +5,7 @@
   "license": "EUPL-1.2",
   "private": false,
   "type": "module",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/developer-overheid-nl/don-register-site"
@@ -32,11 +32,9 @@
     "@rijkshuisstijl-community/design-tokens": "catalog:",
     "@utrecht/component-library-css": "catalog:",
     "i18next": "catalog:",
-    "parse-link-header": "2.0.0",
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "@types/parse-link-header": "^2.0.3",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
     "react": "catalog:react19",

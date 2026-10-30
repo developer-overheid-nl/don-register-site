@@ -1,17 +1,28 @@
 import type { PaginationProps } from "@developer-overheid-nl/don-register-components";
-import parseLinkHeader from "parse-link-header";
+import { type Link, parseLinkHeader } from "./parseLinkHeader";
+
+/**
+ * Link from the `link` header with a single `page` and `perPage` value.
+ */
+export interface PaginationLink extends Link {
+  page?: string;
+  perPage?: string;
+}
 
 export interface paginationHeaders {
   currentPage: number;
   perPage: number;
   totalCount: number;
   totalPages: number;
-  self: parseLinkHeader.Link;
-  first?: parseLinkHeader.Link;
-  prev?: parseLinkHeader.Link;
-  next?: parseLinkHeader.Link;
-  last?: parseLinkHeader.Link;
+  self: PaginationLink;
+  first?: PaginationLink;
+  prev?: PaginationLink;
+  next?: PaginationLink;
+  last?: PaginationLink;
 }
+
+const firstValue = (value: string | string[] | undefined) =>
+  Array.isArray(value) ? value[0] : value;
 
 /**
  * Helper function to parse pagination headers, uses `parseLinkHeader` and expects the following custom headers:
@@ -21,6 +32,7 @@ export interface paginationHeaders {
  * `total-pages` or `x-total-pages`
  * or it can parse these values from the `link` header if the appropriate rels are present (`self`, `first`, `prev`, `next`, `last`)
  * and the page and perPage keys are present in the link URLs (defaults to `page` and `perPage`, but can be customized via the `custom_keys` parameter).
+ * If a page or perPage key appears more than once in a link URL, the first value is used.
  *
  * @param {Headers} headers Headers from http response
  * @param {{page: string, perPage: string}} custom_keys Object containing the current page and perPage values, used for parsing the link header (if present)
@@ -38,29 +50,13 @@ export const parseHeaders = (
 ) => {
   let links = parseLinkHeader(headers.get("link"));
 
-  if (links?.first) {
-    links.first.page = links.first[page];
-    links.first.perPage = links.first[perPage];
-  }
+  for (const rel of ["first", "prev", "self", "next", "last"]) {
+    const link = links?.[rel];
 
-  if (links?.prev) {
-    links.prev.page = links.prev[page];
-    links.prev.perPage = links.prev[perPage];
-  }
-
-  if (links?.self) {
-    links.self.page = links.self[page];
-    links.self.perPage = links.self[perPage];
-  }
-
-  if (links?.next) {
-    links.next.page = links.next[page];
-    links.next.perPage = links.next[perPage];
-  }
-
-  if (links?.last) {
-    links.last.page = links.last[page];
-    links.last.perPage = links.last[perPage];
+    if (link) {
+      link.page = firstValue(link[page]);
+      link.perPage = firstValue(link[perPage]);
+    }
   }
 
   if (links === null) {

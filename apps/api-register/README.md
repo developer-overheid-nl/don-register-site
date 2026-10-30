@@ -42,7 +42,7 @@ In de map `src/types` worden de api-schema's weggeschreven, zie [redocly.yaml](.
 
 De configuratiebestanden `astro.config.mjs` en `app.config.ts` bevatten de configuraties. Zie [Configuration overview](https://docs.astro.build/en/guides/configuring-astro/) voor de eerste. De laatste is een specifieke voor deze site. Hierin staat onder andere de topnavigatie en footer-menu gedefinieerd. Ook kunnen localisations worden aangepast, bijv in deze site zijn de `items` "API's".
 
-In het bestand `.env` staan de omgevings variabelen voor de API-connectie. Ook staat hier een fix voor de package `parse-link-header` als deze client-side gebruikt wordt.
+In het bestand `.env` staan de omgevings variabelen voor de API-connectie.
 Het bestand `.env.mode.example` kan gekopieerd worden naar bijv. `env.developement.local` waarna de juiste keys ingevuld kunnen worden. Deze worden niet meegecommit in git.
 
 ## Dependencies
