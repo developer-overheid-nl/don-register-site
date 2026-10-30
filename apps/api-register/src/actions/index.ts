@@ -74,7 +74,6 @@ export const server = {
       altcha: z.string().min(1, t("actions.error-captcha-missing")),
     }),
     handler: async (input) => {
-      console.log(input, JSON.parse(atob(input.altcha)));
       // Decode the altcha challenge and solution from the input
       const { challenge, solution } = JSON.parse(atob(input.altcha));
       // Verify the altcha captcha solution

@@ -4,35 +4,35 @@ packages:
   - proprietary*
 
 catalog:
-  "@astrojs/markdown-satteri": 0.4.2
-  "@astrojs/mdx": 8.0.2
-  "@astrojs/node": 11.1.5
-  "@astrojs/react": 6.0.5
+  "@astrojs/markdown-satteri": 0.4.6
+  "@astrojs/mdx": 8.1.2
+  "@astrojs/node": 11.1.9
+  "@astrojs/react": 7.1.2
   "@csstools/postcss-global-data": 4.0.0
-  "@piwikpro/react-piwik-pro": 2.5.0
+  "@piwikpro/react-piwik-pro": 3.0.0
   "@rijkshuisstijl-community/components-css": 12.0.0
   "@rijkshuisstijl-community/components-react": 11.0.0
   "@rijkshuisstijl-community/design-tokens": 11.0.0
-  "@types/react": 19.1.17
-  "@types/react-dom": 19.1.11
+  "@types/react": 19.3.0
+  "@types/react-dom": 19.3.0
   "@utrecht/component-library-css": 9.0.0
   "@vitest/browser-playwright": 4.1.9
   "@vitest/coverage-v8": 4.1.9
-  altcha: 3.1.0
+  altcha: 3.3.0
   altcha-lib: 2.2.0
-  astro: 7.3.2
+  astro: 7.4.4
   clsx: 2.1.1
   dotenv-cli: 11.0.0
-  i18next: 26.4.2
+  i18next: 26.5.12
   openapi-fetch: 0.17.0
   openapi-typescript: 7.13.0
   postcss-custom-media: 12.0.1
-  react: 19.2.3
-  react-dom: 19.2.3
+  react: 19.3.1
+  react-dom: 19.3.1
   react-markdown: 10.1.0
   remark-gfm: 4.0.1
   typescript: 5.9.3
-  vite: 8.3.0
+  vite: 8.3.2
   vitest: 4.1.9
 
 catalogs:

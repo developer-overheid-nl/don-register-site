@@ -116,6 +116,9 @@ graph LR
 
 ## (Dev)Dependencies
 
+Node.js versie 22.x of 24.x is vereist.
+Installeer de gepinde node versie via [fnm](https://github.com/Schniz/fnm) of andere node version manager die .node-version files ondersteunt.
+
 - Astro: Site build, routing, SSR / SSG
 - React: Components
 - i18Next: Localisation
