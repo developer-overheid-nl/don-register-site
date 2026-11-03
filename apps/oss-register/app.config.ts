@@ -182,6 +182,11 @@ export default {
             href: "https://developer.overheid.nl/implementatie-ondersteuning",
           },
           {
+            id: "evenementen",
+            label: "Evenementen",
+            href: "https://developer.overheid.nl/evenementen",
+          },
+          {
             id: "contact",
             label: "Contact",
             href: "https://developer.overheid.nl/contact",
