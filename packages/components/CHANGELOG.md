@@ -1,5 +1,34 @@
 # @developer-overheid-nl/don-register-components
 
+## 1.7.0
+
+### Minor Changes
+
+- fbc3ac4: Add `ButtonLink`: a re-export of the RHC `ButtonLink`, a link styled as a button for navigation that should stand
+  out as an action.
+- fbc3ac4: FacetFilters: add a `search-select` filter type for choosing one option from a long list. It shows the first
+  `showTop` options with a "Toon meer"/"Toon minder" toggle, has a search field that filters the options client-side,
+  keeps the chosen option visible while searching, and shows "Geen opties gevonden" when nothing matches. Alert spacing
+  changed.
+- fbc3ac4: Add `LinkButton`: the RHC `LinkButton` (a button styled as a link, for actions on the current page) with an extra
+  `appearance="small"` variant that removes the block padding and uses a smaller font size.
+
+### Patch Changes
+
+- fbc3ac4: FacetFilters: `onFilterChange` now reports only the chosen option for `single-select` and `search-select` filters
+  (and an empty list for "Alle"), instead of appending it to the previous selection.
+- 1605813: Switch: fix screen reader names. In `explicit` mode the "on" radio is now named "Aan" and the "off" radio "Uit"
+  (they were swapped). The default switch now has `role="switch"` and no longer puts a static "Aan"/"Uit" text in its
+  name, which went stale after toggling. The `checked` prop is now passed to the default switch input. In `explicit`
+  mode with neither option selected, the switch now shows an indeterminate state (thumb in the middle) and the first
+  click selects "on"; before, it looked "off" and the first click selected "off", so nothing seemed to change.
+  
+  FormFieldSwitch: the switch (or, in `explicit` mode, the radio group) is now named by the description plus the amount,
+  e.g. "… publiccode.yml bestand. (9)". Before, the group name ended with the first radio's name and the amount only
+  belonged to the "on" radio. `AmountLabel` accepts an optional `id` for this.
+- Updated dependencies [fbc3ac4]
+  - @developer-overheid-nl/don-register-locales@1.3.0
+
 ## 1.6.2
 
 ### Patch Changes

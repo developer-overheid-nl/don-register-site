@@ -1,5 +1,21 @@
 # @developer-overheid-nl/schema-register
 
+## 3.1.0
+
+### Minor Changes
+
+- c6dcdfe: Add "Evenementen" link to the "Overig" footer section in api-, oss- and schema-register.
+
+### Patch Changes
+
+- Updated dependencies [fbc3ac4]
+- Updated dependencies [fbc3ac4]
+- Updated dependencies [fbc3ac4]
+- Updated dependencies [fbc3ac4]
+- Updated dependencies [1605813]
+  - @developer-overheid-nl/don-register-components@1.7.0
+  - @developer-overheid-nl/don-register-layouts@2.1.1
+
 ## 3.0.0
 
 ### Major Changes
