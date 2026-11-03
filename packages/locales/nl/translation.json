@@ -26,7 +26,7 @@
     "filter-on": "Aan",
     "filter-off": "Uit",
     "filter-button-label": "Filter",
-    "filter-search-select-help": "Zoek in de opties. Druk op Enter om te zoeken.",
+    "filter-search-select-help": "Zoek in de opties. De opties worden direct bijgewerkt.",
     "no-options-found": "Geen opties gevonden",
     "sort": "Sorteren",
     "sort-by": "Sorteer op",

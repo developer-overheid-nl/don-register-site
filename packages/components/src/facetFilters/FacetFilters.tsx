@@ -543,8 +543,7 @@ const FacetFilters = (props: PropsWithChildren<FacetFiltersProps>) => {
                       aria-label={t("components.search-label")}
                     />
                   }
-                  aria-describedby="search-help"
-                  name={`search-${facet.key}`}
+                  aria-describedby="search-options-help"
                   onChange={(event: ChangeEvent<HTMLInputElement>) =>
                     handleInput(event, facet.key)
                   }
