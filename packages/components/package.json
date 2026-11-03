@@ -9,7 +9,7 @@
   },
   "private": false,
   "type": "module",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "scripts": {
     "prebuild": "npm run clean",
     "clean": "rimraf dist/",

@@ -1,5 +1,12 @@
 # @developer-overheid-nl/don-register-locales
 
+## 1.3.0
+
+### Minor Changes
+
+- fbc3ac4: Add `components.filter-search-select-help` and `components.no-options-found` for the FacetFilters `search-select`
+  filter, and shorten `components.search-help` to "Zoek in titels. Druk op Enter om te zoeken."
+
 ## 1.2.3
 
 ### Patch Changes
