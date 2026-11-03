@@ -5,11 +5,14 @@ import FieldSet from "./FieldSet";
  * FieldSet groepeert gerelateerde formuliervelden onder een gezamenlijke
  * legenda (`legend`), met ondersteuning voor een sectie-variant en een
  * disabled- of invalid-status.
+ *
+ * ## Wijzigingen tov RHC:
+ * - `box-sizing` erft over van de parent (`inherit`)
  */
 const meta = {
   title: "Components/Form/FieldSet",
   component: FieldSet,
-  tags: ["autodocs", "re-export"],
+  tags: ["autodocs", "remixed"],
   args: {
     legend: "Contactgegevens",
     children: "Veldinhoud van de fieldset.",

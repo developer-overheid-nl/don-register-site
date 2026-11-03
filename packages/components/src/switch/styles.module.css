@@ -29,11 +29,12 @@
       z-index: 1;
     }
 
+    /* The "off" track is only on top while "on" is checked, so with nothing checked the first click selects "on" */
     :global(
         &.utrecht-form-toggle--html-checkbox .utrecht-form-toggle__track
       )[for^='negate'] {
       position: absolute;
-      z-index: 2;
+      z-index: 1;
       display: flex;
 
       :global(.utrecht-form-toggle__thumb) {
@@ -46,9 +47,18 @@
 
     :global(
         &.utrecht-form-toggle--html-checkbox .utrecht-form-toggle__checkbox
-      )[id^='negate']:checked
+      ):not([id^='negate']):checked
       ~ :global(.utrecht-form-toggle__track)[for^='negate'] {
-      z-index: 1;
+      z-index: 2;
+    }
+
+    /* Indeterminate: neither option is checked, so the thumb sits in the middle */
+    :global(
+        &.utrecht-form-toggle--html-checkbox .utrecht-form-toggle__checkbox
+      ):not([id^='negate']):indeterminate
+      ~ :global(.utrecht-form-toggle__track)
+      :global(.utrecht-form-toggle__thumb) {
+      margin-inline: auto;
     }
   }
 }

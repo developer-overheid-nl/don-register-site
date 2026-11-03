@@ -1,0 +1,5 @@
+.fieldset {
+  :global(.utrecht-form-fieldset--html-fieldset) {
+    box-sizing: inherit;
+  }
+}

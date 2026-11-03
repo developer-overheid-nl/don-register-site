@@ -15,7 +15,15 @@ export interface SwitchLabels {
 export interface SwitchProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "readOnly"> {
   invalid?: boolean;
+  /**
+   * Screen reader names for the on and off options in `explicit` mode.
+   * The default switch announces its own on/off state via `role="switch"`.
+   */
   labels?: SwitchLabels;
+  /**
+   * Render two radio options (on/off) instead of a single checkbox, so "off" is submitted as a value.
+   * With neither option checked the switch shows an indeterminate state (thumb in the middle).
+   */
   explicit?: boolean;
 }
 
@@ -56,13 +64,15 @@ const Switch = forwardRef(
           className,
         )}
         hidden={hidden}
+        // In explicit mode `id` is on the group, so a FormField `<label for={id}>` doesn't name only the first radio
+        id={explicit ? id : undefined}
         role={explicit ? "group" : undefined}
         aria-labelledby={explicit ? props["aria-labelledby"] : undefined}
       >
         {explicit ? (
           <>
             <input
-              id={id}
+              id={`${id}-on`}
               aria-invalid={invalid || undefined}
               type="radio"
               name={name}
@@ -105,30 +115,25 @@ const Switch = forwardRef(
             className="utrecht-form-toggle__checkbox"
             name={name}
             value={value}
+            checked={checked}
             defaultChecked={defaultChecked || undefined}
             disabled={disabled || undefined}
             required={required}
             ref={ref}
-            role={role}
+            role={role ?? "switch"}
             tabIndex={tabIndex}
             {...restProps}
           />
         )}
         <label
-          htmlFor={id}
+          htmlFor={explicit ? `${id}-on` : id}
           className={clsx(
             "utrecht-form-toggle__track",
             "utrecht-form-toggle__track--html-label",
           )}
         >
           <div className="utrecht-form-toggle__thumb">
-            <span className="sr-only">
-              {explicit
-                ? labels.off
-                : checked || defaultChecked
-                  ? labels.on
-                  : labels.off}
-            </span>
+            {explicit ? <span className="sr-only">{labels.on}</span> : null}
           </div>
         </label>
         {explicit && (
@@ -140,7 +145,7 @@ const Switch = forwardRef(
             )}
           >
             <div className="utrecht-form-toggle__thumb">
-              <span className="sr-only">{labels.on}</span>
+              <span className="sr-only">{labels.off}</span>
             </div>
           </label>
         )}
