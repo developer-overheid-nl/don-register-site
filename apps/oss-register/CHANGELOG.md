@@ -1,5 +1,12 @@
 # @developer-overheid-nl/oss-register
 
+## 3.1.1
+
+### Patch Changes
+
+- Updated dependencies [afbcd81]
+  - @developer-overheid-nl/don-register-layouts@2.2.0
+
 ## 3.1.0
 
 ### Minor Changes
