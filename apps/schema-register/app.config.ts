@@ -26,21 +26,20 @@ export default {
   notice: {
     type: "warning",
     // Bold lead on its own line; everything below it is one paragraph, so the
-    // explanation runs straight into the two calls to action.
-    body: [
-      "**Het Schema-register is in beta: kopieer een schema voordat je het in",
-      "productie gebruikt.**",
-      "",
-      "URL's, bestandsnamen en versionering worden onderdeel van de Schema Design",
-      "Rules, welke nog niet zijn vastgesteld door de gelijknamige werkgroep van het",
-      "Kennisplatform API's. Een `$ref` naar dit register is daarom nog niet stabiel.",
-      "Verwijzen tijdens de ontwerpfase kan prima, maar haal het schema eerst binnen",
-      "voordat je het in productie gaat gebruiken.",
-      "Meedenken over de Schema Design Rules?",
-      "[Bekijk de open issues](https://github.com/Geonovum/KP-APIs/issues?q=is%3Aissue+state%3Aopen+label%3A%22WG%3A+Schema+design+rules%22).",
-      "Schema toevoegen?",
-      "[Open hier een PR](https://github.com/developer-overheid-nl/don-static/tree/main/assets/schemas).",
-    ].join("\n"),
+    // explanation runs straight into the two calls to action. Flush left on
+    // purpose: indented text after a blank line is an indented code block.
+    body: `**Het Schema-register is in beta: kopieer een schema voordat je het in
+productie gebruikt.**
+
+URL's, bestandsnamen en versionering worden onderdeel van de Schema Design
+Rules, welke nog niet zijn vastgesteld door de gelijknamige werkgroep van het
+Kennisplatform API's. Een \`$ref\` naar dit register is daarom nog niet stabiel.
+Verwijzen tijdens de ontwerpfase kan prima, maar haal het schema eerst binnen
+voordat je het in productie gaat gebruiken.
+Meedenken over de Schema Design Rules?
+[Bekijk de open issues](https://github.com/Geonovum/KP-APIs/issues?q=is%3Aissue+state%3Aopen+label%3A%22WG%3A+Schema+design+rules%22).
+Schema toevoegen?
+[Open hier een PR](https://github.com/developer-overheid-nl/don-static/tree/main/assets/schemas).`,
   },
   mainSite: {
     name: "developer.overheid.nl",
