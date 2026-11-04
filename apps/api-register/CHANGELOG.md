@@ -1,5 +1,12 @@
 # @developer-overheid-nl/api-register
 
+## 2.1.1
+
+### Patch Changes
+
+- Updated dependencies [afbcd81]
+  - @developer-overheid-nl/don-register-layouts@2.2.0
+
 ## 2.1.0
 
 ### Minor Changes
