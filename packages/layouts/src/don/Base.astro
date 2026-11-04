@@ -8,10 +8,12 @@ import "@rijkshuisstijl-community/components-css/dist/index.css";
 import "../styles/override.css";
 import "../styles/helpers.css";
 import {
+  Alert,
   Container,
   Footer,
   Header,
   IconsSprite,
+  Markdown,
   TopNavigation,
 } from "@developer-overheid-nl/don-register-components";
 import i18next from "@developer-overheid-nl/don-register-components/i18n";
@@ -24,6 +26,7 @@ const {
     urlHomepage,
     topNavigation,
     footer,
+    notice,
   },
   titlePage,
   description,
@@ -80,6 +83,17 @@ if (Object.hasOwn(meta.ogImages, routePattern)) {
         endItems={topNavigation.endItems}
       />
     </div>
+    {notice && (
+      <div class="don-document-notice">
+        <Container>
+          <Alert type={notice.type || "warning"}>
+            <div class="utrecht-html">
+              <Markdown text={notice.body} minHeadingDepth={2} />
+            </div>
+          </Alert>
+        </Container>
+      </div>
+    )}
     <main class="don-document-main">
       <slot />
     </main>
@@ -98,11 +112,12 @@ if (Object.hasOwn(meta.ogImages, routePattern)) {
     /* biome-ignore format: better readable */
     grid-template-rows: [start-start] 0 [start-end 
                                                 header-start] auto [header-end 
+                                                notice-start] auto [notice-end
                                                 main-start] 1fr [main-end 
                                                 footer-start] auto [footer-end 
                                                 end-start] 0 [end-end];
     /* biome-ignore format: better readable */
-    grid-template-columns: [start-start header-start main-start footer-start end-start] auto [end-end footer-end main-end header-end start-end];
+    grid-template-columns: [start-start header-start notice-start main-start footer-start end-start] auto [end-end footer-end main-end notice-end header-end start-end];
     grid-auto-rows: 0;
     height: 100dvh;
   }
@@ -113,6 +128,11 @@ if (Object.hasOwn(meta.ogImages, routePattern)) {
 
   .don-document-header {
     grid-area: header;
+  }
+
+  .don-document-notice {
+    grid-area: notice;
+    padding-block: 1rem;
   }
 
   .don-document-main {
