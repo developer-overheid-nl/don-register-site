@@ -62,6 +62,11 @@ export default {
         current: true,
       },
       {
+        id: "schemas",
+        label: "Schema's",
+        href: "https://schemas.developer.overheid.nl",
+      },
+      {
         id: "blog",
         label: "Blog",
         href: `${mainSiteUrl}/blog`,
