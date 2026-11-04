@@ -23,7 +23,11 @@ export default defineConfig({
     ],
   },
   cache: {
-    provider: memoryCache(),
+    provider: memoryCache({
+      // A rendered page is ~240KB. The default of 1000 pages does not fit
+      // in the 256Mi container limit.
+      max: 100,
+    }),
   },
   routeRules: {
     "/apis/[id]": {
