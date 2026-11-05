@@ -20,7 +20,7 @@ catalog:
   "@vitest/coverage-v8": 4.1.9
   altcha: 3.3.0
   altcha-lib: 2.2.0
-  astro: 7.4.4
+  astro: 7.4.5
   clsx: 2.1.1
   dotenv-cli: 11.0.0
   i18next: 26.5.12
