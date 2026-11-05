@@ -22,7 +22,7 @@ catalog:
   altcha-lib: 2.2.0
   astro: 7.4.4
   clsx: 2.1.1
-  dotenv-cli: 11.0.0
+  dotenv-cli: 11.1.0
   i18next: 26.5.12
   openapi-fetch: 0.17.0
   openapi-typescript: 7.13.0
