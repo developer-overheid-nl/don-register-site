@@ -6,6 +6,7 @@ In deze monorepo staan de changelogs in de desbetreffende packages:
 
 - [API-register Changelog](https://github.com/developer-overheid-nl/don-register-site/blob/main/apps/api-register/CHANGELOG.md)
 - [OSS-register Changelog](https://github.com/developer-overheid-nl/don-register-site/blob/main/apps/oss-register/CHANGELOG.md)
+- [Schema-register Changelog](https://github.com/developer-overheid-nl/don-register-site/blob/main/apps/schema-register/CHANGELOG.md)
 
 ## Packages
 
