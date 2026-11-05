@@ -1,6 +1,6 @@
 # developer.overheid.nl Register Sites
 
-> De websites en packages van het OSS- en API-register van developer.overheid.nl en het [register-site-template].
+> De websites en packages van het API-, OSS- en Schema-register van developer.overheid.nl en het [register-site-template].
 
 ![GitHub License](https://img.shields.io/github/license/developer-overheid-nl/don-register-site)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/developer-overheid-nl/don-register-site/build.yml?branch=main)
@@ -8,7 +8,7 @@
 [![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
 [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)](https://developer-overheid-nl.github.io/don-register-site/)
 
-Deze monorepo bevat de _nieuwe_ websites van het [API-register](https://apis.developer.overheid.nl) en het [Open Source Register](https://oss.developer.overheid.nl).
+Deze monorepo bevat de websites van het [API-register](https://apis.developer.overheid.nl), het [Open Source Register](https://oss.developer.overheid.nl) en het [Schema-register](https://schemas.developer.overheid.nl).
 De codebase bestaat uit een aantal packages die de gezamelijke codebase (components, layouts, etc) vormen en een `apps`-package waarin de verschillende websites staan. Deze packages worden ook gebruikt in het [register-site-template].
 
 ## Packages
@@ -34,7 +34,7 @@ Deze package wordt gepubliceerd op [NPM]: <https://www.npmjs.com/package/@develo
 
 ### API-register
 
-> Dit is het API-register van de Nederlandse overheid (bèta): alle API’s op één plek.  
+> Dit is het API-register van de Nederlandse overheid: alle API’s op één plek.  
 > [apis.developer.overheid.nl](https://apis.developer.overheid.nl)
 
 De [Astro] site van het API-register.
@@ -43,10 +43,17 @@ Zie ook de [README](https://github.com/developer-overheid-nl/don-register-site/b
 
 ### Open Source Register
 
-> Dit is het vernieuwde Open Source Register van de Nederlandse overheid (bèta): alle open source repositories op één plek.  
+> Dit is het Open Source Register van de Nederlandse overheid: alle open source repositories op één plek.  
 > [oss.developer.overheid.nl](https://oss.developer.overheid.nl)
 
 De [Astro] site van het Open Source Register.
+
+### Schema-register
+
+> Dit is het Schema-register van de Nederlandse overheid (bèta): JSON Schemas die beschikbaar zijn voor (her)gebruik binnen de overheid.  
+> [schemas.developer.overheid.nl](https://schemas.developer.overheid.nl)
+
+De [Astro] site van het Schema-register.
 
 ### Je eigen register
 
@@ -88,10 +95,8 @@ Typescript declarations.
 
 ### redocly.yaml
 
-Het bestand `redocly.yaml` bevat de OpenApiSpecification-configuratie van de API's van de apps. Als er een nieuwe app wordt toegevoegd kan hier de OAS toegevoegd worden. Met `pnpm generate:oas:types` wordt een typescript declaration aangemaakt op basis van de OAS.  
-Hiervoor wordt [OpenAPI TypeScript](https://openapi-ts.dev/) gebruikt en de apps maken gebruik van [openapi-fetch](https://openapi-ts.dev/openapi-fetch/) waardoor de inhoud van de API direct de correcte types heeft.
-
-Er worden schema's gemaakt voor zowel de productie- als test-API's, in het bestand `api-schema.ts` kan je aangeven welke schema gebruikt wordt. Standaard staat deze op de productie-API, wil je tegen de test-API ontwikkelen, pas dit bestand dan aan. Ook bij deployen naar test is het aan te raden deze aan te passen. Een check in de CI-pipeline zorgt ervoor dat alleen de productie-API schema's gemerged kunnen worden naar `main`.
+Het bestand `redocly.yaml` bevat de OpenAPI-specificaties (productie en test) van de API's achter de apps. Met `pnpm generate:oas:types` worden daar TypeScript-types van gemaakt voor [openapi-fetch](https://openapi-ts.dev/openapi-fetch/).
+Hoe je wisselt tussen de productie- en test-API staat in [MAINTENANCE.md](MAINTENANCE.md#3-generated-files-never-edit-by-hand).
 
 ## Structuur
 
@@ -129,17 +134,13 @@ Installeer de gepinde node versie via [fnm](https://github.com/Schniz/fnm) of an
 - Biome: formatting, linting and assist
 - Changesets, manage versioning and changelogs
 
-## Formatting and Linting
+## Onderhoud en ontwikkeling
 
-Deze repository maakt gebruik van [Biome] voor formatting en linting. Download de VSCode extensie: [![Install Biome in VS Code](https://img.shields.io/badge/Install%20Biome-in%20VS%20Code-007ACC?style=flat&logo=biome)](vscode:extension/biomejs.biome)  
-Als code styleguide kijken we naar de default settings en de [Google Style Guides](https://google.github.io/styleguide/) voor inspiratie.
-Voor Astro-bestanden zijn een aantal features uitgezet om false positives te voorkomen.
+- [AGENTS.md](AGENTS.md): alle commando's, de architectuur en de conventies (Engels).
+- [MAINTENANCE.md](MAINTENANCE.md): waar nieuwe code hoort, dependencies updaten, versioneren met [Changesets](https://github.com/changesets/changesets), releasen en deployen (Engels).
+- [CHANGELOG.md](CHANGELOG.md): overzicht van de changelogs per package.
 
-## Versionering en Changelogs
-
-Voor de publieke packages wordt gebruik gemaakt van [Changesets](https://changesets-docs.vercel.app/) voor het bijhouden van versies en changelogs.  
-Versienummering volgt [SemVer](https://semver.org/), waarbij ook bij mogelijke (visuele) brekende wijzigingen een major-versie wordt uitgebracht.  
-Zie ook de [README](https://github.com/developer-overheid-nl/don-register-site/blob/main/.changeset/README.md) in de `.changeset`-map hoe het werkt en de [CHANGELOG](https://github.com/developer-overheid-nl/don-register-site/blob/main/CHANGELOG.md) van de packages.
+Formatting en linting gaan via [Biome]. Installeer de VSCode-extensie: [![Install Biome in VS Code](https://img.shields.io/badge/Install%20Biome-in%20VS%20Code-007ACC?style=flat&logo=biome)](vscode:extension/biomejs.biome)
 
 ## Contact
 
@@ -152,79 +153,17 @@ Zie ook de [README](https://github.com/developer-overheid-nl/don-register-site/b
 
 ---
 
-## 🧞 Commands
+## Aan de slag
 
-All commands are run from the root of the project, from a terminal:
+Alle commando's draai je vanuit de root van de repository:
 
-| Command                   | Action                                                                 |
-| :------------------------ | :--------------------------------------------------------------------- |
-| `pnpm install`            | Installs dependencies                                                  |
-| `pnpm start`              | Interactive menu to pick and run one of the scripts below              |
-| `pnpm dev`                | Starts both local dev servers at `localhost:4321` and `localhost:4322` |
-| `pnpm build`              | Build both production sites to their `./dist/` folders                 |
-| `pnpm preview`            | Preview both builds locally, before deploying                          |
-| `pnpm dev:api`/`oss`      | Starts the `api` or `oss` local dev server at `localhost:4321`         |
-| `pnpm build:api`/`oss`    | Build the `api` or `oss` production sites to the `./dist/` folder      |
-| `pnpm preview:api`/`oss`  | Preview the `api` or `oss` build locally, before deploying             |
-| `pnpm test`               | Run the unit tests (vitest)                                            |
-| `pnpm test:ts`            | Type check the whole repo (`tsc --noEmit`)                             |
-| `pnpm storybook:dev`      | Start the Storybook dev server at `localhost:6006`                     |
-| `pnpm storybook:build`    | Build Storybook to `./storybook-static/`                               |
-| `pnpm generate:oas:types` | Generate TypeScript types from the OAS files in `redocly.yaml`         |
-| `pnpm astro ...`          | Run CLI commands like `astro add`, `astro check`                       |
-| `pnpm astro -- --help`    | Get help using the Astro CLI                                           |
-
-## Deployen
-
-De deployment van deze site verloopt via GitHub Actions en een aparte _infra-repository_.
-
-### Benodigde variabelen en secrets
-
-- Organization variable `INFRA_REPO`, bijvoorbeeld
-  `developer-overheid-nl/don-infra`.
-- Repository variable `KUSTOMIZE_PATH_API` en `KUSTOMIZE_PATH_OSS`, met als basispad bijvoorbeeld
-  `apps/oss/overlays/`.
-- Secrets `RELEASE_PROCES_APP_ID` en `RELEASE_PROCES_APP_PRIVATE_KEY` voor het
-  aanpassen van de infra repository.
-
-### Deploy naar test
-
-Note: gebruik je het juiste schema? Zie [`api-schema.ts`](#redoclyyaml) voor meer informatie.
-
-De testdeploy draait via
-`.github/workflows/deploy-test.yml`.
-
-- De workflow draait op pushes naar branches behalve `main`.
-- Alleen commits met `[deploy-test]` in de commit message worden echt gedeployed.
-- Er worden drie images gebouwd en gepusht:
-  `ghcr.io/developer-overheid-nl/don-register-site`,
-  `ghcr.io/developer-overheid-nl/don-register-oss-site` en
-  `ghcr.io/developer-overheid-nl/don-register-schema-site`, met tags `test`
-  en de commit SHA.
-- Daarna worden in `INFRA_REPO` de bestanden
-  `${KUSTOMIZE_PATH_API}test/kustomization.yaml`,
-  `${KUSTOMIZE_PATH_OSS}test/kustomization.yaml` en
-  `${KUSTOMIZE_PATH_SCHEMA}test/kustomization.yaml` bijgewerkt naar de nieuwe
-  image tag en direct gecommit.
-
-Voorbeeld commit message:
-
-```text
-feat: pas content aan [deploy-test]
+```sh
+pnpm install   # dependencies installeren
+pnpm start     # interactief menu met alle scripts
+pnpm dev       # alle drie de sites lokaal starten (vanaf localhost:4321)
 ```
 
-### Deploy naar productie
-
-De productiedeploy draait via
-`.github/workflows/deploy-prod.yml`.
-
-- De workflow draait bij een push naar `main`.
-- Er wordt in `INFRA_REPO` een release branch aangemaakt.
-- In `${KUSTOMIZE_PATH_API}prod/kustomization.yaml` en
-  `${KUSTOMIZE_PATH_OSS}prod/kustomization.yaml` wordt de image tag
-  bijgewerkt naar de commit SHA van deze repository.
-- Daarna wordt automatisch een pull request in de infra repository geopend.
-- De productie-uitrol gebeurt door die pull request te mergen.
+Zie [AGENTS.md](AGENTS.md#commands) voor alle commando's en [MAINTENANCE.md](MAINTENANCE.md#6-deploying) voor deployen.
 
 [Astro]: https://astro.build/
 [Biome]: https://biomejs.dev/
