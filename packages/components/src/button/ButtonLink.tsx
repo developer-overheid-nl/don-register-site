@@ -1,3 +1,3 @@
-import { ButtonLink } from "@rijkshuisstijl-community/components-react";
+import { ButtonLink } from "@rijkshuisstijl-community/button-react/no-side-effects";
 
 export default ButtonLink;

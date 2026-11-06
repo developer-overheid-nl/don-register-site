@@ -1,11 +1,11 @@
 // 'use client';
 /* biome-ignore-all lint: TODO: filters needs a refactor anyway */
 
+import { Heading } from "@rijkshuisstijl-community/heading-react/no-side-effects";
 import {
-  Heading,
   LinkList,
   LinkListLink,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/link-list-react/no-side-effects";
 import clsx from "clsx";
 import type { HTMLProps, PropsWithChildren } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";

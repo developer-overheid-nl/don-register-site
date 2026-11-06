@@ -1,7 +1,7 @@
 import {
   CardAsLink as RHCCardAsLink,
   type CardAsLinkProps as RHCCardAsLinkProps,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/card-as-link-react/no-side-effects";
 import clsx from "clsx";
 import styles from "./styles.module.css";
 

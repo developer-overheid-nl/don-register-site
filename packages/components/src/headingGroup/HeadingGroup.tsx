@@ -1,12 +1,17 @@
 import {
-  Heading,
-  type HeadingProps,
-  Paragraph,
   HeadingGroup as RHCHeadingGroup,
   type HeadingGroupProps as RHCHeadingGroupProps,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/heading-group-react/no-side-effects";
+import {
+  Heading,
+  type HeadingProps,
+} from "@rijkshuisstijl-community/heading-react/no-side-effects";
+import {
+  Paragraph,
+  type ParagraphProps,
+} from "@rijkshuisstijl-community/paragraph-react/no-side-effects";
 import clsx from "clsx";
-import type { HTMLProps, PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 import styles from "./styles.module.css";
 
 export interface HeadingGroupProps extends RHCHeadingGroupProps {
@@ -14,7 +19,7 @@ export interface HeadingGroupProps extends RHCHeadingGroupProps {
   subTitle?: string | ReactNode;
   level: HeadingProps["level"];
   appearanceLevel?: HeadingProps["appearanceLevel"];
-  subTitleProps?: HTMLProps<Paragraph>;
+  subTitleProps?: ParagraphProps;
 }
 
 const HeadingGroup = (props: PropsWithChildren<HeadingGroupProps>) => {

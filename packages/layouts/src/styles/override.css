@@ -256,3 +256,92 @@
 html {
   scrollbar-color: var(--rhc-color-cool-grey-400) var(--rhc-color-cool-grey-50);
 }
+
+/*
+ * RHC design-tokens 18 compatibility: restore the look of the former "uitvoerend-groen" theme.
+ * - Headings were lintblauw; the "groen" theme makes them primary (groen).
+ * - Cards, data badges, selects, … used primary (groen); the "groen" theme moved them to core (lintblauw).
+ * - Icons were 24px; --rhc-size-icon-md is now 1rem.
+ * - The old footer (footer-css 1.x) reads page-footer tokens that design-tokens 18 no longer defines.
+ */
+:root {
+  --nl-heading-level-1-color: var(--rhc-color-lintblauw-500);
+  --nl-heading-level-2-color: var(--rhc-color-lintblauw-500);
+  --nl-heading-level-3-color: var(--rhc-color-lintblauw-500);
+  --nl-heading-level-4-color: var(--rhc-color-lintblauw-500);
+  --nl-heading-level-5-color: var(--rhc-color-lintblauw-500);
+  --nl-heading-level-6-color: var(--rhc-color-lintblauw-500);
+
+  --rhc-size-icon-md: 24px;
+
+  --rhc-nav-bar-max-inline-size: 1280px;
+  --rhc-sub-nav-bar-content-max-inline-size: 1280px;
+  --utrecht-textbox-read-only-border-color: var(--rhc-color-transparent);
+
+  --nl-number-badge-background-color: var(--rhc-color-primary-500);
+  --rhc-card-as-link-focus-background-color: var(--rhc-color-primary-50);
+  --rhc-card-as-link-heading-color: var(--rhc-color-primary-500);
+  --rhc-card-as-link-horizontal-background-color: var(--rhc-color-primary-500);
+  --rhc-card-as-link-icon-color: var(--rhc-color-primary-500);
+  --rhc-card-focus-background-color: var(--rhc-color-primary-50);
+  --rhc-card-heading-color: var(--rhc-color-primary-500);
+  --rhc-card-horizontal-background-color: var(--rhc-color-primary-500);
+  --rhc-card-icon-color: var(--rhc-color-primary-500);
+  --rhc-data-badge-button-hover-background-color: var(--rhc-color-primary-500);
+  --rhc-file-border-color: var(--rhc-color-primary-500);
+  --rhc-hero-message-background-color: var(--rhc-color-primary-500);
+  --rhc-navigation-list-item-focus-background-color: var(
+    --rhc-color-primary-50
+  );
+  --rhc-sidenav-link-focus-border-color: var(--rhc-color-primary-500);
+  --utrecht-checkbox-checked-active-background-color: var(
+    --rhc-color-primary-400
+  );
+  --utrecht-checkbox-checked-focus-border-color: var(--rhc-color-primary-500);
+  --utrecht-checkbox-checked-focus-color: var(--rhc-color-primary-500);
+  --utrecht-checkbox-checked-hover-background-color: var(
+    --rhc-color-primary-300
+  );
+  --utrecht-checkbox-indeterminate-active-background-color: var(
+    --rhc-color-primary-400
+  );
+  --utrecht-checkbox-indeterminate-focus-border-color: var(
+    --rhc-color-primary-500
+  );
+  --utrecht-checkbox-indeterminate-focus-color: var(--rhc-color-primary-500);
+  --utrecht-checkbox-indeterminate-hover-background-color: var(
+    --rhc-color-primary-300
+  );
+  --utrecht-data-badge-color: var(--rhc-color-primary-500);
+  --utrecht-select-border-color: var(--rhc-color-primary-500);
+  --utrecht-select-focus-border-color: var(--rhc-color-primary-500);
+  --utrecht-select-hover-border-color: var(--rhc-color-primary-300);
+
+  --rhc-page-footer-border-block-start-color: var(--rhc-color-primary-300);
+  --rhc-page-footer-border-block-start-style: solid;
+  --rhc-page-footer-border-block-start-width: var(--rhc-border-width-md);
+  --rhc-page-footer-column-gap: var(--rhc-space-2xl);
+  --rhc-page-footer-column-title-margin-block-end: var(--rhc-space-lg);
+  --rhc-page-footer-column-width: 200px;
+  --rhc-page-footer-content-column-gap: var(--rhc-space-3xl);
+  --rhc-page-footer-content-max-inline-size: 1280px;
+  --utrecht-page-footer-content-max-inline-size: var(
+    --rhc-page-footer-content-max-inline-size
+  );
+  --rhc-page-footer-content-padding-inline-end: var(--rhc-space-xl);
+  --rhc-page-footer-content-padding-inline-start: var(--rhc-space-xl);
+  --rhc-page-footer-flex-direction: column;
+  --rhc-page-footer-outlined-background-color: var(--rhc-color-wit);
+  --rhc-page-footer-outlined-border-color: var(--rhc-color-primary-500);
+  --rhc-page-footer-outlined-color: var(--rhc-color-primary-500);
+  --rhc-page-footer-padding-block-end: var(--rhc-space-4xl);
+  --rhc-page-footer-padding-block-start: var(--rhc-space-4xl);
+  --rhc-page-footer-padding-inline-end: var(--rhc-space-4xl);
+  --rhc-page-footer-padding-inline-start: var(--rhc-space-4xl);
+  --utrecht-page-footer-background-color: var(--rhc-color-primary-500);
+  --utrecht-page-footer-color: var(--rhc-color-foreground-on-dark-color);
+  --utrecht-page-footer-padding-block-end: var(--rhc-space-5xl);
+  --utrecht-page-footer-padding-block-start: var(--rhc-space-5xl);
+  --utrecht-page-footer-padding-inline-end: 80px;
+  --utrecht-page-footer-padding-inline-start: 80px;
+}

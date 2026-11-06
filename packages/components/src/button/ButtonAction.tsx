@@ -1,7 +1,7 @@
 import {
   ButtonLink,
   type ButtonLinkProps,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/button-react/no-side-effects";
 import Icon from "../iconsSprite/Icon";
 
 export interface ButtonActionProps extends ButtonLinkProps {

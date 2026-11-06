@@ -3,7 +3,7 @@
   --rhc-card-as-link-active-text-decoration: none;
   display: flex;
   flex-direction: column;
-  row-gap: var(--rhc-space-200);
+  row-gap: var(--rhc-space-xl);
   padding-inline-start: 0;
   list-style-type: none;
 }

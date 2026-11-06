@@ -1,7 +1,7 @@
 import {
   TextInput,
   type TextInputProps,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/text-input-react/no-side-effects";
 import { clsx } from "clsx";
 import styles from "./styles.module.css";
 

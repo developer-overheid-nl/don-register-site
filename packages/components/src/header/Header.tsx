@@ -1,7 +1,7 @@
 import { Lint } from "@developer-overheid-nl/proprietary";
 import {
   Heading /*, Link */,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/heading-react/no-side-effects";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "../i18n";
 import SiteLogo from "../siteLogo/SiteLogo";

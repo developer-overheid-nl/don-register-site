@@ -12,6 +12,12 @@
   --rhc-page-footer-border-block-start-width: var(
     --rhc-nav-bar-border-block-end-width
   );
+  /* components-css 18 also ships the new footer design, whose `.rhc-page-footer` rule
+     reads these tokens; point them at the outlined variant of the old footer. */
+  --rhc-page-footer-color: var(--rhc-page-footer-outlined-color);
+  --rhc-page-footer-background-color: var(
+    --rhc-page-footer-outlined-background-color
+  );
 }
 
 .footer {
@@ -60,6 +66,11 @@
         flex-basis: calc(25% - var(--utrecht-column-layout-gap, 2em));
       }
     }
+  }
+
+  /* Was part of the RHC 11 footer CSS, no longer in footer-css 1.x. */
+  p {
+    margin-block-end: var(--utrecht-rich-text-friend-margin-block-end);
   }
 
   :global(.utrecht-link-list__link) {
