@@ -1,4 +1,5 @@
-.checkbox.checkbox {
+/* Triple class: must beat RHC's `.rhc-form-field.utrecht-form-field--checkbox` grid. */
+.checkbox.checkbox.checkbox {
   --utrecht-form-field-label-margin-block-end: 0;
 
   grid-template-areas:

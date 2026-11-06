@@ -1,7 +1,7 @@
 import {
   LinkButton as RHCLinkButton,
   type LinkButtonProps as RHCLinkButtonProps,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/link-button-react/no-side-effects";
 import clsx from "clsx";
 import styles from "./styles.module.css";
 

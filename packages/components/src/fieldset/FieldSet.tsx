@@ -1,7 +1,7 @@
 import {
   type FieldsetProps,
   Fieldset as RHCFieldset,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/fieldset-react/no-side-effects";
 import clsx from "clsx";
 import styles from "./styles.module.css";
 

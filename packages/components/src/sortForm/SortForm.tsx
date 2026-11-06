@@ -1,7 +1,7 @@
 import {
   FormFieldSelect,
   SelectOption,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/components-react/no-side-effects";
 import { type ChangeEvent, useId, useRef } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import Heading from "../heading/Heading";

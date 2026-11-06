@@ -2,4 +2,16 @@
   --utrecht-space-around: 1;
   --utrecht-alert-margin-block-end: 0;
   --utrecht-alert-margin-block-start: 0;
+
+  /* RHC alert-css 4 makes these flex columns, which shrinks single-line alerts. */
+  :global(.utrecht-alert__content),
+  :global(.utrecht-alert__message) {
+    display: block;
+  }
+
+  /* Keep the previous alert height: override.css makes icons block-level, which the
+     old RHC runtime CSS injection used to undo for alerts. */
+  :global(.utrecht-alert__icon .utrecht-icon) {
+    display: inline-block;
+  }
 }

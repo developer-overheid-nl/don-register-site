@@ -1,7 +1,7 @@
 import {
   FormFieldCheckboxOption as RHCFormFieldCheckboxOption,
   type FormFieldCheckboxOptionProps as RHCFormFieldCheckboxOptionProps,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/components-react/no-side-effects";
 import clsx from "clsx";
 import AmountLabel, { type AmountLabelProps } from "../amountLabel/AmountLabel";
 import styles from "./styles.module.css";

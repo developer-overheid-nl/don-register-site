@@ -1,10 +1,12 @@
 import type { Preview } from "@storybook/react-vite";
 import { type PropsWithChildren, useEffect } from "react";
 import "@developer-overheid-nl/proprietary/fonts";
-import "@rijkshuisstijl-community/design-tokens/dist/uitvoerend-groen/root.css";
+import "@rijkshuisstijl-community/design-tokens/dist/groen/root.css";
 import "@utrecht/component-library-css/dist/index.css";
 import "@utrecht/component-library-css/dist/html.css";
 import "@rijkshuisstijl-community/components-css/dist/index.css";
+// Old footer design (1.x), loaded after components-css so it wins over the new footer styles in there.
+import "@rijkshuisstijl-community/footer-css/dist/index.css";
 import "../packages/layouts/src/styles/reset.css";
 import "../packages/layouts/src/styles/override.css";
 import "../packages/layouts/src/styles/helpers.css";

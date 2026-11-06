@@ -1,4 +1,4 @@
-import type { CardAsLink } from "@rijkshuisstijl-community/components-react";
+import type { CardAsLink } from "@rijkshuisstijl-community/card-as-link-react/no-side-effects";
 import clsx from "clsx";
 import type { HTMLAttributes, PropsWithChildren, ReactNode } from "react";
 import styles from "./styles.module.css";

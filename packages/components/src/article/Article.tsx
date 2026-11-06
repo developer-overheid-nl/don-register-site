@@ -1,7 +1,7 @@
 import {
   type ArticleProps,
   Article as RHCArticle,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/article-react/no-side-effects";
 
 const Article = (props: ArticleProps) => {
   return <RHCArticle {...props} />;
