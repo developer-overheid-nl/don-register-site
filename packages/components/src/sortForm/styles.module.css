@@ -1,4 +1,14 @@
 .form {
+  --utrecht-select-border-color: var(--utrecht-textbox-border-color);
+  --utrecht-select-hover-border-color: var(--utrecht-textbox-border-color);
+  --utrecht-select-focus-border-color: var(
+    --utrecht-textbox-focus-border-color
+  );
+  --utrecht-select-padding-inline-end: 3rem;
+  --don-select-image-background-position-padding: 0.5rem;
+  --don-select-image-background-position: right
+    var(--don-select-image-background-position-padding) center;
+
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -9,13 +19,42 @@
 .form select {
   order: 2;
   min-inline-size: 10rem;
-  padding-inline-end: 3rem;
 }
 
 .form :global(.utrecht-form-field) {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+}
+
+.form
+  :global(.rhc-form-field-select.utrecht-select--html-select:not([multiple])) {
+  background-position: var(--don-select-image-background-position);
+}
+
+.form
+  :global(
+    .rhc-form-field-select.utrecht-select--html-select:not([multiple]):focus
+  ) {
+  background-position-x: right
+    calc(var(--don-select-image-background-position-padding) - 1px);
+}
+
+.form :global(.rhc-form-field-select.utrecht-select:focus) {
+  padding-inline-start: calc(
+    var(
+      --utrecht-select-padding-inline-start,
+      var(--utrecht-form-control-padding-inline-start)
+    ) -
+    1px
+  );
+  padding-inline-end: calc(
+    var(
+      --utrecht-select-padding-inline-end,
+      var(--utrecht-form-control-padding-inline-end)
+    ) -
+    1px
+  );
 }
 
 .form :global(.utrecht-form-field__label) {
