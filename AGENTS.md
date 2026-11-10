@@ -2,13 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) and others when working with code in this repository.
 
+Read [MAINTENANCE.md](MAINTENANCE.md) before adding files, updating dependencies, releasing, or deploying. It covers where things go, where the docs are, and how to update, release, and deploy.
+
 ## What this is
 
 A pnpm-workspace monorepo hosting three Astro sites for developer.overheid.nl:
 
 - `apps/api-register` — API-register (apis.developer.overheid.nl)
 - `apps/oss-register` — Open Source Register (oss.developer.overheid.nl)
-- `apps/schema-register` — Schema-register
+- `apps/schema-register` — Schema-register (schemas.developer.overheid.nl)
 
 They share three publishable packages:
 
@@ -25,8 +27,9 @@ Run from the repo root.
 ```
 pnpm install                # install deps
 pnpm start                  # interactive, searchable menu to pick and run any root script
-pnpm dev                    # run all three app dev servers in parallel
+pnpm dev                    # run all three app dev servers in parallel (4321, then 4322/4323 as ports are taken)
 pnpm dev:api / :oss / :schema   # run a single app's dev server (localhost:4321)
+pnpm dev:api:prod / :oss:prod   # dev server in production mode (.env.production)
 pnpm build                  # build all apps to ./dist
 pnpm build:api / :oss / :schema
 pnpm preview:api / :oss / :schema  # preview a production build locally
@@ -40,10 +43,16 @@ pnpm test:e2e:open          # cypress interactive runner
 
 pnpm test:ts                 # tsc --noEmit, repo-wide type check
 pnpm biome:check              # biome check --write (format + lint + import sort)
+pnpm biome:migrate            # migrate biome.json after a Biome upgrade
 pnpm storybook:dev            # storybook dev server on :6006
-pnpm storybook:build
+pnpm storybook:build          # build Storybook to ./storybook-static
+pnpm chromatic                # visual tests of Storybook (needs CHROMATIC_PROJECT_TOKEN)
 
 pnpm generate:oas:types      # regenerate OpenAPI-derived TS types from redocly.yaml (openapi-typescript)
+
+pnpm changeset               # add a changeset (see MAINTENANCE.md §5)
+pnpm changesets:status       # show pending changesets
+pnpm astro ...               # run Astro CLI commands, e.g. `pnpm astro -- --help`
 ```
 
 A pre-commit hook (lefthook) runs `biome check` on staged files automatically.
@@ -55,7 +64,7 @@ A pre-commit hook (lefthook) runs `biome check` on staged files automatically.
 Each app is `output: "server"` (Node adapter, standalone). Pages fetch data server-side in the Astro frontmatter using [openapi-fetch](https://openapi-ts.dev/openapi-fetch/), typed against generated schemas:
 
 - `redocly.yaml` at the repo root defines every backend API (prod + test variant) and where `pnpm generate:oas:types` writes the generated types (`src/types/api-schema.prod.ts`, `.test.ts`, plus `tools-schema.*.ts` for api-register).
-- Each app's `src/types/api-schema.ts` is a thin switcher: it re-exports either `./api-schema.prod` (default, must be what's committed) or `./api-schema.test`. `noTestSchemas.grit` is a Biome/GritQL rule that warns if a `*-schema.test.*` export is checked in — always leave `api-schema.ts` pointing at `.prod` before merging to `main`; only point it at `.test` while actively developing against the test backend or when deploying to the test environment (see README "Deploy naar test").
+- Each app's `src/types/api-schema.ts` is a thin switcher: it re-exports either `./api-schema.prod` (default, must be what's committed) or `./api-schema.test`. See "Hard rules" below and MAINTENANCE.md §3.
 - `createClient<paths>({ baseUrl })` from `openapi-fetch` gives fully-typed `GET`/`POST` calls; route paths are referenced via generated `*Paths` enums (e.g. `ApiPaths.listApis`) rather than string literals.
 - Server-only secrets/config (API URLs, keys, Piwik Pro IDs, Altcha HMAC key) are declared in each app's `astro.config.mjs` under `env.schema` (Astro's typed env) and consumed via `astro:env/server`.
 - Mutations / form submissions go through Astro Actions (`astro:actions`, `defineAction`) in `src/actions/index.ts`, not API routes.
@@ -72,7 +81,7 @@ Each register app follows the same routing pattern (illustrated by api-register,
 
 ### Shared layout/component boundary
 
-- `packages/layouts` provides Astro-level page shells (`Base`, `Basic`, `BasicWithAside`, `Detail`, `Overview` under `src/don/`) and pure helper functions (`getPagination`, `getRouting`, `getSearchParams`, `parseHeaders`) — these have unit tests colocated as `*.test.ts`.
+- `packages/layouts` provides Astro-level page shells (`Base`, `Basic`, `BasicWithAside`, `Detail`, `Overview` under `src/don/`) and pure helper functions (`getPagination`, `getRouting`, `getSearchParams`, `parseLinkHeader`) — these have unit tests colocated as `*.test.ts`.
 - `packages/components` provides the React component library, each component in its own folder (e.g. `src/button/Button.tsx` + `Button.stories.tsx`). Components are consumed by apps via the package's subpath exports (`@developer-overheid-nl/don-register-components`, `.../i18n`, `.../analytics`, `.../client`).
 - CSS: global breakpoints/reset/helpers live in `packages/layouts/src/styles`; apps wire them in via PostCSS (`postcssGlobalData`, `postcssCustomMedia`) in `astro.config.mjs`; app-local component styles use CSS Modules (`*.module.css`).
 
@@ -84,15 +93,16 @@ Each register app follows the same routing pattern (illustrated by api-register,
 - Prefer realistic example data pulled from actual app usage (e.g. `app.config.ts` footer columns, real org names like Kadaster/Geonovum/Logius) over generic placeholders.
 - After adding/editing a story, verify with `tsc --noEmit -p packages/components/tsconfig.json`, `biome check --write`, and `npx vitest run --project=storybook` (must be run from the repo root — it doesn't resolve from inside `packages/components`).
 
-## Formatting, linting, versioning
+## Formatting and linting
 
-- [Biome] handles formatting, linting, and import organization (`biome.json`); `.astro` files have some rules relaxed (const/import-type/unused checks off) since Biome's Astro support is partial. CI runs `biome ci` on push and `--error-on-warnings` on pull requests.
-- [Changesets] manages versioning/changelogs for the publishable packages (`pnpm changesets:status`, `:version`, `:publish`) — add a changeset when changing `packages/*` or `proprietary-*`.
+Biome handles formatting, linting, and import sorting (`biome.json`). `.astro` files have some rules relaxed (const, import-type and unused checks are off) because Biome's Astro support is partial. CI runs `biome ci` and fails pull requests on warnings.
 
-## Deployment
+## Hard rules
 
-Deploys go through GitHub Actions plus a separate infra repo (`INFRA_REPO`), updating Kustomize overlays there rather than deploying directly from this repo:
+Details for each rule are in [MAINTENANCE.md](MAINTENANCE.md).
 
-- **Test**: `.github/workflows/deploy-test.yml` runs on pushes to any non-`main` branch, but only actually deploys commits whose message contains `[deploy-test]`. Before deploying to test, double-check each app's `src/types/api-schema.ts` points at the `.test` schema if you need the test backend.
-- **Prod**: `.github/workflows/deploy-prod.yml` runs on push to `main`; it opens a PR in the infra repo bumping the image tag, and merging that PR triggers the actual rollout. Only production (`.prod`) API schemas may be merged to `main` (enforced by CI + `noTestSchemas.grit`).
-- Three Docker images are built/pushed: `don-register-site` (api), `don-register-oss-site`, `don-register-schema-site`.
+1. On `main`, every schema switcher (`api-schema.ts`, `tools-schema.ts`) exports from `.prod`. Point it at `.test` only on a branch while developing or deploying to test (§3, §6).
+2. Add a changeset (`pnpm changeset`) for every change in `packages/*` or `proprietary-*` (§5).
+3. Never hand-edit generated files: `*-schema.prod.ts`, `*-schema.test.ts`, `*/CHANGELOG.md` (§3).
+4. Keep `packages/*` free of app-specific assumptions; the external register-site-template consumes them (§2).
+5. When a change makes a doc wrong, fix the owning doc in the same change (§7).

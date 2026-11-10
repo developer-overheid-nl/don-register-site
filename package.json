@@ -1,7 +1,7 @@
 {
   "name": "@developer-overheid-nl/don-register-site",
   "author": "developer.overheid.nl",
-  "description": "The sites for the API- and OSS registers",
+  "description": "The sites for the API-, OSS- and Schema registers",
   "license": "EUPL-1.2",
   "private": true,
   "publishConfig": {
