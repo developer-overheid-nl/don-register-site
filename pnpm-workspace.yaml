@@ -4,10 +4,10 @@ packages:
   - proprietary*
 
 catalog:
-  "@astrojs/markdown-satteri": 0.4.6
-  "@astrojs/mdx": 8.1.2
-  "@astrojs/node": 11.1.9
-  "@astrojs/react": 7.1.2
+  "@astrojs/markdown-satteri": 0.4.7
+  "@astrojs/mdx": 8.1.3
+  "@astrojs/node": 11.1.11
+  "@astrojs/react": 7.1.4
   "@csstools/postcss-global-data": 4.0.0
   "@piwikpro/react-piwik-pro": 3.0.0
   # RHC umbrella packages: components-css holds styles that have no separate package
@@ -46,7 +46,7 @@ catalog:
   "@vitest/coverage-v8": 4.1.9
   altcha: 3.3.0
   altcha-lib: 2.2.0
-  astro: 7.4.4
+  astro: 7.4.7
   clsx: 2.1.1
   dotenv-cli: 11.0.0
   i18next: 26.5.12
