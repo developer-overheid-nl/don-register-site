@@ -1,8 +1,8 @@
 import {
   type CustomFormFieldProps,
   FormField,
-  Radio as RHCRadio,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/components-react/no-side-effects";
+import { Radio as RHCRadio } from "@rijkshuisstijl-community/radio-react/no-side-effects";
 import clsx from "clsx";
 import { Fragment, useId } from "react";
 import AmountLabel, { type AmountLabelProps } from "../amountLabel/AmountLabel";

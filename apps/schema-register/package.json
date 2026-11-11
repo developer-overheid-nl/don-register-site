@@ -21,6 +21,7 @@
     "@developer-overheid-nl/don-register-components": "workspace:*",
     "@developer-overheid-nl/don-register-layouts": "workspace:*",
     "@piwikpro/react-piwik-pro": "catalog:",
+    "@rijkshuisstijl-community/accordion-react": "catalog:",
     "@rijkshuisstijl-community/components-react": "catalog:",
     "astro": "catalog:",
     "i18next": "catalog:",

@@ -1,7 +1,7 @@
 import {
   DataSummaryItem as RHCDataSummaryItem,
   type DataSummaryItemProps as RHCDataSummaryItemProps,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/data-summary-item-react/no-side-effects";
 
 export interface DataSummaryItemProps
   extends Partial<RHCDataSummaryItemProps> {}

@@ -1,7 +1,5 @@
-import {
-  FormFieldTextInput,
-  PrimaryActionButton,
-} from "@rijkshuisstijl-community/components-react";
+import { PrimaryActionButton } from "@rijkshuisstijl-community/button-react/no-side-effects";
+import { FormFieldTextInput } from "@rijkshuisstijl-community/components-react/no-side-effects";
 import clsx from "clsx";
 import type { PropsWithChildren } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";

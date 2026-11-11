@@ -1,7 +1,7 @@
 import {
   DataSummary as RHCDataSummary,
   type DataSummaryProps as RHCDataSummaryProps,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/data-summary-react/no-side-effects";
 import clsx from "clsx";
 import styles from "./styles.module.css";
 

@@ -1,7 +1,7 @@
 import {
   Alert as RHCAlert,
   type AlertProps as RHCAlertProps,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/alert-react/no-side-effects";
 import clsx from "clsx";
 import type { PropsWithChildren } from "react";
 import styles from "./styles.module.css";

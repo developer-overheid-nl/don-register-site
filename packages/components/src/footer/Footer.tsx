@@ -1,8 +1,8 @@
+import { Footer as RHCFooter } from "@rijkshuisstijl-community/footer-react/no-side-effects";
 import {
   LinkList,
   LinkListLink,
-  Footer as RHCFooter,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/link-list-react/no-side-effects";
 import clsx from "clsx";
 import { type PropsWithChildren, useId } from "react";
 import Heading from "../heading/Heading";

@@ -1,7 +1,7 @@
 import {
   type FormFieldRadioGroupProps,
   FormFieldRadioGroup as RHCFormFieldRadioGroup,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/components-react/no-side-effects";
 import styles from "./styles.module.css";
 
 const FormFieldRadioGroup = (props: FormFieldRadioGroupProps) => {

@@ -1,7 +1,7 @@
 import {
   DataBadgeButton,
   type DataBadgeButtonProps,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/data-badge-button-react/no-side-effects";
 import clsx from "clsx";
 import styles from "./styles.module.css";
 

@@ -1,7 +1,7 @@
 .filters {
   display: flex;
   flex-direction: column;
-  row-gap: var(--rhc-space-200);
+  row-gap: var(--rhc-space-xl);
 }
 
 .currentFilter {

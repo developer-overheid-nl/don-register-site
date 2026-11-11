@@ -1,7 +1,7 @@
 import {
   type CustomFormFieldProps,
   FormField,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/components-react/no-side-effects";
 import clsx from "clsx";
 import { useId } from "react";
 import AmountLabel, { type AmountLabelProps } from "../amountLabel/AmountLabel";

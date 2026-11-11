@@ -15,6 +15,7 @@ const catalogPackages = [
   "@rijkshuisstijl-community/components-react",
   "@rijkshuisstijl-community/components-css",
   "@rijkshuisstijl-community/design-tokens",
+  "@rijkshuisstijl-community/footer-react",
   "react",
   "astro",
 ];

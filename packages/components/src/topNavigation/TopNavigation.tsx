@@ -1,8 +1,8 @@
+import type { IconProps } from "@rijkshuisstijl-community/icon-react/no-side-effects";
 import {
-  type IconProps,
   NavBar,
   type NavBarItemProps,
-} from "@rijkshuisstijl-community/components-react";
+} from "@rijkshuisstijl-community/navigation-bar-react/no-side-effects";
 import type { ReactElement } from "react";
 import Icon from "../iconsSprite/Icon";
 import styles from "./styles.module.css";

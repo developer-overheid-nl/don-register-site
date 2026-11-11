@@ -1,6 +1,6 @@
 "use client";
 
-import { SecondaryActionButton } from "@rijkshuisstijl-community/components-react";
+import { SecondaryActionButton } from "@rijkshuisstijl-community/button-react/no-side-effects";
 import clsx from "clsx";
 import Icon from "../iconsSprite/Icon";
 import styles from "./styles.module.css";
