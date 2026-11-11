@@ -54,7 +54,10 @@ jobs:
       - name: Write CI secrets to local env files
         env:
           API_X_API_KEY: ${{ secrets.API_X_API_KEY }}
-          PIWIK_PRO_SITE_ID: ${{ secrets.PIWIK_PRO_SITE_ID }}
+          # Runs die Dependabot start krijgen geen environment-secrets. De Astro-
+          # schema eist een site-ID; Cypress onderschept de Piwik-pings, dus
+          # een placeholder volstaat om te kunnen bouwen en testen.
+          PIWIK_PRO_SITE_ID: ${{ secrets.PIWIK_PRO_SITE_ID || 'ci-placeholder' }}
         run: |
           for app in api-register oss-register; do
             printf 'API_X_API_KEY=%s\nPIWIK_PRO_SITE_ID=%s\n' \
