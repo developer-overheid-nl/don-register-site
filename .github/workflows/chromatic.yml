@@ -5,6 +5,9 @@ on: push
 jobs:
   chromatic:
     name: Run Chromatic
+    # Dependabot-runs krijgen geen CHROMATIC_PROJECT_TOKEN, dus de job zou
+    # altijd falen met "Missing project token".
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
