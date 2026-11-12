@@ -1,5 +1,13 @@
 # @developer-overheid-nl/api-register
 
+## 2.1.2
+
+### Patch Changes
+
+- Updated dependencies [252b932]
+  - @developer-overheid-nl/don-register-components@1.8.0
+  - @developer-overheid-nl/don-register-layouts@2.3.0
+
 ## 2.1.1
 
 ### Patch Changes
