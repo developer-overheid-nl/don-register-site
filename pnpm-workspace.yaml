@@ -27,7 +27,7 @@ catalog:
   "@rijkshuisstijl-community/data-summary-react": 1.0.2
   "@rijkshuisstijl-community/fieldset-react": 1.0.2
   # Footer is pinned to the old design (1.x); npm "latest" (0.0.x) is the new slot-based footer.
-  "@rijkshuisstijl-community/footer-css": 1.0.1
+  "@rijkshuisstijl-community/footer-css": 2.1.0
   "@rijkshuisstijl-community/footer-react": 1.0.3
   "@rijkshuisstijl-community/heading-group-react": 1.0.2
   "@rijkshuisstijl-community/heading-react": 1.0.3
