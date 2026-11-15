@@ -27,6 +27,7 @@
 
   .searchSelect {
     --rhc-radio-group-padding-block-end: 0;
+    --rhc-checkbox-group-padding-block-end: 0;
 
     /* RHC FormField does not forward the `hidden` attribute, so use a class */
     .hidden {
