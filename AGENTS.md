@@ -6,11 +6,12 @@ Read [MAINTENANCE.md](MAINTENANCE.md) before adding files, updating dependencies
 
 ## What this is
 
-A pnpm-workspace monorepo hosting three Astro sites for developer.overheid.nl:
+A pnpm-workspace monorepo hosting four Astro sites for developer.overheid.nl:
 
 - `apps/api-register` — API-register (apis.developer.overheid.nl)
 - `apps/oss-register` — Open Source Register (oss.developer.overheid.nl)
 - `apps/schema-register` — Schema-register (schemas.developer.overheid.nl)
+- `apps/skills-register` — AI-skills-register (skills.developer.overheid.nl, not live yet). A skeleton: placeholder `/skills` page and a 404, no backend, no Docker image, no deploy and no Cypress tests yet.
 
 They share three publishable packages:
 
@@ -18,7 +19,7 @@ They share three publishable packages:
 - `packages/layouts` — Astro layouts and SSR helper functions (`@developer-overheid-nl/don-register-layouts`), under `src/don/` (room for other orgs' layouts later)
 - `packages/locales` — i18next translation strings, currently only `nl/translation.json`
 
-`proprietary-don` / `proprietary-example` hold copyrighted/example assets (logos, fonts, icons). Apps depend on the generic `@developer-overheid-nl/proprietary` name, which is aliased in each app's `package.json` to one of these two workspace packages — the codebase always imports `@developer-overheid-nl/proprietary`, never the concrete package directly. All three apps + packages also get consumed as a starting point by the external [register-site-template](https://github.com/developer-overheid-nl/register-site-template) repo, so avoid baking app-specific assumptions into `packages/*`.
+`proprietary-don` / `proprietary-example` hold copyrighted/example assets (logos, fonts, icons). Apps depend on the generic `@developer-overheid-nl/proprietary` name, which is aliased in each app's `package.json` to one of these two workspace packages — the codebase always imports `@developer-overheid-nl/proprietary`, never the concrete package directly. All apps + packages also get consumed as a starting point by the external [register-site-template](https://github.com/developer-overheid-nl/register-site-template) repo, so avoid baking app-specific assumptions into `packages/*`.
 
 ## Commands
 
@@ -27,12 +28,13 @@ Run from the repo root.
 ```
 pnpm install                # install deps
 pnpm start                  # interactive, searchable menu to pick and run any root script
-pnpm dev                    # run all three app dev servers in parallel (4321, then 4322/4323 as ports are taken)
-pnpm dev:api / :oss / :schema   # run a single app's dev server (localhost:4321)
+pnpm dev                    # run all app dev servers in parallel (4321, then 4322/4323/4324 as ports are taken)
+pnpm dev:api / :oss / :schema / :skills   # run a single app's dev server (localhost:4321)
 pnpm dev:api:prod / :oss:prod   # dev server in production mode (.env.production)
 pnpm build                  # build all apps to ./dist
-pnpm build:api / :oss / :schema
-pnpm preview:api / :oss / :schema  # preview a production build locally
+pnpm build:api / :oss / :schema / :skills
+pnpm preview:api / :oss / :schema / :skills  # preview a production build locally
+pnpm start:api / :oss / :schema / :skills    # run a built app's server (node entry.mjs, port 4321)
 
 pnpm test                   # vitest (unit tests, workspace-wide via projects: packages/*, apps/*)
 pnpm test -- run <file>     # run a single vitest file/pattern, non-watch
@@ -64,6 +66,7 @@ A pre-commit hook (lefthook) runs `biome check` on staged files automatically.
 Each app is `output: "server"` (Node adapter, standalone). Pages fetch data server-side in the Astro frontmatter using [openapi-fetch](https://openapi-ts.dev/openapi-fetch/), typed against generated schemas:
 
 - `redocly.yaml` at the repo root defines every backend API (prod + test variant) and where `pnpm generate:oas:types` writes the generated types (`src/types/api-schema.prod.ts`, `.test.ts`, plus `tools-schema.*.ts` for api-register).
+- An app without a backend yet (currently `skills-register`) has none of this: no `redocly.yaml` entry, no `src/types/`, no `src/actions/`, no `API_*` env vars.
 - Each app's `src/types/api-schema.ts` is a thin switcher: it re-exports either `./api-schema.prod` (default, must be what's committed) or `./api-schema.test`. See "Hard rules" below and MAINTENANCE.md §3.
 - `createClient<paths>({ baseUrl })` from `openapi-fetch` gives fully-typed `GET`/`POST` calls; route paths are referenced via generated `*Paths` enums (e.g. `ApiPaths.listApis`) rather than string literals.
 - Server-only secrets/config (API URLs, keys, Piwik Pro IDs, Altcha HMAC key) are declared in each app's `astro.config.mjs` under `env.schema` (Astro's typed env) and consumed via `astro:env/server`.

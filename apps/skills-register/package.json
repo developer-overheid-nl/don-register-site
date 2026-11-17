@@ -1,0 +1,35 @@
+{
+  "name": "@developer-overheid-nl/skills-register",
+  "author": "developer.overheid.nl",
+  "description": "The site for the AI-skills-register",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "dotenv -c development -- astro preview",
+    "preview:prod": "dotenv -c production -- astro preview",
+    "astro": "astro"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "dependencies": {
+    "@astrojs/markdown-satteri": "catalog:",
+    "@astrojs/mdx": "catalog:",
+    "@astrojs/react": "catalog:",
+    "@developer-overheid-nl/don-register-components": "workspace:*",
+    "@developer-overheid-nl/don-register-layouts": "workspace:*",
+    "@piwikpro/react-piwik-pro": "catalog:",
+    "astro": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@csstools/postcss-global-data": "catalog:",
+    "dotenv-cli": "catalog:",
+    "postcss-custom-media": "catalog:",
+    "vite": "catalog:"
+  }
+}

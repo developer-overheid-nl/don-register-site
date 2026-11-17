@@ -107,15 +107,27 @@ Update these together:
 
 ### Adding a new app
 
+Start from a skeleton (see `apps/skills-register`): copy `apps/schema-register` and strip it to a placeholder page and a 404. Add the backend, deploy and go-live steps when the app needs them.
+
 Every place that lists the apps by name:
 
-1. `apps/<app>/` with `package.json`, `astro.config.mjs`, `app.config.ts`, `biome.json`, `vitest.config.ts`, `.env.mode.example`
-2. Root `package.json`: `dev:`, `build:`, `preview:`, `start:` scripts (`scripts/start.mjs` groups them automatically by `action:app`)
-3. `redocly.yaml` (prod + test) and `src/types/api-schema.ts`
-4. `Dockerfile`: a `runtime-<app>` target
-5. `.github/workflows/`: `build.yml`, `deploy-test.yml`, `deploy-prod.yml`, plus a `KUSTOMIZE_PATH_<APP>` repository variable
-6. `cypress/e2e/<app>/` and a `test:e2e:<app>` script
-7. Docs: README (Apps section), the root [CHANGELOG.md](CHANGELOG.md) index, [publiccode.yml](publiccode.yml), [AGENTS.md](AGENTS.md)
+**Skeleton (always):**
+
+1. `apps/<app>/` with `package.json` (start at `version: "0.0.0"`), `astro.config.mjs`, `app.config.ts`, `biome.json`, `tsconfig.json`, `vitest.config.ts`, `.env` (committed, non-secret defaults), `.env.mode.example`, `public/favicon.svg` (+ `public/sponsors/` for the footer), `src/layouts/Markdown.astro`, `src/pages/404.md`
+2. Root `package.json`: `dev:`, `build:`, `preview:`, `start:` scripts (`scripts/start.mjs` groups them automatically by `action:app`), and the root `description`
+3. A changeset for the new app (`minor` from `0.0.0`). Don't create its `CHANGELOG.md`; Changesets does.
+4. Docs: README (Apps section), the root [CHANGELOG.md](CHANGELOG.md) index, [AGENTS.md](AGENTS.md)
+
+**When the app gets a backend:**
+
+1. `redocly.yaml` (prod + test), `pnpm generate:oas:types`, the `src/types/api-schema.ts` switcher, `API_*` vars in `env.schema`, and `noTestSchemas.grit` in the app's `biome.json` `plugins`
+
+**When the app goes to test/production:**
+
+1. `Dockerfile`: the `deps` / `build` stages (`COPY` of `package.json` and `node_modules`, the build command) and a `runtime-<app>` target
+2. `.github/workflows/`: `build.yml` (image build, upload, push), `deploy-test.yml`, `deploy-prod.yml`, plus a `KUSTOMIZE_PATH_<APP>` repository variable and overlays in `INFRA_REPO` (§6)
+3. `cypress/e2e/<app>/` and a `test:e2e:<app>` script
+4. [publiccode.yml](publiccode.yml), the link in the README, and an item for the new app in `topNavigation` in the other apps' `app.config.ts`
 
 ## 5. Versioning and releasing
 
@@ -134,7 +146,7 @@ Versioning uses [Changesets](https://github.com/changesets/changesets) and [SemV
 - `@developer-overheid-nl/don-register-locales`
 - `@developer-overheid-nl/proprietary-example`
 
-**Private, versioned and changelogged only:** the three apps, `proprietary-don`, and the root package.
+**Private, versioned and changelogged only:** the apps, `proprietary-don`, and the root package.
 
 **Release flow** (`.github/workflows/publish.yml`):
 
@@ -148,6 +160,7 @@ Canary releases: `pnpm changesets:version:canary` and `pnpm changesets:publish:c
 
 Deploys go through GitHub Actions and a separate infra repository. This repo never deploys directly.
 Three images are built: `ghcr.io/developer-overheid-nl/don-register-site` (api), `don-register-oss-site` and `don-register-schema-site`.
+`skills-register` has no image and is not deployed yet (see [§4 Adding a new app](#adding-a-new-app)).
 
 ### Variables and secrets
 
@@ -199,7 +212,7 @@ Update the owning doc in the same pull request as the change.
 | A Storybook convention or tag | Storybook conventions in [AGENTS.md](AGENTS.md) |
 | A workflow, CI variable or secret | [§6](#6-deploying) of this file |
 | Where a kind of file lives | [§2](#2-where-things-go) of this file |
-| Package or app list | [README.md](README.md), the root [CHANGELOG.md](CHANGELOG.md), [publiccode.yml](publiccode.yml), [§4 Adding a new app](#adding-a-new-app) |
+| Package or app list | [README.md](README.md), the root [CHANGELOG.md](CHANGELOG.md), [AGENTS.md](AGENTS.md), [publiccode.yml](publiccode.yml) (live apps only), [§4 Adding a new app](#adding-a-new-app) |
 | Public API of a published package | That package's `README.md` + a changeset |
 
 **For agents:** treat a doc that disagrees with the code as a bug. Fix the doc in the same change, or report it if fixing is out of scope.
