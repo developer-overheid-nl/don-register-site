@@ -67,7 +67,7 @@ const organisationSearchFilter = {
   key: "organisation-search",
   label: "Organisatie zoeken",
   description: "Zoek en kies één eigenaar of beheerder van de registratie.",
-  type: "search-select",
+  type: "search-single-select",
   showTop: 5,
   options: [
     { value: "kadaster", label: "Kadaster", count: 12, selected: false },
@@ -135,6 +135,18 @@ const organisationSearchFilter = {
   ],
 } as unknown as FilterData;
 
+// Same options, with one selected option outside the top 5
+const organisationMultiSearchFilter = {
+  ...organisationSearchFilter,
+  key: "organisation-multi-search",
+  label: "Organisaties zoeken",
+  description: "Zoek en kies één of meer eigenaren of beheerders.",
+  type: "search-multi-select",
+  options: (
+    organisationSearchFilter as Extract<FilterData, { showTop?: number }>
+  ).options.map((option) => ({ ...option, selected: option.value === "rvig" })),
+} as unknown as FilterData;
+
 /**
  * FacetFilters rendert de filterkolom van een registeroverzicht op basis van
  * een `filters`-array uit de API. Per filter wordt een kop, een korte
@@ -143,7 +155,13 @@ const organisationSearchFilter = {
  * - `multi-select`: meerdere opties tegelijk (checkboxes)
  * - `single-select`: één optie of "Alle" (radio buttons)
  * - `toggle`: aan/uit-schakelaar; met `explicitFalseFilters` als losse aan/uit-opties
- * - `search-select`: één optie kiezen uit een lange lijst, met zoekveld en "Toon meer"
+ * - `search-single-select`: één optie kiezen uit een lange lijst (radio buttons),
+ *   met zoekveld en "Toon meer"
+ * - `search-multi-select`: meerdere opties kiezen uit een lange lijst (checkboxes),
+ *   met zoekveld en "Toon meer"
+ * - `search-select`: verouderd, gebruik `search-single-select`
+ *
+ * Elk filtertype heeft een eigen component in `facetFilters/filters/`.
  *
  * Wijzigingen worden gemeld via `onFilterChange` én een `onFilterChange`
  * CustomEvent op het element (voor gebruik buiten React). Voor `single-select`
@@ -163,6 +181,7 @@ const meta = {
       lifecycleFilter,
       publiccodeFilter,
       organisationSearchFilter,
+      organisationMultiSearchFilter,
     ],
     explicitFalseFilters: ["publiccode"],
     onFilterChange: fn(),
@@ -183,6 +202,7 @@ export const Default: Story = {
       "Levensfase",
       "Heeft publiccode.yml",
       "Organisatie zoeken",
+      "Organisaties zoeken",
     ]) {
       await expect(
         canvas.getByRole("heading", { level: 3, name }),
@@ -213,8 +233,21 @@ export const MultiSelect: Story = {
       organisation: ["kadaster", "geonovum"],
     });
 
+    // A second change builds on the first, not on the `filters` prop
+    const logius = canvas.getByRole("checkbox", { name: /Logius/ });
+    await userEvent.click(logius);
+
+    await expect(args.onFilterChange).toHaveBeenLastCalledWith({
+      organisation: ["kadaster", "geonovum", "logius"],
+    });
+
     // Leave the story in its starting state
-    geonovum.checked = false;
+    await userEvent.click(geonovum);
+    await userEvent.click(logius);
+
+    await expect(args.onFilterChange).toHaveBeenLastCalledWith({
+      organisation: ["kadaster"],
+    });
   },
 };
 
@@ -294,8 +327,8 @@ export const ToggleExplicitFalse: Story = {
   },
 };
 
-export const SearchSelect: Story = {
-  name: "Zoeken in opties",
+export const SearchSingleSelect: Story = {
+  name: "Zoeken in opties (enkele keuze)",
   args: {
     filters: [organisationSearchFilter],
   },
@@ -357,6 +390,79 @@ export const SearchSelect: Story = {
         await expect(radio).not.toBeChecked();
       }
     });
+  },
+};
+
+export const SearchMultiSelect: Story = {
+  name: "Zoeken in opties (meerkeuze)",
+  args: {
+    filters: [organisationMultiSearchFilter],
+  },
+  play: async ({ args, canvas, step }) => {
+    const key = "organisation-multi-search";
+    const search = canvas.getByRole("searchbox");
+
+    await step("Toont de top 5 plus de gekozen optie", async () => {
+      await expect(canvas.getAllByRole("checkbox")).toHaveLength(6);
+      await expect(
+        canvas.getByRole("checkbox", { name: /Identiteitsgegevens/ }),
+      ).toBeChecked();
+      await expect(canvas.queryByRole("radio")).not.toBeInTheDocument();
+    });
+
+    await step("Tweede optie kiezen via zoeken", async () => {
+      await userEvent.type(search, "utrecht");
+      // The match plus the already selected option
+      await expect(canvas.getAllByRole("checkbox")).toHaveLength(2);
+      await userEvent.click(
+        canvas.getByRole("checkbox", { name: /Gemeente Utrecht/ }),
+      );
+      await expect(args.onFilterChange).toHaveBeenLastCalledWith({
+        [key]: ["rvig", "gemeente-utrecht"],
+      });
+    });
+
+    await step("Gekozen opties blijven zichtbaar", async () => {
+      await userEvent.clear(search);
+      await userEvent.type(search, "kadaster");
+      await expect(canvas.getAllByRole("checkbox")).toHaveLength(3);
+      await expect(
+        canvas.getByRole("checkbox", { name: /Identiteitsgegevens/ }),
+      ).toBeChecked();
+      await expect(
+        canvas.getByRole("checkbox", { name: /Gemeente Utrecht/ }),
+      ).toBeChecked();
+    });
+
+    // Also leaves the story in its starting state
+    await step("Optie weer uitzetten", async () => {
+      await userEvent.click(
+        canvas.getByRole("checkbox", { name: /Gemeente Utrecht/ }),
+      );
+      await expect(args.onFilterChange).toHaveBeenLastCalledWith({
+        [key]: ["rvig"],
+      });
+      await expect(canvas.getAllByRole("checkbox")).toHaveLength(2);
+      await userEvent.clear(search);
+      await expect(canvas.getAllByRole("checkbox")).toHaveLength(6);
+    });
+  },
+};
+
+/**
+ * Verouderd: `search-select` werkt nog en gedraagt zich als `search-single-select`.
+ */
+export const SearchSelectDeprecated: Story = {
+  name: "Zoeken in opties (verouderd type)",
+  tags: ["deprecated"],
+  args: {
+    filters: [
+      { ...organisationSearchFilter, type: "search-select" } as FilterData,
+    ],
+  },
+  play: async ({ canvas }) => {
+    await expect(canvas.getAllByRole("radio")).toHaveLength(5);
+    await expect(canvas.queryByRole("checkbox")).not.toBeInTheDocument();
   },
 };
 
