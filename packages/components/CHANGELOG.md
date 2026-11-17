@@ -1,5 +1,36 @@
 # @developer-overheid-nl/don-register-components
 
+## 1.8.0
+
+### Minor Changes
+
+- b2156ed: `FacetFilters` heeft een nieuw filtertype `search-multi-select`: een lange lijst met zoekveld en "Toon meer", waarin meerdere opties gekozen kunnen worden (checkboxes).
+  
+  - `search-select` is hernoemd naar `search-single-select`. Het oude type is verouderd, maar blijft werken.
+  - `getSelectedFilters` en `getSelectedFiltersMap` geven nu ook de gekozen opties van de zoek-filters terug.
+- 252b932: Rijkshuisstijl Community (RHC) bijgewerkt: design-tokens 11 → 18, components-css 12 → 18, components-react 11 → 17.
+  
+  - Componenten komen nu uit de losse RHC-packages
+    (bijv. `@rijkshuisstijl-community/button-react/no-side-effects`).
+    `components-react` blijft alleen nodig voor `FormField*` en `Table*`.
+  - Het thema heet nu `groen`: `design-tokens/dist/groen/root.css` in plaats van `dist/uitvoerend-groen/root.css`.
+  - De footer houdt het oude ontwerp: `footer-react` en `footer-css` staan vast op 1.x.
+  - `--rhc-space-200` is hernoemd naar `--rhc-space-xl`.
+  - `Paragraph` met `purpose="short"` geeft de prop niet meer door aan RHC.
+  - Het uiterlijk blijft gelijk aan RHC 11: `override.css` zet de gewijzigde tokens terug
+    (blauwe koppen, groene kaarten/badges, 24px iconen, footer-tokens, max-breedte 1280px).
+    Alert, Header, Footer en FormFieldCheckboxOption krijgen kleine CSS-correcties.
+
+### Patch Changes
+
+- b2156ed: `FacetFilters`: `onFilterChange` geeft nu alle wijzigingen sinds de laatste filterdata door. Eerder werd elke wijziging berekend vanaf de `filters`-prop, waardoor bij twee snelle wijzigingen alleen de laatste in de payload stond.
+- b2156ed: `FacetFilters` opgesplitst in een component per filtertype (toggle, multi-select, single-select, search-select). Het gedrag en de exports blijven gelijk.
+  
+  - Het id van de hulptekst bij het zoekveld is nu uniek per filter (`<key>-search-help`).
+  - "Toon meer" / "Toon minder" komen nu uit de vertalingen (`components.show-more`, `components.show-less`).
+- Updated dependencies [b2156ed]
+  - @developer-overheid-nl/don-register-locales@1.3.1
+
 ## 1.7.0
 
 ### Minor Changes
