@@ -55,6 +55,12 @@ De [Astro] site van het Open Source Register.
 
 De [Astro] site van het Schema-register.
 
+### AI-skills-register
+
+> Dit wordt het AI-skills-register van de Nederlandse overheid: AI-skills die beschikbaar zijn voor (her)gebruik binnen de overheid.
+
+De [Astro] site van het AI-skills-register. Deze site is in ontwikkeling en nog niet online.
+
 ### Je eigen register
 
 In de repository [register-site-template] staat een template voor het bouwen van sites op basis van de packages in deze monorepo.

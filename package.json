@@ -1,7 +1,7 @@
 {
   "name": "@developer-overheid-nl/don-register-site",
   "author": "developer.overheid.nl",
-  "description": "The sites for the API-, OSS- and Schema registers",
+  "description": "The sites for the API-, OSS-, Schema- and AI-skills registers",
   "license": "EUPL-1.2",
   "private": true,
   "publishConfig": {
@@ -32,6 +32,10 @@
     "dev:schema": "pnpm --filter @developer-overheid-nl/schema-register dev",
     "build:schema": "pnpm --filter @developer-overheid-nl/schema-register build",
     "preview:schema": "pnpm --filter @developer-overheid-nl/schema-register preview",
+    "start:skills": "node apps/skills-register/dist/server/entry.mjs --host 0.0.0.0 --port 4321",
+    "dev:skills": "pnpm --filter @developer-overheid-nl/skills-register dev",
+    "build:skills": "pnpm --filter @developer-overheid-nl/skills-register build",
+    "preview:skills": "pnpm --filter @developer-overheid-nl/skills-register preview",
     "storybook:dev": "storybook dev -p 6006",
     "storybook:build": "storybook build",
     "astro": "astro",
