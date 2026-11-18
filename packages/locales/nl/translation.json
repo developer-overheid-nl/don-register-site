@@ -55,6 +55,7 @@
     "status-sunset": "Sunset, wordt Retired per {{date}}",
     "status-retired": "Retired per {{date}}",
     "lifecycle-status-active": "Active",
+    "lifecycle-status-active_future": "Active, wordt Deprecated per {{date}}",
     "lifecycle-status-deprecated": "Deprecated",
     "lifecycle-status-deprecated_past": "Deprecated sinds {{date}}",
     "lifecycle-status-deprecated_future": "Deprecated per {{date}}",

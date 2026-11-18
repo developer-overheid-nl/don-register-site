@@ -30,7 +30,7 @@ export interface AlignBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
 }
 
-const getAlignmentClass = (align: Align): string => {
+const getAlignmentClass = (align: Align): string | undefined => {
   switch (align) {
     case "left":
       return styles.left;
@@ -65,7 +65,7 @@ const getAlignmentClass = (align: Align): string => {
   }
 };
 
-const getGapClass = (gap: Gap): string => {
+const getGapClass = (gap: Gap): string | undefined => {
   switch (gap) {
     case "none":
       return styles.gapNone;

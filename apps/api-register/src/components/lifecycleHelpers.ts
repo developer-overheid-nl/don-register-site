@@ -28,7 +28,10 @@ export const getStatusColor = (lifecycle: LifeCycle) => {
 
   switch (current) {
     case "active":
-      return "groen";
+      // Upcoming deprecation: same colour as a deprecation that hasn't started yet.
+      return getFromDate(lifecycle)?.context === "future"
+        ? "mosgroen"
+        : "groen";
     case "deprecated":
       return previous ? "mosgroen" : "donkergeel";
     case "sunset":
@@ -43,7 +46,12 @@ export const getStatusColor = (lifecycle: LifeCycle) => {
 export const getFromDate = (lifecycle: LifeCycle) => {
   if (!lifecycle) return;
 
-  const fromDate = lifecycle.from && new Date(lifecycle.from);
+  // The date that belongs to the current status: deprecation date for active/deprecated, sunset date for sunset/retired.
+  const dateString =
+    lifecycle.status === "sunset" || lifecycle.status === "retired"
+      ? lifecycle.sunset
+      : lifecycle.deprecated;
+  const fromDate = dateString && new Date(dateString);
   const isFuture =
     // biome-ignore lint/suspicious/noGlobalIsNan: isNan casts it to a number, that's what we want
     fromDate && !isNaN(fromDate as unknown as number)

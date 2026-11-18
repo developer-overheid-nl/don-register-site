@@ -5,7 +5,7 @@ import {
 import { clsx } from "clsx";
 import styles from "./styles.module.css";
 
-interface ReadOnlyTextInputProps extends TextInputProps {
+export interface ReadOnlyTextInputProps extends TextInputProps {
   fontVariant?: "slashed-zero" | "monospace" | "normal";
 }
 

@@ -42,7 +42,7 @@
     "test:e2e:open": "cypress open",
     "test:storybook": "vitest --project=storybook",
     "generate:oas:types": "pnpx openapi-typescript --make-paths-enum",
-    "test:ts": "tsc --noEmit",
+    "test:ts": "tsc --noEmit && pnpm --no-bail --filter \"./apps/*\" --filter \"./packages/*\" exec tsc --noEmit",
     "biome:check": "biome check --write",
     "biome:migrate": "biome migrate --write",
     "changesets:status": "changeset status --verbose",

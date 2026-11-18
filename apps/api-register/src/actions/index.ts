@@ -7,6 +7,7 @@ import {
   API_X_API_KEY,
   TOOLS_ENDPOINT,
 } from "astro:env/server";
+import type { FilterData } from "@developer-overheid-nl/don-register-components";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import { verifySolution } from "altcha-lib";
 import { deriveKey } from "altcha-lib/algorithms/pbkdf2";
@@ -64,7 +65,7 @@ export const server = {
         });
       }
 
-      return data;
+      return data as unknown as FilterData[];
     },
   }),
   keyRequest: defineAction({

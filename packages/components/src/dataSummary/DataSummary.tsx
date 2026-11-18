@@ -13,7 +13,7 @@ const DataSummary = (props: DataSummaryProps) => {
   const { className, contained = false, ...restProps } = props;
   return (
     <RHCDataSummary
-      className={clsx(className, { [styles.isContained]: contained })}
+      className={clsx(className, contained && styles.isContained)}
       {...restProps}
     />
   );

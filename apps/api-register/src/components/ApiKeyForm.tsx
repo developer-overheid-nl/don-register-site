@@ -14,7 +14,6 @@ import {
 } from "@developer-overheid-nl/don-register-components";
 import { CustomEvent, ErrorTracking } from "@piwikpro/react-piwik-pro";
 import type {} from "altcha/types/react";
-// @ts-expect-error somehow Activity is not recognized yet
 import { Activity, useActionState, useEffect } from "react";
 import styles from "./ApiKeyForm.module.css";
 
