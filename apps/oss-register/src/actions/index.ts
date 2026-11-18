@@ -5,6 +5,7 @@ import {
   API_VERSION,
   API_X_API_KEY,
 } from "astro:env/server";
+import type { FilterData } from "@developer-overheid-nl/don-register-components";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
 import { z } from "astro/zod";
 import createClient from "openapi-fetch";
@@ -54,7 +55,7 @@ export const server = {
         });
       }
 
-      return data;
+      return data as unknown as FilterData[];
     },
   }),
 };

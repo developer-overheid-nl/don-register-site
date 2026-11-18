@@ -41,7 +41,7 @@ pnpm test:e2e               # cypress e2e for both api and oss (needs the apps a
 pnpm test:e2e:api / :oss    # cypress against one app only (baseUrl 4321 / 4322)
 pnpm test:e2e:open          # cypress interactive runner
 
-pnpm test:ts                 # tsc --noEmit, repo-wide type check
+pnpm test:ts                 # tsc --noEmit: root files, then each app/package with its own tsconfig
 pnpm biome:check              # biome check --write (format + lint + import sort)
 pnpm biome:migrate            # migrate biome.json after a Biome upgrade
 pnpm storybook:dev            # storybook dev server on :6006

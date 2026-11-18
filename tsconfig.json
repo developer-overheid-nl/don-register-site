@@ -1,12 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [
-    ".astro/types.d.ts",
-    "**/*"
-  ],
-  "exclude": [
-    "dist"
-  ],
+  "include": [".storybook/**/*", "cypress/**/*", "types/**/*", "*.ts"],
+  "exclude": ["apps", "packages", "proprietary-*", "**/dist"],
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",

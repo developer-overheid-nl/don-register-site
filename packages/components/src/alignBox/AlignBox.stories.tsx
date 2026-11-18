@@ -48,6 +48,8 @@ const meta = {
     direction: "row",
     wrap: false,
     display: "block",
+    // Required by AlignBoxProps; the render function below supplies the real children.
+    children: null,
   },
   render: (args) => (
     <AlignBox {...args} style={{ border: "1px dashed #ccc", minHeight: 120 }}>

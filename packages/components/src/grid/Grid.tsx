@@ -8,7 +8,9 @@ export interface GridProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
 }
 
-const getGapClass = (gap: NonNullable<GridProps["gap"]>): string => {
+const getGapClass = (
+  gap: NonNullable<GridProps["gap"]>,
+): string | undefined => {
   switch (gap) {
     case "none":
       return styles.gapNone;
