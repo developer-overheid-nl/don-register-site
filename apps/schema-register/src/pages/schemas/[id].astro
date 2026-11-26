@@ -25,14 +25,6 @@ import {
   Paragraph,
   PillBadge,
   ReadOnlyTextInput,
-} from "@developer-overheid-nl/don-register-components";
-import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
-import i18n from "@developer-overheid-nl/don-register-components/i18n";
-import {
-  DonBasic,
-  DonDetail,
-} from "@developer-overheid-nl/don-register-layouts";
-import {
   Table,
   TableBody,
   TableCaption,
@@ -40,7 +32,13 @@ import {
   TableHeader,
   TableHeaderCell,
   TableRow,
-} from "@rijkshuisstijl-community/components-react/no-side-effects";
+} from "@developer-overheid-nl/don-register-components";
+import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
+import i18n from "@developer-overheid-nl/don-register-components/i18n";
+import {
+  DonBasic,
+  DonDetail,
+} from "@developer-overheid-nl/don-register-layouts";
 import createClient from "openapi-fetch";
 import appConfig from "../../../app.config";
 import DependenciesAccordion from "../../components/DependenciesAccordion";

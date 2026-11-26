@@ -120,6 +120,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/scans": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Submit ORT scan
+         * @description Stores the result of an ORT scan by the ort-runner for a repository. Every scan is kept as history. A retried delivery with the same Idempotency-Key does not store a second scan and returns the stored scan. Vulnerabilities in the report are stored but not published.
+         */
+        post: operations["submitScan"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/organisations": {
         parameters: {
             query?: never;
@@ -163,12 +183,17 @@ export interface components {
              * @example Request validation failed
              */
             title: string;
+            /**
+             * @description A human-readable explanation specific to this occurrence of the problem
+             * @example url: must be a valid URL
+             */
+            detail: string;
             errors?: {
                 /**
                  * @description Location of the error (e.g., body, query, header)
                  * @enum {string}
                  */
-                in: "body" | "query";
+                in: "body" | "query" | "path";
                 /**
                  * @description Location in the document where the error occurred (JSON Pointer)
                  * @example #/foo[0]/bar
@@ -278,6 +303,7 @@ export interface components {
             readonly lastActivityAt?: components["schemas"]["LastActivityAt"];
             /** @description Whether the repository is archived and hidden from default repository listings. */
             readonly archived?: boolean;
+            scanSummary?: components["schemas"]["RepositoryScanSummary"];
         };
         /**
          * @description Derived fork classification based on the git fork flag, publiccode.yml url, and isBasedOn metadata.
@@ -310,6 +336,7 @@ export interface components {
             publicCode?: components["schemas"]["PublicCode"];
             /** @description Long description of the repository, typically from publiccode.yml. */
             longDescription?: string;
+            scan?: components["schemas"]["RepositoryScan"];
         };
         /** @description A single option within a multi-select filter group. */
         FilterOption: {
@@ -346,6 +373,113 @@ export interface components {
             count?: number | null;
             /** @description Available options with counts. Only present for multi-select type. */
             options?: components["schemas"]["FilterOption"][];
+        };
+        /**
+         * Scan submission
+         * @description A scan result as delivered by the ort-runner.
+         */
+        ScanSubmission: {
+            /**
+             * @description Version of this message.
+             * @enum {integer}
+             */
+            schemaVersion: 1;
+            /**
+             * Format: uuid
+             * @description Id of the repository in the register.
+             */
+            repositoryId: string;
+            /** @description The complete run.json of the ort-runner. `status` must be `completed`, `incomplete` or `failed`. */
+            scan: {
+                /** @enum {string} */
+                status: "completed" | "incomplete" | "failed";
+            } & {
+                [key: string]: unknown;
+            };
+        };
+        /**
+         * Repository scan summary
+         * @description The latest ORT scan of a repository. Vulnerabilities are not published.
+         */
+        RepositoryScanSummary: {
+            /**
+             * @description Whether the scan ran completely. Says nothing about the quality of the repository.
+             * @enum {string}
+             */
+            status: "completed" | "incomplete" | "failed";
+            /**
+             * Format: date-time
+             * @description When the scan finished.
+             */
+            scannedAt: string;
+            /** @description Percentage of passed ORT repository rules. Absent when the scan did not report its rules. */
+            repoScorePercentage?: number;
+            /** @description Number of unique dependencies found. */
+            packageCount?: number;
+            /** @description Number of unique direct dependencies. */
+            directDependencyCount?: number;
+            /** @description Number of unique transitive dependencies. */
+            transitiveDependencyCount?: number;
+            /** @description Package managers found, as named by ORT (for example GoMod or NPM). */
+            packageManagers?: string[];
+            findingCounts: components["schemas"]["ScanFindingCounts"];
+        };
+        /**
+         * Scan finding counts
+         * @description Number of failed ORT repository rules per severity.
+         */
+        ScanFindingCounts: {
+            error: number;
+            warning: number;
+            hint: number;
+        };
+        /**
+         * Repository scan
+         * @description An ORT scan of a repository with its findings. Vulnerabilities are not published.
+         */
+        RepositoryScan: components["schemas"]["RepositoryScanSummary"] & {
+            /** Format: date-time */
+            startedAt: string;
+            /** @description Scanned Git commit. */
+            revision?: string;
+            /** @description Why the scan failed or is incomplete. */
+            error?: string;
+            /** @description The first stage of the scan that failed. */
+            failedStage?: string;
+            /** @description Dependency counts per project file. */
+            projects?: {
+                packageManager: string;
+                /** @description Path of the project file, for example go.mod. */
+                definitionFile: string;
+                directDependencyCount: number;
+                transitiveDependencyCount: number;
+            }[];
+            /** @description ORT repository rules, passed or failed. */
+            findings: components["schemas"]["ScanFinding"][];
+            /** @description What the scan was made with. */
+            tooling: {
+                ortImage?: string;
+                runnerVersion?: string;
+                configDigest?: string;
+            };
+        };
+        /**
+         * Scan finding
+         * @description One ORT repository rule.
+         */
+        ScanFinding: {
+            /** @description ORT rule id, for example MISSING_LICENSE_FILE. */
+            rule: string;
+            /** @enum {string} */
+            severity: "ERROR" | "WARNING" | "HINT";
+            passed: boolean;
+            /** @description ORT message for a failed rule. */
+            message?: string;
+            /**
+             * Format: uri
+             * @description Guidance on developer.overheid.nl.
+             */
+            howToFixUrl?: string;
         };
         /** @description Mandatory and conditionally mandatory fields extracted from publiccode.yml v0.5.0. */
         PublicCode: {
@@ -477,6 +611,8 @@ export interface components {
         AvailableLanguagesFilter: string[];
         /** @description Filter by license (SPDX identifier). Repeatable for multiple values. */
         LicenseFilter: string[];
+        /** @description Key of this delivery. A retry with the same key returns the scan stored the first time. */
+        IdempotencyKey: string;
         /** @description Unique identifier of the resource. */
         ResourceId: string;
         /** @description Search term to combine with repository filters. Matches repository name, short description, long description, publiccode.yml url and publiccode.yml landingURL. */
@@ -781,6 +917,36 @@ export interface operations {
             404: components["responses"]["NotFound"];
         };
     };
+    submitScan: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Key of this delivery. A retry with the same key returns the scan stored the first time. */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScanSubmission"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    "API-Version": components["headers"]["APIVersion"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RepositoryScan"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            404: components["responses"]["NotFound"];
+        };
+    };
     listOrganisations: {
         parameters: {
             query?: {
@@ -849,6 +1015,7 @@ export enum ApiPaths {
     searchRepositories = "/repositories/_search",
     getRepositoryById = "/repositories/{id}",
     updateRepository = "/repositories/{id}",
+    submitScan = "/scans",
     listOrganisations = "/organisations",
     createOrganisation = "/organisations"
 }

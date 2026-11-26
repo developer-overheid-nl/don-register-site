@@ -10,15 +10,26 @@ import {
   PIWIK_PRO_SITE_ID,
 } from "astro:env/server";
 import {
+  AccordionProvider,
   Alert,
   AlignBox,
   Block,
+  ButtonAction,
+  ButtonLink,
+  DataBadge,
+  type DataBadgeAppearance,
+  DataList,
+  DataListActions,
+  DataListItem,
+  DataListKey,
+  DataListValue,
   DataSummary,
   DataSummaryItem,
   Heading,
   HeadingGroup,
   Icon,
   Link,
+  LinkButton,
   Markdown,
   Paragraph,
   PillBadge,
@@ -31,6 +42,7 @@ import {
 } from "@developer-overheid-nl/don-register-layouts";
 import createClient from "openapi-fetch";
 import appConfig from "../../../app.config";
+import { ProjectsAccordion } from "../../components/ProjectsAccordion";
 import RepoIcon from "../../components/RepoIcon.astro";
 import { ApiPaths, type paths } from "../../types/api-schema";
 
@@ -46,6 +58,9 @@ const devStatusColors = {
   archived: "coolgrey",
   unknown: "coolgrey",
 };
+
+// Failed findings first, most severe first; passed findings last
+const severityOrder = { ERROR: 0, WARNING: 1, HINT: 2 };
 
 const client = createClient<paths>({
   baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
@@ -133,6 +148,14 @@ const getLang = (langKeys: Array<string>) =>
         {/* <DataSummaryItem itemKey="Contactpersoon" itemValue={details?.contact?.name || '-'} />
         <DataSummaryItem itemKey="Email" itemValue={details?.contact?.email || '-'} /> */}
       </DataSummary>
+      <Heading level={4}>{t(`pages.tbd-metadata`)}</Heading>
+      <Block appearance="outlined">
+        <DataSummary appearance="column" contained>
+          <DataSummaryItem itemKey={t(`components.created-at`)} itemValue={new Date(details.createdAt as string | number).toLocaleDateString('nl-NL')} />
+          <DataSummaryItem itemKey={t(`components.last-activity-at`)} itemValue={new Date(details.lastActivityAt as string | number).toLocaleDateString('nl-NL')} />
+          <DataSummaryItem itemKey={t(`components.last-crawled-at`)} itemValue={new Date(details.lastCrawledAt as string | number).toLocaleDateString('nl-NL')} />
+        </DataSummary>
+      </Block>
     </Fragment>
     { /* biome-ignore lint/complexity/noUselessFragments: needed for slot */ }
     <Fragment slot="meta">
@@ -167,14 +190,109 @@ const getLang = (langKeys: Array<string>) =>
             )
           }
       </Block>
-      <Heading level={4}>{t(`pages.tbd-metadata`)}</Heading>
-      <Block appearance="outlined">
-        <DataSummary appearance="column" contained>
-          <DataSummaryItem itemKey={t(`components.created-at`)} itemValue={new Date(details.createdAt as string | number).toLocaleDateString('nl-NL')} />
-          <DataSummaryItem itemKey={t(`components.last-activity-at`)} itemValue={new Date(details.lastActivityAt as string | number).toLocaleDateString('nl-NL')} />
-          <DataSummaryItem itemKey={t(`components.last-crawled-at`)} itemValue={new Date(details.lastCrawledAt as string | number).toLocaleDateString('nl-NL')} />
-        </DataSummary>
-      </Block>
+      <Heading level={4}>{t(`pages.repository-scan`)}</Heading>
+      <AlignBox align="stretch" gap="medium" className="scans">
+        <Block layout="flex-col" className="scan">
+          <Heading level={5} className="">{t(`components.scan`)}</Heading>
+          <p class="content">
+            <DataBadge appearance="outlined" className={details.scan?.status}>
+              {t(`components.status`, {context: details.scan?.status})}
+              {details.scan?.status === "completed" ? <>&nbsp;<Icon aria-hidden name="active" /></> : null}
+            </DataBadge><br />
+            <span class="summary">{new Date(details.scan?.scannedAt ?? "").toLocaleString("nl-NL", { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" })} UTC</span>
+          </p>
+          {details.scan?.status !== "failed" ? <PillBadge startValue={t(`components.score`)} endValue={details.scan?.repoScorePercentage} type="percentage"/> : null }
+        </Block>
+        {details.scan?.status !== "failed" ?
+          <Block>
+            <Heading level={5} className="title">{t(`components.checks`)}</Heading>
+            <p class="content">
+              <strong class="highlight">{(details.scan?.findingCounts.error ?? 0) + (details.scan?.findingCounts.warning ?? 0)}</strong>
+              &nbsp;/&nbsp;
+              <span>{details.scan?.findings.length}</span>
+            </p>
+            <ul class="content summary">
+              <li>{(details.scan?.findingCounts.error ?? 0)} errors</li>
+              <li>{(details.scan?.findingCounts.warning ?? 0)} warnings</li>
+              <li>{(details.scan?.findingCounts.hint ?? 0)} hints</li>
+            </ul>
+          </Block>
+          <Block>
+            <Heading level={5} className="title">{t(`components.packages`)}</Heading>
+            <p class="content">
+              <strong class="highlight">{new Intl.NumberFormat("nl-NL").format(details.scan?.packageCount ?? 0)}</strong><br />
+              <span class="summary">
+                {(details.scan?.directDependencyCount ?? 0)} direct &middot;&nbsp;
+                {(details.scan?.transitiveDependencyCount ?? 0)} transitive
+              </span>
+            </p>
+          </Block>
+          <Block>
+            <Heading level={5} className="title">{t(`components.package-managers`)}</Heading>
+            <p class="content">
+              <strong class="highlight">{new Intl.NumberFormat("nl-NL").format(details.scan?.projects?.length ?? 0)}</strong>
+              <small>{t('components.definition-files')}</small><br />
+              <AlignBox align="top-left" wrap gap="small" className="features">
+              {
+                details.scan?.packageManagers?.map((packageManager) => (
+                  <span class="feature-pill">{packageManager}</span>
+                ))
+              }
+              </AlignBox>
+            </p>
+          </Block> : 
+        null }
+      </AlignBox>
+      {details.scan?.status !== "failed" ? 
+        <>
+          <Heading level={5} className="findings-title">
+            <span>{t(`components.checks`)}</span>
+          </Heading>
+          <DataList appearance="rows" className="findings">
+            {
+              [...(details.scan?.findings ?? [])]
+                .sort(
+                  (a, b) =>
+                    Number(a.passed) - Number(b.passed) ||
+                    severityOrder[a.severity] - severityOrder[b.severity],
+                )
+                .map((finding) => (
+                <>
+                  <DataListItem>
+                    <DataListKey className="title">
+                      {t(`scans.${finding.rule}`, {context: finding.passed ? 'passed' : ''})}
+                      {
+                        finding.passed ? 
+                        <Icon name="active" className="passed" /> :
+                        <DataBadge appearance={finding.severity.toLowerCase() as DataBadgeAppearance}>{t(`scans.severity.${finding.severity}`)}</DataBadge>
+                      }
+                    </DataListKey>
+                    <DataListValue>
+                      <AlignBox align="top-left" direction="column" gap="small">
+                        <div class="message">{finding.message}</div>
+                        <div class="rule">{finding.rule}</div>
+                      </AlignBox>
+                    </DataListValue>
+                    <DataListActions>
+                      {
+                        finding.passed ? 
+                        <ButtonLink appearance="subtle-button" href={finding.howToFixUrl} className="fixurl">{t(`components.howto`)}<Icon name="externe-link-inline" /></ButtonLink> :                   
+                        <ButtonAction appearance="inline-button" iconEnd="externe-link-inline">{t(`components.howto`)}</ButtonAction>
+                      }
+                    </DataListActions>
+                  </DataListItem>
+                </>
+              ))
+            }
+          </DataList>
+          <Heading level={5} className="projects-title">
+            <span>{t(`components.packages`)}</span>
+            <small>{t('components.definition-files', {count: details.scan?.projects?.length})}</small>
+          </Heading>
+          <ProjectsAccordion client:visible projects={details.scan?.projects} />
+        </> : 
+        null 
+      }
     </Fragment>
   </DonDetail>
   )
@@ -210,6 +328,86 @@ const getLang = (langKeys: Array<string>) =>
     --utrecht-code-background-color: rgb(from var(--rhc-color-cool-grey-50) r g b / 0.5);
     code {
       padding-inline: 2px;
+    }
+  }
+
+  .scans {
+    justify-content: space-between;
+
+    & > * {
+      flex-basis: 25%;
+      flex-grow: 1;
+    }
+
+    .scan {
+      gap: 0.5rem;
+      justify-content: flex-start;
+
+      .incomplete {
+        --utrecht-data-badge-color: var(--rhc-color-border-default);
+      }
+
+      .failed {
+        /* outline: 1mm dashed salmon; */
+        --utrecht-data-badge-color: var(--rhc-color-negative-500);
+      }
+    }
+    .title {
+      margin-block-end: 0.5rem;
+    }
+    .content {
+      margin: 0;
+    }
+    ul.content {
+      padding-inline: 1rem;
+      line-height: normal;
+    }
+
+    .highlight {
+      font-size: xx-large;
+    }
+
+    .summary {
+      color: var(--rhc-color-cool-grey-700);
+      font-size: smaller;
+    }
+  }
+
+  .findings {
+    margin-block-end: 1rem;
+    .title {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .passed {
+      color: var(--rhc-color-positive-500);
+      block-size: 1.25rem;
+      inline-size: 1.25rem;
+    }
+
+    .rule {
+      color: var(--rhc-color-cool-grey-700);
+    }
+
+    .fixurl {
+      font-weight: normal;
+      min-inline-size: auto;
+      min-block-size: auto;
+      padding-block-start: 0.25rem;
+      padding-block-end: 0.25rem;
+      padding-inline-start: 0.5rem;
+      padding-inline-end: 0.5rem;
+    }
+  }
+
+  .findings-title,
+  .projects-title {
+    display: flex;
+    justify-content: space-between;
+
+    small {
+      font-weight: normal;
     }
   }
 

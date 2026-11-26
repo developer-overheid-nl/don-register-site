@@ -1,4 +1,9 @@
 // Barrel export for all components
+export {
+  AccordionProvider,
+  type AccordionProviderProps,
+  type AccordionSectionProps,
+} from "./accordion/AccordionProvider";
 export { type AlertProps, default as Alert } from "./alert/Alert";
 export { type AlignBoxProps, default as AlignBox } from "./alignBox/AlignBox";
 export { default as Article } from "./article/Article";
@@ -26,9 +31,26 @@ export {
 export { default as Container } from "./container/Container";
 export { default as CopyButton } from "./copyButton/CopyButton"; // client component
 export {
+  type DataBadgeAppearance,
+  type DataBadgeProps,
+  default as DataBadge,
+} from "./dataBadge/DataBadge";
+export {
   type DataBadgeLinkProps,
   default as DataBadgeLink,
 } from "./dataBadgeLink/DataBadgeLink";
+export {
+  DataList,
+  DataListActions,
+  type DataListActionsProps,
+  DataListItem,
+  type DataListItemProps,
+  DataListKey,
+  type DataListKeyProps,
+  type DataListProps,
+  DataListValue,
+  type DataListValueProps,
+} from "./dataList/DataList";
 export {
   type DataSummaryProps,
   default as DataSummary,
@@ -110,6 +132,23 @@ export {
   type SortOption,
 } from "./sortForm/SortForm";
 export { default as Switch, type SwitchProps } from "./switch/Switch";
+export {
+  Table,
+  TableBody,
+  type TableBodyProps,
+  TableCaption,
+  TableCell,
+  type TableCellProps,
+  TableFooter,
+  type TableFooterProps,
+  TableHeader,
+  TableHeaderCell,
+  type TableHeaderCellProps,
+  type TableHeaderProps,
+  type TableProps,
+  TableRow,
+  type TableRowProps,
+} from "./table/Table";
 export { default as ToolTip } from "./toolTip/ToolTip";
 export {
   default as TopNavigation,

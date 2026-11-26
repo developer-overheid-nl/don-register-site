@@ -3,7 +3,8 @@ import {
   type DataBadgeButtonProps,
 } from "@rijkshuisstijl-community/data-badge-button-react/no-side-effects";
 import clsx from "clsx";
-import styles from "./styles.module.css";
+import type { DataBadgeAppearance } from "../dataBadge/DataBadge";
+import styles from "../dataBadge/styles.module.css";
 
 /** A data badge that acts as a link instead of a toggle button. */
 export interface DataBadgeLinkProps
@@ -19,7 +20,7 @@ export interface DataBadgeLinkProps
   className?: string;
   role?: string;
   /** Visual style of the badge. */
-  appearance?: "primary" | "outlined" | "subtle" | "link";
+  appearance?: DataBadgeAppearance;
 }
 
 const DataBadgeLink = (props: DataBadgeLinkProps) => {
@@ -36,7 +37,12 @@ const DataBadgeLink = (props: DataBadgeLinkProps) => {
   } = props;
   return (
     <DataBadgeButton
-      className={clsx(className, styles.donDataBadge, styles[appearance])}
+      className={clsx(
+        className,
+        styles.donDataBadge,
+        styles[appearance],
+        styles.interactive,
+      )}
       /* biome-ignore lint/a11y/useValidAriaValues: {null} is needed to remove it */
       aria-pressed={undefined}
       role={role}

@@ -1,4 +1,6 @@
-type i18nTranslations = Record<string, string | Record<string, string>>;
+type i18nTranslations = {
+  [key: string]: string | i18nTranslations;
+};
 
 const mainSiteUrl = "https://developer.overheid.nl";
 
@@ -35,6 +37,29 @@ export default {
         items_one: "repository",
         items_other: "repositories",
         "back-to-homepage": "Terug naar het OSS-registeroverzicht",
+      },
+      scans: {
+        MISSING_README_FILE: "README-bestand is niet aanwezig",
+        MISSING_README_FILE_passed: "README-bestand is aanwezig",
+        MISSING_LICENSE_FILE: "LICENSE-bestand is niet aanwezig",
+        MISSING_LICENSE_FILE_passed: "LICENSE-bestand is aanwezig",
+        MISSING_PUBLICCODE_FILE: "Publiccode.yml-bestand is niet aanwezig",
+        MISSING_PUBLICCODE_FILE_passed: "Publiccode.yml-bestand is aanwezig",
+        MISSING_CONTRIBUTING_FILE: "CONTRIBUTING-bestand is niet aanwezig",
+        MISSING_CONTRIBUTING_FILE_passed: "CONTRIBUTING-bestand is aanwezig",
+        MISSING_SECURITY_FILE: "SECURITY.md-bestand is niet aanwezig",
+        MISSING_SECURITY_FILE_passed: "SECURITY.md-bestand is aanwezig",
+        MISSING_CODE_OF_CONDUCT_FILE:
+          "CODE_OF_CONDUCT.md-bestand is niet aanwezig",
+        MISSING_CODE_OF_CONDUCT_FILE_passed:
+          "CODE_OF_CONDUCT.md-bestand is aanwezig",
+        MISSING_CHANGELOG_FILE: "CHANGELOG-bestand is niet aanwezig",
+        MISSING_CHANGELOG_FILE_passed: "CHANGELOG-bestand is aanwezig",
+        severity: {
+          ERROR: "Fout",
+          WARNING: "Waarschuwing",
+          HINT: "Hint",
+        },
       },
     },
   } as Record<string, i18nTranslations>,

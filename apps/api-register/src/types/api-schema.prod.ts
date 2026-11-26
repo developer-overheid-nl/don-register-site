@@ -572,6 +572,11 @@ export interface components {
              * @example Request validation failed
              */
             title: string;
+            /**
+             * @description A human-readable explanation specific to this occurrence of the problem
+             * @example uri is verplicht
+             */
+            detail: string;
             errors?: {
                 /**
                  * @description Location of the error (e.g., body, query, header)

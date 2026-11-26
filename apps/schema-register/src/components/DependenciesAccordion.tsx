@@ -1,9 +1,7 @@
 import {
+  AccordionProvider,
   Link,
   Paragraph,
-} from "@developer-overheid-nl/don-register-components";
-import { AccordionProvider } from "@rijkshuisstijl-community/accordion-react/no-side-effects";
-import {
   Table,
   TableBody,
   TableCaption,
@@ -11,7 +9,7 @@ import {
   TableHeader,
   TableHeaderCell,
   TableRow,
-} from "@rijkshuisstijl-community/components-react/no-side-effects";
+} from "@developer-overheid-nl/don-register-components";
 
 type DependencyRow = {
   at: string;

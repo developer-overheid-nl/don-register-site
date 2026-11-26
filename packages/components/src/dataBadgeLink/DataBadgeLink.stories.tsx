@@ -28,7 +28,8 @@ const CrossIcon = () => (
  * - Gebruikt RHC's `DataBadgeButton`, maar rendert de inhoud als `<a>` in
  *   plaats van als knop; de toggle-knop-semantiek (`pressed`/`aria-pressed`)
  *   is daarom verwijderd.
- * - Voegt een `appearance`-prop toe (`primary`, `outlined`, `subtle`, `link`).
+ * - Voegt een `appearance`-prop toe (`primary`, `outlined`, `subtle`, `link`,
+ *   `error`, `warning`, `hint`).
  */
 const meta = {
   title: "Components/DataBadgeLink",
@@ -37,7 +38,15 @@ const meta = {
   argTypes: {
     appearance: {
       control: "select",
-      options: ["primary", "outlined", "subtle", "link"],
+      options: [
+        "primary",
+        "outlined",
+        "subtle",
+        "link",
+        "error",
+        "warning",
+        "hint",
+      ],
     },
   },
   args: {
@@ -79,6 +88,29 @@ export const LinkAppearance: Story = {
   },
 };
 
+// `Error` zou de globale `Error` overschrijven, vandaar de export-naam.
+export const ErrorLink: Story = {
+  name: "Error",
+  args: {
+    appearance: "error",
+    children: "Verouderd",
+  },
+};
+
+export const Warning: Story = {
+  args: {
+    appearance: "warning",
+    children: "Binnenkort uit gebruik",
+  },
+};
+
+export const Hint: Story = {
+  args: {
+    appearance: "hint",
+    children: "Nieuw",
+  },
+};
+
 export const WithIcon: Story = {
   args: {
     appearance: "subtle",
@@ -113,6 +145,15 @@ export const AllAppearances: Story = {
       </DataBadgeLink>
       <DataBadgeLink href="#" appearance="link">
         Link
+      </DataBadgeLink>
+      <DataBadgeLink href="#" appearance="error">
+        Error
+      </DataBadgeLink>
+      <DataBadgeLink href="#" appearance="warning">
+        Warning
+      </DataBadgeLink>
+      <DataBadgeLink href="#" appearance="hint">
+        Hint
       </DataBadgeLink>
     </>
   ),

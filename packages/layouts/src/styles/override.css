@@ -77,6 +77,30 @@
   --rhc-data-badge-button-column-gap: 0.25rem;
   --rhc-data-summary-font-family: var(--rhc-font-family-primary);
   --rhc-data-summary-font-size: 1rem;
+  --utrecht-accordion-panel-padding-block-end: var(--rhc-space-2xl);
+  --utrecht-accordion-panel-padding-inline-end: 0;
+  --utrecht-accordion-panel-padding-inline-start: 0;
+  --utrecht-data-list-margin-block-start: 0;
+  --utrecht-data-list-margin-block-end: var(--rhc-space-lg);
+  --utrecht-data-list-item-key-color: var(--rhc-color-foreground-default);
+  --utrecht-data-list-item-key-font-size: 1rem;
+  --utrecht-data-list-item-key-font-weight: var(--rhc-text-font-weight-strong);
+  --utrecht-data-list-item-key-line-height: 1.5;
+  --utrecht-data-list-item-value-color: var(--rhc-color-foreground-default);
+  --utrecht-data-list-item-value-font-size: 1rem;
+  --utrecht-data-list-item-value-font-weight: var(
+    --rhc-text-font-weight-default
+  );
+  --utrecht-data-list-item-value-line-height: 1.5;
+  --utrecht-data-list-rows-border-bottom-color: var(--rhc-color-cool-grey-300);
+  --utrecht-data-list-rows-border-bottom-width: var(--rhc-border-width-sm);
+  --utrecht-data-list-rows-column-inline-size: 80%;
+  --utrecht-data-list-rows-column-min-inline-size: 25ch;
+  --utrecht-data-list-rows-gap: var(--rhc-space-xl);
+  --utrecht-data-list-rows-item-margin-block-start: 0;
+  --utrecht-data-list-rows-item-padding-block-start: var(--rhc-space-md);
+  --utrecht-data-list-rows-item-padding-block-end: var(--rhc-space-md);
+  --utrecht-data-list-rows-item-value-margin-block-start: 0;
   --utrecht-textbox-font-family: var(--rhc-font-family-primary);
   --utrecht-textbox-font-size: 1rem;
   --utrecht-textbox-line-height: 1;
