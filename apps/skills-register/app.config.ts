@@ -15,6 +15,24 @@ export default {
       },
     },
   },
+  /**
+   * Site-wide notice, rendered by the Base layout under the main navigation,
+   * like the beta notice of the Schema-register.
+   */
+  notice: {
+    type: "warning",
+    // Bold lead on its own line; flush left on purpose: indented text after a
+    // blank line is an indented code block.
+    body: `**De AI-skills in dit register zijn niet gecontroleerd: lees een skill
+voordat je hem installeert.**
+
+Een skill is een set instructies voor je AI-assistent. Daarmee kan de
+assistent bestanden lezen en aanpassen of commando's uitvoeren. Het
+AI-skills-register laat zien welke skills overheidsorganisaties publiceren,
+maar beoordeelt de inhoud niet. Het register is nog in ontwikkeling.
+Skill toevoegen?
+[Bekijk de skills-marketplace](https://github.com/developer-overheid-nl/skills-marketplace).`,
+  },
   mainSite: {
     name: "developer.overheid.nl",
     url: mainSiteUrl,
@@ -40,6 +58,14 @@ export default {
       },
       pages: {
         "skill-not-found": "AI-skill niet gevonden",
+        install: "Installeren",
+        "install-intro":
+          "Installeer de plugin met deze skill in Claude Code. Voeg eerst de marketplace toe:",
+        "install-plugin": "Installeer daarna de plugin:",
+        "install-other-tools":
+          "Andere tools en automatisch bijwerken: zie de README van de [marketplace]({{url}}).",
+        "install-add-marketplace": "Marketplace toevoegen",
+        "install-plugin-label": "Plugin installeren",
         organisation: "Organisatie",
         "skill-content": "Inhoud van SKILL.md",
         "skill-file": "SKILL.md",

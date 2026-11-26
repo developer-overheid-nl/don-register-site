@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { skillFileUrl, stripFrontmatter } from "./skillContent";
+import {
+  installCommands,
+  skillFileUrl,
+  stripFrontmatter,
+} from "./skillContent";
 
 describe("stripFrontmatter", () => {
   it("removes the frontmatter", () => {
@@ -42,5 +46,50 @@ describe("skillFileUrl", () => {
     expect(skillFileUrl("https://github.com/org/repo.git", "SKILL.md")).toBe(
       "https://github.com/org/repo/blob/HEAD/SKILL.md",
     );
+  });
+});
+
+describe("installCommands", () => {
+  const marketplace = {
+    name: "overheid-plugins",
+    url: "https://github.com/developer-overheid-nl/skills-marketplace",
+  };
+
+  it("uses owner/repo for a GitHub marketplace", () => {
+    expect(
+      installCommands({
+        plugin: { name: "nerds" },
+        marketplaces: [marketplace],
+      }),
+    ).toEqual({
+      marketplaceAdd:
+        "claude plugin marketplace add developer-overheid-nl/skills-marketplace",
+      pluginInstall: "claude plugin install nerds@overheid-plugins",
+      marketplaceUrl: marketplace.url,
+    });
+  });
+
+  it("keeps other URLs as they are", () => {
+    expect(
+      installCommands({
+        plugin: { name: "x" },
+        marketplaces: [
+          { name: "m", url: "https://github.com/org/repo/tree/main/plugins" },
+        ],
+      })?.marketplaceAdd,
+    ).toBe(
+      "claude plugin marketplace add https://github.com/org/repo/tree/main/plugins",
+    );
+  });
+
+  it("returns null without a plugin or a named marketplace", () => {
+    expect(installCommands({ marketplaces: [marketplace] })).toBeNull();
+    expect(
+      installCommands({
+        plugin: { name: "x" },
+        marketplaces: [{ url: marketplace.url }],
+      }),
+    ).toBeNull();
+    expect(installCommands({ plugin: { name: "x" } })).toBeNull();
   });
 });

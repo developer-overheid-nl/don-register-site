@@ -9,7 +9,9 @@ import {
 } from "astro:env/server";
 import {
   Alert,
+  AlignBox,
   Block,
+  CopyButton,
   DataSummary,
   DataSummaryItem,
   Heading,
@@ -17,6 +19,7 @@ import {
   Link,
   Markdown,
   Paragraph,
+  ReadOnlyTextInput,
 } from "@developer-overheid-nl/don-register-components";
 import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
 import i18n from "@developer-overheid-nl/don-register-components/i18n";
@@ -27,7 +30,11 @@ import {
 import createClient from "openapi-fetch";
 import appConfig from "../../../app.config";
 import SkillContentAccordion from "../../components/SkillContentAccordion";
-import { skillFileUrl, stripFrontmatter } from "../../helpers/skillContent";
+import {
+  installCommands,
+  skillFileUrl,
+  stripFrontmatter,
+} from "../../helpers/skillContent";
 import { ApiPaths, type paths } from "../../types/api-schema";
 
 const { id = "" } = Astro.params;
@@ -75,6 +82,7 @@ const formatDate = (value?: string) =>
 const fileUrl = details
   ? skillFileUrl(details.repoUrl, details.path, details.ref)
   : "";
+const install = details ? installCommands(details) : null;
 const sourceTypeLabel = (type?: string) =>
   type ? t(`components.source-type_${type}`) : "-";
 ---
@@ -126,6 +134,36 @@ const sourceTypeLabel = (type?: string) =>
     </Fragment>
     { /* biome-ignore lint/complexity/noUselessFragments: needed for slot */ }
     <Fragment slot="meta">
+      { install && (
+        <Fragment>
+          <Heading level={4}>{t('pages.install')}</Heading>
+          <Block appearance="outlined" className="install">
+            <Paragraph>{t('pages.install-intro')}</Paragraph>
+            <AlignBox align="space-between" gap="small">
+              <ReadOnlyTextInput
+                id="installMarketplace"
+                aria-label={t('pages.install-add-marketplace')}
+                defaultValue={install.marketplaceAdd}
+                name="installMarketplace"
+                fontVariant="monospace"
+              />
+              <CopyButton client:load text={install.marketplaceAdd} data-content-target="Install Marketplace Copy Button" />
+            </AlignBox>
+            <Paragraph>{t('pages.install-plugin')}</Paragraph>
+            <AlignBox align="space-between" gap="small">
+              <ReadOnlyTextInput
+                id="installPlugin"
+                aria-label={t('pages.install-plugin-label')}
+                defaultValue={install.pluginInstall}
+                name="installPlugin"
+                fontVariant="monospace"
+              />
+              <CopyButton client:load text={install.pluginInstall} data-content-target="Install Plugin Copy Button" />
+            </AlignBox>
+            <div class="utrecht-html"><Markdown text={t('pages.install-other-tools', { url: install.marketplaceUrl, interpolation: { escapeValue: false } })} openLinksInNewTab /></div>
+          </Block>
+        </Fragment>
+      )}
       <SkillContentAccordion
         client:load
         content={stripFrontmatter(details.content)}
@@ -161,6 +199,16 @@ const sourceTypeLabel = (type?: string) =>
 )}
 
 <style>
+  :global(.install) {
+    display: grid;
+    gap: 0.5rem;
+
+    :global(.utrecht-paragraph),
+    :global(.utrecht-html p) {
+      margin-block: 0;
+    }
+  }
+
   /* Long lines in code blocks must not widen the grid column or the
      accordion; without this the aside shrinks to a few characters wide. */
   :global(.skill-content-accordion),
