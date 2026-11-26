@@ -21,7 +21,7 @@ export default {
   },
   urlHomepage: [
     "/",
-    "/skills",
+    "/skills/pagina/[...page]",
   ],
   items: {
     type: "skills",
@@ -32,6 +32,19 @@ export default {
         items_one: "AI-skill",
         items_other: "AI-skills",
         "back-to-homepage": "Terug naar het AI-skills-registeroverzicht",
+        plugin: "Plugin",
+        marketplace: "Marketplace",
+        "source-type_marketplace": "marketplace",
+        "source-type_plugin": "plugin",
+        "source-type_skill": "skill",
+      },
+      pages: {
+        "skill-not-found": "AI-skill niet gevonden",
+        organisation: "Organisatie",
+        "skill-content": "Inhoud van SKILL.md",
+        "skill-file": "SKILL.md",
+        source: "Bron",
+        commit: "Commit",
       },
     },
   } as Record<string, i18nTranslations>,

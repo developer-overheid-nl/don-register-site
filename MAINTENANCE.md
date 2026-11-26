@@ -160,7 +160,7 @@ Canary releases: `pnpm changesets:version:canary` and `pnpm changesets:publish:c
 
 Deploys go through GitHub Actions and a separate infra repository. This repo never deploys directly.
 Three images are built: `ghcr.io/developer-overheid-nl/don-register-site` (api), `don-register-oss-site` and `don-register-schema-site`.
-`skills-register` has no image and is not deployed yet (see [§4 Adding a new app](#adding-a-new-app)).
+`skills-register` is only deployed to test: `ghcr.io/developer-overheid-nl/don-register-skills-site` (target `runtime-skills`) via `deploy-test.yml` and the `KUSTOMIZE_PATH_SKILLS` variable. It is not in `build.yml` or `deploy-prod.yml` yet (see [§4 Adding a new app](#adding-a-new-app)).
 
 ### Variables and secrets
 
@@ -168,6 +168,7 @@ Three images are built: `ghcr.io/developer-overheid-nl/don-register-site` (api),
 | :-- | :-- | :-- |
 | `INFRA_REPO` | Organization variable, e.g. `developer-overheid-nl/don-infra` | deploy-test, deploy-prod |
 | `KUSTOMIZE_PATH_API`, `KUSTOMIZE_PATH_OSS`, `KUSTOMIZE_PATH_SCHEMA` | Repository variables, base path e.g. `apps/oss/overlays/` | deploy-test, deploy-prod |
+| `KUSTOMIZE_PATH_SKILLS` | Repository variable, `apps/api/overlays/` | deploy-test |
 | `RELEASE_PROCES_APP_ID`, `RELEASE_PROCES_APP_PRIVATE_KEY` | Secrets: GitHub App that writes to the infra repo | deploy-test, deploy-prod |
 | `CHANGELOG_APP_CLIENT_ID` (variable), `CHANGELOG_APP_PRIVATE_KEY` (secret) | GitHub App that opens the "Version Packages" PR | publish |
 | `API_X_API_KEY`, `PIWIK_PRO_SITE_ID` | Secrets written to `.env.production.local` for the CI build | build |

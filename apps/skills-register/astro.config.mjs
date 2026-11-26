@@ -30,9 +30,16 @@ export default defineConfig({
     }),
   },
   routeRules: {
-    "/skills": {
-      maxAge: 86400,
-      tag: "content",
+    "/skills/[id]": {
+      maxAge: 3600,
+      swr: 7200,
+    },
+    "/skills/pagina/[...page]": {
+      maxAge: 1800,
+      swr: 3600,
+    },
+    "api/[...any]": {
+      maxAge: 0,
     },
     "[...rest]": {
       maxAge: 86400,
@@ -113,6 +120,27 @@ export default defineConfig({
   },
   env: {
     schema: {
+      API_URL: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+      API_ENDPOINT: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+      API_X_API_KEY: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
+      }),
+      API_VERSION: envField.enum({
+        values: [
+          "v1",
+        ],
+        context: "server",
+        access: "public",
+        default: "v1",
+      }),
       PIWIK_PRO_SITE_ID: envField.string({
         context: "server",
         access: "secret",

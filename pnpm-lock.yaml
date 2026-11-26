@@ -485,6 +485,12 @@ importers:
       astro:
         specifier: 'catalog:'
         version: 7.4.4(@types/node@24.0.8)(esbuild@0.28.2)(yaml@2.9.1)
+      i18next:
+        specifier: 'catalog:'
+        version: 26.5.12(typescript@5.9.3)
+      openapi-fetch:
+        specifier: 'catalog:'
+        version: 0.17.0
       react:
         specifier: 19.2.3
         version: 19.2.3

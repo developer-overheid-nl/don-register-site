@@ -1,0 +1,171 @@
+---
+import {
+  API_ENDPOINT,
+  API_URL,
+  API_VERSION,
+  API_X_API_KEY,
+  PIWIK_PRO_ACCOUNT_ADDRESS,
+  PIWIK_PRO_SITE_ID,
+} from "astro:env/server";
+import {
+  Alert,
+  Block,
+  DataSummary,
+  DataSummaryItem,
+  Heading,
+  HeadingGroup,
+  Link,
+  Markdown,
+  Paragraph,
+} from "@developer-overheid-nl/don-register-components";
+import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
+import i18n from "@developer-overheid-nl/don-register-components/i18n";
+import {
+  DonBasic,
+  DonDetail,
+} from "@developer-overheid-nl/don-register-layouts";
+import createClient from "openapi-fetch";
+import appConfig from "../../../app.config";
+import { skillFileUrl, stripFrontmatter } from "../../helpers/skillContent";
+import { ApiPaths, type paths } from "../../types/api-schema";
+
+const { id = "" } = Astro.params;
+const API_RESOURCE = ApiPaths.getSkillById;
+
+const client = createClient<paths>({
+  baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
+});
+const {
+  data,
+  error,
+  response: { status, statusText },
+} = await client
+  .GET(API_RESOURCE, {
+    params: {
+      path: { id },
+    },
+    headers: {
+      "x-api-key": API_X_API_KEY,
+    },
+  })
+  .catch((error) => {
+    console.error(error);
+    return { data: null, error, response: new Response() };
+  });
+
+// Localization
+const { i18n: i18nApp } = appConfig;
+i18n.addResourceBundle(
+  i18n.language,
+  "translation",
+  i18nApp ? i18nApp[i18n.language] : {},
+  true,
+  true,
+);
+const { t } = i18n;
+
+const details = error ? null : data;
+if (!details) {
+  Astro.response.status = status === 404 || status === 400 ? 404 : 502;
+}
+
+const formatDate = (value?: string) =>
+  value ? new Date(value).toLocaleDateString("nl-NL") : "-";
+const fileUrl = details
+  ? skillFileUrl(details.repoUrl, details.path, details.ref)
+  : "";
+const sourceTypeLabel = (type?: string) =>
+  type ? t(`components.source-type_${type}`) : "-";
+---
+
+{ !details && (
+  <DonBasic appConfig={appConfig} titlePage={t('pages.skill-not-found')}>
+    <Alert type="error">
+      {/* biome-ignore lint/suspicious/noExplicitAny: error handling needs any at this moment */}
+      {(error as unknown as any)?.detail || (error as unknown as any)?.message || `${status}: ${statusText}` || t('components.fuzz-error')}
+    </Alert>
+    <Paragraph>{t('components.item-not-found-error')}</Paragraph>
+  </DonBasic>
+)}
+
+{details && (
+  <DonDetail appConfig={appConfig} titlePage={details.name} description={details.description}>
+    <PiwikPro slot="head" client:only="react"
+      accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS}
+      siteId={PIWIK_PRO_SITE_ID}
+    />
+    <HeadingGroup
+      slot="header"
+      title={`${t('pages.details-of-item')}: ${details.name}`}
+      level={2}
+      data-track-content
+      data-content-name="Detail Page Header"
+    >
+      { details.organisation && (
+        <Paragraph slot="subTitle" data-content-piece="Organisation Name" itemScope={true} itemType="https://schema.org/Organization" itemID={details.organisation.uri}>
+          <span itemprop="name"><Link data-content-target="Organisation Link" href={new URL(`/skills?organisation=${encodeURIComponent(details.organisation.uri)}`, Astro.url).toString()}>
+            {details.organisation.label}
+          </Link></span>
+        </Paragraph>
+      )}
+    </HeadingGroup>
+    { /* biome-ignore lint/complexity/noUselessFragments: needed for slot */ }
+    <Fragment slot="description">
+      <Heading level={3} className="sr-only">{t('pages.description')}</Heading>
+      <div class="utrecht-html"><Markdown text={details.description} /></div>
+    </Fragment>
+    { /* biome-ignore lint/complexity/noUselessFragments: needed for slot */ }
+    <Fragment slot="aside">
+      <DataSummary appearance="row">
+        <DataSummaryItem itemKey={t('pages.organisation')} itemValue={details.organisation?.label || '-'} />
+        { details.plugin && (
+          <DataSummaryItem itemKey={t('components.plugin')} itemValue={[details.plugin.name, details.plugin.version].filter(Boolean).join(' ')} />
+        )}
+      </DataSummary>
+    </Fragment>
+    { /* biome-ignore lint/complexity/noUselessFragments: needed for slot */ }
+    <Fragment slot="meta">
+      <Heading level={4}>{t('pages.skill-content')}</Heading>
+      <Block appearance="outlined">
+        <div class="skill-content utrecht-html">
+          <Markdown text={stripFrontmatter(details.content)} minHeadingDepth={5} openLinksInNewTab />
+        </div>
+      </Block>
+      <Heading level={4}>{t('pages.details')}</Heading>
+      <Block appearance="outlined">
+        <Heading level={5}>{t('pages.links')}</Heading>
+        <DataSummary appearance="column" contained>
+          <DataSummaryItem itemKey={t('pages.skill-file')} itemValue="" href={fileUrl}>{details.path}</DataSummaryItem>
+          <DataSummaryItem itemKey={t('pages.repository-url')} itemValue="" href={details.repoUrl}>{details.repoUrl}</DataSummaryItem>
+          { details.source && (
+            <DataSummaryItem itemKey={`${t('pages.source')} (${sourceTypeLabel(details.source.type)})`} itemValue={details.source.name || ''} href={details.source.url}>{details.source.url}</DataSummaryItem>
+          )}
+          { details.marketplaces?.map((marketplace) => (
+            <DataSummaryItem itemKey={t('components.marketplace')} itemValue={marketplace.name || ''} href={marketplace.url}>{marketplace.url}</DataSummaryItem>
+          ))}
+        </DataSummary>
+      </Block>
+      <Heading level={4}>{t('pages.tbd-metadata')}</Heading>
+      <Block appearance="outlined">
+        <DataSummary appearance="column" contained>
+          <DataSummaryItem itemKey={t('components.created-at')} itemValue={formatDate(details.createdAt)} />
+          <DataSummaryItem itemKey={t('components.last-crawled-at')} itemValue={formatDate(details.lastCrawledAt)} />
+          { details.ref && (
+            <DataSummaryItem itemKey={t('pages.commit')} itemValue={details.ref.slice(0, 12)} />
+          )}
+        </DataSummary>
+      </Block>
+    </Fragment>
+  </DonDetail>
+)}
+
+<style>
+  .skill-content {
+    overflow-wrap: anywhere;
+
+    :global(pre) {
+      overflow-x: auto;
+      white-space: pre;
+    }
+  }
+</style>

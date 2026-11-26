@@ -2,7 +2,13 @@
   "$schema": "https://biomejs.dev/schemas/2.5.13/schema.json",
   "root": false,
   "extends": "//",
+  "plugins": ["../../noTestSchemas.grit"],
   "files": {
-    "includes": ["src", "!public/sponsors"]
+    "includes": [
+      "src",
+      "!src/types/*.prod.ts",
+      "!src/types/*.test.ts",
+      "!public/sponsors"
+    ]
   }
 }

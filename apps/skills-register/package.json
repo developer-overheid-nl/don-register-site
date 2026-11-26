@@ -23,6 +23,8 @@
     "@developer-overheid-nl/don-register-layouts": "workspace:*",
     "@piwikpro/react-piwik-pro": "catalog:",
     "astro": "catalog:",
+    "i18next": "catalog:",
+    "openapi-fetch": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
   },

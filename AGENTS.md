@@ -11,7 +11,7 @@ A pnpm-workspace monorepo hosting four Astro sites for developer.overheid.nl:
 - `apps/api-register` — API-register (apis.developer.overheid.nl)
 - `apps/oss-register` — Open Source Register (oss.developer.overheid.nl)
 - `apps/schema-register` — Schema-register (schemas.developer.overheid.nl)
-- `apps/skills-register` — AI-skills-register (skills.developer.overheid.nl, not live yet). A skeleton: placeholder `/skills` page and a 404, no backend, no Docker image, no deploy and no Cypress tests yet.
+- `apps/skills-register` — AI-skills-register (skills.developer.overheid.nl, not live yet). Talks to the skills-register API on test (`redocly.yaml` has no prod entry yet; `api-schema.prod.ts` is a copy of the test schema). Deployed to test only (`runtime-skills` image, `deploy-test.yml`); no production deploy and no Cypress tests yet.
 
 They share three publishable packages:
 
@@ -66,7 +66,6 @@ A pre-commit hook (lefthook) runs `biome check` on staged files automatically.
 Each app is `output: "server"` (Node adapter, standalone). Pages fetch data server-side in the Astro frontmatter using [openapi-fetch](https://openapi-ts.dev/openapi-fetch/), typed against generated schemas:
 
 - `redocly.yaml` at the repo root defines every backend API (prod + test variant) and where `pnpm generate:oas:types` writes the generated types (`src/types/api-schema.prod.ts`, `.test.ts`, plus `tools-schema.*.ts` for api-register).
-- An app without a backend yet (currently `skills-register`) has none of this: no `redocly.yaml` entry, no `src/types/`, no `src/actions/`, no `API_*` env vars.
 - Each app's `src/types/api-schema.ts` is a thin switcher: it re-exports either `./api-schema.prod` (default, must be what's committed) or `./api-schema.test`. See "Hard rules" below and MAINTENANCE.md §3.
 - `createClient<paths>({ baseUrl })` from `openapi-fetch` gives fully-typed `GET`/`POST` calls; route paths are referenced via generated `*Paths` enums (e.g. `ApiPaths.listApis`) rather than string literals.
 - Server-only secrets/config (API URLs, keys, Piwik Pro IDs, Altcha HMAC key) are declared in each app's `astro.config.mjs` under `env.schema` (Astro's typed env) and consumed via `astro:env/server`.
