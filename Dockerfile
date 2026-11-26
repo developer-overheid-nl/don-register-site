@@ -18,6 +18,7 @@ COPY package.json ./
 COPY apps/api-register/package.json ./apps/api-register/
 COPY apps/oss-register/package.json ./apps/oss-register/
 COPY apps/schema-register/package.json ./apps/schema-register/
+COPY apps/skills-register/package.json ./apps/skills-register/
 COPY packages/components/package.json ./packages/components/
 COPY packages/layouts/package.json ./packages/layouts/
 
@@ -33,12 +34,14 @@ COPY --from=deps /opt/astro/node_modules ./node_modules
 COPY --from=deps /opt/astro/apps/api-register/node_modules ./apps/api-register/node_modules
 COPY --from=deps /opt/astro/apps/oss-register/node_modules ./apps/oss-register/node_modules
 COPY --from=deps /opt/astro/apps/schema-register/node_modules ./apps/schema-register/node_modules
+COPY --from=deps /opt/astro/apps/skills-register/node_modules ./apps/skills-register/node_modules
 COPY --from=deps /opt/astro/packages/components/node_modules ./packages/components/node_modules
 COPY --from=deps /opt/astro/packages/layouts/node_modules ./packages/layouts/node_modules
 
 RUN pnpm --filter @developer-overheid-nl/api-register build && \
     pnpm --filter @developer-overheid-nl/oss-register build && \
-    pnpm --filter @developer-overheid-nl/schema-register build  
+    pnpm --filter @developer-overheid-nl/schema-register build && \
+    pnpm --filter @developer-overheid-nl/skills-register build
 
 # ---- Runtime containers ----
 FROM node:lts-alpine AS runtime-base
@@ -69,3 +72,10 @@ COPY --from=build /opt/astro/apps/schema-register/dist ./apps/schema-register/di
 COPY --from=deps /opt/astro/apps/schema-register/node_modules ./apps/schema-register/node_modules
 
 CMD ["node", "./apps/schema-register/dist/server/entry.mjs", "--host", "0.0.0.0", "--port", "4321"]
+
+FROM runtime-base AS runtime-skills
+
+COPY --from=build /opt/astro/apps/skills-register/dist ./apps/skills-register/dist
+COPY --from=deps /opt/astro/apps/skills-register/node_modules ./apps/skills-register/node_modules
+
+CMD ["node", "./apps/skills-register/dist/server/entry.mjs", "--host", "0.0.0.0", "--port", "4321"]

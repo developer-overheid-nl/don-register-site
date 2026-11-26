@@ -1,0 +1,348 @@
+---
+import {
+  API_ENDPOINT,
+  API_URL,
+  API_VERSION,
+  API_X_API_KEY,
+  PIWIK_PRO_ACCOUNT_ADDRESS,
+  PIWIK_PRO_SITE_ID,
+} from "astro:env/server";
+import {
+  Alert,
+  AlignBox,
+  Article,
+  BadgeList,
+  CardAsLink,
+  CardsList,
+  CardsListItem,
+  DataBadgeLink,
+  type FilterData,
+  getSelectedFiltersMap,
+  Heading,
+  HeadingGroup,
+  Icon,
+  Markdown,
+  Pagination,
+  Paragraph,
+  PillBadge,
+  Search,
+} from "@developer-overheid-nl/don-register-components";
+import { PiwikPro } from "@developer-overheid-nl/don-register-components/analytics";
+import i18n from "@developer-overheid-nl/don-register-components/i18n";
+import {
+  DonOverview,
+  getPagination,
+  getRouting,
+  getSearchParams,
+  parseHeaders,
+} from "@developer-overheid-nl/don-register-layouts";
+import createClient from "openapi-fetch";
+import appConfig from "../../../../app.config";
+import FacetFiltersForm from "../../../components/FacetFiltersForm";
+import { Content as Intro } from "../../../partials/intro.mdx";
+import { ApiPaths, type paths } from "../../../types/api-schema";
+
+const { page = 1 } = Astro.params;
+
+const SKILLS_RESOURCE = ApiPaths.listSkills;
+const FILTERS_RESOURCE = ApiPaths.listSkillFilters;
+const SEARCH_QUERY_KEY = "q";
+
+const routingObj = getRouting(
+  Astro.url,
+  Astro.originPathname,
+  Astro.routePattern,
+  Astro.params,
+);
+
+const client = createClient<paths>({
+  baseUrl: `${API_URL}/${API_ENDPOINT}/${API_VERSION}`,
+});
+
+const {
+  data,
+  error,
+  response: { status, statusText, headers },
+} = await client
+  .GET(SKILLS_RESOURCE, {
+    params: {
+      query: {
+        page: Number(page),
+        ...routingObj.queryObject,
+      },
+    },
+    headers: {
+      "x-api-key": API_X_API_KEY,
+    },
+  })
+  .catch((error) => {
+    console.error(error);
+    return { data: null, error, response: new Response() };
+  });
+
+const {
+  data: facetfilters,
+  error: facetfiltersError,
+  response: { status: facetfiltersStatus, statusText: facetfiltersStatusText },
+} = await client
+  .GET(FILTERS_RESOURCE, {
+    params: {
+      query: {
+        ...routingObj.queryObject,
+      },
+    },
+    headers: {
+      "x-api-key": API_X_API_KEY,
+    },
+  })
+  .catch((error) => {
+    console.error(error);
+    return { data: null, error, response: new Response() };
+  });
+
+const paginationObj = parseHeaders(headers);
+const pagination = getPagination(paginationObj, routingObj.url, 2);
+
+const outOfBounds = Boolean(
+  paginationObj.totalPages && Number(page) > paginationObj.totalPages,
+);
+
+const { i18n: i18nApp } = appConfig;
+i18n.addResourceBundle(
+  i18n.language,
+  "translation",
+  i18nApp ? i18nApp[i18n.language] : {},
+  true,
+  true,
+);
+const { t } = i18n;
+
+const isSearchPage = Boolean(routingObj.queryObject[SEARCH_QUERY_KEY]);
+const searchObject = isSearchPage
+  ? {
+      keyword: routingObj.queryObject[SEARCH_QUERY_KEY]?.toString(),
+      category: undefined,
+      searchCount: paginationObj.totalCount,
+    }
+  : undefined;
+
+const items = error ? null : data;
+
+const selectedFiltersMap = getSelectedFiltersMap(
+  facetfilters as unknown as FilterData[],
+  true,
+);
+const i18nContext =
+  selectedFiltersMap.size > 0 || isSearchPage ? "filtered" : "all";
+
+const labels = {
+  filtersTitle: t("components.filters-title"),
+  filterButtonLabel: t("components.filter-button-label"),
+};
+
+const searchHiddenFields = getSearchParams(
+  routingObj.url,
+  { exclude: [SEARCH_QUERY_KEY] },
+  "array",
+);
+const filterHiddenFields = getSearchParams(
+  routingObj.url,
+  { include: [SEARCH_QUERY_KEY] },
+  "array",
+);
+
+const overviewHref = (exclude: (string | [string, string])[]) =>
+  new URL(
+    `/skills?${new URLSearchParams(
+      getSearchParams(routingObj.url, { exclude }, "array"),
+    )}`,
+    routingObj.url,
+  ).toString();
+
+const formatDate = (value?: string) =>
+  value ? new Date(value).toLocaleDateString("nl-NL") : "-";
+---
+
+<DonOverview appConfig={appConfig} titlePage={t('pages.overview')}>
+  <PiwikPro slot="head" client:only="react"
+    accountAddress={PIWIK_PRO_ACCOUNT_ADDRESS}
+    siteId={PIWIK_PRO_SITE_ID}
+    customEvent={{name: i18nContext as string}}
+    isSearchPage={isSearchPage}
+    searchObject={searchObject}
+  />
+  <Article className="markdown-content intro" slot="header"><Intro /></Article>
+  <Search
+    slot="search"
+    searchUrl={new URL(`/skills`, routingObj?.url).toString()}
+    searchKey={SEARCH_QUERY_KEY}
+    searchTerm={routingObj.query[SEARCH_QUERY_KEY]}
+    hiddenFields={searchHiddenFields}
+  />
+
+  <FacetFiltersForm
+    client:load
+    slot="filters"
+    filters={facetfilters as FilterData[]}
+    action={new URL(`/skills`, routingObj?.url).toString()}
+    method="GET"
+    labels={labels}
+    hiddenFields={filterHiddenFields}
+  />
+  {
+    facetfiltersError && (
+      <Alert slot="filters" type="error">
+        {/* biome-ignore lint/suspicious/noExplicitAny: error handling needs any at this moment */}
+        {(facetfiltersError as unknown as any).detail || (facetfiltersError as unknown as any).message || `${facetfiltersStatus}: ${facetfiltersStatusText}` || t('components.fuzz-error')}
+      </Alert>
+    )
+  }
+
+  <HeadingGroup className="heading-results" title={t('components.search-results', {context: i18nContext})} level={2}>
+    <BadgeList table role="menu" aria-label={t('components.current-filters')}>
+      {[...selectedFiltersMap].map(([[key, keyLabel], filter]) => (
+        <li data-key={key}>
+          <small class="label" id={key}>{keyLabel}:</small>
+          {
+            filter.map(([filterValue, filterLabel]) => (
+              <DataBadgeLink
+                appearance="subtle"
+                helperText={t("components.remove-filter")}
+                href={overviewHref([[key, filterValue]])}
+                role="menuitem"
+              >
+                {filterLabel}
+                <Icon slot="icon" name="kruis-inline" />
+              </DataBadgeLink>
+            ))
+          }
+        </li>
+      ))}
+      {
+        routingObj.queryObject[SEARCH_QUERY_KEY] !== undefined && (
+          // biome-ignore lint/a11y/useSemanticElements: fieldset would not be correct
+          <li role="group" aria-labelledby="search-term">
+            <small class="label" id="search-term">{t('components.search-term')}:</small>
+            <DataBadgeLink
+              appearance="subtle"
+              href={overviewHref([[SEARCH_QUERY_KEY, routingObj.queryObject[SEARCH_QUERY_KEY].toString()]])}
+              role="menuitem"
+            >
+              {routingObj.queryObject[SEARCH_QUERY_KEY]}
+              <Icon slot="icon" name="kruis-inline" />
+            </DataBadgeLink>
+          </li>
+        )
+      }
+      {
+        selectedFiltersMap.size > 1 && (
+          <li class="deselect-all">
+            <DataBadgeLink
+              appearance="link"
+              href={new URL('/skills', routingObj.url).toString()}
+              role="menuitem"
+            >
+              {t('components.remove-all-filters')}
+              <Icon slot="icon" name="kruis-inline" />
+            </DataBadgeLink>
+          </li>
+        )
+      }
+    </BadgeList>
+    <Paragraph role="status">{t('components.search-results-amount', {context: i18nContext, amount: paginationObj.totalCount})}</Paragraph>
+  </HeadingGroup>
+
+  { error && (
+    <Alert type="error">
+      {/* biome-ignore lint/suspicious/noExplicitAny: error handling needs any at this moment */}
+      {(error as unknown as any).detail || (error as unknown as any).message || `${status}: ${statusText}` || t('components.fuzz-error')}
+    </Alert>
+  )}
+
+  { outOfBounds && (
+    <Alert type="warning">
+      <Heading level={2} appearanceLevel={5}>{t('components.fuzz-error')}</Heading>
+      {t('components.pagination-out-of-bounds', {page: page, count: paginationObj.totalPages})}
+    </Alert>
+  )}
+
+  { items && items.length > 0 ? (
+    <CardsList>
+      {
+        items.map((item, index, array) => (
+          <CardsListItem index={index} setsize={array.length}>
+            <CardAsLink
+              href={new URL(`/skills/${item.id}`, routingObj?.url).toString()}
+              linkLabel={t('components.view-details')}
+              data-track-content
+              data-content-name="Overview Page Card"
+            >
+              <HeadingGroup slot="heading" title={item.name} level={2} appearanceLevel={4}>
+                { item.organisation && (
+                  <Paragraph slot="subTitle" data-content-piece="Organisation Name" itemScope={true} itemType="https://schema.org/Organization" itemID={item.organisation.uri} className="moveAbove">
+                    <span itemprop="name"><DataBadgeLink data-content-target="Organisation Badge" appearance="subtle" className="orgLink" href={new URL(`/skills?organisation=${encodeURIComponent(item.organisation.uri)}`, routingObj.url).toString()}>
+                      {item.organisation.label}
+                    </DataBadgeLink></span>
+                  </Paragraph>
+                )}
+              </HeadingGroup>
+              <div slot="description" class="description utrecht-html"><Markdown text={item.description} openLinksInNewTab allowedElements={['p', 'a', 'ul', 'ol', 'li', 'code']} /></div>
+              <AlignBox align="space-between" slot="metadata" className="meta">
+                <span class="badges">
+                  { item.plugin && (
+                    <PillBadge startValue={t('components.plugin')} endValue={item.plugin.name} type="color" color="lichtblauw" />
+                  )}
+                  { item.marketplaces?.map((marketplace) => (
+                    <PillBadge startValue={t('components.marketplace')} endValue={marketplace.name || marketplace.url} type="color" color="mintgroen" />
+                  ))}
+                </span>
+                <span class="last-updated">{t('components.last-crawled-at')}: {formatDate(item.lastCrawledAt)}</span>
+              </AlignBox>
+            </CardAsLink>
+          </CardsListItem>
+        ))
+      }
+    </CardsList>
+  ) :
+  (
+    <Alert type="warning">{t('components.no-items-found')}</Alert>
+  )}
+  <Pagination slot="pagination" {...pagination} />
+</DonOverview>
+
+<style>
+  .intro {
+    --utrecht-article-max-inline-size: 100%;
+
+    p {
+      margin-block-start: 0;
+      margin-block-end: 0;
+    }
+  }
+
+  .heading-results {
+    padding-inline-start: calc(var(--rhc-card-as-link-border-width, 1px) + var(--rhc-card-as-link-padding-inline-start, 16px));
+  }
+
+  .deselect-all {
+    align-self: flex-end;
+  }
+
+  .description {
+    word-break: break-word;
+
+    a:hover {
+      text-decoration-line: none;
+    }
+  }
+
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .orgLink {
+    font-size: 0.875rem;
+  }
+</style>

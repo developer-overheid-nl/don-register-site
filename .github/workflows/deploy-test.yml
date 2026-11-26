@@ -21,6 +21,7 @@ jobs:
         [
           {"name": "ghcr.io/developer-overheid-nl/don-register-site", "target": "runtime-api", "kustomize-path": "${{ vars.KUSTOMIZE_PATH_API }}"},
           {"name": "ghcr.io/developer-overheid-nl/don-register-oss-site", "target": "runtime-oss", "kustomize-path": "${{ vars.KUSTOMIZE_PATH_OSS }}"},
-          {"name": "ghcr.io/developer-overheid-nl/don-register-schema-site", "target": "runtime-schema", "kustomize-path": "${{ vars.KUSTOMIZE_PATH_SCHEMA }}"}
+          {"name": "ghcr.io/developer-overheid-nl/don-register-schema-site", "target": "runtime-schema", "kustomize-path": "${{ vars.KUSTOMIZE_PATH_SCHEMA }}"},
+          {"name": "ghcr.io/developer-overheid-nl/don-register-skills-site", "target": "runtime-skills", "kustomize-path": "${{ vars.KUSTOMIZE_PATH_SKILLS }}"}
         ]
     secrets: inherit

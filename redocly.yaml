@@ -31,3 +31,12 @@ apis:
   #   root: https://api.developer.overheid.nl/schema-register/v1/openapi.json
   #   x-openapi-ts:
   #     output: ./apps/schema-register/src/types/api-schema.prod.ts
+  skills-register@v1@test:
+    root: https://api.don.projects.digilab.network/skills-register/v1/openapi.json
+    x-openapi-ts:
+      output: ./apps/skills-register/src/types/api-schema.test.ts
+  # There is no production API yet; until then api-schema.prod.ts is a copy of the test schema.
+  # skills-register@v1@prod:
+  #   root: https://api.developer.overheid.nl/skills-register/v1/openapi.json
+  #   x-openapi-ts:
+  #     output: ./apps/skills-register/src/types/api-schema.prod.ts

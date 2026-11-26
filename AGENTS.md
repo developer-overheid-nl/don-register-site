@@ -6,11 +6,12 @@ Read [MAINTENANCE.md](MAINTENANCE.md) before adding files, updating dependencies
 
 ## What this is
 
-A pnpm-workspace monorepo hosting three Astro sites for developer.overheid.nl:
+A pnpm-workspace monorepo hosting four Astro sites for developer.overheid.nl:
 
 - `apps/api-register` — API-register (apis.developer.overheid.nl)
 - `apps/oss-register` — Open Source Register (oss.developer.overheid.nl)
 - `apps/schema-register` — Schema-register (schemas.developer.overheid.nl)
+- `apps/skills-register` — AI-skills-register (skills.developer.overheid.nl, not live yet). Talks to the skills-register API on test (`redocly.yaml` has no prod entry yet; `api-schema.prod.ts` is a copy of the test schema). Deployed to test only (`runtime-skills` image, `deploy-test.yml`); no production deploy and no Cypress tests yet.
 
 They share three publishable packages:
 
@@ -18,7 +19,7 @@ They share three publishable packages:
 - `packages/layouts` — Astro layouts and SSR helper functions (`@developer-overheid-nl/don-register-layouts`), under `src/don/` (room for other orgs' layouts later)
 - `packages/locales` — i18next translation strings, currently only `nl/translation.json`
 
-`proprietary-don` / `proprietary-example` hold copyrighted/example assets (logos, fonts, icons). Apps depend on the generic `@developer-overheid-nl/proprietary` name, which is aliased in each app's `package.json` to one of these two workspace packages — the codebase always imports `@developer-overheid-nl/proprietary`, never the concrete package directly. All three apps + packages also get consumed as a starting point by the external [register-site-template](https://github.com/developer-overheid-nl/register-site-template) repo, so avoid baking app-specific assumptions into `packages/*`.
+`proprietary-don` / `proprietary-example` hold copyrighted/example assets (logos, fonts, icons). Apps depend on the generic `@developer-overheid-nl/proprietary` name, which is aliased in each app's `package.json` to one of these two workspace packages — the codebase always imports `@developer-overheid-nl/proprietary`, never the concrete package directly. All apps + packages also get consumed as a starting point by the external [register-site-template](https://github.com/developer-overheid-nl/register-site-template) repo, so avoid baking app-specific assumptions into `packages/*`.
 
 ## Commands
 
@@ -27,12 +28,13 @@ Run from the repo root.
 ```
 pnpm install                # install deps
 pnpm start                  # interactive, searchable menu to pick and run any root script
-pnpm dev                    # run all three app dev servers in parallel (4321, then 4322/4323 as ports are taken)
-pnpm dev:api / :oss / :schema   # run a single app's dev server (localhost:4321)
+pnpm dev                    # run all app dev servers in parallel (4321, then 4322/4323/4324 as ports are taken)
+pnpm dev:api / :oss / :schema / :skills   # run a single app's dev server (localhost:4321)
 pnpm dev:api:prod / :oss:prod   # dev server in production mode (.env.production)
 pnpm build                  # build all apps to ./dist
-pnpm build:api / :oss / :schema
-pnpm preview:api / :oss / :schema  # preview a production build locally
+pnpm build:api / :oss / :schema / :skills
+pnpm preview:api / :oss / :schema / :skills  # preview a production build locally
+pnpm start:api / :oss / :schema / :skills    # run a built app's server (node entry.mjs, port 4321)
 
 pnpm test                   # vitest (unit tests, workspace-wide via projects: packages/*, apps/*)
 pnpm test -- run <file>     # run a single vitest file/pattern, non-watch
