@@ -100,6 +100,18 @@ Each register app follows the same routing pattern (illustrated by api-register,
 
 Biome handles formatting, linting, and import sorting (`biome.json`). `.astro` files have some rules relaxed (const, import-type and unused checks are off) because Biome's Astro support is partial. CI runs `biome ci` and fails pull requests on warnings.
 
+## Visual Regression
+
+Chromatic runs visual regression tests on Storybook. If their MCP-server is active, use it toegether with their skills. If it is not installed or down inform the user.
+
+After you push, check the latest Chromatic build for this branch.
+
+- Fix broken stories and new accessibility violations, push, and check the next build.
+- Repeat until the build has no broken stories or new violations.
+- List the remaining visual changes in the pull request for a person to review. Don't accept them.
+- Mark the pull request ready only once the Chromatic build has finished. A passing CI job doesn't mean the UI passed.
+- To test a UI change, add or update a story. Don't write a separate page-level test for the same thing.
+
 ## Hard rules
 
 Details for each rule are in [MAINTENANCE.md](MAINTENANCE.md).
