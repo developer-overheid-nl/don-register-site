@@ -482,6 +482,9 @@ importers:
       '@piwikpro/react-piwik-pro':
         specifier: 'catalog:'
         version: 3.0.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@rijkshuisstijl-community/accordion-react':
+        specifier: 'catalog:'
+        version: 3.1.3(@babel/runtime@7.29.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       astro:
         specifier: 'catalog:'
         version: 7.4.4(@types/node@24.0.8)(esbuild@0.28.2)(yaml@2.9.1)

@@ -26,6 +26,7 @@ import {
 } from "@developer-overheid-nl/don-register-layouts";
 import createClient from "openapi-fetch";
 import appConfig from "../../../app.config";
+import SkillContentAccordion from "../../components/SkillContentAccordion";
 import { skillFileUrl, stripFrontmatter } from "../../helpers/skillContent";
 import { ApiPaths, type paths } from "../../types/api-schema";
 
@@ -125,12 +126,12 @@ const sourceTypeLabel = (type?: string) =>
     </Fragment>
     { /* biome-ignore lint/complexity/noUselessFragments: needed for slot */ }
     <Fragment slot="meta">
-      <Heading level={4}>{t('pages.skill-content')}</Heading>
-      <Block appearance="outlined">
-        <div class="skill-content utrecht-html">
-          <Markdown text={stripFrontmatter(details.content)} minHeadingDepth={5} openLinksInNewTab />
-        </div>
-      </Block>
+      <SkillContentAccordion
+        client:load
+        content={stripFrontmatter(details.content)}
+        label={t('pages.skill-content')}
+        headingLevel={4}
+      />
       <Heading level={4}>{t('pages.details')}</Heading>
       <Block appearance="outlined">
         <Heading level={5}>{t('pages.links')}</Heading>
@@ -160,12 +161,21 @@ const sourceTypeLabel = (type?: string) =>
 )}
 
 <style>
-  .skill-content {
-    overflow-wrap: anywhere;
+  /* Long lines in code blocks must not widen the grid column or the
+     accordion; without this the aside shrinks to a few characters wide. */
+  :global(.skill-content-accordion),
+  :global(.skill-content) {
+    contain: inline-size;
+  }
 
-    :global(pre) {
-      overflow-x: auto;
-      white-space: pre;
-    }
+  :global(.skill-content) {
+    --utrecht-code-block-background-color: var(--rhc-color-cool-grey-100);
+    overflow-wrap: anywhere;
+  }
+
+  :global(.skill-content.utrecht-html pre) {
+    overflow-x: auto;
+    padding: 0.5rem 0.75rem;
+    white-space: pre;
   }
 </style>
