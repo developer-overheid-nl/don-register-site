@@ -71,6 +71,7 @@
   --utrecht-unordered-list-font-size: var(--nl-paragraph-font-size);
   --utrecht-link-list-link-font-weight: inherit;
   --utrecht-alert-icon-inset-block-start: 0;
+  --nl-link-hover-text-decoration-thickness: 1px;
   --utrecht-link-hover-text-decoration-thickness: 1px;
   --utrecht-badge-list-column-gap: 0.25rem;
   --utrecht-badge-list-row-gap: 0.25rem;

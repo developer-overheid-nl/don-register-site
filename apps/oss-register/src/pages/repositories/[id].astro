@@ -241,7 +241,21 @@ const getLang = (langKeys: Array<string>) =>
               </AlignBox>
             </p>
           </Block> : 
-        null }
+          <Block>
+            <Alert type="warning">
+              <Heading level={5} className="error-title">
+                {
+                  details.scan?.failedStage ? 
+                    <><small>Failed in stage </small>{details.scan?.failedStage}</> : 
+                    null
+                }
+              </Heading>
+              <Paragraph>
+                {details.scan?.error}
+              </Paragraph>
+            </Alert>
+          </Block> 
+        }
       </AlignBox>
       {details.scan?.status !== "failed" ? 
         <>
@@ -337,6 +351,12 @@ const getLang = (langKeys: Array<string>) =>
     & > * {
       flex-basis: 25%;
       flex-grow: 1;
+    }
+
+    .error-title {
+      small {
+        font-weight: normal;
+      }
     }
 
     .scan {
