@@ -94,6 +94,20 @@
     "download-as": "Download als",
     "read-documentation-at": "Lees de documentatie op",
     "copy-to-clipboard": "Kopieer naar klembord",
+    "scan": "Scan",
+    "status": "Status onbekend",
+    "status_completed": "Compleet",
+    "status_incomplete": "Incompleet",
+    "status_failed": "Gefaald",
+    "checks": "Checks",
+    "score": "Score",
+    "packages": "Packages",
+    "package-managers": "Packagemanagers",
+    "definition-files": "Definitiebestanden",
+    "definition-files_zero": "Geen Definitiebestanden",
+    "definition-files_one": "{{count}} Definitiebestand",
+    "definition-files_other": "{{count}} Definitiebestanden",
+    "howto": "Uitleg",
     "fork": "fork",
     "fork_GIT_FORK": "git fork",
     "fork_TECHNICAL_FORK": "technische fork",
@@ -134,6 +148,7 @@
     "software-type": "Software type",
     "localisation": "Localisatie mogelijk",
     "maintenance-type": "Onderhoud",
-    "stay-up-to-date-about-api": "Blijf op de hoogte over deze API"
+    "stay-up-to-date-about-api": "Blijf op de hoogte over deze API",
+    "repository-scan": "Repository-scan"
   }
 }

@@ -21,6 +21,7 @@ const meta = {
         "primary-action-button",
         "secondary-action-button",
         "subtle-button",
+        "inline-button",
       ],
     },
   },
@@ -58,5 +59,13 @@ export const Subtle: Story = {
     appearance: "subtle-button",
     href: "/apis/download",
     children: "Download alle API's",
+  },
+};
+
+export const Inline: Story = {
+  args: {
+    appearance: "inline-button",
+    href: "/apis/zoeken",
+    children: "Zoek in alle API's",
   },
 };

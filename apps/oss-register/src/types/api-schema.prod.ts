@@ -163,12 +163,17 @@ export interface components {
              * @example Request validation failed
              */
             title: string;
+            /**
+             * @description A human-readable explanation specific to this occurrence of the problem
+             * @example url: must be a valid URL
+             */
+            detail: string;
             errors?: {
                 /**
                  * @description Location of the error (e.g., body, query, header)
                  * @enum {string}
                  */
-                in: "body" | "query";
+                in: "body" | "query" | "path";
                 /**
                  * @description Location in the document where the error occurred (JSON Pointer)
                  * @example #/foo[0]/bar

@@ -135,10 +135,65 @@ export interface paths {
         put?: never;
         /**
          * Validate OpenAPI (POST)
-         * @description Valideert een OpenAPI specificatie met de DON ADR ruleset. Standaard wordt ruleset 2.1 gebruikt; geef targetVersion "2.0" of "2.1" mee om een versie te kiezen. Body: { oasUrl } of { oasBody } (stringified JSON of YAML).
+         * @description Valideert een OpenAPI specificatie met de DON ADR ruleset. Standaard wordt ruleset 2.2 gebruikt; geef targetVersion "2.0", "2.1", "2.2" of "draft" mee om een versie te kiezen. Body: { oasUrl } of { oasBody } (stringified JSON of YAML).
          */
         post: operations["validatorOpenAPIPost"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Lijst events
+         * @description Geeft de events uit de agenda, gesorteerd op begintijd (oplopend).
+         */
+        get: operations["listEvents"];
+        put?: never;
+        /**
+         * Maak event
+         * @description Voegt een handmatig beheerd event toe aan de agenda.
+         */
+        post: operations["createEvent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/events/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Id van het event. */
+                id: components["parameters"]["EventId"];
+            };
+            cookie?: never;
+        };
+        /**
+         * Haal event op
+         * @description Geeft een event uit de agenda.
+         */
+        get: operations["getEvent"];
+        /**
+         * Wijzig event
+         * @description Vervangt een handmatig beheerd event. Geharveste events kunnen alleen bij de bron worden gewijzigd.
+         */
+        put: operations["updateEvent"];
+        post?: never;
+        /**
+         * Verwijder event
+         * @description Verwijdert een handmatig beheerd event. Een geharvest event wordt verborgen, zodat een volgende harvest het niet terugzet.
+         */
+        delete: operations["deleteEvent"];
         options?: never;
         head?: never;
         patch?: never;
@@ -168,6 +223,72 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        ProblemJson: {
+            detail: string;
+            errors?: {
+                code?: string;
+                detail?: string;
+                in?: string;
+                location?: string;
+            }[];
+            status: number;
+            title: string;
+        };
+        /**
+         * @description Herkomst van het event. `manual` is via deze API beheerd, `pleio` is geharvest uit een Pleio-site.
+         * @example manual
+         * @enum {string}
+         */
+        AgendaEventSource: "manual" | "pleio";
+        AgendaEventInput: {
+            /** @example PGDay Lowlands 2026 */
+            title: string;
+            /** @example PostgreSQL-conferentie van PostgreSQL Europe, voor developers en databaseprofessionals. */
+            summary?: string;
+            /**
+             * Format: date-time
+             * @description Begin van het event (RFC 3339 met UTC-offset).
+             * @example 2026-09-10T09:00:00+02:00
+             */
+            startsAt: string;
+            /**
+             * Format: date-time
+             * @description Einde van het event (RFC 3339 met UTC-offset). Mag niet vóór `startsAt` liggen.
+             * @example 2026-09-10T17:00:00+02:00
+             */
+            endsAt: string;
+            /** @example TivoliVredenburg, Utrecht */
+            location?: string;
+            /**
+             * Format: uri
+             * @description Pagina met meer informatie over het event.
+             * @example https://2026.pgday.nl/
+             */
+            url: string;
+        };
+        AgendaEvent: components["schemas"]["AgendaEventInput"] & {
+            /**
+             * Format: uuid
+             * @example 0f8d3c1e-7a3b-4f5e-9b1a-2c6d4e8f0a12
+             */
+            id: string;
+            source: components["schemas"]["AgendaEventSource"];
+            /**
+             * @description Naam van de bron, bijvoorbeeld de host van de Pleio-site.
+             * @example digilab.pleio.nl
+             */
+            sourceName?: string;
+            /**
+             * Format: date-time
+             * @example 2026-09-01T08:00:00+02:00
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @example 2026-09-02T10:15:00+02:00
+             */
+            updatedAt: string;
+        };
         /**
          * @example {
          *       "oasUrl": "oasUrl",
@@ -178,7 +299,7 @@ export interface components {
         OasInput: {
             oasBody?: string;
             oasUrl?: string;
-            /** @description Doelversie. Voor conversie: 3.0 of 3.1. Voor validatie: 2.0 of 2.1. */
+            /** @description Doelversie. Voor conversie: "3.0" of "3.1" (standaard "3.1"). Voor validatie: de ADR-rulesetversie "2.0", "2.1", "2.2" of "draft" (standaard "2.2"). */
             targetVersion?: string;
         };
         /**
@@ -236,10 +357,10 @@ export interface components {
         /**
          * @example {
          *       "createdAt": "2000-01-23T04:56:07.000Z",
-         *       "score": 6,
+         *       "score": 100,
          *       "failures": 0,
          *       "successes": true,
-         *       "rulesetVersion": "2.1",
+         *       "rulesetVersion": "2.2",
          *       "messages": [
          *         {
          *           "severity": "severity",
@@ -318,12 +439,77 @@ export interface components {
             };
             content?: never;
         };
+        /** @description Bad request */
+        BadRequest: {
+            headers: {
+                "API-Version": components["headers"]["API-Version"];
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["ProblemJson"];
+            };
+        };
+        /** @description Resource does not exist */
+        NotFound: {
+            headers: {
+                "API-Version": components["headers"]["API-Version"];
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["ProblemJson"];
+            };
+        };
+        /** @description Conflict with the current state of the resource */
+        Conflict: {
+            headers: {
+                "API-Version": components["headers"]["API-Version"];
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["ProblemJson"];
+            };
+        };
+        /** @description Service unavailable */
+        ServiceUnavailable: {
+            headers: {
+                "API-Version": components["headers"]["API-Version"];
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["ProblemJson"];
+            };
+        };
     };
-    parameters: never;
+    parameters: {
+        /** @description Paginanummer (begint bij 1). */
+        Page: number;
+        /** @description Aantal resultaten per pagina. */
+        PerPage: number;
+        /** @description Alleen events die op of na dit moment eindigen. Gebruik het huidige moment voor aankomende en lopende events. */
+        EndsAfter: string;
+        /** @description Alleen events die vóór dit moment beginnen. */
+        StartsBefore: string;
+        /** @description Alleen events uit deze bron. */
+        EventSourceFilter: components["schemas"]["AgendaEventSource"];
+        /** @description Id van het event. */
+        EventId: string;
+    };
     requestBodies: never;
     headers: {
         /** @description De API-versie van de response */
         "API-Version": string;
+        /** @description Links naar de eerste, vorige, volgende en laatste pagina */
+        Link: string;
+        /** @description URI van de aangemaakte resource */
+        Location: string;
+        /** @description Totaal aantal items */
+        "Total-Count": number;
+        /** @description Huidige pagina */
+        "Current-Page": number;
+        /** @description Aantal items per pagina */
+        "Per-Page": number;
+        /** @description Totaal aantal pagina's */
+        "Total-Pages": number;
     };
     pathItems: never;
 }
@@ -353,6 +539,7 @@ export interface operations {
                     "text/markdown": string;
                 };
             };
+            400: components["responses"]["BadRequest"];
             404: components["responses"]["404"];
         };
     };
@@ -380,6 +567,7 @@ export interface operations {
                     "text/plain": string;
                 };
             };
+            400: components["responses"]["BadRequest"];
             404: components["responses"]["404"];
         };
     };
@@ -407,6 +595,7 @@ export interface operations {
                     "application/json": components["schemas"]["ModelsKeycloakClientResult"];
                 };
             };
+            400: components["responses"]["BadRequest"];
             404: components["responses"]["404"];
         };
     };
@@ -432,6 +621,7 @@ export interface operations {
                 };
                 content?: never;
             };
+            400: components["responses"]["BadRequest"];
             404: components["responses"]["404"];
         };
     };
@@ -457,6 +647,7 @@ export interface operations {
                 };
                 content?: never;
             };
+            400: components["responses"]["BadRequest"];
             404: components["responses"]["404"];
         };
     };
@@ -484,6 +675,7 @@ export interface operations {
                     "application/json": Record<string, never>;
                 };
             };
+            400: components["responses"]["BadRequest"];
             404: components["responses"]["404"];
         };
     };
@@ -511,7 +703,159 @@ export interface operations {
                     "application/json": components["schemas"]["ModelsLintResult"];
                 };
             };
+            400: components["responses"]["BadRequest"];
             404: components["responses"]["404"];
+        };
+    };
+    listEvents: {
+        parameters: {
+            query?: {
+                /** @description Paginanummer (begint bij 1). */
+                page?: components["parameters"]["Page"];
+                /** @description Aantal resultaten per pagina. */
+                perPage?: components["parameters"]["PerPage"];
+                /** @description Alleen events die op of na dit moment eindigen. Gebruik het huidige moment voor aankomende en lopende events. */
+                endsAfter?: components["parameters"]["EndsAfter"];
+                /** @description Alleen events die vóór dit moment beginnen. */
+                startsBefore?: components["parameters"]["StartsBefore"];
+                /** @description Alleen events uit deze bron. */
+                source?: components["parameters"]["EventSourceFilter"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    "API-Version": components["headers"]["API-Version"];
+                    Link: components["headers"]["Link"];
+                    "Total-Count": components["headers"]["Total-Count"];
+                    "Current-Page": components["headers"]["Current-Page"];
+                    "Per-Page": components["headers"]["Per-Page"];
+                    "Total-Pages": components["headers"]["Total-Pages"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgendaEvent"][];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            503: components["responses"]["ServiceUnavailable"];
+        };
+    };
+    createEvent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AgendaEventInput"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    "API-Version": components["headers"]["API-Version"];
+                    Location: components["headers"]["Location"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgendaEvent"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            503: components["responses"]["ServiceUnavailable"];
+        };
+    };
+    getEvent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Id van het event. */
+                id: components["parameters"]["EventId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    "API-Version": components["headers"]["API-Version"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgendaEvent"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            404: components["responses"]["NotFound"];
+            503: components["responses"]["ServiceUnavailable"];
+        };
+    };
+    updateEvent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Id van het event. */
+                id: components["parameters"]["EventId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AgendaEventInput"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    "API-Version": components["headers"]["API-Version"];
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgendaEvent"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            404: components["responses"]["NotFound"];
+            409: components["responses"]["Conflict"];
+            503: components["responses"]["ServiceUnavailable"];
+        };
+    };
+    deleteEvent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Id van het event. */
+                id: components["parameters"]["EventId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    "API-Version": components["headers"]["API-Version"];
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["BadRequest"];
+            404: components["responses"]["NotFound"];
+            503: components["responses"]["ServiceUnavailable"];
         };
     };
     createPostmanCollection: {
@@ -536,6 +880,7 @@ export interface operations {
                 };
                 content?: never;
             };
+            400: components["responses"]["BadRequest"];
             404: components["responses"]["404"];
         };
     };
@@ -548,5 +893,10 @@ export enum ApiPaths {
     bundleOAS = "/v1/oas/bundle",
     generateOAS = "/v1/oas/generate",
     validatorOpenAPIPost = "/v1/oas/validate",
+    listEvents = "/v1/events",
+    createEvent = "/v1/events",
+    getEvent = "/v1/events/{id}",
+    updateEvent = "/v1/events/{id}",
+    deleteEvent = "/v1/events/{id}",
     createPostmanCollection = "/v1/oas/postman"
 }

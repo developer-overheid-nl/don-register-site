@@ -1,0 +1,17 @@
+export {
+  Table,
+  TableBody,
+  type TableBodyProps,
+  TableCaption,
+  TableCell,
+  type TableCellProps,
+  TableFooter,
+  type TableFooterProps,
+  TableHeader,
+  TableHeaderCell,
+  type TableHeaderCellProps,
+  type TableHeaderProps,
+  type TableProps,
+  TableRow,
+  type TableRowProps,
+} from "@rijkshuisstijl-community/components-react/no-side-effects";
